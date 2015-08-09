@@ -37,6 +37,7 @@ public class FTLAdventureVisualiser {
 	public static final int APP_VERSION = 1;
 
 	public static ArrayList <SavedGameParser.SavedGameState> gameStateArray = new ArrayList <SavedGameParser.SavedGameState>();
+	public static ArrayList <SavedGameParser.ShipState> shipStateArray = new ArrayList <SavedGameParser.ShipState>();
 
 	public static void main( String[] args ) {
 
@@ -170,20 +171,20 @@ public class FTLAdventureVisualiser {
 			}
 		}
 
-		if ( writeConfig ) {
-			String wipMsg = "";
-			wipMsg += "FTL: Faster Than Light Adventure Visualiser (FTLAV) is a tool to visualize your FTL playsessions\n";
-			wipMsg += "\n";
-			wipMsg += "This program is build on top of the FTL Profile Editor by Vhati\n";
-			wipMsg += "\n";
-			wipMsg += "This application requires the \"continue.sav\" from the FTL game directory.\n";
-			wipMsg += "This is where your current game progress is stored.\n";
-			wipMsg += "This application can and will not modify this or any other files.\n";
-			wipMsg += "\n";
-			wipMsg += "If you encounter a read error opening a file, that means the editor saw something \n";
-			wipMsg += "new that it doesn't recognize. Submitting a bug report would be helpful.";
-			JOptionPane.showMessageDialog(null, wipMsg, "Work in Progress", JOptionPane.PLAIN_MESSAGE);
-		}
+		// if ( writeConfig ) {
+		// 	String wipMsg = "";
+		// 	wipMsg += "FTL: Faster Than Light Adventure Visualiser (FTLAV) is a tool to visualize your FTL playsessions\n";
+		// 	wipMsg += "\n";
+		// 	wipMsg += "This program is build on top of the FTL Profile Editor by Vhati\n";
+		// 	wipMsg += "\n";
+		// 	wipMsg += "This application requires the \"continue.sav\" from the FTL game directory.\n";
+		// 	wipMsg += "This is where your current game progress is stored.\n";
+		// 	wipMsg += "This application can and will not modify this or any other files.\n";
+		// 	wipMsg += "\n";
+		// 	wipMsg += "If you encounter a read error opening a file, that means the editor saw something \n";
+		// 	wipMsg += "new that it doesn't recognize. Submitting a bug report would be helpful.";
+		// 	JOptionPane.showMessageDialog(null, wipMsg, "Work in Progress", JOptionPane.PLAIN_MESSAGE);
+		// }
 
 		// Parse the dats.
 		try {

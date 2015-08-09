@@ -12,13 +12,13 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Insets;
+import java.awt.GridLayout;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -42,8 +42,7 @@ import javax.swing.UIManager;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.DumpPanel;
-import net.ntg.ftl.ui.GraphPanel;
-import net.ntg.ftl.ui.StatusbarMouseListener;
+import net.ntg.ftl.ui.graph.GraphPanelGeneral;
 import net.ntg.ftl.util.FileWatcher;
 
 import net.blerf.ftl.parser.MysteryBytes;
@@ -60,7 +59,7 @@ public class FTLFrame extends JFrame {
 	private static final Logger log = LogManager.getLogger(FTLFrame.class);
 
 	private static final String SAVE_DUMP = "Dump";
-	private static final String SAVE_GRAPH= "Graph";
+	private static final String SAVE_GRAPH= "Graph Inspector";
 
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
@@ -69,9 +68,8 @@ public class FTLFrame extends JFrame {
 
 	private JButton gameStateSaveBtn;
 	private JTabbedPane savedGameTabsPane;
-	private DumpPanel savedGameDumpPanel;
-	private GraphPanel savedGameGraphPanel;
-	private JLabel statusLbl;
+	private DumpPanel dumpPanel;
+	private GraphPanelGeneral graphPanelGeneral;
 
 	private String appName;
 	private int appVersion;
@@ -86,35 +84,31 @@ public class FTLFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle(String.format("%s (version %d)", appName, appVersion));
 
-		// UI top
-		JPanel contentPane = new JPanel(new BorderLayout());
+		JPanel contentPane = new JPanel(new GridLayout(2,1));
 		setContentPane(contentPane);
 
-		// UI savedGamePane
-		JPanel savedGamePane = new JPanel(new BorderLayout());
-		contentPane.add(savedGamePane, BorderLayout.CENTER);
+		// UI savedGameInspector
+		JPanel savedGameInspector = new JPanel(new BorderLayout());
+		contentPane.add(savedGameInspector);
 
 		JToolBar savedGameToolbar = new JToolBar();
 		setupSavedGameToolbar(savedGameToolbar);
-		savedGamePane.add(savedGameToolbar, BorderLayout.NORTH);
+		savedGameInspector.add(savedGameToolbar, BorderLayout.NORTH);
 
 		savedGameTabsPane = new JTabbedPane();
-		savedGamePane.add( savedGameTabsPane, BorderLayout.CENTER );
+		savedGameInspector.add( savedGameTabsPane, BorderLayout.CENTER );
 
-		savedGameDumpPanel  = new DumpPanel();
-		savedGameGraphPanel = new GraphPanel();
+		dumpPanel  = new DumpPanel();
+		graphPanelGeneral = new GraphPanelGeneral(this);
 
-		savedGameTabsPane.addTab(SAVE_DUMP, savedGameDumpPanel);
-		savedGameTabsPane.addTab(SAVE_GRAPH,savedGameGraphPanel);
+		graphPanelGeneral.setFloatable(false);
 
-		JPanel statusPanel = new JPanel();
-		statusPanel.setLayout( new BoxLayout(statusPanel, BoxLayout.Y_AXIS) );
-		statusPanel.setBorder( BorderFactory.createLoweredBevelBorder() );
-		statusLbl = new JLabel( " " );
-		statusLbl.setBorder( BorderFactory.createEmptyBorder(2, 4, 2, 4));
-		statusLbl.setAlignmentX( Component.LEFT_ALIGNMENT );
-		statusPanel.add( statusLbl );
-		contentPane.add( statusPanel, BorderLayout.SOUTH );
+		savedGameTabsPane.addTab(SAVE_DUMP, dumpPanel);
+		savedGameTabsPane.addTab(SAVE_GRAPH,graphPanelGeneral);
+
+		// UI Graph
+		JPanel savedGameGraphPane = new JPanel(new BorderLayout());
+		contentPane.add(savedGameGraphPane);
 	}
 
 
@@ -187,7 +181,6 @@ public class FTLFrame extends JFrame {
 				}
 			}
 		});
-		gameStateOpenBtn.addMouseListener( new StatusbarMouseListener(this, "Open an existing saved game.") );
 		toolbar.add( gameStateOpenBtn );
 
 
@@ -197,9 +190,9 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AbstractButton abstractButton = (AbstractButton) e.getSource();
-                gameStateWatcherBtn.setSelected(abstractButton.getModel().isSelected());
+				gameStateWatcherBtn.setSelected(abstractButton.getModel().isSelected());
 
-                if ( gameStateWatcherBtn.isSelected() ) {
+				if ( gameStateWatcherBtn.isSelected() ) {
 					if ( lastGameState != null ) {
 						// start monitor function
 						log.info("start monitoring save file");
@@ -225,9 +218,7 @@ public class FTLFrame extends JFrame {
 				}
 			}
 		});
-		gameStateWatcherBtn.addMouseListener(new StatusbarMouseListener(this, "Constantly watch save game file for changes"));
 		toolbar.add( gameStateWatcherBtn );
-
 
 		toolbar.add( Box.createHorizontalGlue() );
 	}
@@ -258,7 +249,7 @@ public class FTLFrame extends JFrame {
 
 			SavedGameParser parser = new SavedGameParser();
 			SavedGameParser.SavedGameState gs = parser.readSavedGame( in );
-			loadGameState( gs );
+			loadGameState( gs, gs.getPlayerShipState() );
 
 			log.trace( "Game state read successfully." );
 
@@ -284,24 +275,20 @@ public class FTLFrame extends JFrame {
 	}
 
 
-	public void loadGameState( SavedGameParser.SavedGameState currentGameState ) {
-		savedGameDumpPanel.setText((currentGameState != null ? currentGameState.toString() : ""));
+	public void loadGameState (SavedGameParser.SavedGameState currentGameState, SavedGameParser.ShipState currentShipState) {
+
+		dumpPanel.setText(currentGameState != null ? currentGameState.toString() : "");
 
 		if (lastGameState != null) {
-			if (currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored()) {
+			if (currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() ||
+				FTLAdventureVisualiser.gameStateArray.size() == 0
+			) {
+				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
+				FTLAdventureVisualiser.shipStateArray.add(currentShipState);
+
 				log.info( "currently at beacon number " + currentGameState.getTotalBeaconsExplored() );
 
-				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
-
-				String dumplogString = "";
-				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
-					dumplogString += "\n Beacons explored: ";
-					dumplogString += FTLAdventureVisualiser.gameStateArray.get(i).getTotalBeaconsExplored();
-					dumplogString += "\n Scrap collected : ";
-					dumplogString += FTLAdventureVisualiser.gameStateArray.get(i).getTotalScrapCollected();
-					dumplogString += "\n";
-				}
-				log.info (dumplogString);
+				graphPanelGeneral.setGameState();
 			}
 		}
 
@@ -311,14 +298,5 @@ public class FTLFrame extends JFrame {
 
 	private void showErrorDialog (String message) {
 		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-
-
-	public void setStatusText( String text ) {
-		if (text.length() > 0) {
-			statusLbl.setText( text );
-		} else {
-			statusLbl.setText( " " );
-		}
 	}
 }
