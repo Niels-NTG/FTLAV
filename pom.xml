@@ -42,8 +42,13 @@
 			<artifactId>platform</artifactId>
 			<version>3.5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.processing</groupId>
+			<artifactId>core</artifactId>
+			<version>2.2.1</version>
+		</dependency>
 	</dependencies>
-  
+
 	<build>
 	<plugins>
 		<plugin>
@@ -126,5 +131,5 @@
 		</plugin>
 	</plugins>
   </build>
-  
+
 </project>
