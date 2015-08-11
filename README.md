@@ -5,7 +5,11 @@ This (currently highly experimental and totally not user-ready!) application is 
 
 Large chunks of the code used in this Java-based application come from [Vhati](https://github.com/Vhati)'s version of the [ftl-profile-editor](https://github.com/Vhati/ftl-profile-editor).
 
-### TODO
-- Adding actual graphs and visuals. If you can recommend a good Java library for this kind of stuff, please file an issue or make a pull-request.
-- A cool looking and effective user interfaces inspired on the one you see in FTL.
+Use [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) to build from source.
+
+### MAJOR TODO
+- Proper graphs that look great, easy to manipulate, readable and in some way insightful for the user.
 - Removing all classes and methods taken from ftl-profile-editor that aren't needed for this project.
+- Graphs are exportable to common formats (i.e. PNG, GIF, PDF, SVG) to enable people sharing their FTL adventures with others.
+- Make it possible that the application can dump the array of gamestates to a file before you quit the application so that you can resume recording data the next time you start playing FTL again.
+- A cool looking and effective user interfaces inspired on the one you see in FTL.
