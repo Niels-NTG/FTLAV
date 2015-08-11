@@ -43,6 +43,7 @@ import javax.swing.UIManager;
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.DumpPanel;
 import net.ntg.ftl.ui.graph.GraphPanelGeneral;
+import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
 
 import net.blerf.ftl.parser.MysteryBytes;
@@ -78,6 +79,7 @@ public class FTLFrame extends JFrame {
 		this.appName = appName;
 		this.appVersion = appVersion;
 
+
 		// UI setup
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800,700);
@@ -86,6 +88,7 @@ public class FTLFrame extends JFrame {
 
 		JPanel contentPane = new JPanel(new GridLayout(2,1));
 		setContentPane(contentPane);
+
 
 		// UI savedGameInspector
 		JPanel savedGameInspector = new JPanel(new BorderLayout());
@@ -98,7 +101,7 @@ public class FTLFrame extends JFrame {
 		savedGameTabsPane = new JTabbedPane();
 		savedGameInspector.add( savedGameTabsPane, BorderLayout.CENTER );
 
-		dumpPanel  = new DumpPanel();
+		dumpPanel = new DumpPanel();
 		graphPanelGeneral = new GraphPanelGeneral(this);
 
 		graphPanelGeneral.setFloatable(false);
@@ -106,9 +109,18 @@ public class FTLFrame extends JFrame {
 		savedGameTabsPane.addTab(SAVE_DUMP, dumpPanel);
 		savedGameTabsPane.addTab(SAVE_GRAPH,graphPanelGeneral);
 
+
 		// UI Graph
 		JPanel savedGameGraphPane = new JPanel(new BorderLayout());
 		contentPane.add(savedGameGraphPane);
+
+		processing.core.PApplet graphRenderer = new GraphRenderer();
+		savedGameGraphPane.add(graphRenderer);
+		// TODO get the actual height of the graphRender frame
+		// some way that is not as bad as this one
+		GraphRenderer.panelWidth = this.getWidth();
+		GraphRenderer.panelHeight= this.getHeight() / 2;
+		graphRenderer.init();
 	}
 
 

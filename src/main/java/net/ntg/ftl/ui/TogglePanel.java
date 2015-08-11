@@ -17,7 +17,8 @@ import javax.swing.JToggleButton;
 
 public class TogglePanel extends JPanel {
 
-	private Map<String, JLabel> toggleButtonLabelMap = new HashMap<String, JLabel>();
+	private Map<String, JToggleButton> toggleButtonMap = new HashMap<String, JToggleButton>();
+	private Map<String, JLabel> labelMap = new HashMap<String, JLabel>();
 
 	private GridBagConstraints gridC = new GridBagConstraints();
 	private Component valueStrut = Box.createHorizontalStrut( 120 );
@@ -44,13 +45,13 @@ public class TogglePanel extends JPanel {
 	}
 
 
-	public void setValueWidth (int width) {
+	public void setValueWidth ( int width ) {
 		valueStrut.setMinimumSize( new Dimension(width, 0) );
 		valueStrut.setPreferredSize( new Dimension(width, 0) );
 	}
 
 
-	public void addToggle (String valueName) {
+	public void addToggle ( String valueName, boolean state ) {
 		gridC.fill = GridBagConstraints.HORIZONTAL;
 		gridC.gridwidth = 1;
 		gridC.weighty = 0.0;
@@ -60,15 +61,15 @@ public class TogglePanel extends JPanel {
 
 		gridC.anchor = GridBagConstraints.WEST;
 		// TODO icon
-		JToggleButton toggleButton = new JToggleButton(valueName);
-		// toggleButtonMap.put(valueName, toggleButton);
+		JToggleButton toggleButton = new JToggleButton(valueName, state);
+		toggleButtonMap.put(valueName, toggleButton);
 		this.add(toggleButton, gridC);
 
 		gridC.gridx++;
 
 		gridC.anchor = GridBagConstraints.WEST;
 		JLabel valueLabel = new JLabel();
-		toggleButtonLabelMap.put( valueName, valueLabel );
+		labelMap.put( valueName, valueLabel );
 		this.add( valueLabel, gridC );
 
 		gridC.gridy++;
@@ -109,8 +110,13 @@ public class TogglePanel extends JPanel {
 	}
 
 
-	public void setValue( String valueName, int n) {
-		JLabel valueLabel = toggleButtonLabelMap.get(valueName);
-		valueLabel.setText(Integer.toString(n));
+	public void setValue( String valueName, int n ) {
+		JLabel valueLabel = labelMap.get(valueName);
+		valueLabel.setText( Integer.toString(n) );
+	}
+
+
+	public JToggleButton getState( String valueName ) {
+		return toggleButtonMap.get( valueName );
 	}
 }

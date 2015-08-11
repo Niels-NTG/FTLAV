@@ -36,6 +36,7 @@ public class FTLAdventureVisualiser {
 	public static final String APP_NAME = "FTL Adventure Visualiser";
 	public static final int APP_VERSION = 1;
 
+	// TODO each time arrays are updated, write this to file for later use
 	public static ArrayList <SavedGameParser.SavedGameState> gameStateArray = new ArrayList <SavedGameParser.SavedGameState>();
 	public static ArrayList <SavedGameParser.ShipState> shipStateArray = new ArrayList <SavedGameParser.ShipState>();
 
