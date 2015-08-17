@@ -109,7 +109,14 @@ public class GraphPanelGeneral extends JToolBar {
 				GraphRenderer.superArray.add(intArray);
 			}
 
-			GraphRenderer.ceiling = Collections.max(GraphRenderer.superArray.get(0)) <= 30 ? 30 : Collections.max(GraphRenderer.superArray.get(0));
+
+			ArrayList<Integer> ceilingMeasureArray = new ArrayList<Integer>();
+			for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
+				ceilingMeasureArray.add( Collections.max(GraphRenderer.superArray.get(i)) );
+			}
+			GraphRenderer.ceiling = Collections.max(ceilingMeasureArray) <= 30 ?
+				30 : Collections.max(ceilingMeasureArray);
+
 
 			log.info("superArray a " + GraphRenderer.superArray.size());
 			for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
@@ -119,18 +126,4 @@ public class GraphPanelGeneral extends JToolBar {
 
 		}
 	}
-
-	// TODO method get current enabled toggles, send to Processing
-	// 		get toggles that are enabled
-	// 		extract new arraylist from shipStateArray/GameStateArray for specified data type (getScrapAmt(), getTotalCrewHired())
-	// 		get highest value from all of these arraylists by combining them into a special array, then to Collections.max(measurementArray)
-	// 		Send combined ArrayList to Processing
-	//
-	// 		Iterate trough combined ArrayList with for loop
-	// 		for MeasurementArray.size() a++ {
-	// 			for MeasurementArray.get(a).size() b++ {
-	//				MeasurementArray.get(a).get(b);
-	// 				render graph for this type
-	// 			}
-	// 		}
 }
