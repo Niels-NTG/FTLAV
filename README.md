@@ -1,7 +1,9 @@
 # FTLAV
 *FTL: Faster Than Light Adventure Visualiser*
 
-This (currently highly experimental and totally not user-ready!) application is a tool that generates a nice visualisation of your current game of FTL: Faster Than Light (www.ftlgame.com) while you play.
+This (currently highly experimental and not quite yet user-ready!) application is a tool that generates a nice visualisation of your current game of FTL: Faster Than Light (www.ftlgame.com) while you play.
+
+<a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png" width="145px" height="auto" /></a>
 
 Large chunks of the code used in this Java-based application come from [Vhati](https://github.com/Vhati)'s version of the [ftl-profile-editor](https://github.com/Vhati/ftl-profile-editor).
 
