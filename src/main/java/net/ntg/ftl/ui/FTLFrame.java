@@ -47,8 +47,7 @@ import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
 
 import net.blerf.ftl.parser.MysteryBytes;
-import net.blerf.ftl.parser.SavedGameParser;
-// TODO remove write methods from SavedGameParser
+import net.blerf.ftl.parser.SavedGameParser; // TODO remove write methods from SavedGameParser
 import net.vhati.modmanager.core.FTLUtilities;
 
 import org.apache.logging.log4j.Logger;
@@ -291,14 +290,15 @@ public class FTLFrame extends JFrame {
 
 		dumpPanel.setText(currentGameState != null ? currentGameState.toString() : "");
 
+		log.info( "Currently at beacon number : " + currentGameState.getTotalBeaconsExplored() );
+		log.info( "Currently in sector : " + currentGameState.getSectorNumber() );
+
 		if (lastGameState != null) {
 			if (currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() ||
 				FTLAdventureVisualiser.gameStateArray.size() == 0
 			) {
 				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
 				FTLAdventureVisualiser.shipStateArray.add(currentShipState);
-
-				log.info( "currently at beacon number " + currentGameState.getTotalBeaconsExplored() );
 
 				graphPanelGeneral.setGameState();
 			}
