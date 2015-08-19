@@ -1,17 +1,12 @@
 package net.ntg.ftl.ui.graph;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import processing.core.*;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
-
-import net.blerf.ftl.model.sectortree.SectorDot;
-import net.blerf.ftl.parser.random.NativeRandom;
-import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,6 +48,7 @@ public class GraphRenderer extends PApplet {
 	};
 
 	Map<String,Integer> sectorTypeColor = new HashMap<String,Integer>();
+
 
 	public void setup() {
 
@@ -128,13 +124,15 @@ public class GraphRenderer extends PApplet {
 					) {
 						textFont(headerFontAlt, 22);
 						textAlign(LEFT, BOTTOM);
-						fill(sectorTypeColor.get(
-								getSectorInfo(
+						fill(
+							sectorTypeColor.get(
+								FTLAdventureVisualiser.sectorArray.get(
 									FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber()
 								).getType()
 							)
 						);
-						text(getSectorInfo(
+						text(
+							FTLAdventureVisualiser.sectorArray.get(
 								FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber()
 							).getTitle().toUpperCase(),
 							margin + (canvasWidth / superArray.get(a).size()) * b,
@@ -167,31 +165,4 @@ public class GraphRenderer extends PApplet {
 		previous = current;
 
 	}
-
-
-	private SectorDot getSectorInfo( int index ) {
-		ArrayList<SectorDot> visitedSectors = new ArrayList<SectorDot>();
-
-		RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
-		List<List<SectorDot>> myColumns = myGen.generateSectorTree(
-			FTLAdventureVisualiser.gameStateArray.get(current).getSectorTreeSeed(),
-			FTLAdventureVisualiser.gameStateArray.get(current).isDLCEnabled()
-		);
-
-		int columnsOffset = 0;
-		for (int i = 0; i < myColumns.size(); i++) {
-			for (int k = 0; k < myColumns.get(i).size(); k++) {
-				if (FTLAdventureVisualiser.gameStateArray.get(current).getSectorVisitation().subList(
-						columnsOffset, columnsOffset + myColumns.get(i).size()
-					).get(k)
-				) {
-					visitedSectors.add( myColumns.get(i).get(k) );
-				}
-			}
-			columnsOffset += myColumns.get(i).size();
-		}
-
-		return visitedSectors.get( index );
-	}
-
 }

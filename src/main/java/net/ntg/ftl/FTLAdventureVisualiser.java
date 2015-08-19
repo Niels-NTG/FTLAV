@@ -22,6 +22,7 @@ import net.vhati.modmanager.core.FTLUtilities;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
+import net.blerf.ftl.model.sectortree.SectorDot;
 
 import net.ntg.ftl.ui.FTLFrame;
 
@@ -39,6 +40,7 @@ public class FTLAdventureVisualiser {
 	// TODO each time arrays are updated, write this to file for later use
 	public static ArrayList <SavedGameParser.SavedGameState> gameStateArray = new ArrayList <SavedGameParser.SavedGameState>();
 	public static ArrayList <SavedGameParser.ShipState> shipStateArray = new ArrayList <SavedGameParser.ShipState>();
+	public static ArrayList <SectorDot> sectorArray = new ArrayList <SectorDot>();
 
 	public static void main( String[] args ) {
 

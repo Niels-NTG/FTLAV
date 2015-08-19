@@ -3,16 +3,17 @@ package net.ntg.ftl.ui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.TimerTask;
-import java.util.Timer;
 import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Insets;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
@@ -46,8 +47,11 @@ import net.ntg.ftl.ui.graph.GraphPanelGeneral;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
 
+import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.MysteryBytes;
+import net.blerf.ftl.parser.random.NativeRandom;
 import net.blerf.ftl.parser.SavedGameParser; // TODO remove write methods from SavedGameParser
+import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 import net.vhati.modmanager.core.FTLUtilities;
 
 import org.apache.logging.log4j.Logger;
@@ -299,6 +303,25 @@ public class FTLFrame extends JFrame {
 			) {
 				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
 				FTLAdventureVisualiser.shipStateArray.add(currentShipState);
+
+				FTLAdventureVisualiser.sectorArray.clear();
+				RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
+				List<List<SectorDot>> myColumns = myGen.generateSectorTree(
+					currentGameState.getSectorTreeSeed(),
+					currentGameState.isDLCEnabled()
+				);
+				int columnsOffset = 0;
+				for (int i = 0; i < myColumns.size(); i++) {
+					for (int k = 0; k < myColumns.get(i).size(); k++) {
+						if (currentGameState.getSectorVisitation().subList(
+								columnsOffset, columnsOffset + myColumns.get(i).size()
+							).get(k)
+						) {
+							FTLAdventureVisualiser.sectorArray.add( myColumns.get(i).get(k) );
+						}
+					}
+					columnsOffset += myColumns.get(i).size();
+				}
 
 				graphPanelGeneral.setGameState();
 			}
