@@ -7,6 +7,7 @@
 
 	<properties>
 		<jdk.version>1.6</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<!--
@@ -77,7 +78,8 @@
 				</dependency>
 			</dependencies>
 			<executions>
-				<execution>  <!-- Build jar. -->
+				 <!-- Build jar. -->
+				<execution>
 					<id>jar-with-dependencies</id>
 					<phase>package</phase>
 					<goals>
@@ -97,9 +99,12 @@
 						</archive>
 						<finalName>FTLAdventureVisualiser</finalName>
 						<appendAssemblyId>false</appendAssemblyId>
+						<attach>false</attach>
 					</configuration>
 				</execution>
-				<execution>  <!-- Build zip archive. -->
+				<!-- uncomment this section if you wish to also build zip and/or tar.gz archives -->
+				<!-- Build zip archive. -->
+				<!-- <execution>
 					<id>dist-win</id>
 					<phase>package</phase>
 					<goals>
@@ -111,9 +116,11 @@
 						</descriptors>
 						<finalName>${project.name} v${project.version}-Win</finalName>
 						<appendAssemblyId>false</appendAssemblyId>
+						<attach>false</attach>
 					</configuration>
-				</execution>
-				<execution>  <!-- Build tar.gz archive. -->
+				</execution> -->
+				<!-- Build tar.gz archive. -->
+				<!-- <execution>
 					<id>dist-unix</id>
 					<phase>package</phase>
 					<goals>
@@ -125,8 +132,9 @@
 						</descriptors>
 						<finalName>${project.name} v${project.version}-Unix</finalName>
 						<appendAssemblyId>false</appendAssemblyId>
+						<attach>false</attach>
 					</configuration>
-				</execution>
+				</execution> -->
 			</executions>
 		</plugin>
 	</plugins>
