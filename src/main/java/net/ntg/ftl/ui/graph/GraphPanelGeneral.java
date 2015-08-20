@@ -7,9 +7,7 @@ import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.Box;
 import javax.swing.JToolBar;
-import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
@@ -48,8 +46,6 @@ public class GraphPanelGeneral extends JToolBar {
 		suppliesPanel.addToggle(FUEL, false);
 		suppliesPanel.addToggle(DRONE_PARTS, false);
 		suppliesPanel.addToggle(MISSILES, false);
-		suppliesPanel.addBlankRow();
-		suppliesPanel.addFillRow();
 		this.add(suppliesPanel);
 
 	}
