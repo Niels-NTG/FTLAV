@@ -47,7 +47,43 @@ public class GraphRenderer extends PApplet {
 		color(36, 47, 46, 28)
 	};
 
-	Map<String,Integer> sectorTypeColor = new HashMap<String,Integer>();
+	int[] greenGlow = {
+		color(235, 245, 229, 255),
+		color(66, 119, 17, 226),
+		color(53, 106, 4, 198),
+		color(45, 92, 1, 170),
+		color(40, 80, 1, 141),
+		color(36, 72, 1, 113),
+		color(32, 65, 1, 85),
+		color(30, 61, 1, 56),
+		color(29, 58, 1, 25)
+	};
+
+	int[] redGlow = {
+		color(235, 245, 229, 255),
+		color(182, 30, 30, 226),
+		color(162, 24, 24, 198),
+		color(140, 19, 19, 170),
+		color(122, 14, 14, 141),
+		color(112, 11, 11, 113),
+		color(100, 7, 7, 85),
+		color(93, 7, 7, 56),
+		color(88, 5, 5, 25)
+	};
+
+	int[] purpleGlow = {
+		color(235, 245, 229, 255),
+		color(130, 4, 165, 226),
+		color(117, 1, 150, 198),
+		color(106, 1, 135, 170),
+		color(95, 1, 121, 141),
+		color(90, 1, 115, 113),
+		color(83, 1, 106, 85),
+		color(74, 1, 95, 56),
+		color(70, 1, 90, 25)
+	};
+
+	Map<String,Integer> hudColor = new HashMap<String,Integer>();
 
 
 	public void setup() {
@@ -59,15 +95,29 @@ public class GraphRenderer extends PApplet {
 		canvasHeight= panelHeight - (margin * 2);
 
 		// graphics
-		background(40, 36, 34);
-
 		mainFont      = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-48.vlw").toString());
-		headerFont    = loadFont(ClassLoader.getSystemResource("Half-Life1-48.vlw").toString());
-		headerFontAlt = loadFont(ClassLoader.getSystemResource("Half-Life2-48.vlw").toString());
+		headerFont    = loadFont(ClassLoader.getSystemResource("Half-Life2-48.vlw").toString());
+		headerFontAlt = loadFont(ClassLoader.getSystemResource("Half-Life1-48.vlw").toString());
 
-		sectorTypeColor.put( "CIVILIAN", color( 135, 199, 74 ) );
-		sectorTypeColor.put( "HOSTILE", color( 214, 50, 50 ) );
-		sectorTypeColor.put( "NEBULA", color( 128, 51, 210 ) );
+		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
+		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
+		hudColor.put( "BG_DARK", color( 24, 20, 19 ) );				// dark brown			(background color)
+		hudColor.put( "BORDER", color( 235, 245, 229 ) );			// white-greenish		(panel border color)
+		hudColor.put( "BUTTON", color( 235, 245, 229 ) );			// white-greenish		(button color)
+		hudColor.put( "BUTTON_ACTIVE", color( 255, 230, 94 ) );		// yellow				(button color)
+		hudColor.put( "MAINTEXT", color( 255, 255, 255 ) );			// white				(standard text color)
+		hudColor.put( "HEADERTEXT", color( 65, 120, 128 ) );		// turquoise			(standard text color)
+		hudColor.put( "HEADERTEXT_ALT", color( 54, 78, 80 ) );		// dark turquoise		(standard text color)
+		hudColor.put( "SECTOR_CIVILIAN", color( 135, 199, 74 ) );	// bright green			(sector color)
+		hudColor.put( "SECTOR_HOSTILE", color( 214, 50, 50 ) );		// bright red			(sector color)
+		hudColor.put( "SECTOR_NEBULA", color( 128, 51, 210 ) );		// pure purple			(sector color)
+		hudColor.put( "SYSTEM_ACTIVE", color( 100, 255, 99 ) );		// bright green			(system status color)
+		hudColor.put( "SYSTEM_OFF", color( 211, 211, 211 ) );		// light grey			(system status color)
+		hudColor.put( "SYSTEM_DAMAGE", color( 248, 59, 51 ) );		// bright red			(system status color)
+		hudColor.put( "SYSTEM_HACKED", color( 212, 70, 253 ) );		// magenta				(system status color)
+		hudColor.put( "SYSTEM_IONIZED", color( 133, 231, 237 ) );	// cyan					(system status color)
+
+		background(hudColor.get("BG_DARK"));
 
 	}
 
@@ -79,7 +129,7 @@ public class GraphRenderer extends PApplet {
 
 		if (current > previous) {
 
-			background(40, 36, 34);
+			background(hudColor.get("BG_DARK"));
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
@@ -94,7 +144,7 @@ public class GraphRenderer extends PApplet {
 					beginShape();
 					for (int b = 0; b < superArray.get(a).size(); ++b) {
 						vertex(
-							margin + canvasWidth / superArray.get(a).size() * b,
+							margin + (canvasWidth / superArray.get(a).size()) * b,
 							map(
 								superArray.get(a).get(b),
 								0, ceiling,
@@ -108,37 +158,24 @@ public class GraphRenderer extends PApplet {
 				// graph x labels
 				noStroke();
 				for (int b = 0; b < superArray.get(a).size(); ++b) {
-					fill(235, 245, 227);
-					textFont(mainFont, 15);
-					textAlign(LEFT, TOP);
-					text(
-						"B " + FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored()+"\n"+
-						"S " + FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(),
-						margin + (canvasWidth / superArray.get(a).size()) * b,
-						canvasHeight + margin + (margin / 4)
-					);
 
+					// sector name labels
 					if (b == 0 ||
 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
 					) {
-						textFont(headerFontAlt, 22);
-						textAlign(LEFT, BOTTOM);
-						fill(
-							sectorTypeColor.get(
-								FTLAdventureVisualiser.sectorArray.get(
-									FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber()
-								).getType()
-							)
-						);
-						text(
-							FTLAdventureVisualiser.sectorArray.get(
-								FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber()
-							).getTitle().toUpperCase(),
-							margin + (canvasWidth / superArray.get(a).size()) * b,
-							canvasHeight + margin + (margin / 4)
-						);
+						drawSectorLabel(a, b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber());
 					}
+
+					// beacon numbers
+					fill(235, 245, 227);
+					textFont(mainFont, 15);
+					textAlign(LEFT, BOTTOM);
+					text(
+						FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
+						margin + (canvasWidth / superArray.get(a).size()) * b,
+						canvasHeight + margin + (margin / 4)
+					);
 				}
 
 			}
@@ -148,7 +185,8 @@ public class GraphRenderer extends PApplet {
 			fill(235, 245, 227);
 			textFont(mainFont, 15);
 			textAlign(RIGHT, BASELINE);
-			for (int y = canvasHeight; y > 0; y -= (canvasHeight * 0.06)) {
+			// TODO better algoritme for drawing y labels
+			for (int y = canvasHeight; y > 0; y -= (canvasHeight * 0.04)) {
 				text(
 					Integer.toString(y),
 					margin - (margin / 4),
@@ -156,13 +194,66 @@ public class GraphRenderer extends PApplet {
 				);
 			}
 
-			// TODO draw a vertical line at the end of each sector
-
 			// TODO draw text label on the end of each graph line that shows what data it is
 
 		}
 
 		previous = current;
 
+	}
+
+	private void drawSectorLabel( int a, int b, int sectorNumber ) {
+		int textSize       = 22;
+		int xPos           = margin + (canvasWidth / superArray.get(a).size()) * b;
+		int yPos           = canvasHeight + margin + (margin / 3);
+		int padding        = 6;
+		float glowSpread   = 1.3f;
+		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
+		String sectorType  = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType();
+
+		textFont( headerFont, textSize );
+		textAlign( LEFT, TOP );
+
+
+		// sector label
+		fill( hudColor.get("BORDER") );
+		beginShape();
+		vertex( xPos, yPos );															// TL
+		vertex( xPos, yPos + textSize + padding );										// BL
+		vertex( textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding ); // BR
+		vertex( textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
+		endShape(CLOSE);
+
+		// extended line
+		rect( xPos, yPos, canvasWidth - xPos, padding );
+
+		// glow color
+		int[] gradient;
+		if (sectorType == "CIVILIAN") {
+			gradient = greenGlow;
+		} else if (sectorType == "HOSTILE") {
+			gradient = redGlow;
+		} else if (sectorType == "NEBULA") {
+			gradient = purpleGlow;
+		} else {
+			gradient = blueGlow;
+		}
+
+		// apply glow effect
+		fill( hudColor.get("BG_DARK") ); // tape over existing glow
+		int glowSize = gradient.length - 1;
+		rect(xPos, yPos - (glowSize * glowSpread) + 1, canvasWidth - xPos, glowSize * glowSpread);
+		for (int s = glowSize; s >= 0; --s) {
+			fill(gradient[s]);
+			rect(xPos, yPos - (s * glowSpread), canvasWidth - xPos, padding);
+		}
+
+		// sector title text
+		fill( hudColor.get("HEADERTEXT_ALT") );
+		text( sectorTitle, xPos + padding, yPos + padding );
+
+		// tape over left side
+		fill( hudColor.get("BG_DARK") );
+		rect( xPos - padding, yPos - (glowSize * glowSpread), padding, textSize + padding + (glowSize * glowSpread) );
 	}
 }
