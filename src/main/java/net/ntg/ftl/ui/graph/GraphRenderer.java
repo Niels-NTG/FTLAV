@@ -127,10 +127,28 @@ public class GraphRenderer extends PApplet {
 
 		current = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
-
 		if (current > previous) {
 
 			background(hudColor.get("BG_DARK"));
+
+			// graph y labels
+			noStroke();
+			fill(235, 245, 227);
+			textFont(mainFont, 15);
+			textAlign(RIGHT, BOTTOM);
+			for (int y = 0; y < canvasHeight; ++y) {
+				if (y % 10 == 0) {
+					text(
+						Integer.toString(y),
+						margin - (margin / 2),
+						map(y, 0, ceiling, canvasHeight + margin, 0)
+					);
+					rect(
+						margin, map(y, 0, ceiling, canvasHeight + margin, 0),
+						canvasWidth, 0.1f
+					);
+				}
+			}
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
@@ -188,22 +206,9 @@ public class GraphRenderer extends PApplet {
 						margin + (canvasWidth / lineArray.size()) * b,
 						canvasHeight + margin + (margin / 4)
 					);
+
 				}
 
-			}
-
-			// graph y labels
-			noStroke();
-			fill(235, 245, 227);
-			textFont(mainFont, 15);
-			textAlign(RIGHT, BASELINE);
-			// TODO better algoritme for drawing y labels
-			for (int y = canvasHeight; y > 0; y -= (canvasHeight * 0.04)) {
-				text(
-					Integer.toString(y),
-					margin - (margin / 4),
-					map(y, 0, ceiling, canvasHeight + margin, margin)
-				);
 			}
 
 		}
@@ -215,32 +220,39 @@ public class GraphRenderer extends PApplet {
 
 	private void drawLineLabel( int a, String lineLabel, int lineSize, int lastestValue ) {
 
-		// TODO rewrite this function
-		// TODO better looking labels
-
 		int textSize       = 15;
-		int xPos           = (margin + (canvasWidth / lineSize) * (lineSize-1)) + 8;
-		int yPos           = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - 8;
-		int padding        = 4;
-		float glowSpread   = 1.3f;
+		int offSet         = 8;
+		int xPos           = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offSet;
+		int yPos           = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offSet;
+		int padding        = 6;
+
+		noStroke();
 
 		textFont( mainFont, textSize );
 		textAlign( LEFT, BOTTOM );
+
+		float keyPos = xPos + padding + textWidth(lineLabel) + padding;
+
+		// connecting line
+		noFill();
+		stroke( hudColor.get("BORDER") );
+		strokeJoin(ROUND);
+		strokeCap(ROUND);
+		beginShape();
+		vertex(xPos + offSet, yPos - offSet);
+		vertex(xPos - offSet, yPos + offSet);
+		endShape(CLOSE);
+		noStroke();
 
 		// label
 		fill( hudColor.get("BORDER") );
 		beginShape();
 		vertex(xPos, yPos);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2, yPos);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - padding);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - (padding + textSize + padding));
+		vertex(keyPos + textWidth("0000"), yPos);
+		vertex(keyPos + textWidth("0000") + padding, yPos - padding);
+		vertex(keyPos + textWidth("0000") + padding, yPos - (padding + textSize + padding));
 		vertex(xPos + padding, yPos - (padding + textSize + padding));
 		vertex(xPos, yPos - (padding + textSize));
-		endShape(CLOSE);
-
-		beginShape();
-		vertex(xPos, yPos);
-		vertex(xPos - 8, yPos + 8);
 		endShape(CLOSE);
 
 		// label key
@@ -249,16 +261,19 @@ public class GraphRenderer extends PApplet {
 
 		// label value
 		beginShape();
-		vertex(xPos + padding + textWidth(lineLabel) + padding, yPos);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - padding);
-		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - (padding + textSize + padding));
-		vertex(xPos + padding + textWidth(lineLabel) + padding, yPos - (padding + textSize + padding));
+		vertex(keyPos, yPos - 2);
+		vertex(keyPos + textWidth("0000") - 2, yPos - 2);
+		vertex(keyPos + textWidth("0000") + padding - 2, yPos - (padding + 2));
+		vertex(keyPos + textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
+		vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
 		endShape(CLOSE);
-
 		fill( hudColor.get("MAINTEXT") );
 		textAlign(CENTER, BOTTOM);
-		text(lastestValue, xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)), yPos - padding);
+		text(
+			lastestValue,
+			keyPos + (((keyPos + textWidth("0000") + padding - 2) - keyPos) / 2),
+			yPos - padding
+		);
 
 	}
 
@@ -273,9 +288,10 @@ public class GraphRenderer extends PApplet {
 		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
 		String sectorType  = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType();
 
+		noStroke();
+
 		textFont( headerFont, textSize );
 		textAlign( LEFT, TOP );
-
 
 		// sector label
 		fill( hudColor.get("BORDER") );
