@@ -134,7 +134,7 @@ public class GraphRenderer extends PApplet {
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
-				ArrayList<Integer> lineArray = (new ArrayList<ArrayList>(superArray.values())).get(a);
+				ArrayList<Integer> lineArray = (new ArrayList<ArrayList<Integer>>(superArray.values())).get(a);
 				String lineLabel = (new ArrayList<String>(superArray.keySet())).get(a).toUpperCase();
 
 				// graph line
