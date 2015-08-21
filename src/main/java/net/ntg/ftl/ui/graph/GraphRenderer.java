@@ -206,8 +206,6 @@ public class GraphRenderer extends PApplet {
 				);
 			}
 
-			// TODO draw text label on the end of each graph line that shows what data it is
-
 		}
 
 		previous = current;
