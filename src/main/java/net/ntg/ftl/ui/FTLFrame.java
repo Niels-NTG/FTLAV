@@ -215,7 +215,7 @@ public class FTLFrame extends JFrame {
 						TimerTask task = new FileWatcher( chosenFile ) {
 							protected void onChange( File file ) {
 								// here we code the action on a change
-								log.info( "FILE "+ file.getName() +" HAS CHANGED !" );
+								log.info( "\nFILE "+ file.getName() +" HAS CHANGED !" );
 								loadGameStateFile ( chosenFile );
 							}
 						};

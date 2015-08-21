@@ -3,6 +3,7 @@ package net.ntg.ftl.ui.graph;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import processing.core.*;
 
@@ -16,7 +17,7 @@ public class GraphRenderer extends PApplet {
 
 	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
 
-	public static ArrayList<ArrayList<Integer>> superArray = new ArrayList<ArrayList<Integer>>();
+	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
 	public static int ceiling = 30;
 
 	int current = 0;
@@ -133,20 +134,23 @@ public class GraphRenderer extends PApplet {
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
+				ArrayList<Integer> lineArray = (new ArrayList<ArrayList>(superArray.values())).get(a);
+				String lineLabel = (new ArrayList<String>(superArray.keySet())).get(a).toUpperCase();
+
 				// graph line
 				for (int s = blueGlow.length - 1; s >= 0; --s) {
 
 					noFill();
 					stroke(blueGlow[s]);
-					strokeWeight(s ==  blueGlow.length - 1 ? 4 : 4 + (s * 2));
+					strokeWeight(s == blueGlow.length - 1 ? 4 : 4 + (s * 2));
 					strokeJoin(ROUND);
 					strokeCap(ROUND);
 					beginShape();
-					for (int b = 0; b < superArray.get(a).size(); ++b) {
+					for (int b = 0; b < lineArray.size(); ++b) {
 						vertex(
-							margin + (canvasWidth / superArray.get(a).size()) * b,
+							margin + (canvasWidth / lineArray.size()) * b,
 							map(
-								superArray.get(a).get(b),
+								lineArray.get(b),
 								0, ceiling,
 								margin + canvasHeight, margin
 							)
@@ -155,16 +159,24 @@ public class GraphRenderer extends PApplet {
 					endShape();
 				}
 
+				// draw label at end of line
+				drawLineLabel(a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1));
+
 				// graph x labels
 				noStroke();
-				for (int b = 0; b < superArray.get(a).size(); ++b) {
+				for (int b = 0; b < lineArray.size(); ++b) {
 
 					// sector name labels
 					if (b == 0 ||
 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
 					) {
-						drawSectorLabel(a, b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber());
+						drawSectorLabel(
+							a,
+							b,
+							FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(),
+							lineArray.size()
+						);
 					}
 
 					// beacon numbers
@@ -173,7 +185,7 @@ public class GraphRenderer extends PApplet {
 					textAlign(LEFT, BOTTOM);
 					text(
 						FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
-						margin + (canvasWidth / superArray.get(a).size()) * b,
+						margin + (canvasWidth / lineArray.size()) * b,
 						canvasHeight + margin + (margin / 4)
 					);
 				}
@@ -202,9 +214,61 @@ public class GraphRenderer extends PApplet {
 
 	}
 
-	private void drawSectorLabel( int a, int b, int sectorNumber ) {
+
+	private void drawLineLabel( int a, String lineLabel, int lineSize, int lastestValue ) {
+
+		// TODO rewrite this function
+		// TODO better looking labels
+
+		int textSize       = 15;
+		int xPos           = (margin + (canvasWidth / lineSize) * (lineSize-1)) + 8;
+		int yPos           = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - 8;
+		int padding        = 4;
+		float glowSpread   = 1.3f;
+
+		textFont( mainFont, textSize );
+		textAlign( LEFT, BOTTOM );
+
+		// label
+		fill( hudColor.get("BORDER") );
+		beginShape();
+		vertex(xPos, yPos);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2, yPos);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - padding);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - (padding + textSize + padding));
+		vertex(xPos + padding, yPos - (padding + textSize + padding));
+		vertex(xPos, yPos - (padding + textSize));
+		endShape(CLOSE);
+
+		beginShape();
+		vertex(xPos, yPos);
+		vertex(xPos - 8, yPos + 8);
+		endShape(CLOSE);
+
+		// label key
+		fill( hudColor.get("HEADERTEXT_ALT") );
+		text( lineLabel, xPos + padding, yPos - padding );
+
+		// label value
+		beginShape();
+		vertex(xPos + padding + textWidth(lineLabel) + padding, yPos);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - padding);
+		vertex(xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)) * 2 + padding, yPos - (padding + textSize + padding));
+		vertex(xPos + padding + textWidth(lineLabel) + padding, yPos - (padding + textSize + padding));
+		endShape(CLOSE);
+
+		fill( hudColor.get("MAINTEXT") );
+		textAlign(CENTER, BOTTOM);
+		text(lastestValue, xPos + padding + textWidth(lineLabel) + padding + textWidth(Integer.toString(lastestValue)), yPos - padding);
+
+	}
+
+
+	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
+
 		int textSize       = 22;
-		int xPos           = margin + (canvasWidth / superArray.get(a).size()) * b;
+		int xPos           = margin + (canvasWidth / lineSize) * b;
 		int yPos           = canvasHeight + margin + (margin / 3);
 		int padding        = 6;
 		float glowSpread   = 1.3f;
@@ -220,7 +284,7 @@ public class GraphRenderer extends PApplet {
 		beginShape();
 		vertex( xPos, yPos );															// TL
 		vertex( xPos, yPos + textSize + padding );										// BL
-		vertex( textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding ); // BR
+		vertex( textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );	// BR
 		vertex( textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
 		endShape(CLOSE);
 
@@ -255,5 +319,6 @@ public class GraphRenderer extends PApplet {
 		// tape over left side
 		fill( hudColor.get("BG_DARK") );
 		rect( xPos - padding, yPos - (glowSize * glowSpread), padding, textSize + padding + (glowSize * glowSpread) );
+
 	}
 }

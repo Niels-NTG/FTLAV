@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 import javax.swing.JToolBar;
 import javax.swing.BorderFactory;
@@ -70,7 +71,7 @@ public class GraphPanelGeneral extends JToolBar {
 				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 					intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt());
 				}
-				GraphRenderer.superArray.add(intArray);
+				GraphRenderer.superArray.put(SCRAP,intArray);
 			}
 
 			if (suppliesPanel.getState(HULL).isSelected()) {
@@ -78,7 +79,7 @@ public class GraphPanelGeneral extends JToolBar {
 				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 					intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getHullAmt());
 				}
-				GraphRenderer.superArray.add(intArray);
+				GraphRenderer.superArray.put(HULL, intArray);
 			}
 
 			if (suppliesPanel.getState(FUEL).isSelected()) {
@@ -86,7 +87,7 @@ public class GraphPanelGeneral extends JToolBar {
 				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 					intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getFuelAmt());
 				}
-				GraphRenderer.superArray.add(intArray);
+				GraphRenderer.superArray.put(FUEL, intArray);
 			}
 
 			if (suppliesPanel.getState(DRONE_PARTS).isSelected()) {
@@ -94,7 +95,7 @@ public class GraphPanelGeneral extends JToolBar {
 				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 					intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getDronePartsAmt());
 				}
-				GraphRenderer.superArray.add(intArray);
+				GraphRenderer.superArray.put(DRONE_PARTS, intArray);
 			}
 
 			if (suppliesPanel.getState(MISSILES).isSelected()) {
@@ -102,22 +103,25 @@ public class GraphPanelGeneral extends JToolBar {
 				for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 					intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getMissilesAmt());
 				}
-				GraphRenderer.superArray.add(intArray);
+				GraphRenderer.superArray.put(MISSILES, intArray);
 			}
 
 
 			ArrayList<Integer> ceilingMeasureArray = new ArrayList<Integer>();
 			for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
-				ceilingMeasureArray.add( Collections.max(GraphRenderer.superArray.get(i)) );
+				ceilingMeasureArray.add(
+					Collections.max(
+						new ArrayList<ArrayList<Integer>>(
+							GraphRenderer.superArray.values()
+						).get(i)
+					)
+				);
 			}
 			GraphRenderer.ceiling = Collections.max(ceilingMeasureArray) <= 30 ?
 				30 : Collections.max(ceilingMeasureArray);
 
-
-			log.info("superArray a " + GraphRenderer.superArray.size());
-			for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
-				log.info("superArray a b (" + i + ") " + GraphRenderer.superArray.get(i).size());
-			}
+			log.info("superArray size " + GraphRenderer.superArray.size());
+			log.info("superArray " + GraphRenderer.superArray);
 			log.info("Ceiling " + GraphRenderer.ceiling);
 
 		}
