@@ -91,6 +91,7 @@ public class GraphRenderer extends PApplet {
 
 		// window
 		size(panelWidth, panelHeight);
+		// TODO redraw when window is resized
 
 		canvasWidth = panelWidth  - (margin * 2);
 		canvasHeight= panelHeight - (margin * 2);
@@ -129,6 +130,8 @@ public class GraphRenderer extends PApplet {
 
 		if (current > previous) {
 
+			// TODO option for logaritmic rendering
+
 			background(hudColor.get("BG_DARK"));
 
 			// graph y labels
@@ -141,10 +144,10 @@ public class GraphRenderer extends PApplet {
 					text(
 						Integer.toString(y),
 						margin - (margin / 2),
-						map(y, 0, ceiling, canvasHeight + margin, 0)
+						map(y, 0, ceiling, canvasHeight + margin, margin)
 					);
 					rect(
-						margin, map(y, 0, ceiling, canvasHeight + margin, 0),
+						margin, map(y, 0, ceiling, canvasHeight + margin, margin),
 						canvasWidth, 0.1f
 					);
 				}
@@ -178,7 +181,7 @@ public class GraphRenderer extends PApplet {
 				}
 
 				// draw label at end of line
-				drawLineLabel(a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1));
+				drawLineLabel( a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1) );
 
 				// graph x labels
 				noStroke();
@@ -189,23 +192,17 @@ public class GraphRenderer extends PApplet {
 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
 					) {
+
 						drawSectorLabel(
-							a,
-							b,
+							a, b,
 							FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(),
 							lineArray.size()
 						);
+
 					}
 
 					// beacon numbers
-					fill(235, 245, 227);
-					textFont(mainFont, 15);
-					textAlign(LEFT, BOTTOM);
-					text(
-						FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
-						margin + (canvasWidth / lineArray.size()) * b,
-						canvasHeight + margin + (margin / 4)
-					);
+					drawBeaconLabel( b, lineArray.size() );
 
 				}
 
@@ -214,6 +211,98 @@ public class GraphRenderer extends PApplet {
 		}
 
 		previous = current;
+
+	}
+
+
+	private void drawBeaconLabel ( int b, int lineSize ) {
+
+		noStroke();
+
+		fill(hudColor.get("MAINTEXT"));
+
+		textFont(mainFont, 15);
+		textAlign(LEFT, BOTTOM);
+		text(
+			FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
+			margin + (canvasWidth / lineSize) * b,
+			canvasHeight + margin + (margin / 4)
+		);
+
+	}
+
+
+	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
+
+		int textSize       = 22;
+		int xPos           = margin + (canvasWidth / lineSize) * b;
+		int yPos           = canvasHeight + margin + (margin / 3);
+		int padding        = 6;
+		float glowSpread   = 1.3f;
+		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
+		String sectorType  = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType();
+
+		// shorten sector name
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bSECTOR\\b\\s*","");
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bCONTROLLED\\b\\s*","");
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bUNCHARTED\\b\\s*","");
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*","HOME");
+
+		noStroke();
+
+		textAlign( LEFT, TOP );
+
+		// sector title label
+		textFont( headerFont, textSize );
+
+		fill( hudColor.get("BORDER") );
+		beginShape();
+		vertex( xPos, yPos );																				// TL
+		vertex( xPos, yPos + textSize + padding );															// BL
+		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );// BR
+		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
+		endShape(CLOSE);
+
+		// extended line
+		rect( xPos, yPos, canvasWidth - xPos, padding );
+
+		// glow color
+		int[] gradient;
+		if (sectorType == "CIVILIAN") {
+			gradient = greenGlow;
+		} else if (sectorType == "HOSTILE") {
+			gradient = redGlow;
+		} else if (sectorType == "NEBULA") {
+			gradient = purpleGlow;
+		} else {
+			gradient = blueGlow;
+		}
+
+		// apply glow effect
+		fill( hudColor.get("BG_DARK") ); // tape over existing glow
+		int glowSize = gradient.length - 1;
+		rect(xPos, yPos - (glowSize * glowSpread) + 1, canvasWidth - xPos, glowSize * glowSpread);
+		for (int s = glowSize; s >= 0; --s) {
+			fill(gradient[s]);
+			rect(xPos, yPos - (s * glowSpread), canvasWidth - xPos, padding);
+		}
+
+		// sector title text
+		fill( hudColor.get("HEADERTEXT_ALT") );
+		text( sectorTitle, padding + textSize + xPos + padding, yPos + padding );
+
+		// sector number label
+		fill( hudColor.get("BG_LIGHT") );
+		rect( xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2 ), textSize );
+
+		// sector number text
+		fill( hudColor.get("MAINTEXT") );
+		textFont( headerFontAlt, textSize );
+		text( Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding );
+
+		// tape over left side
+		fill( hudColor.get("BG_DARK") );
+		rect( xPos - padding, yPos - (glowSize * glowSpread), padding, textSize + padding + (glowSize * glowSpread) );
 
 	}
 
@@ -274,65 +363,6 @@ public class GraphRenderer extends PApplet {
 			keyPos + (((keyPos + textWidth("0000") + padding - 2) - keyPos) / 2),
 			yPos - padding
 		);
-
-	}
-
-
-	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
-
-		int textSize       = 22;
-		int xPos           = margin + (canvasWidth / lineSize) * b;
-		int yPos           = canvasHeight + margin + (margin / 3);
-		int padding        = 6;
-		float glowSpread   = 1.3f;
-		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
-		String sectorType  = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType();
-
-		noStroke();
-
-		textFont( headerFont, textSize );
-		textAlign( LEFT, TOP );
-
-		// sector label
-		fill( hudColor.get("BORDER") );
-		beginShape();
-		vertex( xPos, yPos );															// TL
-		vertex( xPos, yPos + textSize + padding );										// BL
-		vertex( textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );	// BR
-		vertex( textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
-		endShape(CLOSE);
-
-		// extended line
-		rect( xPos, yPos, canvasWidth - xPos, padding );
-
-		// glow color
-		int[] gradient;
-		if (sectorType == "CIVILIAN") {
-			gradient = greenGlow;
-		} else if (sectorType == "HOSTILE") {
-			gradient = redGlow;
-		} else if (sectorType == "NEBULA") {
-			gradient = purpleGlow;
-		} else {
-			gradient = blueGlow;
-		}
-
-		// apply glow effect
-		fill( hudColor.get("BG_DARK") ); // tape over existing glow
-		int glowSize = gradient.length - 1;
-		rect(xPos, yPos - (glowSize * glowSpread) + 1, canvasWidth - xPos, glowSize * glowSpread);
-		for (int s = glowSize; s >= 0; --s) {
-			fill(gradient[s]);
-			rect(xPos, yPos - (s * glowSpread), canvasWidth - xPos, padding);
-		}
-
-		// sector title text
-		fill( hudColor.get("HEADERTEXT_ALT") );
-		text( sectorTitle, xPos + padding, yPos + padding );
-
-		// tape over left side
-		fill( hudColor.get("BG_DARK") );
-		rect( xPos - padding, yPos - (glowSize * glowSpread), padding, textSize + padding + (glowSize * glowSpread) );
 
 	}
 }
