@@ -20,6 +20,10 @@ public class GraphRenderer extends PApplet {
 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
 	public static int ceiling = 30;
 
+	public static LinkedHashMap<String,String> titleMap = new LinkedHashMap<String,String>();
+	// TODO make extra headroom if any of the titleMap items =! null to fit the title text above the graph
+	// TODO title rendering and typography
+
 	int current = 0;
 	int previous= 0;
 
@@ -246,6 +250,7 @@ public class GraphRenderer extends PApplet {
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bSECTOR\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bCONTROLLED\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bUNCHARTED\\b\\s*","");
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bTHE\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*","HOME");
 
 		noStroke();
@@ -262,9 +267,6 @@ public class GraphRenderer extends PApplet {
 		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );// BR
 		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
 		endShape(CLOSE);
-
-		// extended line
-		rect( xPos, yPos, canvasWidth - xPos, padding );
 
 		// glow color
 		int[] gradient;
