@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import processing.core.*;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
+import net.ntg.ftl.parser.ShipDataParser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,11 +19,7 @@ public class GraphRenderer extends PApplet {
 	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
 
 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
-	public static int ceiling = 30;
-
-	public static LinkedHashMap<String,String> titleMap = new LinkedHashMap<String,String>();
-	// TODO make extra headroom if any of the titleMap items =! null to fit the title text above the graph
-	// TODO title rendering and typography
+	public static int ceiling = 20;
 
 	int current = 0;
 	int previous= 0;
@@ -95,7 +92,6 @@ public class GraphRenderer extends PApplet {
 
 		// window
 		size(panelWidth, panelHeight);
-		// TODO redraw when window is resized
 
 		canvasWidth = panelWidth  - (margin * 2);
 		canvasHeight= panelHeight - (margin * 2);
@@ -132,7 +128,7 @@ public class GraphRenderer extends PApplet {
 
 		current = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
-		if (current > previous) {
+		if (current > previous || isResized()) {
 
 			// TODO option for logaritmic rendering
 
@@ -212,9 +208,89 @@ public class GraphRenderer extends PApplet {
 
 			}
 
+			if (current >= 0) {
+				drawTitle( current );
+			}
+
 		}
 
 		previous = current;
+
+	}
+
+
+	private boolean isResized () {
+
+		if( width != panelWidth || height != panelHeight ) {
+			panelWidth = width;
+			panelHeight = height;
+			canvasWidth = panelWidth  - (margin * 2);
+			canvasHeight= panelHeight - (margin * 2);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+	private void drawTitle( int latest ) {
+
+		// TODO title rendering and typography in style of ship window header title
+
+		log.info("starting drawTitle...");
+
+		int shipNameTextSize = 39;
+		int textSize         = 15;
+		int padding          = 6;
+		int offset           = margin / 2;
+		int borderWeight     = 4;
+		float glowSpread     = 1.3f;
+		String shipName      = FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName();
+		String shipType      = ShipDataParser.getFullShipType(latest);
+		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
+		String ae            = ShipDataParser.getAEEnabled(latest);
+
+		log.info(shipName + "-" + shipType + " - " + difficulty + " - " + ae);
+
+		noStroke();
+
+		textAlign( LEFT, TOP );
+
+		textFont( mainFont, shipNameTextSize );
+		int titleLabelWidth  = round(textWidth(shipName) + (2 * (padding + borderWeight)));
+		int titleLabelHeight = round((textSize * 2) + shipNameTextSize + (padding + borderWeight));
+
+		// title label
+		for (int s = blueGlow.length - 1; s >= 0; --s) {
+			fill(hudColor.get("BG_LIGHT"));
+			stroke(blueGlow[s]);
+			strokeWeight(s == blueGlow.length - 1 ? borderWeight : borderWeight + (s * 2));
+			strokeJoin(ROUND);
+			strokeCap(ROUND);
+			beginShape();
+			vertex(margin, offset + padding);
+			vertex(margin + padding, offset);
+			vertex(margin + (titleLabelWidth - padding), offset);
+			vertex(margin + titleLabelWidth, offset + padding);
+			vertex(margin + titleLabelWidth, offset + (titleLabelHeight - padding));
+			vertex(margin + (titleLabelWidth - padding), offset + titleLabelHeight);
+			vertex(margin + padding, offset + titleLabelHeight);
+			vertex(margin, offset + (titleLabelHeight - padding));
+			endShape(CLOSE);
+		}
+		noStroke();
+
+		// title text
+		fill(hudColor.get("MAINTEXT"));
+		text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
+
+		textFont( mainFont, textSize);
+		text(
+			shipType+"\n"+
+			difficulty+" ("+ae+")",
+			margin + borderWeight + padding, offset + borderWeight + shipNameTextSize
+		);
 
 	}
 
@@ -283,10 +359,10 @@ public class GraphRenderer extends PApplet {
 		// apply glow effect
 		fill( hudColor.get("BG_DARK") ); // tape over existing glow
 		int glowSize = gradient.length - 1;
-		rect(xPos, yPos - (glowSize * glowSpread) + 1, canvasWidth - xPos, glowSize * glowSpread);
+		rect(xPos, yPos - (glowSize * glowSpread) + 1, (canvasWidth + margin) - xPos, glowSize * glowSpread);
 		for (int s = glowSize; s >= 0; --s) {
 			fill(gradient[s]);
-			rect(xPos, yPos - (s * glowSpread), canvasWidth - xPos, padding);
+			rect(xPos, yPos - (s * glowSpread), (canvasWidth + margin) - xPos, padding);
 		}
 
 		// sector title text
@@ -311,11 +387,11 @@ public class GraphRenderer extends PApplet {
 
 	private void drawLineLabel( int a, String lineLabel, int lineSize, int lastestValue ) {
 
-		int textSize       = 15;
-		int offSet         = 8;
-		int xPos           = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offSet;
-		int yPos           = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offSet;
-		int padding        = 6;
+		int textSize = 15;
+		int offset   = 8;
+		int xPos     = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offset;
+		int yPos     = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset;
+		int padding  = 6;
 
 		noStroke();
 
@@ -330,8 +406,8 @@ public class GraphRenderer extends PApplet {
 		strokeJoin(ROUND);
 		strokeCap(ROUND);
 		beginShape();
-		vertex(xPos + offSet, yPos - offSet);
-		vertex(xPos - offSet, yPos + offSet);
+		vertex(xPos + offset, yPos - offset);
+		vertex(xPos - offset, yPos + offset);
 		endShape(CLOSE);
 		noStroke();
 

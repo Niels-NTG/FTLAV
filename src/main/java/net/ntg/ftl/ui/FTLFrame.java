@@ -43,7 +43,7 @@ import javax.swing.UIManager;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.DumpPanel;
-import net.ntg.ftl.ui.graph.GraphPanelGeneral;
+import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
 
@@ -73,7 +73,7 @@ public class FTLFrame extends JFrame {
 	private JButton gameStateSaveBtn;
 	private JTabbedPane savedGameTabsPane;
 	private DumpPanel dumpPanel;
-	private GraphPanelGeneral graphPanelGeneral;
+	private GraphInspector graphInspector;
 
 	private String appName;
 	private int appVersion;
@@ -105,12 +105,12 @@ public class FTLFrame extends JFrame {
 		savedGameInspector.add( savedGameTabsPane, BorderLayout.CENTER );
 
 		dumpPanel = new DumpPanel();
-		graphPanelGeneral = new GraphPanelGeneral(this);
+		graphInspector = new GraphInspector(this);
 
-		graphPanelGeneral.setFloatable(false);
+		graphInspector.setFloatable(false);
 
 		savedGameTabsPane.addTab(SAVE_DUMP, dumpPanel);
-		savedGameTabsPane.addTab(SAVE_GRAPH,graphPanelGeneral);
+		savedGameTabsPane.addTab(SAVE_GRAPH,graphInspector);
 
 
 		// UI Graph
@@ -264,7 +264,7 @@ public class FTLFrame extends JFrame {
 
 			SavedGameParser parser = new SavedGameParser();
 			SavedGameParser.SavedGameState gs = parser.readSavedGame( in );
-			loadGameState( gs, gs.getPlayerShipState() );
+			loadGameState( gs );
 
 			log.trace( "Game state read successfully." );
 
@@ -290,19 +290,23 @@ public class FTLFrame extends JFrame {
 	}
 
 
-	public void loadGameState (SavedGameParser.SavedGameState currentGameState, SavedGameParser.ShipState currentShipState) {
+	public void loadGameState (SavedGameParser.SavedGameState currentGameState) {
 
 		dumpPanel.setText(currentGameState != null ? currentGameState.toString() : "");
 
+		log.info( "------" );
+		log.info( "Ship Name : " + currentGameState.getPlayerShipName() );
 		log.info( "Currently at beacon number : " + currentGameState.getTotalBeaconsExplored() );
-		log.info( "Currently in sector : " + currentGameState.getSectorNumber() );
+		log.info( "Currently in sector : " + currentGameState.getSectorNumber() + 1 );
 
 		if (lastGameState != null) {
 			if (currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() ||
 				FTLAdventureVisualiser.gameStateArray.size() == 0
 			) {
 				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
-				FTLAdventureVisualiser.shipStateArray.add(currentShipState);
+				FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
+				FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
+				FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
 
 				FTLAdventureVisualiser.sectorArray.clear();
 				RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
@@ -323,7 +327,7 @@ public class FTLFrame extends JFrame {
 					columnsOffset += myColumns.get(i).size();
 				}
 
-				graphPanelGeneral.setGameState();
+				graphInspector.setGameState();
 			}
 		}
 

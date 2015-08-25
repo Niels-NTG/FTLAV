@@ -116,6 +116,12 @@ public class TogglePanel extends JPanel {
 	}
 
 
+	public void setValue( String valueName, String label ) {
+		JLabel valueLabel = labelMap.get(valueName);
+		valueLabel.setText( label );
+	}
+
+
 	public JToggleButton getState( String valueName ) {
 		return toggleButtonMap.get( valueName );
 	}

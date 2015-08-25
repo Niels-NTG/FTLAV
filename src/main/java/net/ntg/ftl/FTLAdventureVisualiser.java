@@ -40,6 +40,8 @@ public class FTLAdventureVisualiser {
 	// TODO each time arrays are updated, write this to file for later use
 	public static ArrayList <SavedGameParser.SavedGameState> gameStateArray = new ArrayList <SavedGameParser.SavedGameState>();
 	public static ArrayList <SavedGameParser.ShipState> shipStateArray = new ArrayList <SavedGameParser.ShipState>();
+	public static ArrayList <SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList <SavedGameParser.ShipState>();
+	public static ArrayList <SavedGameParser.EnvironmentState> environmentArray = new ArrayList <SavedGameParser.EnvironmentState>();
 	public static ArrayList <SectorDot> sectorArray = new ArrayList <SectorDot>();
 
 	public static void main( String[] args ) {
