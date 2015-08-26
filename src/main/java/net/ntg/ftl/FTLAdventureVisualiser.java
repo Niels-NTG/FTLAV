@@ -44,9 +44,8 @@ public class FTLAdventureVisualiser {
 	public static ArrayList <SavedGameParser.EnvironmentState> environmentArray = new ArrayList <SavedGameParser.EnvironmentState>();
 	public static ArrayList <SectorDot> sectorArray = new ArrayList <SectorDot>();
 
-	public static void main( String[] args ) {
 
-		// Ensure all popups are triggered from the event dispatch thread.
+	public static void main( String[] args ) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -128,6 +127,7 @@ public class FTLAdventureVisualiser {
 		if ( datsDir == null ) {
 			datsDir = FTLUtilities.findDatsDir();
 			if ( datsDir != null ) {
+				// TODO a more welcoming confirm dialog
 				int response = JOptionPane.showConfirmDialog(
 					null,
 					"FTL resources were found in:\n"+ datsDir.getPath() +"\nIs this correct?",

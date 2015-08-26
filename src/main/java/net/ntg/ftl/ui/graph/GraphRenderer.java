@@ -24,6 +24,7 @@ public class GraphRenderer extends PApplet {
 	int current = 0;
 	int previous= 0;
 
+
 	// window
 	public static int panelWidth;
 	public static int panelHeight;
@@ -31,6 +32,9 @@ public class GraphRenderer extends PApplet {
 	private int canvasWidth;
 	private int canvasHeight;
 	private int margin = 64; // px
+
+	public static boolean captureImage = false;
+	public static String  exportPath = "FTLAV_######.png"; // TODO use this to set specific file destination
 
 	// graphics
 	PFont mainFont;
@@ -135,6 +139,7 @@ public class GraphRenderer extends PApplet {
 			background(hudColor.get("BG_DARK"));
 
 			// graph y labels
+			// TODO as its own method
 			noStroke();
 			fill(235, 245, 227);
 			textFont(mainFont, 15);
@@ -214,9 +219,16 @@ public class GraphRenderer extends PApplet {
 
 		}
 
+		if (captureImage) {
+			// TODO support for exporting to PDF
+			saveFrame(exportPath);
+			captureImage = false;
+		}
+
 		previous = current;
 
 	}
+
 
 
 	private boolean isResized () {
@@ -237,6 +249,7 @@ public class GraphRenderer extends PApplet {
 	private void drawTitle( int latest ) {
 
 		// TODO title rendering and typography in style of ship window header title
+		// TODO renderer image of spaceship exterior next to written information
 
 		int shipNameTextSize = 39;
 		int textSize         = 15;
@@ -247,8 +260,6 @@ public class GraphRenderer extends PApplet {
 		String shipName      = FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName();
 		String shipType      = ShipDataParser.getFullShipType(latest);
 		int score            = ShipDataParser.getCurrentScore(latest);
-		int sectorNumber     = FTLAdventureVisualiser.gameStateArray.get(latest).getSectorNumber();
-		// String sectorTitle   = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle();
 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
 		String ae            = ShipDataParser.getAEEnabled(latest);
 
@@ -287,8 +298,7 @@ public class GraphRenderer extends PApplet {
 		textFont( mainFont, textSize);
 		text(
 			shipType+"\n"+
-			"SCORE    "+ score+"\n"+
-			"SECTOR  " + (sectorNumber+1)+"\n"+
+			"SCORE  "+ score+"\n"+
 			difficulty + " ("+ae+")",
 			margin + borderWeight + padding, offset + borderWeight + shipNameTextSize
 		);
@@ -297,6 +307,10 @@ public class GraphRenderer extends PApplet {
 
 
 	private void drawBeaconLabel ( int b, int lineSize ) {
+
+		// TODO do not render all the numbers if screen pixel space is limited
+
+		// TODO indicator to show if there where enemy ships and/or environmental hazards at the beacon
 
 		noStroke();
 
@@ -315,6 +329,8 @@ public class GraphRenderer extends PApplet {
 
 	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
 
+		// TODO do not render sectorTitle if screenspace becomes to narrow
+
 		int textSize       = 22;
 		int xPos           = margin + (canvasWidth / lineSize) * b;
 		int yPos           = canvasHeight + margin + (margin / 3);
@@ -328,7 +344,7 @@ public class GraphRenderer extends PApplet {
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bCONTROLLED\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bUNCHARTED\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bTHE\\b\\s*","");
-		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*","HOME");
+		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*"," HOME");
 
 		noStroke();
 

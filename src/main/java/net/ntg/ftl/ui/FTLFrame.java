@@ -12,34 +12,21 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.Insets;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.graph.GraphInspector;
@@ -61,17 +48,20 @@ public class FTLFrame extends JFrame {
 
 	private static final Logger log = LogManager.getLogger(FTLFrame.class);
 
-	private static final String SAVE_DUMP = "Dump";
-	private static final String SAVE_GRAPH= "Graph Inspector";
+	JFrame graphFrame;
+	// TODO JFrame helpFrame;
 
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	private ImageIcon openIcon = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	// TODO new FTL style icons for the open and export button
+	private ImageIcon openIcon  = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
+	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
+	private ImageIcon exportIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
 
 	private JButton gameStateSaveBtn;
-	private JTabbedPane savedGameTabsPane;
-	private GraphInspector graphInspector;
+	private GraphInspector inspector;
 
 	private String appName;
 	private int appVersion;
@@ -80,54 +70,48 @@ public class FTLFrame extends JFrame {
 		this.appName = appName;
 		this.appVersion = appVersion;
 
+		// graph window
+		setupGraphFrame();
 
-		// UI setup
+		// inspector window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800,700);
-		setLocationRelativeTo(null);
-		setTitle(String.format("%s (version %d)", appName, appVersion));
+		setResizable(false);
+		setTitle(String.format("%s %d.0 - Inspector", appName, appVersion));
+		setLayout(new BorderLayout());
 
-		JPanel contentPane = new JPanel(new GridLayout(2,1));
-		setContentPane(contentPane);
+		// inspector toolbar
+		JToolBar toolbar = new JToolBar();
+		setupToolbar(toolbar);
+		add(toolbar, BorderLayout.NORTH);
 
+		// inspector options
+		inspector = new GraphInspector(this);
+		inspector.setFloatable(false);
+		add(inspector, BorderLayout.CENTER);
 
-		// UI savedGameInspector
-		JPanel savedGameInspector = new JPanel(new BorderLayout());
-		contentPane.add(savedGameInspector);
+		pack();
 
-		JToolBar savedGameToolbar = new JToolBar();
-		setupSavedGameToolbar(savedGameToolbar);
-		savedGameInspector.add(savedGameToolbar, BorderLayout.NORTH);
-
-		savedGameTabsPane = new JTabbedPane();
-		savedGameInspector.add( savedGameTabsPane, BorderLayout.CENTER );
-
-		graphInspector = new GraphInspector(this);
-
-		graphInspector.setFloatable(false);
-
-		savedGameTabsPane.addTab(SAVE_GRAPH,graphInspector);
-
-
-		// UI Graph
-		JPanel savedGameGraphPane = new JPanel(new BorderLayout());
-		contentPane.add(savedGameGraphPane);
-
-		processing.core.PApplet graphRenderer = new GraphRenderer();
-		savedGameGraphPane.add(graphRenderer);
-		// TODO get the actual height of the graphRender frame
-		// some way that is not as bad as this one
-		GraphRenderer.panelWidth = this.getWidth();
-		GraphRenderer.panelHeight= this.getHeight() / 2;
-		graphRenderer.init();
 	}
 
 
-	private void setupSavedGameToolbar (JToolBar toolbar) {
-		log.trace( "Initialising SavedGame toolbar." );
+	private void setupToolbar (JToolBar toolbar) {
+		log.trace( "Initialising toolbar." );
 
 		toolbar.setMargin( new Insets(5, 5, 5, 5) );
 		toolbar.setFloatable(false);
+
+
+		JButton gameStateOpenBtn = new JButton( "Open", openIcon );
+		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
+		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
+		gameStateWatcherBtn.setEnabled(false);
+		toggleGraphBtn.setEnabled(false);
+		JButton exportImageBtn = new JButton( "Export", exportIcon );
+		// TODO JButton "Export As…" that toggles an options dialog for the preferrend file-format
+		//      and file destination. After confirm the "Export" button uses the options set by
+		//      the "Export As…" button
+		// TODO JButton "Help" that sets the helpFrame visible
+
 
 		final JFileChooser fc = new JFileChooser();
 		fc.setFileHidingEnabled( false );
@@ -148,14 +132,15 @@ public class FTLFrame extends JFrame {
 		} else {
 			fc.setCurrentDirectory( FTLUtilities.findUserDataDir() );
 		}
-
 		fc.setMultiSelectionEnabled(false);
 
-		JButton gameStateOpenBtn = new JButton( "Open", openIcon );
+
 		gameStateOpenBtn.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed( ActionEvent e ) {
 				log.trace( "Open saved game button clicked." );
+
+				gameStateWatcherBtn.doClick();
 
 				fc.setDialogTitle( "Open Saved Game" );
 				int chooserResponse = fc.showOpenDialog(FTLFrame.this);
@@ -183,20 +168,25 @@ public class FTLFrame extends JFrame {
 
 				if ( chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake ) {
 					loadGameStateFile( chosenFile );
+					gameStateWatcherBtn.setEnabled(true);
+					toggleGraphBtn.setEnabled(true);
+					gameStateWatcherBtn.doClick();
+					toggleGraphBtn.setSelected(true);
+					graphFrame.setVisible(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty( "ftlContinuePath", chosenFile.getAbsolutePath() );
 
+				} else if (sillyMistake || lastGameState == null) {
+					gameStateWatcherBtn.setEnabled(false);
+					toggleGraphBtn.setEnabled(false);
 				} else {
 					log.trace( "Open dialog cancelled." );
 				}
 			}
 		});
-		toolbar.add( gameStateOpenBtn );
 
 
-		// TODO button automaticly set to true when save file has been loaded
-		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", false);
 		gameStateWatcherBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -206,32 +196,93 @@ public class FTLFrame extends JFrame {
 				if ( gameStateWatcherBtn.isSelected() ) {
 					if ( lastGameState != null ) {
 						// start monitor function
-						log.info("start monitoring save file");
+						log.info("Start monitoring save file...");
 
 						TimerTask task = new FileWatcher( chosenFile ) {
 							protected void onChange( File file ) {
 								// here we code the action on a change
 								log.info( "\nFILE "+ file.getName() +" HAS CHANGED !" );
-								loadGameStateFile ( chosenFile );
+								if (gameStateWatcherBtn.isSelected()) {
+									loadGameStateFile ( chosenFile );
+								}
 							}
 						};
-
 						Timer timer = new Timer();
-						// repeat the check every second
-						timer.schedule( task , new Date(), 1000 );
+						timer.schedule( task , new Date(), 1000 ); // repeat the check every second
 
 					} else {
 						gameStateWatcherBtn.doClick();
 					}
-				} else {
-					// TODO cancel TimerTask task somehow
-					// task.cancel();
 				}
 			}
 		});
+
+
+		toggleGraphBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AbstractButton abstractButton = (AbstractButton) e.getSource();
+				toggleGraphBtn.setSelected(abstractButton.getModel().isSelected());
+
+				if ( toggleGraphBtn.isSelected() ) {
+					if ( lastGameState != null ) {
+						// spawn window
+						graphFrame.setVisible(true);
+
+					} else {
+						toggleGraphBtn.doClick();
+					}
+				} else {
+					// destroy window if it exists
+					graphFrame.setVisible(false);
+				}
+			}
+		});
+
+
+		exportImageBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed( ActionEvent e ) {
+				GraphRenderer.captureImage = true;
+			}
+		});
+
+
+		graphFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				toggleGraphBtn.setSelected(false);
+			}
+		});
+
+
+		toolbar.add( gameStateOpenBtn );
 		toolbar.add( gameStateWatcherBtn );
+		toolbar.add( toggleGraphBtn );
+		toolbar.add( exportImageBtn );
 
 		toolbar.add( Box.createHorizontalGlue() );
+
+	}
+
+
+	private void setupGraphFrame() {
+
+		graphFrame = new JFrame();
+
+		graphFrame.setSize(1200, 700);
+		graphFrame.setResizable(true);
+		graphFrame.setLocationRelativeTo(null);
+		graphFrame.setTitle(String.format("%s %d.0 - Graph Renderer", appName, appVersion));
+		graphFrame.setLayout(new BorderLayout());
+
+		processing.core.PApplet graphRenderer = new GraphRenderer();
+		graphFrame.add(graphRenderer);
+		GraphRenderer.panelWidth = graphFrame.getWidth();
+		GraphRenderer.panelHeight= graphFrame.getHeight();
+		graphRenderer.init();
+
+		graphFrame.setVisible(false);
+
 	}
 
 
@@ -323,7 +374,7 @@ public class FTLFrame extends JFrame {
 				columnsOffset += myColumns.get(i).size();
 			}
 
-			graphInspector.setGameState();
+			inspector.setGameState();
 		}
 
 		lastGameState = currentGameState;

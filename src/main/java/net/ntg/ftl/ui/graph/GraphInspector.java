@@ -54,12 +54,10 @@ public class GraphInspector extends JToolBar {
 
 	// Crewmembers
 	// private TogglePanel crewPanel = null;
+	// TODO make list of all crew members, display a seperate box for each
 
 
 	public GraphInspector (FTLFrame frame) {
-
-		// TODO align toolbar at top. Make it a collapable window or seperate window (toolbar?)
-		// TODO make graph take up whole window with toolbar on top
 
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -90,9 +88,8 @@ public class GraphInspector extends JToolBar {
 
 
 	public void setGameState() {
-		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
-		// TODO get value labels directly after loading savegame
+		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
 		// Ship Log
 		log.info("Score : " + ShipDataParser.getCurrentScore(latest));
