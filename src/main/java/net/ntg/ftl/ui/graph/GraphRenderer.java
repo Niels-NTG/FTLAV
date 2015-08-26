@@ -238,8 +238,6 @@ public class GraphRenderer extends PApplet {
 
 		// TODO title rendering and typography in style of ship window header title
 
-		log.info("starting drawTitle...");
-
 		int shipNameTextSize = 39;
 		int textSize         = 15;
 		int padding          = 6;
@@ -248,18 +246,19 @@ public class GraphRenderer extends PApplet {
 		float glowSpread     = 1.3f;
 		String shipName      = FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName();
 		String shipType      = ShipDataParser.getFullShipType(latest);
+		int score            = ShipDataParser.getCurrentScore(latest);
+		int sectorNumber     = FTLAdventureVisualiser.gameStateArray.get(latest).getSectorNumber();
+		// String sectorTitle   = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle();
 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
 		String ae            = ShipDataParser.getAEEnabled(latest);
-
-		log.info(shipName + "-" + shipType + " - " + difficulty + " - " + ae);
 
 		noStroke();
 
 		textAlign( LEFT, TOP );
 
 		textFont( mainFont, shipNameTextSize );
-		int titleLabelWidth  = round(textWidth(shipName) + (2 * (padding + borderWeight)));
-		int titleLabelHeight = round((textSize * 2) + shipNameTextSize + (padding + borderWeight));
+		int titleLabelWidth  = round(shipName.length() < 9 ? textWidth("XXXXXXXX") : textWidth(shipName) + (2 * (padding + borderWeight)));
+		int titleLabelHeight = round((textSize * 4) + shipNameTextSize + (padding + borderWeight));
 
 		// title label
 		for (int s = blueGlow.length - 1; s >= 0; --s) {
@@ -288,7 +287,9 @@ public class GraphRenderer extends PApplet {
 		textFont( mainFont, textSize);
 		text(
 			shipType+"\n"+
-			difficulty+" ("+ae+")",
+			"SCORE    "+ score+"\n"+
+			"SECTOR  " + (sectorNumber+1)+"\n"+
+			difficulty + " ("+ae+")",
 			margin + borderWeight + padding, offset + borderWeight + shipNameTextSize
 		);
 

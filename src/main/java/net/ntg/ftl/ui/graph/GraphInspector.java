@@ -60,7 +60,6 @@ public class GraphInspector extends JToolBar {
 
 		// TODO align toolbar at top. Make it a collapable window or seperate window (toolbar?)
 		// TODO make graph take up whole window with toolbar on top
-		// TODO remove dump panel from tabbar
 
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -96,6 +95,7 @@ public class GraphInspector extends JToolBar {
 		// TODO get value labels directly after loading savegame
 
 		// Ship Log
+		log.info("Score : " + ShipDataParser.getCurrentScore(latest));
 
 		// Ship Supplies
 		suppliesPanel.setValue(SCRAP, FTLAdventureVisualiser.shipStateArray.get(latest).getScrapAmt());
@@ -114,7 +114,6 @@ public class GraphInspector extends JToolBar {
 			GraphRenderer.superArray.clear();
 
 			// Ship Log
-
 
 			// Ship Supplies
 			if (suppliesPanel.getState(SCRAP).isSelected()) {
@@ -186,7 +185,7 @@ public class GraphInspector extends JToolBar {
 					)
 				);
 			}
-			GraphRenderer.ceiling = Collections.max(ceilingMeasureArray) <= 20 ?
+			GraphRenderer.ceiling = ceilingMeasureArray.isEmpty() || Collections.max(ceilingMeasureArray) <= 20 ?
 				20 : Collections.max(ceilingMeasureArray);
 
 			log.info("superArray size " + GraphRenderer.superArray.size());

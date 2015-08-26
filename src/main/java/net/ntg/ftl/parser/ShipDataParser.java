@@ -108,4 +108,19 @@ public class ShipDataParser {
 		}
 	}
 
+
+	public static int getCurrentScore ( int index ) {
+		int s = FTLAdventureVisualiser.gameStateArray.get(index).getTotalScrapCollected();
+		int b = FTLAdventureVisualiser.gameStateArray.get(index).getTotalBeaconsExplored();
+		int d = FTLAdventureVisualiser.gameStateArray.get(index).getTotalShipsDefeated();
+		float dm;
+		switch (FTLAdventureVisualiser.gameStateArray.get(index).getDifficulty().toString()) {
+			case "EASY" : dm = 1f;   break;
+			case "HARD" : dm = 1.5f; break;
+			default     : dm = 1.5f; break;
+		}
+
+		return Math.round( (s + 10 * b + 20 * d) * dm );
+	}
+
 }

@@ -42,7 +42,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.ui.DumpPanel;
 import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
@@ -72,7 +71,6 @@ public class FTLFrame extends JFrame {
 
 	private JButton gameStateSaveBtn;
 	private JTabbedPane savedGameTabsPane;
-	private DumpPanel dumpPanel;
 	private GraphInspector graphInspector;
 
 	private String appName;
@@ -104,12 +102,10 @@ public class FTLFrame extends JFrame {
 		savedGameTabsPane = new JTabbedPane();
 		savedGameInspector.add( savedGameTabsPane, BorderLayout.CENTER );
 
-		dumpPanel = new DumpPanel();
 		graphInspector = new GraphInspector(this);
 
 		graphInspector.setFloatable(false);
 
-		savedGameTabsPane.addTab(SAVE_DUMP, dumpPanel);
 		savedGameTabsPane.addTab(SAVE_GRAPH,graphInspector);
 
 
@@ -281,7 +277,10 @@ public class FTLFrame extends JFrame {
 			}
 		} catch ( Exception f ) {
 			log.error( String.format("Error reading saved game (\"%s\").", chosenFile.getName()), f );
-			showErrorDialog( String.format("Error reading saved game (\"%s\"):\n%s: %s", chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage()) );
+			showErrorDialog( String.format(
+				"Error reading saved game (\"%s\"):\n%s: %s",
+				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage())
+			);
 			exception = f;
 		} finally {
 			try { if ( in != null ) in.close(); }
@@ -292,43 +291,39 @@ public class FTLFrame extends JFrame {
 
 	public void loadGameState (SavedGameParser.SavedGameState currentGameState) {
 
-		dumpPanel.setText(currentGameState != null ? currentGameState.toString() : "");
-
 		log.info( "------" );
 		log.info( "Ship Name : " + currentGameState.getPlayerShipName() );
 		log.info( "Currently at beacon number : " + currentGameState.getTotalBeaconsExplored() );
 		log.info( "Currently in sector : " + currentGameState.getSectorNumber() + 1 );
 
-		if (lastGameState != null) {
-			if (currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() ||
-				FTLAdventureVisualiser.gameStateArray.size() == 0
-			) {
-				FTLAdventureVisualiser.gameStateArray.add(currentGameState);
-				FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
-				FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
-				FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
+		if (FTLAdventureVisualiser.gameStateArray.isEmpty() ||
+			currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored()
+		) {
+			FTLAdventureVisualiser.gameStateArray.add(currentGameState);
+			FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
+			FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
+			FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
 
-				FTLAdventureVisualiser.sectorArray.clear();
-				RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
-				List<List<SectorDot>> myColumns = myGen.generateSectorTree(
-					currentGameState.getSectorTreeSeed(),
-					currentGameState.isDLCEnabled()
-				);
-				int columnsOffset = 0;
-				for (int i = 0; i < myColumns.size(); i++) {
-					for (int k = 0; k < myColumns.get(i).size(); k++) {
-						if (currentGameState.getSectorVisitation().subList(
-								columnsOffset, columnsOffset + myColumns.get(i).size()
-							).get(k)
-						) {
-							FTLAdventureVisualiser.sectorArray.add( myColumns.get(i).get(k) );
-						}
+			FTLAdventureVisualiser.sectorArray.clear();
+			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
+			List<List<SectorDot>> myColumns = myGen.generateSectorTree(
+				currentGameState.getSectorTreeSeed(),
+				currentGameState.isDLCEnabled()
+			);
+			int columnsOffset = 0;
+			for (int i = 0; i < myColumns.size(); i++) {
+				for (int k = 0; k < myColumns.get(i).size(); k++) {
+					if (currentGameState.getSectorVisitation().subList(
+							columnsOffset, columnsOffset + myColumns.get(i).size()
+						).get(k)
+					) {
+						FTLAdventureVisualiser.sectorArray.add( myColumns.get(i).get(k) );
 					}
-					columnsOffset += myColumns.get(i).size();
 				}
-
-				graphInspector.setGameState();
+				columnsOffset += myColumns.get(i).size();
 			}
+
+			graphInspector.setGameState();
 		}
 
 		lastGameState = currentGameState;
