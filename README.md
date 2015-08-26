@@ -5,6 +5,8 @@ This (currently highly experimental and not quite yet user-ready!) application i
 
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png" /></a>
 
+[Here’s an example of a full FTL game from beginning to end](https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png). Sadly, I didn’t survive the boss in this particular instance…
+
 Large chunks of the code used in this Java-based application come from [Vhati](https://github.com/Vhati)'s version of the [ftl-profile-editor](https://github.com/Vhati/ftl-profile-editor).
 
 Use [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) to build from source.
