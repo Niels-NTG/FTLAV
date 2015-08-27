@@ -74,7 +74,7 @@ public class FTLFrame extends JFrame {
 		setupGraphFrame();
 
 		// inspector window
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE); // TODO show warning dialog before exit
 		setResizable(false);
 		setTitle(String.format("%s %d.0 - Inspector", appName, appVersion));
 		setLayout(new BorderLayout());
@@ -106,10 +106,13 @@ public class FTLFrame extends JFrame {
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		gameStateWatcherBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
+		// TODO JButton "Refresh" to redraw graph
+		// TODO spacing
 		JButton exportImageBtn = new JButton( "Export", exportIcon );
 		// TODO JButton "Export As…" that toggles an options dialog for the preferrend file-format
 		//      and file destination. After confirm the "Export" button uses the options set by
 		//      the "Export As…" button
+		// TODO spacing
 		// TODO JButton "Help" that sets the helpFrame visible
 
 
@@ -143,7 +146,7 @@ public class FTLFrame extends JFrame {
 				gameStateWatcherBtn.doClick();
 
 				fc.setDialogTitle( "Open Saved Game" );
-				int chooserResponse = fc.showOpenDialog(FTLFrame.this);
+				int chooserResponse = fc.showOpenDialog(null);
 				chosenFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
 
