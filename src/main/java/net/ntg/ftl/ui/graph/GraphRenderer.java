@@ -36,6 +36,8 @@ public class GraphRenderer extends PApplet {
 	public static String  exportPath = "FTLAV_######.png"; // TODO use this to set specific file destination
 
 	// graphics
+	public static boolean showTitle = true;
+
 	PFont mainFont13;
 	PFont mainFont39;
 	PFont headerFont;
@@ -165,6 +167,7 @@ public class GraphRenderer extends PApplet {
 				String lineLabel = (new ArrayList<String>(superArray.keySet())).get(a).toUpperCase();
 
 				// graph line
+				// TODO differend colours depending on data type
 				for (int s = blueGlow.length - 1; s >= 0; --s) {
 
 					noFill();
@@ -214,7 +217,7 @@ public class GraphRenderer extends PApplet {
 
 			}
 
-			if (current >= 0) {
+			if (current >= 0 && showTitle) {
 				drawTitle( current );
 			}
 
@@ -222,6 +225,7 @@ public class GraphRenderer extends PApplet {
 
 		if (captureImage) {
 			// TODO support for exporting to PDF
+			// TODO support transparant PNG
 			saveFrame(exportPath);
 			captureImage = false;
 		}

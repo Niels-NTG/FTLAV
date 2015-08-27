@@ -27,15 +27,16 @@ public class GraphInspector extends JToolBar {
 
 	private FTLFrame frame;
 
-	// Ship Log
-	// private TogglePanel shipLogPanel = null;
-	// Ship Name:              Mulsanne (as title)
-	// Ship Type:              PLAYER_SHIP_FED (as title)
-	// Difficulty:             EASY (as title)
+	// Graph Settings
+	private TogglePanel graphSettings = null;
+	private static final String SHOWTITLE = "Show Title";
 	// Game start date-time (get savefile data of creation)
 	// Game current date-time (get savefile last modified)
+
+	// Ship Log
+	// private TogglePanel shipLogPanel = null;
 	//
-	// bar graph per sector
+	// TODO bar graph per sector
 	// Total Ships Defeated:       0 (per sector)
 	// Total Beacons Explored:     1 (per sector)
 	// Total Scrap Collected:      0 (per sector)
@@ -63,6 +64,12 @@ public class GraphInspector extends JToolBar {
 
 		this.frame = frame;
 
+		// Graph Settings
+		graphSettings = new TogglePanel();
+		graphSettings.setBorder(BorderFactory.createTitledBorder("Graph Settings"));
+		graphSettings.addToggle(SHOWTITLE, true);
+		this.add(graphSettings);
+
 		// Ship Log
 		// shipLogPanel = new TogglePanel();
 		// shipLogPanel.setBorder(BorderFactory.createTitledBorder("Ship Log"));
@@ -70,7 +77,7 @@ public class GraphInspector extends JToolBar {
 
 		// Ship Supplies
 		suppliesPanel = new TogglePanel();
-		suppliesPanel.setBorder(BorderFactory.createTitledBorder("Supplies"));
+		suppliesPanel.setBorder(BorderFactory.createTitledBorder("Ship Supplies"));
 		suppliesPanel.addToggle(SCRAP, false);
 		suppliesPanel.addToggle(HULL, false);
 		suppliesPanel.addToggle(FUEL, false);
@@ -91,8 +98,15 @@ public class GraphInspector extends JToolBar {
 
 		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
+		// Graph Settings
+		if (graphSettings.getState(SHOWTITLE).isSelected()) {
+			GraphRenderer.showTitle = true;
+		} else {
+			GraphRenderer.showTitle = false;
+		}
+
 		// Ship Log
-		log.info("Score : " + ShipDataParser.getCurrentScore(latest));
+
 
 		// Ship Supplies
 		suppliesPanel.setValue(SCRAP, FTLAdventureVisualiser.shipStateArray.get(latest).getScrapAmt());
