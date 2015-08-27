@@ -31,7 +31,7 @@ public class FTLUtilities {
 		String gogPath = "GOG.com/Faster Than Light/resources";
 		String humblePath = "FTL/resources";
 
-		String xdgDataHome = System.getenv("XDG_DATA_HOME");
+		String xdgDataHome = System.getenv("HOME");
 		if (xdgDataHome == null)
 			xdgDataHome = System.getProperty("user.home") +"/.local/share";
 
