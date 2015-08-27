@@ -24,7 +24,6 @@ public class GraphRenderer extends PApplet {
 	int current = 0;
 	int previous= 0;
 
-
 	// window
 	public static int panelWidth;
 	public static int panelHeight;
@@ -37,7 +36,8 @@ public class GraphRenderer extends PApplet {
 	public static String  exportPath = "FTLAV_######.png"; // TODO use this to set specific file destination
 
 	// graphics
-	PFont mainFont;
+	PFont mainFont13;
+	PFont mainFont39;
 	PFont headerFont;
 	PFont headerFontAlt;
 
@@ -101,9 +101,10 @@ public class GraphRenderer extends PApplet {
 		canvasHeight= panelHeight - (margin * 2);
 
 		// graphics
-		mainFont      = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-48.vlw").toString());
-		headerFont    = loadFont(ClassLoader.getSystemResource("Half-Life2-48.vlw").toString());
-		headerFontAlt = loadFont(ClassLoader.getSystemResource("Half-Life1-48.vlw").toString());
+		mainFont13    = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-13.vlw").toString());
+		mainFont39    = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-39.vlw").toString());
+		headerFont    = loadFont(ClassLoader.getSystemResource("Half-Life2-22.vlw").toString());
+		headerFontAlt = loadFont(ClassLoader.getSystemResource("Half-Life1-22.vlw").toString());
 
 		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
 		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
@@ -142,7 +143,7 @@ public class GraphRenderer extends PApplet {
 			// TODO as its own method
 			noStroke();
 			fill(235, 245, 227);
-			textFont(mainFont, 15);
+			textFont(mainFont13, 13);
 			textAlign(RIGHT, BOTTOM);
 			for (int y = 0; y < canvasHeight; ++y) {
 				if (y % 10 == 0) {
@@ -252,7 +253,7 @@ public class GraphRenderer extends PApplet {
 		// TODO renderer image of spaceship exterior next to written information
 
 		int shipNameTextSize = 39;
-		int textSize         = 15;
+		int textSize         = 13;
 		int padding          = 6;
 		int offset           = margin / 2;
 		int borderWeight     = 4;
@@ -267,7 +268,7 @@ public class GraphRenderer extends PApplet {
 
 		textAlign( LEFT, TOP );
 
-		textFont( mainFont, shipNameTextSize );
+		textFont( mainFont39, shipNameTextSize );
 		int titleLabelWidth  = round(shipName.length() < 9 ? textWidth("XXXXXXXX") : textWidth(shipName) + (2 * (padding + borderWeight)));
 		int titleLabelHeight = round((textSize * 4) + shipNameTextSize + (padding + borderWeight));
 
@@ -295,7 +296,7 @@ public class GraphRenderer extends PApplet {
 		fill(hudColor.get("MAINTEXT"));
 		text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
 
-		textFont( mainFont, textSize);
+		textFont( mainFont13, textSize);
 		text(
 			shipType+"\n"+
 			"SCORE  "+ score+"\n"+
@@ -310,13 +311,13 @@ public class GraphRenderer extends PApplet {
 
 		// TODO do not render all the numbers if screen pixel space is limited
 
-		// TODO indicator to show if there where enemy ships and/or environmental hazards at the beacon
+		// TODO indicator to show if there where enemy ships, environmental hazards or BOSS at the beacon
 
 		noStroke();
 
 		fill(hudColor.get("MAINTEXT"));
 
-		textFont(mainFont, 15);
+		textFont(mainFont13, 13);
 		textAlign(LEFT, BOTTOM);
 		text(
 			FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
@@ -404,7 +405,7 @@ public class GraphRenderer extends PApplet {
 
 	private void drawLineLabel( int a, String lineLabel, int lineSize, int lastestValue ) {
 
-		int textSize = 15;
+		int textSize = 13;
 		int offset   = 8;
 		int xPos     = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offset;
 		int yPos     = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset;
@@ -412,7 +413,7 @@ public class GraphRenderer extends PApplet {
 
 		noStroke();
 
-		textFont( mainFont, textSize );
+		textFont( mainFont13, textSize );
 		textAlign( LEFT, BOTTOM );
 
 		float keyPos = xPos + padding + textWidth(lineLabel) + padding;
