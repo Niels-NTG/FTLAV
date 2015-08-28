@@ -18,31 +18,6 @@ public class ShipDataParser {
 	}
 
 
-	public static int getPlayerCrewSize ( int index ) {
-
-		int playerControlledCrew = 0;
-
-		// get player controlled crew members on player ship
-		for (int i = 0; i < FTLAdventureVisualiser.shipStateArray.get(index).getCrewList().size(); i++) {
-			if (FTLAdventureVisualiser.shipStateArray.get(index).getCrewList().get(i).isPlayerControlled()) {
-				playerControlledCrew++;
-			}
-		}
-
-		// get player controlled crew members on enemy ship
-		if (FTLAdventureVisualiser.nearbyShipStateArray.get(index) != null) {
-			for (int i = 0; i < FTLAdventureVisualiser.nearbyShipStateArray.get(index).getCrewList().size(); i++) {
-				if (FTLAdventureVisualiser.nearbyShipStateArray.get(index).getCrewList().get(i).isPlayerControlled()) {
-					playerControlledCrew++;
-				}
-			}
-		}
-
-		return playerControlledCrew;
-
-	}
-
-
 	public static String getFullShipType () {
 		return getFullShipType(0);
 	}
@@ -97,6 +72,15 @@ public class ShipDataParser {
 	}
 
 
+	public static String getCrewHealthRatio ( int index, int crewIndex ) {
+		return Integer.toString(FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getHealth());
+		// TODO figure out how to get max-health
+		//+
+		// " / " +
+		// FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getMaxHealth();
+	}
+
+
 	public static String getAEEnabled () {
 		return getAEEnabled(0);
 	}
@@ -110,6 +94,7 @@ public class ShipDataParser {
 
 
 	public static int getCurrentScore ( int index ) {
+
 		int s = FTLAdventureVisualiser.gameStateArray.get(index).getTotalScrapCollected();
 		int b = FTLAdventureVisualiser.gameStateArray.get(index).getTotalBeaconsExplored();
 		int d = FTLAdventureVisualiser.gameStateArray.get(index).getTotalShipsDefeated();

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -38,11 +39,12 @@ public class FTLAdventureVisualiser {
 	public static final int APP_VERSION = 1;
 
 	// TODO each time arrays are updated, write this to file for later use
-	public static ArrayList <SavedGameParser.SavedGameState> gameStateArray = new ArrayList <SavedGameParser.SavedGameState>();
-	public static ArrayList <SavedGameParser.ShipState> shipStateArray = new ArrayList <SavedGameParser.ShipState>();
-	public static ArrayList <SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList <SavedGameParser.ShipState>();
-	public static ArrayList <SavedGameParser.EnvironmentState> environmentArray = new ArrayList <SavedGameParser.EnvironmentState>();
-	public static ArrayList <SectorDot> sectorArray = new ArrayList <SectorDot>();
+	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<SavedGameParser.SavedGameState>();
+	public static ArrayList<SavedGameParser.ShipState> shipStateArray = new ArrayList<SavedGameParser.ShipState>();
+	public static ArrayList<SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList<SavedGameParser.ShipState>();
+	public static ArrayList<List<SavedGameParser.CrewState>> playerCrewArray = new ArrayList<List<SavedGameParser.CrewState>>();
+	public static ArrayList<SavedGameParser.EnvironmentState> environmentArray = new ArrayList<SavedGameParser.EnvironmentState>();
+	public static ArrayList<SectorDot> sectorArray = new ArrayList<SectorDot>();
 
 
 	public static void main( String[] args ) {

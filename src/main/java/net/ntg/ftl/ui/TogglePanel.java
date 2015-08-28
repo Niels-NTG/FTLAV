@@ -17,8 +17,10 @@ import javax.swing.JToggleButton;
 
 public class TogglePanel extends JPanel {
 
-	private Map<String, JToggleButton> toggleButtonMap = new HashMap<String, JToggleButton>();
-	private Map<String, JLabel> labelMap = new HashMap<String, JLabel>();
+	private Map<String,JToggleButton> toggleMap = new HashMap<String,JToggleButton>();
+	private Map<String,JLabel> toggleLabelMap = new HashMap<String,JLabel>();
+	private Map<String,JLabel> labelMap = new HashMap<String,JLabel>();
+	private Map<String,JLabel> labelLabelMap = new HashMap<String,JLabel>();
 
 	private GridBagConstraints gridC = new GridBagConstraints();
 	private Component valueStrut = Box.createHorizontalStrut( 120 );
@@ -41,13 +43,38 @@ public class TogglePanel extends JPanel {
 		this.add( valueStrut, gridC );
 		gridC.gridx++;
 
-		gridC.insets = new Insets( 2, 4, 2, 4 );
+		gridC.insets = new Insets( 5, 5, 5, 5 );
 	}
 
 
 	public void setValueWidth ( int width ) {
 		valueStrut.setMinimumSize( new Dimension(width, 0) );
 		valueStrut.setPreferredSize( new Dimension(width, 0) );
+	}
+
+
+	public void addLabel ( String valueName ) {
+		gridC.fill = GridBagConstraints.HORIZONTAL;
+		gridC.gridwidth = 1;
+		gridC.weighty = 0.0;
+		gridC.gridx = 0;
+
+		gridC.gridx++;
+
+		gridC.anchor = GridBagConstraints.WEST;
+		// TODO icon
+		JLabel label = new JLabel(valueName);
+		labelMap.put(valueName, label);
+		this.add(label, gridC);
+
+		gridC.gridx++;
+
+		gridC.anchor = GridBagConstraints.WEST;
+		JLabel valueLabel = new JLabel();
+		labelLabelMap.put( valueName, valueLabel );
+		this.add( valueLabel, gridC );
+
+		gridC.gridy++;
 	}
 
 
@@ -62,14 +89,14 @@ public class TogglePanel extends JPanel {
 		gridC.anchor = GridBagConstraints.WEST;
 		// TODO icon
 		JToggleButton toggleButton = new JToggleButton(valueName, state);
-		toggleButtonMap.put(valueName, toggleButton);
+		toggleMap.put(valueName, toggleButton);
 		this.add(toggleButton, gridC);
 
 		gridC.gridx++;
 
 		gridC.anchor = GridBagConstraints.WEST;
 		JLabel valueLabel = new JLabel();
-		labelMap.put( valueName, valueLabel );
+		toggleLabelMap.put( valueName, valueLabel );
 		this.add( valueLabel, gridC );
 
 		gridC.gridy++;
@@ -111,18 +138,31 @@ public class TogglePanel extends JPanel {
 
 
 	public void setValue( String valueName, int n ) {
-		JLabel valueLabel = labelMap.get(valueName);
+		JLabel valueLabel = toggleLabelMap.get(valueName);
 		valueLabel.setText( Integer.toString(n) );
 	}
 
 
 	public void setValue( String valueName, String label ) {
-		JLabel valueLabel = labelMap.get(valueName);
+		JLabel valueLabel = toggleLabelMap.get(valueName);
+		valueLabel.setText( label );
+	}
+
+
+	public void setLabelValue( String valueName, int n ) {
+		JLabel valueLabel = labelLabelMap.get(valueName);
+		valueLabel.setText( Integer.toString(n) );
+	}
+
+
+	public void setLabelValue( String valueName, String label ) {
+		JLabel valueLabel = labelLabelMap.get(valueName);
 		valueLabel.setText( label );
 	}
 
 
 	public JToggleButton getState( String valueName ) {
-		return toggleButtonMap.get( valueName );
+		return toggleMap.get( valueName );
 	}
+
 }

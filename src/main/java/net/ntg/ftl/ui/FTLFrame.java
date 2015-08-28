@@ -3,6 +3,7 @@ package net.ntg.ftl.ui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -357,6 +358,21 @@ public class FTLFrame extends JFrame {
 			FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
 			FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
 			FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
+
+			ArrayList<SavedGameParser.CrewState> currentPlayerCrew = new ArrayList<SavedGameParser.CrewState>();
+			for (int i = 0; i < currentGameState.getPlayerShipState().getCrewList().size(); i++) {
+				if (currentGameState.getPlayerShipState().getCrewList().get(i).isPlayerControlled()) {
+					currentPlayerCrew.add(currentGameState.getPlayerShipState().getCrewList().get(i));
+				}
+			}
+			if (currentGameState.getNearbyShipState() != null) {
+				for (int i = 0; i < currentGameState.getNearbyShipState().getCrewList().size(); i++) {
+					if (currentGameState.getNearbyShipState().getCrewList().get(i).isPlayerControlled()) {
+						currentPlayerCrew.add(currentGameState.getNearbyShipState().getCrewList().get(i));
+					}
+				}
+			}
+			FTLAdventureVisualiser.playerCrewArray.add(currentPlayerCrew);
 
 			FTLAdventureVisualiser.sectorArray.clear();
 			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );

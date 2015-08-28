@@ -251,6 +251,14 @@ public class GraphRenderer extends PApplet {
 	}
 
 
+	// TODO design bar graph rendering
+	// TODO draw bar graph option
+
+
+	// TODO draw a label next to the title for each indivual crew member
+	// TODO corosponding line color for each crewmember. These lines are thinners than the others
+
+
 	private void drawTitle( int latest ) {
 
 		// TODO title rendering and typography in style of ship window header title
@@ -274,7 +282,7 @@ public class GraphRenderer extends PApplet {
 
 		textFont( mainFont39, shipNameTextSize );
 		int titleLabelWidth  = round(shipName.length() < 9 ? textWidth("XXXXXXXX") : textWidth(shipName) + (2 * (padding + borderWeight)));
-		int titleLabelHeight = round((textSize * 4) + shipNameTextSize + (padding + borderWeight));
+		int titleLabelHeight = round((textSize * 3) + shipNameTextSize + padding);
 
 		// title label
 		for (int s = blueGlow.length - 1; s >= 0; --s) {
@@ -334,7 +342,7 @@ public class GraphRenderer extends PApplet {
 
 	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
 
-		// TODO do not render sectorTitle if screenspace becomes to narrow
+		// TODO do not render sectorTitle if screenspace becomes too narrow
 
 		int textSize       = 22;
 		int xPos           = margin + (canvasWidth / lineSize) * b;
@@ -446,7 +454,7 @@ public class GraphRenderer extends PApplet {
 
 		// label key
 		fill( hudColor.get("HEADERTEXT_ALT") );
-		text( lineLabel, xPos + padding, yPos - padding );
+		text( lineLabel.replaceAll("_"," "), xPos + padding, yPos - padding );
 
 		// label value
 		beginShape();
