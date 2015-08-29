@@ -4,18 +4,25 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 
 public class TogglePanel extends JPanel {
+
+	private static final Logger log = LogManager.getLogger(TogglePanel.class);
 
 	private Map<String,JToggleButton> toggleMap = new HashMap<String,JToggleButton>();
 	private Map<String,JLabel> toggleLabelMap = new HashMap<String,JLabel>();
@@ -54,6 +61,10 @@ public class TogglePanel extends JPanel {
 
 
 	public void addLabel ( String valueName ) {
+		addLabel(valueName, null);
+	}
+
+	public void addLabel ( String valueName, ImageIcon icon ) {
 		gridC.fill = GridBagConstraints.HORIZONTAL;
 		gridC.gridwidth = 1;
 		gridC.weighty = 0.0;
@@ -62,8 +73,13 @@ public class TogglePanel extends JPanel {
 		gridC.gridx++;
 
 		gridC.anchor = GridBagConstraints.WEST;
-		// TODO icon
-		JLabel label = new JLabel(valueName);
+		JLabel label;
+		if (icon != null) {
+			label = new JLabel(valueName, icon, JLabel.LEFT);
+		} else {
+			label = new JLabel(valueName);
+		}
+
 		labelMap.put(valueName, label);
 		this.add(label, gridC);
 
@@ -79,6 +95,10 @@ public class TogglePanel extends JPanel {
 
 
 	public void addToggle ( String valueName, boolean state ) {
+		addToggle( valueName, null, state );
+	}
+
+	public void addToggle ( String valueName, ImageIcon icon, boolean state ) {
 		gridC.fill = GridBagConstraints.HORIZONTAL;
 		gridC.gridwidth = 1;
 		gridC.weighty = 0.0;
@@ -87,8 +107,13 @@ public class TogglePanel extends JPanel {
 		gridC.gridx++;
 
 		gridC.anchor = GridBagConstraints.WEST;
-		// TODO icon
-		JToggleButton toggleButton = new JToggleButton(valueName, state);
+		JToggleButton toggleButton;
+		if (icon != null) {
+			toggleButton = new JToggleButton(valueName, icon, state);
+		} else {
+			toggleButton = new JToggleButton(valueName, state);
+		}
+		toggleButton.setHorizontalAlignment(JToggleButton.LEFT);
 		toggleMap.put(valueName, toggleButton);
 		this.add(toggleButton, gridC);
 
