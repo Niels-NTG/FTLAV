@@ -103,10 +103,10 @@ public class GraphRenderer extends PApplet {
 		canvasHeight= panelHeight - (margin * 2);
 
 		// graphics
-		mainFont13    = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-13.vlw").toString());
-		mainFont39    = loadFont(ClassLoader.getSystemResource("C&CRedAlertINET-39.vlw").toString());
-		headerFont    = loadFont(ClassLoader.getSystemResource("Half-Life2-22.vlw").toString());
-		headerFontAlt = loadFont(ClassLoader.getSystemResource("Half-Life1-22.vlw").toString());
+		mainFont13    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
+		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
+		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
+		headerFontAlt = loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
 
 		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
 		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
@@ -233,7 +233,6 @@ public class GraphRenderer extends PApplet {
 		previous = current;
 
 	}
-
 
 
 	private boolean isResized () {

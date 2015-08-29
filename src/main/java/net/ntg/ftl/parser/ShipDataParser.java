@@ -81,6 +81,32 @@ public class ShipDataParser {
 	}
 
 
+	public static String getFullCrewType ( int index, int crewIndex ) {
+
+		String fullCrewType = "";
+
+		String rawCrewType = FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getRace();
+
+		if (rawCrewType.length() > 1) {
+
+			switch (rawCrewType) {
+				case "battle"    : fullCrewType = "Anti-Personnel Drone"; break;
+				case "energy"    : fullCrewType = "Zoltan"; break;
+				case "anaerobic" : fullCrewType = "Lanius"; break;
+				default :
+					fullCrewType = rawCrewType.substring(0, 1).toUpperCase() + rawCrewType.substring(1);
+				break;
+			}
+
+		} else {
+			fullCrewType = "";
+		}
+
+		return fullCrewType;
+
+	}
+
+
 	public static String getAEEnabled () {
 		return getAEEnabled(0);
 	}
@@ -106,6 +132,21 @@ public class ShipDataParser {
 		}
 
 		return Math.round( (s + 10 * b + 20 * d) * dm );
+
+	}
+
+
+	public static int getRebelFleetDistance ( int index ) {
+
+		// TODO test if this really works
+		// TODO calculate distance from offset to pixel position current beacon player is at. Ask Vhati on how to get pixel coords of current beacon
+		// TODO make exception for The Last Stand to track proximity to BOSS instead of rebelFleet
+
+		int rebelOffset = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetOffset();
+		int rebelFudge  = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetFudge();
+
+		return rebelOffset + rebelFudge;
+
 	}
 
 }

@@ -87,7 +87,6 @@ public class FTLFrame extends JFrame {
 
 		// inspector options
 		inspector = new GraphInspector(this);
-		inspector.setFloatable(false);
 		add(inspector, BorderLayout.CENTER);
 
 		pack();
@@ -117,6 +116,7 @@ public class FTLFrame extends JFrame {
 		// TODO JButton "Help" that sets the helpFrame visible
 
 
+		// TODO get continue.sav automaticly if it exist on the expected location
 		final JFileChooser fc = new JFileChooser();
 		fc.setFileHidingEnabled( false );
 		fc.addChoosableFileFilter( new FileFilter() {

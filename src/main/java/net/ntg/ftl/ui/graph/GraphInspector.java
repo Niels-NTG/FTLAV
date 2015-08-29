@@ -8,17 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-import javax.swing.JToolBar;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JToolBar;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ShipDataParser;
 import net.ntg.ftl.ui.FTLFrame;
-import net.ntg.ftl.ui.TogglePanel;
 import net.ntg.ftl.ui.graph.GraphRenderer;
+import net.ntg.ftl.ui.TogglePanel;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 public class GraphInspector extends JToolBar {
@@ -27,9 +28,12 @@ public class GraphInspector extends JToolBar {
 
 	private FTLFrame frame;
 
+	private FlowLayout flowLayout;
+
 	// Graph Settings
 	private TogglePanel graphSettings = null;
 	private static final String SHOWTITLE = "Display Title";
+	private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
 	// Game start date-time (get savefile data of creation)
 	// Game current date-time (get savefile last modified)
 
@@ -41,6 +45,7 @@ public class GraphInspector extends JToolBar {
 	// Total Beacons Explored:     1 (per sector)
 	// Total Scrap Collected:      0 (per sector)
 	// Total Crew Hired:           4 (per sector)
+	// Distance to rebel fleet relative to player
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
@@ -55,6 +60,8 @@ public class GraphInspector extends JToolBar {
 
 	// Crewmembers
 	// TODO horizontal scrolling so all panels fit smaller screens
+	// TODO make it more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
+	// TODO take a look at field-editor panel class from UI package to see how this is done
 	private ArrayList<TogglePanel> crewPanelArray = new ArrayList<TogglePanel>();
 	private static final String CREW_NAME         = "Name";
 	private static final String CREW_RACE         = "Kind"; // battle = Anti Personel Drone, energy = Zoltan, anaerobic = Lanius
@@ -71,11 +78,24 @@ public class GraphInspector extends JToolBar {
 	private static final String CREW_JUMPS        = "Total Jumps Survided";	 // TODO bar graph per sector instead of line graph
 	private static final String CREW_SKILLS       = "Skills Mastered";       // TODO bar graph per sector instead of line graph
 
+	// icons
+	private static final ImageIcon CREW_HEALTH_ICON       = new ImageIcon(ClassLoader.getSystemResource("crew-health.gif"));
+	private static final ImageIcon CREW_SKILL_PILOT_ICON  = new ImageIcon(ClassLoader.getSystemResource("crew-pilot.gif"));
+	private static final ImageIcon CREW_SKILL_ENGINE_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-engine.gif"));
+	private static final ImageIcon CREW_SKILL_SHIELD_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-shield.gif"));
+	private static final ImageIcon CREW_SKILL_WEAPON_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-weapon.gif"));
+	private static final ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repairs.gif"));
+	private static final ImageIcon CREW_SKILL_COMBAT_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-combat.gif"));
+
 
 
 	public GraphInspector (FTLFrame frame) {
 
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// TODO change GraphInspector interface to a vertical scrolling BoxLayout
+		flowLayout = new FlowLayout(FlowLayout.LEFT);
+		flowLayout.setAlignOnBaseline(true);
+		this.setLayout(flowLayout);
+		this.setFloatable(false);
 
 		this.frame = frame;
 
@@ -157,7 +177,7 @@ public class GraphInspector extends JToolBar {
 
 		for (int i = 0; i < crewPanelArray.size(); i++) {
 
-			crewPanelArray.get(i).setLabelValue(CREW_RACE, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getRace());
+			crewPanelArray.get(i).setLabelValue(CREW_RACE, ShipDataParser.getFullCrewType(latest, i));
 			crewPanelArray.get(i).setValue(CREW_HEALTH, ShipDataParser.getCrewHealthRatio(latest, i));
 			crewPanelArray.get(i).setValue(CREW_SKILL_PILOT, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getPilotSkill());
 			crewPanelArray.get(i).setValue(CREW_SKILL_ENGINE, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getEngineSkill());
