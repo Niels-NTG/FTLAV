@@ -84,7 +84,7 @@ public class GraphInspector extends JToolBar {
 	private static final ImageIcon CREW_SKILL_ENGINE_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-engine.gif"));
 	private static final ImageIcon CREW_SKILL_SHIELD_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-shield.gif"));
 	private static final ImageIcon CREW_SKILL_WEAPON_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-weapon.gif"));
-	private static final ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repairs.gif"));
+	private static final ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repair.gif"));
 	private static final ImageIcon CREW_SKILL_COMBAT_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-combat.gif"));
 
 

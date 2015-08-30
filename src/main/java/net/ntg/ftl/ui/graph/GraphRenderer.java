@@ -43,6 +43,14 @@ public class GraphRenderer extends PApplet {
 	PFont headerFont;
 	PFont headerFontAlt;
 
+	PImage crewCombat;
+	PImage crewEngine;
+	PImage crewHealth;
+	PImage crewPilot;
+	PImage crewRepair;
+	PImage crewShield;
+	PImage crewWeapon;
+
 	int[] blueGlow = {
 		color(235, 245, 227, 255),
 		color(69, 110, 112, 226),
@@ -107,6 +115,14 @@ public class GraphRenderer extends PApplet {
 		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
 		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
 		headerFontAlt = loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
+
+		crewCombat = loadImage(ClassLoader.getSystemResource("graph/crew-combat.gif").toString());
+		crewEngine = loadImage(ClassLoader.getSystemResource("graph/crew-engine.gif").toString());
+		crewHealth = loadImage(ClassLoader.getSystemResource("graph/crew-health.gif").toString());
+		crewPilot  = loadImage(ClassLoader.getSystemResource("graph/crew-pilot.gif").toString());
+		crewRepair = loadImage(ClassLoader.getSystemResource("graph/crew-repair.gif").toString());
+		crewShield = loadImage(ClassLoader.getSystemResource("graph/crew-shield.gif").toString());
+		crewWeapon = loadImage(ClassLoader.getSystemResource("graph/crew-weapon.gif").toString());
 
 		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
 		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
@@ -421,14 +437,18 @@ public class GraphRenderer extends PApplet {
 		int xPos     = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offset;
 		int yPos     = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset;
 		int padding  = 6;
+		float keyPos;
 
 		noStroke();
 
 		textFont( mainFont13, textSize );
 		textAlign( LEFT, BOTTOM );
 
-		float keyPos = xPos + padding + textWidth(lineLabel) + padding;
-
+		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+			keyPos = xPos + padding + crewHealth.width + padding + textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
+		} else {
+			keyPos = xPos + padding + textWidth(lineLabel) + padding;
+		}
 		// connecting line
 		noFill();
 		stroke( hudColor.get("BORDER") );
@@ -452,8 +472,43 @@ public class GraphRenderer extends PApplet {
 		endShape(CLOSE);
 
 		// label key
-		fill( hudColor.get("HEADERTEXT_ALT") );
-		text( lineLabel.replaceAll("_"," "), xPos + padding, yPos - padding );
+		tint(hudColor.get("HEADERTEXT_ALT"));
+		fill(hudColor.get("HEADERTEXT_ALT"));
+		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+			switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
+				case "HEALTH" :
+					image(crewHealth, xPos + padding, yPos - crewHealth.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
+				break;
+				case "PILOT SKILL" :
+					image(crewPilot, xPos + padding, yPos - crewPilot.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
+				break;
+				case "ENGINE SKILL" :
+					image(crewEngine, xPos + padding, yPos - crewEngine.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
+				break;
+				case "SHIELD SKILL" :
+					image(crewShield, xPos + padding, yPos - crewShield.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
+				break;
+				case "WEAPON SKILL" :
+					image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
+				break;
+				case "REPAIR SKILL" :
+					image(crewRepair, xPos + padding, yPos - crewRepair.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
+				break;
+				case "COMBAT SKILL" :
+					image(crewCombat, xPos + padding, yPos - crewCombat.height);
+					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
+				break;
+				default : break;
+			}
+		} else {
+			text( lineLabel, xPos + padding, yPos - padding );
+		}
 
 		// label value
 		beginShape();
@@ -472,4 +527,5 @@ public class GraphRenderer extends PApplet {
 		);
 
 	}
+
 }
