@@ -158,24 +158,7 @@ public class GraphRenderer extends PApplet {
 			background(hudColor.get("BG_DARK"));
 
 			// graph y labels
-			// TODO as its own method
-			noStroke();
-			fill(235, 245, 227);
-			textFont(mainFont13, 13);
-			textAlign(RIGHT, BOTTOM);
-			for (int y = 0; y < canvasHeight; ++y) {
-				if (y % 10 == 0) {
-					text(
-						Integer.toString(y),
-						margin - (margin / 2),
-						map(y, 0, ceiling, canvasHeight + margin, margin)
-					);
-					rect(
-						margin, map(y, 0, ceiling, canvasHeight + margin, margin),
-						canvasWidth, 0.1f
-					);
-				}
-			}
+			drawYLabel();
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
@@ -183,12 +166,18 @@ public class GraphRenderer extends PApplet {
 				String lineLabel = (new ArrayList<String>(superArray.keySet())).get(a).toUpperCase();
 
 				// graph line
-				// TODO differend colours depending on data type
-				for (int s = blueGlow.length - 1; s >= 0; --s) {
+				int[] gradient;
+				if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+					gradient = purpleGlow;
+				} else {
+					gradient = blueGlow;
+				}
+
+				for (int s = gradient.length - 1; s >= 0; --s) {
 
 					noFill();
-					stroke(blueGlow[s]);
-					strokeWeight(s == blueGlow.length - 1 ? 4 : 4 + (s * 2));
+					stroke(gradient[s]);
+					strokeWeight(s == gradient.length - 1 ? 4 : 4 + (s * 2));
 					strokeJoin(ROUND);
 					strokeCap(ROUND);
 					beginShape();
@@ -203,6 +192,7 @@ public class GraphRenderer extends PApplet {
 						);
 					}
 					endShape();
+
 				}
 
 				// draw label at end of line
@@ -272,6 +262,28 @@ public class GraphRenderer extends PApplet {
 
 	// TODO draw a label next to the title for each indivual crew member
 	// TODO corosponding line color for each crewmember. These lines are thinners than the others
+
+	private void drawYLabel() {
+
+		noStroke();
+		fill(235, 245, 227);
+		textFont(mainFont13, 13);
+		textAlign(RIGHT, BOTTOM);
+		for (int y = 0; y < canvasHeight; ++y) {
+			if (y % 10 == 0) {
+				text(
+					Integer.toString(y),
+					margin - (margin / 2),
+					map(y, 0, ceiling, canvasHeight + margin, margin)
+				);
+				rect(
+					margin, map(y, 0, ceiling, canvasHeight + margin, margin),
+					canvasWidth, 0.1f
+				);
+			}
+		}
+
+	}
 
 
 	private void drawTitle( int latest ) {
