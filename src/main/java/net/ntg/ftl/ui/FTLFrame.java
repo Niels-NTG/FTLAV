@@ -393,7 +393,7 @@ public class FTLFrame extends JFrame {
 				columnsOffset += myColumns.get(i).size();
 			}
 
-			if (currentGameState.getEncounter().getText().toLowerCase().contains("giant alien spiders".toLowerCase())) {
+			if (currentGameState.getEncounter().getText().toLowerCase().contains("giant alien spiders!")) {
 				log.info("\n" +
 					"     /^\\ ___ /^\\    \n"+
 					"    //^\\(o o)/^\\\\  \n"+

@@ -21,8 +21,8 @@ public class GraphRenderer extends PApplet {
 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
 	public static int ceiling = 20;
 
-	int current = 0;
-	int previous= 0;
+	int current  = 0;
+	int previous = 0;
 
 	// window
 	public static int panelWidth;
@@ -33,9 +33,11 @@ public class GraphRenderer extends PApplet {
 	private int margin = 64; // px
 
 	public static boolean captureImage = false;
-	public static String  exportPath = "FTLAV_######.png"; // TODO use this to set specific file destination
+	public static String  exportPath   = "FTLAV_######.png"; // TODO use this to set specific file destination
 
 	// graphics
+	PGraphics pg;
+
 	public static boolean showTitle = true;
 
 	PFont mainFont13;
@@ -111,6 +113,8 @@ public class GraphRenderer extends PApplet {
 		canvasHeight= panelHeight - (margin * 2);
 
 		// graphics
+		pg = createGraphics(panelWidth, panelHeight);
+
 		mainFont13    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
 		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
 		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
@@ -157,6 +161,10 @@ public class GraphRenderer extends PApplet {
 
 			background(hudColor.get("BG_DARK"));
 
+			pg.clear();
+			pg = createGraphics(panelWidth, panelHeight);
+			pg.beginDraw();
+
 			// graph y labels
 			drawYLabel();
 
@@ -175,14 +183,14 @@ public class GraphRenderer extends PApplet {
 
 				for (int s = gradient.length - 1; s >= 0; --s) {
 
-					noFill();
-					stroke(gradient[s]);
-					strokeWeight(s == gradient.length - 1 ? 4 : 4 + (s * 2));
-					strokeJoin(ROUND);
-					strokeCap(ROUND);
-					beginShape();
+					pg.noFill();
+					pg.stroke(gradient[s]);
+					pg.strokeWeight(s == gradient.length - 1 ? 4 : 4 + (s * 2));
+					pg.strokeJoin(ROUND);
+					pg.strokeCap(ROUND);
+					pg.beginShape();
 					for (int b = 0; b < lineArray.size(); ++b) {
-						vertex(
+						pg.vertex(
 							margin + (canvasWidth / lineArray.size()) * b,
 							map(
 								lineArray.get(b),
@@ -191,7 +199,7 @@ public class GraphRenderer extends PApplet {
 							)
 						);
 					}
-					endShape();
+					pg.endShape();
 
 				}
 
@@ -199,7 +207,6 @@ public class GraphRenderer extends PApplet {
 				drawLineLabel( a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1) );
 
 				// graph x labels
-				noStroke();
 				for (int b = 0; b < lineArray.size(); ++b) {
 
 					// sector name labels
@@ -207,13 +214,7 @@ public class GraphRenderer extends PApplet {
 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
 					) {
-
-						drawSectorLabel(
-							a, b,
-							FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(),
-							lineArray.size()
-						);
-
+						drawSectorLabel( b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(), lineArray.size() );
 					}
 
 					// beacon numbers
@@ -227,11 +228,15 @@ public class GraphRenderer extends PApplet {
 				drawTitle( current );
 			}
 
+			pg.endDraw();
+
+			tint(255);
+			image(pg, 0, 0);
+
 		}
 
 		if (captureImage) {
-			// TODO support for exporting to PDF
-			// TODO support transparant PNG
+			pg.save("FTLAV_alpha.png");
 			saveFrame(exportPath);
 			captureImage = false;
 		}
@@ -248,6 +253,7 @@ public class GraphRenderer extends PApplet {
 			panelHeight = height;
 			canvasWidth = panelWidth  - (margin * 2);
 			canvasHeight= panelHeight - (margin * 2);
+			pg = createGraphics(panelWidth, panelHeight);
 			return true;
 		} else {
 			return false;
@@ -259,26 +265,26 @@ public class GraphRenderer extends PApplet {
 	// TODO design bar graph rendering
 	// TODO draw bar graph option
 
-
 	// TODO draw a label next to the title for each indivual crew member
 	// TODO corosponding line color for each crewmember. These lines are thinners than the others
 
+
 	private void drawYLabel() {
 
-		noStroke();
-		fill(235, 245, 227);
-		textFont(mainFont13, 13);
-		textAlign(RIGHT, BOTTOM);
+		pg.noStroke();
+		pg.fill(235, 245, 227);
+		pg.textFont(mainFont13, 13);
+		pg.textAlign(RIGHT, BOTTOM);
 		for (int y = 0; y < canvasHeight; ++y) {
 			if (y % 10 == 0) {
-				text(
+				pg.text(
 					Integer.toString(y),
 					margin - (margin / 2),
 					map(y, 0, ceiling, canvasHeight + margin, margin)
 				);
-				rect(
+				pg.rect(
 					margin, map(y, 0, ceiling, canvasHeight + margin, margin),
-					canvasWidth, 0.1f
+					canvasWidth, 0.2f
 				);
 			}
 		}
@@ -303,40 +309,40 @@ public class GraphRenderer extends PApplet {
 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
 		String ae            = ShipDataParser.getAEEnabled(latest);
 
-		noStroke();
+		pg.noStroke();
 
-		textAlign( LEFT, TOP );
+		pg.textAlign( LEFT, TOP );
 
-		textFont( mainFont39, shipNameTextSize );
-		int titleLabelWidth  = round(shipName.length() < 9 ? textWidth("XXXXXXXX") : textWidth(shipName) + (2 * (padding + borderWeight)));
+		pg.textFont( mainFont39, shipNameTextSize );
+		int titleLabelWidth  = round(shipName.length() < 9 ? pg.textWidth("XXXXXXXX") : pg.textWidth(shipName) + (2 * (padding + borderWeight)));
 		int titleLabelHeight = round((textSize * 3) + shipNameTextSize + padding);
 
 		// title label
 		for (int s = blueGlow.length - 1; s >= 0; --s) {
-			fill(hudColor.get("BG_LIGHT"));
-			stroke(blueGlow[s]);
-			strokeWeight(s == blueGlow.length - 1 ? borderWeight : borderWeight + (s * 2));
-			strokeJoin(ROUND);
-			strokeCap(ROUND);
-			beginShape();
-			vertex(margin, offset + padding);
-			vertex(margin + padding, offset);
-			vertex(margin + (titleLabelWidth - padding), offset);
-			vertex(margin + titleLabelWidth, offset + padding);
-			vertex(margin + titleLabelWidth, offset + (titleLabelHeight - padding));
-			vertex(margin + (titleLabelWidth - padding), offset + titleLabelHeight);
-			vertex(margin + padding, offset + titleLabelHeight);
-			vertex(margin, offset + (titleLabelHeight - padding));
-			endShape(CLOSE);
+			pg.fill(hudColor.get("BG_LIGHT"));
+			pg.stroke(blueGlow[s]);
+			pg.strokeWeight(s == blueGlow.length - 1 ? borderWeight : borderWeight + (s * 2));
+			pg.strokeJoin(ROUND);
+			pg.strokeCap(ROUND);
+			pg.beginShape();
+			pg.vertex(margin, offset + padding);
+			pg.vertex(margin + padding, offset);
+			pg.vertex(margin + (titleLabelWidth - padding), offset);
+			pg.vertex(margin + titleLabelWidth, offset + padding);
+			pg.vertex(margin + titleLabelWidth, offset + (titleLabelHeight - padding));
+			pg.vertex(margin + (titleLabelWidth - padding), offset + titleLabelHeight);
+			pg.vertex(margin + padding, offset + titleLabelHeight);
+			pg.vertex(margin, offset + (titleLabelHeight - padding));
+			pg.endShape(CLOSE);
 		}
-		noStroke();
+		pg.noStroke();
 
 		// title text
-		fill(hudColor.get("MAINTEXT"));
-		text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
+		pg.fill(hudColor.get("MAINTEXT"));
+		pg.text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
 
-		textFont( mainFont13, textSize);
-		text(
+		pg.textFont( mainFont13, textSize);
+		pg.text(
 			shipType+"\n"+
 			"SCORE  "+ score+"\n"+
 			difficulty + " ("+ae+")",
@@ -352,13 +358,13 @@ public class GraphRenderer extends PApplet {
 
 		// TODO indicator to show if there where enemy ships, environmental hazards or BOSS at the beacon
 
-		noStroke();
+		pg.noStroke();
 
-		fill(hudColor.get("MAINTEXT"));
+		pg.fill(hudColor.get("MAINTEXT"));
 
-		textFont(mainFont13, 13);
-		textAlign(LEFT, BOTTOM);
-		text(
+		pg.textFont(mainFont13, 13);
+		pg.textAlign(LEFT, BOTTOM);
+		pg.text(
 			FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
 			margin + (canvasWidth / lineSize) * b,
 			canvasHeight + margin + (margin / 4)
@@ -367,7 +373,7 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private void drawSectorLabel( int a, int b, int sectorNumber, int lineSize ) {
+	private void drawSectorLabel( int b, int sectorNumber, int lineSize ) {
 
 		// TODO do not render sectorTitle if screenspace becomes too narrow
 
@@ -386,20 +392,20 @@ public class GraphRenderer extends PApplet {
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bTHE\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*"," HOME");
 
-		noStroke();
+		pg.noStroke();
 
-		textAlign( LEFT, TOP );
+		pg.textAlign( LEFT, TOP );
 
 		// sector title label
-		textFont( headerFont, textSize );
+		pg.textFont( headerFont, textSize );
 
-		fill( hudColor.get("BORDER") );
-		beginShape();
-		vertex( xPos, yPos );																				// TL
-		vertex( xPos, yPos + textSize + padding );															// BL
-		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );// BR
-		vertex( textSize + padding + textWidth( sectorTitle ) + xPos + padding + textSize, yPos );			// TR
-		endShape(CLOSE);
+		pg.fill( hudColor.get("BORDER") );
+		pg.beginShape();
+		pg.vertex( xPos, yPos );																				  // TL
+		pg.vertex( xPos, yPos + textSize + padding );															  // BL
+		pg.vertex( textSize + padding + pg.textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );// BR
+		pg.vertex( textSize + padding + pg.textWidth( sectorTitle ) + xPos + padding + textSize, yPos );		  // TR
+		pg.endShape(CLOSE);
 
 		// glow color
 		int[] gradient;
@@ -414,6 +420,7 @@ public class GraphRenderer extends PApplet {
 		}
 
 		// apply glow effect
+		noStroke();
 		fill( hudColor.get("BG_DARK") ); // tape over existing glow
 		int glowSize = gradient.length - 1;
 		rect(xPos, yPos - (glowSize * glowSpread) + 1, (canvasWidth + margin) - xPos, glowSize * glowSpread);
@@ -421,23 +428,21 @@ public class GraphRenderer extends PApplet {
 			fill(gradient[s]);
 			rect(xPos, yPos - (s * glowSpread), (canvasWidth + margin) - xPos, padding);
 		}
+		pg.fill(gradient[0]);
+		pg.rect(xPos, yPos, (canvasWidth + margin) - xPos, padding);
 
 		// sector title text
-		fill( hudColor.get("HEADERTEXT_ALT") );
-		text( sectorTitle, padding + textSize + xPos + padding, yPos + padding );
+		pg.fill( hudColor.get("HEADERTEXT_ALT") );
+		pg.text( sectorTitle, padding + textSize + xPos + padding, yPos + padding );
 
 		// sector number label
-		fill( hudColor.get("BG_LIGHT") );
-		rect( xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2 ), textSize );
+		pg.fill( hudColor.get("BG_LIGHT") );
+		pg.rect( xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2 ), textSize );
 
 		// sector number text
-		fill( hudColor.get("MAINTEXT") );
-		textFont( headerFontAlt, textSize );
-		text( Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding );
-
-		// tape over left side
-		fill( hudColor.get("BG_DARK") );
-		rect( xPos - padding, yPos - (glowSize * glowSpread), padding, textSize + padding + (glowSize * glowSpread) );
+		pg.fill( hudColor.get("MAINTEXT") );
+		pg.textFont( headerFontAlt, textSize );
+		pg.text( Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding );
 
 	}
 
@@ -451,90 +456,90 @@ public class GraphRenderer extends PApplet {
 		int padding  = 6;
 		float keyPos;
 
-		noStroke();
+		pg.noStroke();
 
-		textFont( mainFont13, textSize );
-		textAlign( LEFT, BOTTOM );
+		pg.textFont( mainFont13, textSize );
+		pg.textAlign( LEFT, BOTTOM );
 
 		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
-			keyPos = xPos + padding + crewHealth.width + padding + textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
+			keyPos = xPos + padding + crewHealth.width + padding + pg.textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
 		} else {
-			keyPos = xPos + padding + textWidth(lineLabel) + padding;
+			keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
 		}
 		// connecting line
-		noFill();
-		stroke( hudColor.get("BORDER") );
-		strokeJoin(ROUND);
-		strokeCap(ROUND);
-		beginShape();
-		vertex(xPos + offset, yPos - offset);
-		vertex(xPos - offset, yPos + offset);
-		endShape(CLOSE);
-		noStroke();
+		pg.noFill();
+		pg.stroke( hudColor.get("BORDER") );
+		pg.strokeJoin(ROUND);
+		pg.strokeCap(ROUND);
+		pg.beginShape();
+		pg.vertex(xPos + offset, yPos - offset);
+		pg.vertex(xPos - offset, yPos + offset);
+		pg.endShape();
+		pg.noStroke();
 
 		// label
-		fill( hudColor.get("BORDER") );
-		beginShape();
-		vertex(xPos, yPos);
-		vertex(keyPos + textWidth("0000"), yPos);
-		vertex(keyPos + textWidth("0000") + padding, yPos - padding);
-		vertex(keyPos + textWidth("0000") + padding, yPos - (padding + textSize + padding));
-		vertex(xPos + padding, yPos - (padding + textSize + padding));
-		vertex(xPos, yPos - (padding + textSize));
-		endShape(CLOSE);
+		pg.fill( hudColor.get("BORDER") );
+		pg.beginShape();
+		pg.vertex(xPos, yPos);
+		pg.vertex(keyPos + pg.textWidth("0000"), yPos);
+		pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - padding);
+		pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - (padding + textSize + padding));
+		pg.vertex(xPos + padding, yPos - (padding + textSize + padding));
+		pg.vertex(xPos, yPos - (padding + textSize));
+		pg.endShape(CLOSE);
 
 		// label key
-		tint(hudColor.get("HEADERTEXT_ALT"));
-		fill(hudColor.get("HEADERTEXT_ALT"));
+		pg.tint(hudColor.get("HEADERTEXT_ALT"));
+		pg.fill(hudColor.get("HEADERTEXT_ALT"));
 		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
 			switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
 				case "HEALTH" :
-					image(crewHealth, xPos + padding, yPos - crewHealth.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
+					pg.image(crewHealth, xPos + padding, yPos - crewHealth.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
 				break;
 				case "PILOT SKILL" :
-					image(crewPilot, xPos + padding, yPos - crewPilot.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
+					pg.image(crewPilot, xPos + padding, yPos - crewPilot.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
 				break;
 				case "ENGINE SKILL" :
-					image(crewEngine, xPos + padding, yPos - crewEngine.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
+					pg.image(crewEngine, xPos + padding, yPos - crewEngine.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
 				break;
 				case "SHIELD SKILL" :
-					image(crewShield, xPos + padding, yPos - crewShield.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
+					pg.image(crewShield, xPos + padding, yPos - crewShield.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
 				break;
 				case "WEAPON SKILL" :
-					image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
+					pg.image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
 				break;
 				case "REPAIR SKILL" :
-					image(crewRepair, xPos + padding, yPos - crewRepair.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
+					pg.image(crewRepair, xPos + padding, yPos - crewRepair.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
 				break;
 				case "COMBAT SKILL" :
-					image(crewCombat, xPos + padding, yPos - crewCombat.height);
-					text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
+					pg.image(crewCombat, xPos + padding, yPos - crewCombat.height);
+					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
 				break;
 				default : break;
 			}
 		} else {
-			text( lineLabel, xPos + padding, yPos - padding );
+			pg.text( lineLabel, xPos + padding, yPos - padding );
 		}
 
 		// label value
-		beginShape();
-		vertex(keyPos, yPos - 2);
-		vertex(keyPos + textWidth("0000") - 2, yPos - 2);
-		vertex(keyPos + textWidth("0000") + padding - 2, yPos - (padding + 2));
-		vertex(keyPos + textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
-		vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
-		endShape(CLOSE);
-		fill( hudColor.get("MAINTEXT") );
-		textAlign(CENTER, BOTTOM);
-		text(
+		pg.beginShape();
+		pg.vertex(keyPos, yPos - 2);
+		pg.vertex(keyPos + pg.textWidth("0000") - 2, yPos - 2);
+		pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - (padding + 2));
+		pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
+		pg.vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
+		pg.endShape(CLOSE);
+		pg.fill( hudColor.get("MAINTEXT") );
+		pg.textAlign(CENTER, BOTTOM);
+		pg.text(
 			lastestValue,
-			keyPos + (((keyPos + textWidth("0000") + padding - 2) - keyPos) / 2),
+			keyPos + (((keyPos + pg.textWidth("0000") + padding - 2) - keyPos) / 2),
 			yPos - padding
 		);
 

@@ -33,7 +33,7 @@ public class GraphInspector extends JToolBar {
 	// Graph Settings
 	private TogglePanel graphSettings = null;
 	private static final String SHOWTITLE = "Display Title";
-	private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
+	// private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
 	// Game start date-time (get savefile data of creation)
 	// Game current date-time (get savefile last modified)
 
@@ -59,7 +59,6 @@ public class GraphInspector extends JToolBar {
 	private static final String OXYGEN_LEVEL= "Oxygen Level";
 
 	// Crewmembers
-	// TODO horizontal scrolling so all panels fit smaller screens
 	// TODO make it more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
 	// TODO take a look at field-editor panel class from UI package to see how this is done
 	private ArrayList<TogglePanel> crewPanelArray = new ArrayList<TogglePanel>();
@@ -121,9 +120,6 @@ public class GraphInspector extends JToolBar {
 		suppliesPanel.addToggle(CREW_SIZE, false);
 		suppliesPanel.addToggle(OXYGEN_LEVEL, false);
 		this.add(suppliesPanel);
-
-		// Crewmembers (add a seperate panel for each crew member)
-
 
 	}
 
@@ -258,6 +254,8 @@ public class GraphInspector extends JToolBar {
 
 
 		// Crewmembers
+		// TODO solution to prevent IndexOutOfBoundsException
+		//      when looking trough history of crewmembers that weren't there from the beginning
 		for (int i = 0; i < crewPanelArray.size(); i++) {
 
 			String crewName = FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getName();
