@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.JScrollPane;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.graph.GraphInspector;
@@ -55,7 +56,6 @@ public class FTLFrame extends JFrame {
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	// TODO new FTL style icons for the open and export button
 	private ImageIcon openIcon  = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
 	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
@@ -87,7 +87,13 @@ public class FTLFrame extends JFrame {
 
 		// inspector options
 		inspector = new GraphInspector(this);
-		add(inspector, BorderLayout.CENTER);
+		JScrollPane inspectorScrollPane = new JScrollPane(
+			inspector,
+			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		);
+		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement( 14 );
+		add(inspectorScrollPane, BorderLayout.CENTER);
 
 		pack();
 
@@ -107,12 +113,12 @@ public class FTLFrame extends JFrame {
 		gameStateWatcherBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		// TODO JButton "Refresh" to redraw graph
-		// TODO spacing
+
 		JButton exportImageBtn = new JButton( "Export", exportIcon );
 		// TODO JButton "Export As…" that toggles an options dialog for the preferrend file-format
 		//      and file destination. After confirm the "Export" button uses the options set by
 		//      the "Export As…" button
-		// TODO spacing
+
 		// TODO JButton "Help" that sets the helpFrame visible
 
 
@@ -261,10 +267,9 @@ public class FTLFrame extends JFrame {
 
 		toolbar.add( gameStateOpenBtn );
 		toolbar.add( gameStateWatcherBtn );
+		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( toggleGraphBtn );
 		toolbar.add( exportImageBtn );
-
-		toolbar.add( Box.createHorizontalGlue() );
 
 	}
 
@@ -274,6 +279,7 @@ public class FTLFrame extends JFrame {
 		graphFrame = new JFrame();
 
 		graphFrame.setSize(1200, 700);
+		// graphFrame.setType(JFrame.Type.UTILITY);
 		graphFrame.setResizable(true);
 		graphFrame.setLocationRelativeTo(null);
 		graphFrame.setTitle(String.format("%s %d.0 - Graph Renderer", appName, appVersion));

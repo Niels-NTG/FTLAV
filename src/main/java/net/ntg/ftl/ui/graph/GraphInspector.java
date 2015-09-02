@@ -1,8 +1,8 @@
 package net.ntg.ftl.ui.graph;
 
-import java.awt.FlowLayout;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.GraphicsEnvironment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ShipDataParser;
@@ -27,8 +28,6 @@ public class GraphInspector extends JToolBar {
 	private static final Logger log = LogManager.getLogger(GraphInspector.class);
 
 	private FTLFrame frame;
-
-	private FlowLayout flowLayout;
 
 	// Graph Settings
 	private TogglePanel graphSettings = null;
@@ -90,10 +89,7 @@ public class GraphInspector extends JToolBar {
 
 	public GraphInspector (FTLFrame frame) {
 
-		// TODO change GraphInspector interface to a vertical scrolling BoxLayout
-		flowLayout = new FlowLayout(FlowLayout.LEFT);
-		flowLayout.setAlignOnBaseline(true);
-		this.setLayout(flowLayout);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setFloatable(false);
 
 		this.frame = frame;
@@ -187,7 +183,18 @@ public class GraphInspector extends JToolBar {
 			crewPanelArray.get(i).setValue(CREW_JUMPS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getJumpsSurvived());
 			crewPanelArray.get(i).setValue(CREW_SKILLS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getSkillMasteries());
 
+
 			((FTLFrame)crewPanelArray.get(i).getTopLevelAncestor()).pack();
+			if (
+				frame.getHeight() >
+				GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight()
+			) {
+				frame.setSize(
+					frame.getWidth(),
+					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight() - 50
+				);
+			}
+
 		}
 
 

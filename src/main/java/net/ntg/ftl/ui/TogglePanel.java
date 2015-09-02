@@ -30,7 +30,7 @@ public class TogglePanel extends JPanel {
 	private Map<String,JLabel> labelLabelMap = new HashMap<String,JLabel>();
 
 	private GridBagConstraints gridC = new GridBagConstraints();
-	private Component valueStrut = Box.createHorizontalStrut( 120 );
+	private Component valueStrut = Box.createHorizontalStrut( 260 );
 
 	public TogglePanel () {
 		super(new GridBagLayout());
