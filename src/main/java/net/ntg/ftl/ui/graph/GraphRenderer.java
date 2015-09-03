@@ -33,7 +33,7 @@ public class GraphRenderer extends PApplet {
 	private int margin = 64; // px
 
 	public static boolean captureImage = false;
-	public static String  exportPath   = "FTLAV_######.png"; // TODO use this to set specific file destination
+	public static String  exportPath   = "FTLAV_######";
 
 	// graphics
 	PGraphics pg;
@@ -236,8 +236,9 @@ public class GraphRenderer extends PApplet {
 		}
 
 		if (captureImage) {
-			pg.save("FTLAV_alpha.png");
-			saveFrame(exportPath);
+			String fileTimestamp = " "+year()+"-"+month()+"-"+day()+" "+hour()+"-"+minute();
+			pg.save(exportPath + fileTimestamp + " (alpha).png");
+			saveFrame(exportPath + fileTimestamp + ".png");
 			captureImage = false;
 		}
 

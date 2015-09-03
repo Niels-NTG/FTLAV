@@ -110,16 +110,15 @@ public class FTLFrame extends JFrame {
 		JButton gameStateOpenBtn = new JButton( "Open", openIcon );
 		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
-		gameStateWatcherBtn.setEnabled(false);
-		toggleGraphBtn.setEnabled(false);
 		// TODO JButton "Refresh" to redraw graph
 
 		JButton exportImageBtn = new JButton( "Export", exportIcon );
-		// TODO JButton "Export As…" that toggles an options dialog for the preferrend file-format
-		//      and file destination. After confirm the "Export" button uses the options set by
-		//      the "Export As…" button
 
 		// TODO JButton "Help" that sets the helpFrame visible
+
+		gameStateWatcherBtn.setEnabled(false);
+		toggleGraphBtn.setEnabled(false);
+		exportImageBtn.setEnabled(false);
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
@@ -132,7 +131,7 @@ public class FTLFrame extends JFrame {
 			}
 			@Override
 			public boolean accept(File f) {
-				return f.isDirectory() || f.getName().equalsIgnoreCase("continue.sav");
+			return f.isDirectory() || f.getName().equalsIgnoreCase("continue.sav");
 			}
 		});
 
@@ -183,6 +182,7 @@ public class FTLFrame extends JFrame {
 					gameStateWatcherBtn.doClick();
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
+					exportImageBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty( "ftlContinuePath", chosenFile.getAbsolutePath() );
@@ -190,6 +190,7 @@ public class FTLFrame extends JFrame {
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateWatcherBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
+					exportImageBtn.setEnabled(false);
 				} else {
 					log.trace( "Open dialog cancelled." );
 				}
@@ -253,7 +254,18 @@ public class FTLFrame extends JFrame {
 		exportImageBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed( ActionEvent e ) {
+
+				JFileChooser exportChooser = new JFileChooser();
+				exportChooser.setCurrentDirectory(null);
+				exportChooser.setFileHidingEnabled(true);
+				exportChooser.setDialogTitle("Export as PNG image");
+
+				int chooserResponse = exportChooser.showSaveDialog(null);
+
+				GraphRenderer.exportPath = exportChooser.getSelectedFile().getAbsolutePath();
 				GraphRenderer.captureImage = true;
+
+				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
 			}
 		});
 
