@@ -3,6 +3,7 @@ package net.ntg.ftl.ui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.TimerTask;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -20,15 +22,18 @@ import java.awt.Insets;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
-import javax.swing.JScrollPane;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.graph.GraphInspector;
@@ -51,7 +56,7 @@ public class FTLFrame extends JFrame {
 	private static final Logger log = LogManager.getLogger(FTLFrame.class);
 
 	JFrame graphFrame;
-	// TODO JFrame helpFrame;
+	JFrame helpFrame;
 
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
@@ -60,6 +65,10 @@ public class FTLFrame extends JFrame {
 	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
 	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private ImageIcon exportIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private ImageIcon helpIcon  = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
+
+	private URL helpPage = ClassLoader.getSystemResource("help.html");
+	private final HyperlinkListener linkListener;
 
 	private JButton gameStateSaveBtn;
 	private GraphInspector inspector;
@@ -68,8 +77,28 @@ public class FTLFrame extends JFrame {
 	private int appVersion;
 
 	public FTLFrame (String appName, int appVersion) {
+
 		this.appName = appName;
 		this.appVersion = appVersion;
+
+		linkListener = new HyperlinkListener() {
+			@Override
+			public void hyperlinkUpdate( HyperlinkEvent e ) {
+				if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ) {
+					log.trace( "Dialog link clicked: "+ e.getURL() );
+
+					if ( Desktop.isDesktopSupported() ) {
+						try {
+							Desktop.getDesktop().browse( e.getURL().toURI() );
+							log.trace( "Link opened in external browser." );
+						}
+						catch ( Exception f ) {
+							log.error( "Unable to open link.", f );
+						}
+					}
+				}
+			}
+		};
 
 		// graph window
 		setupGraphFrame();
@@ -79,6 +108,9 @@ public class FTLFrame extends JFrame {
 		setResizable(false);
 		setTitle(String.format("%s %d.0 - Inspector", appName, appVersion));
 		setLayout(new BorderLayout());
+
+		// help frame
+		createhelpFrame();
 
 		// inspector toolbar
 		JToolBar toolbar = new JToolBar();
@@ -115,6 +147,8 @@ public class FTLFrame extends JFrame {
 		JButton exportImageBtn = new JButton( "Export", exportIcon );
 
 		// TODO JButton "Help" that sets the helpFrame visible
+		JButton helpBtn = new JButton( "Help", helpIcon );
+
 
 		gameStateWatcherBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
@@ -244,7 +278,7 @@ public class FTLFrame extends JFrame {
 						toggleGraphBtn.doClick();
 					}
 				} else {
-					// destroy window if it exists
+					// hide window if it exists
 					graphFrame.setVisible(false);
 				}
 			}
@@ -270,6 +304,14 @@ public class FTLFrame extends JFrame {
 		});
 
 
+		helpBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed( ActionEvent e ) {
+				helpFrame.setVisible(true);
+			}
+		});
+
+
 		graphFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				toggleGraphBtn.setSelected(false);
@@ -282,6 +324,32 @@ public class FTLFrame extends JFrame {
 		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( toggleGraphBtn );
 		toolbar.add( exportImageBtn );
+		toolbar.add( Box.createHorizontalGlue() );
+		toolbar.add( helpBtn );
+
+	}
+
+
+	private void createhelpFrame() {
+
+		helpFrame = new JFrame();
+
+		helpFrame.setSize( 400, 480 );
+		helpFrame.setResizable(true);
+		helpFrame.setLocationRelativeTo(this);
+		helpFrame.setTitle("Help & Background Information");
+		helpFrame.setLayout(new BorderLayout());
+
+		try {
+			JEditorPane editor = new JEditorPane(helpPage);
+			editor.setEditable(false);
+			editor.addHyperlinkListener(linkListener);
+			helpFrame.add(editor, BorderLayout.CENTER);
+		} catch (IOException e) {
+			log.error(e);
+		}
+
+		helpFrame.setVisible(false);
 
 	}
 

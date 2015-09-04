@@ -33,8 +33,6 @@ public class GraphInspector extends JToolBar {
 	private TogglePanel graphSettings = null;
 	private static final String SHOWTITLE = "Display Title";
 	// private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
-	// Game start date-time (get savefile data of creation)
-	// Game current date-time (get savefile last modified)
 
 	// Ship Log
 	// private TogglePanel shipLogPanel = null;
@@ -59,7 +57,6 @@ public class GraphInspector extends JToolBar {
 
 	// Crewmembers
 	// TODO make it more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
-	// TODO take a look at field-editor panel class from UI package to see how this is done
 	private ArrayList<TogglePanel> crewPanelArray = new ArrayList<TogglePanel>();
 	private static final String CREW_NAME         = "Name";
 	private static final String CREW_RACE         = "Kind"; // battle = Anti Personel Drone, energy = Zoltan, anaerobic = Lanius
