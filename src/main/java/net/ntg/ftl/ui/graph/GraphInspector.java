@@ -35,14 +35,13 @@ public class GraphInspector extends JToolBar {
 	// private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
 
 	// Ship Log
-	// private TogglePanel shipLogPanel = null;
-	//
+	private TogglePanel shipLogPanel = null;
+	private static final String TOTAL_DEFEATED = "Total Ships Defeated";
+	private static final String TOTAL_BEACONS  = "Total Beacons Explored";
+	private static final String TOTAL_SCRAP    = "Total Scrap Collected";
+	private static final String TOTAL_CREW     = "Total Crew Hired";
+	// TODO distance to rebel fleet relative to player
 	// TODO bar graph per sector
-	// Total Ships Defeated:       0 (per sector)
-	// Total Beacons Explored:     1 (per sector)
-	// Total Scrap Collected:      0 (per sector)
-	// Total Crew Hired:           4 (per sector)
-	// Distance to rebel fleet relative to player
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
@@ -91,35 +90,44 @@ public class GraphInspector extends JToolBar {
 
 		this.frame = frame;
 
-		// Graph Settings
-		graphSettings = new TogglePanel();
-		graphSettings.setBorder(BorderFactory.createTitledBorder("Graph Settings"));
-		graphSettings.addToggle(SHOWTITLE, true);
-		this.add(graphSettings);
-
-		// Ship Log
-		// shipLogPanel = new TogglePanel();
-		// shipLogPanel.setBorder(BorderFactory.createTitledBorder("Ship Log"));
-		// this.add(shipLogPanel);
-
-		// Ship Supplies
-		suppliesPanel = new TogglePanel();
-		suppliesPanel.setBorder(BorderFactory.createTitledBorder("Ship Supplies"));
-		suppliesPanel.addToggle(SCRAP, false);
-		suppliesPanel.addToggle(HULL, false);
-		suppliesPanel.addToggle(FUEL, false);
-		suppliesPanel.addToggle(DRONE_PARTS, false);
-		suppliesPanel.addToggle(MISSILES, false);
-		suppliesPanel.addToggle(CREW_SIZE, false);
-		suppliesPanel.addToggle(OXYGEN_LEVEL, false);
-		this.add(suppliesPanel);
-
 	}
 
 
 	public void setGameState() {
 
 		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
+
+		if (latest == 0) {
+
+			// Graph Settings
+			graphSettings = new TogglePanel();
+			graphSettings.setBorder(BorderFactory.createTitledBorder("Graph Settings"));
+			graphSettings.addToggle(SHOWTITLE, true);
+			this.add(graphSettings);
+
+			// Ship Log
+			shipLogPanel = new TogglePanel();
+			shipLogPanel.setBorder(BorderFactory.createTitledBorder("Ship Log"));
+			shipLogPanel.addToggle(TOTAL_DEFEATED, false);
+			shipLogPanel.addToggle(TOTAL_BEACONS, false);
+			shipLogPanel.addToggle(TOTAL_SCRAP, false);
+			shipLogPanel.addToggle(TOTAL_CREW, false);
+			this.add(shipLogPanel);
+
+			// Ship Supplies
+			suppliesPanel = new TogglePanel();
+			suppliesPanel.setBorder(BorderFactory.createTitledBorder("Ship Supplies"));
+			suppliesPanel.addToggle(SCRAP, false);
+			suppliesPanel.addToggle(HULL, false);
+			suppliesPanel.addToggle(FUEL, false);
+			suppliesPanel.addToggle(DRONE_PARTS, false);
+			suppliesPanel.addToggle(MISSILES, false);
+			suppliesPanel.addToggle(CREW_SIZE, false);
+			suppliesPanel.addToggle(OXYGEN_LEVEL, false);
+			this.add(suppliesPanel);
+
+			((FTLFrame)suppliesPanel.getTopLevelAncestor()).pack();
+		}
 
 		// Graph Settings
 		if (graphSettings.getState(SHOWTITLE).isSelected()) {
@@ -129,6 +137,10 @@ public class GraphInspector extends JToolBar {
 		}
 
 		// Ship Log
+		shipLogPanel.setValue(TOTAL_DEFEATED, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalShipsDefeated());
+		shipLogPanel.setValue(TOTAL_BEACONS, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalBeaconsExplored());
+		shipLogPanel.setValue(TOTAL_SCRAP, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalScrapCollected());
+		shipLogPanel.setValue(TOTAL_CREW, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired());
 
 		// Ship Supplies
 		suppliesPanel.setValue(SCRAP, FTLAdventureVisualiser.shipStateArray.get(latest).getScrapAmt());
@@ -197,7 +209,40 @@ public class GraphInspector extends JToolBar {
 
 		GraphRenderer.superArray.clear();
 
+
 		// Ship Log
+		if (shipLogPanel.getState(TOTAL_DEFEATED).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalShipsDefeated());
+			}
+			GraphRenderer.superArray.put(TOTAL_DEFEATED, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_BEACONS).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalBeaconsExplored());
+			}
+			GraphRenderer.superArray.put(TOTAL_BEACONS, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_SCRAP).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalScrapCollected());
+			}
+			GraphRenderer.superArray.put(TOTAL_SCRAP, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_CREW).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired());
+			}
+			GraphRenderer.superArray.put(TOTAL_CREW, intArray);
+		}
+
 
 		// Ship Supplies
 		if (suppliesPanel.getState(SCRAP).isSelected()) {
@@ -205,7 +250,7 @@ public class GraphInspector extends JToolBar {
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt());
 			}
-			GraphRenderer.superArray.put(SCRAP,intArray);
+			GraphRenderer.superArray.put(SCRAP, intArray);
 		}
 
 		if (suppliesPanel.getState(HULL).isSelected()) {
