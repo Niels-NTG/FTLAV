@@ -143,10 +143,7 @@ public class FTLFrame extends JFrame {
 		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
-
 		JButton exportImageBtn = new JButton( "Export", exportIcon );
-
-		// TODO JButton "Help" that sets the helpFrame visible
 		JButton helpBtn = new JButton( "Help", helpIcon );
 
 
@@ -185,7 +182,7 @@ public class FTLFrame extends JFrame {
 
 				gameStateWatcherBtn.doClick();
 
-				fc.setDialogTitle( "Open Saved Game" );
+				fc.setDialogTitle( "Select continue.sav (saved game)" );
 				int chooserResponse = fc.showOpenDialog(null);
 				chosenFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
@@ -334,7 +331,7 @@ public class FTLFrame extends JFrame {
 
 		helpFrame = new JFrame();
 
-		helpFrame.setSize( 400, 480 );
+		helpFrame.setSize(480, 670);
 		helpFrame.setResizable(true);
 		helpFrame.setLocationRelativeTo(this);
 		helpFrame.setTitle("Help & Background Information");
