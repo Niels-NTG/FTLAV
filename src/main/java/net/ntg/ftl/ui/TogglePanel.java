@@ -50,7 +50,7 @@ public class TogglePanel extends JPanel {
 		this.add( valueStrut, gridC );
 		gridC.gridx++;
 
-		gridC.insets = new Insets( 5, 5, 5, 5 );
+		gridC.insets = new Insets( 2, 4, 2, 4 );
 	}
 
 

@@ -106,7 +106,7 @@ public class FTLFrame extends JFrame {
 		// inspector window
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // TODO show warning dialog before exit
 		setResizable(false);
-		setTitle(String.format("%s %d.0 - Inspector", appName, appVersion));
+		setTitle(String.format("%s %d - Inspector", appName, appVersion));
 		setLayout(new BorderLayout());
 
 		// help frame
@@ -118,14 +118,7 @@ public class FTLFrame extends JFrame {
 		add(toolbar, BorderLayout.NORTH);
 
 		// inspector options
-		inspector = new GraphInspector(this);
-		JScrollPane inspectorScrollPane = new JScrollPane(
-			inspector,
-			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-		);
-		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement( 14 );
-		add(inspectorScrollPane, BorderLayout.CENTER);
+		setupInspector();
 
 		pack();
 
@@ -341,7 +334,15 @@ public class FTLFrame extends JFrame {
 			JEditorPane editor = new JEditorPane(helpPage);
 			editor.setEditable(false);
 			editor.addHyperlinkListener(linkListener);
-			helpFrame.add(editor, BorderLayout.CENTER);
+
+			JScrollPane helpScrollPane = new JScrollPane(
+				editor,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+			);
+			helpScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+			helpScrollPane.getHorizontalScrollBar().setUnitIncrement(14);
+			helpFrame.add(helpScrollPane, BorderLayout.CENTER);
 		} catch (IOException e) {
 			log.error(e);
 		}
@@ -359,7 +360,7 @@ public class FTLFrame extends JFrame {
 		// graphFrame.setType(JFrame.Type.UTILITY);
 		graphFrame.setResizable(true);
 		graphFrame.setLocationRelativeTo(null);
-		graphFrame.setTitle(String.format("%s %d.0 - Graph Renderer", appName, appVersion));
+		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
 		graphFrame.setLayout(new BorderLayout());
 
 		processing.core.PApplet graphRenderer = new GraphRenderer();
@@ -369,6 +370,19 @@ public class FTLFrame extends JFrame {
 		graphRenderer.init();
 
 		graphFrame.setVisible(false);
+
+	}
+
+	private void setupInspector() {
+
+		inspector = new GraphInspector(this);
+		JScrollPane inspectorScrollPane = new JScrollPane(
+			inspector,
+			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		);
+		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+		add(inspectorScrollPane, BorderLayout.CENTER);
 
 	}
 
@@ -404,7 +418,7 @@ public class FTLFrame extends JFrame {
 
 			if ( lastGameState.getMysteryList().size() > 0 ) {
 				StringBuilder musteryBuf = new StringBuilder();
-				musteryBuf.append( "This saved game file contains mystery bytes the developers hadn't anticipated!\n" );
+				musteryBuf.append("This saved game file contains mystery bytes the developers hadn't anticipated!\n");
 				boolean first = true;
 				for (MysteryBytes m : lastGameState.getMysteryList()) {
 					if (first) { first = false; }
@@ -416,9 +430,12 @@ public class FTLFrame extends JFrame {
 		} catch ( Exception f ) {
 			log.error( String.format("Error reading saved game (\"%s\").", chosenFile.getName()), f );
 			showErrorDialog( String.format(
-				"Error reading saved game (\"%s\"):\n%s: %s",
-				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage())
+				"Error reading saved game (\"%s\"):\n%s: %s\n" +
+				"This error is probably caused by a game-over or the restarting of a game.\n" +
+				"You can still save your graph by pressing the Export button. Restart %s to reset everything.",
+				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName )
 			);
+
 			exception = f;
 		} finally {
 			try { if ( in != null ) in.close(); }

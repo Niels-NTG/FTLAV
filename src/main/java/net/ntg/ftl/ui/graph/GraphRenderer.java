@@ -155,9 +155,11 @@ public class GraphRenderer extends PApplet {
 
 		current = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
-		if (current > previous || isResized()) {
+		if (current > previous || current == 0 || isResized()) {
 
 			// TODO option for logaritmic rendering
+
+			// TODO mouseover+click shows seperate box about event, environment and stats of that particular beacon
 
 			background(hudColor.get("BG_DARK"));
 

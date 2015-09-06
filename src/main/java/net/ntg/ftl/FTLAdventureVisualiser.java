@@ -133,7 +133,7 @@ public class FTLAdventureVisualiser {
 				int response = JOptionPane.showConfirmDialog(
 					null,
 					"FTL resources were found in:\n"+ datsDir.getPath() +"\nIs this correct?",
-					"Confirm",
+					String.format("%s %s - Setup", APP_NAME, APP_VERSION),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE
 				);
