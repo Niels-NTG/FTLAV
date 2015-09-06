@@ -20,7 +20,7 @@ If you get a game-over by either loosing or winning the game, FTL will delete `c
 It’s possible to track data from games that are already ongoing. However, it’s not possible to look into the past from the moment you’ve started tracking. This also means that if you close FTLAV all data from before the current beacon will be lost. You can however open and close FTL at any moment.
 
 ## Roadmap
-### Version 1 (6 September 2015)
+### Version 1 (7 September 2015)
 **Data types**
 
 - Scrap count
