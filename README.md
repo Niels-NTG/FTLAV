@@ -1,7 +1,7 @@
 # FTLAV
 *FTL: Faster Than Light Adventure Visualiser*
 
-With this tool you can record and visualise your unique adventures in the videogame [FTL:Faster Than Light](http://www.ftlgame.com/). This could use as a way to archive a particular spectacular FTL session to save it for posterity. Alternatively, you use this tool for optimising your play style.
+With this tool you can record and visualise your unique adventures in the videogame [FTL:Faster Than Light](http://www.ftlgame.com/). This could use as a way to archive a particular spectacular FTL session to save it for posterity. Alternatively, this tool could be used for optimising your play style.
 
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png" /></a>
 
@@ -9,15 +9,15 @@ Here’s an example of a full FTL game from beginning to end:
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png" /></a>
 
 ## Usage
-Start FTL: Faster Than Light, start a new game or continue an existing one. Now start FTLAV. If you open it for the first time the program will ask you where your FTL data is located. After this click *Open* and select your `continue.sav` (this file contains all information regarding your current run). 
+Start FTL: Faster Than Light; start a new game or continue an existing one. Now start FTLAV. If it's your first time it will ask where your FTL data is located. After this, click *Open* and select the file `continue.sav` (this file contains all information regarding your current run). 
 
 If the selected file is valid you will be presented with a second window showing an empty graph. In the main window you can select the types of data you want the graph to keep track of. You can toggle these on and off at any time without loosing any data. Please note that when toggling changes won’t show up instantly, but only when the current gamestate is updated.
 
 Play FTL as you would do normally with FTLAV running in the background. The graph will update automatically each time you reach a safe point in the game, usually after an encounter or exiting a store.
 
-If you get a game-over by either loosing or winning the game, FTL will delete `continue.sav`. This means that FTLAV can’t track any new data and will respond with a “File Not Found” error. But you can still save your graph as a PNG of the same resolution of the window by pressing the *Export* button.
+If you get a game-over by either loosing or winning the game, FTL will delete `continue.sav`. This means that FTLAV can’t track any new data and will respond with a “File Not Found” error. But you can still save your graph by pressing the *Export* button. This will save the graph as two PNG images, one with a transparant background and one without, both at the resolution of the graph window.
 
-It’s possible to track data from games that are already ongoing. However, it’s not possible to look into the past from the moment you’ve started tracking. This also means that if you close FTLAV all data from before the current beacon will be lost. You can however open and close FTL at any moment.
+It’s possible to track data from games that are already ongoing. However, it’s not possible to look into the past from the moment you’ve started tracking. This also means that if you close FTLAV, all data from before the current beacon will be lost. You can however open and close FTL at any moment without using any graph data.
 
 ## Roadmap
 ### Version 1 (7 September 2015)
@@ -84,6 +84,6 @@ It’s possible to track data from games that are already ongoing. However, it�
 
 
 ## Contribute
-If you have ideas, suggestions or found a bug (definitely not as rare as you might think), please let me know, preferably by filing an *issue* at this GitHub repository.
+If you have ideas, suggestions, problems or encountered a bug (definitely not as rare as you might think), please let me know, preferably by filing an *[issue](https://github.com/Niels-NTG/FTLAV/issues)* at this GitHub repository.
 
-If you want to delve into the code you will probably need some knowledge of Processing (Java-like code that is responsible for the graph graphics) or/and Java (interface, data-parsing, everything else). For the Java part you can look at [Vhati](https://github.com/Vhati)’s version of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor), of which a large part of the code of this project is based on. Use [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) to compile the source code.
+If you want to delve into the code you will probably need some knowledge of Processing (Java-like code that is responsible for the graph graphics) or/and Java (UI, data-parsing and basicly everything else). For the Java part you can look at [Vhati](https://github.com/Vhati)’s version of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor), of which a large part of the code of this project is based on. Use [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) to compile the source code.
