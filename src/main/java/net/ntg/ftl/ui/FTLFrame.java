@@ -104,7 +104,7 @@ public class FTLFrame extends JFrame {
 		setupGraphFrame();
 
 		// inspector window
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // TODO show warning dialog before exit
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		setTitle(String.format("%s %d - Inspector", appName, appVersion));
 		setLayout(new BorderLayout());
@@ -243,7 +243,7 @@ public class FTLFrame extends JFrame {
 							}
 						};
 						Timer timer = new Timer();
-						timer.schedule( task , new Date(), 1000 ); // repeat the check every second
+						timer.schedule( task , new Date(), 1000 );
 
 					} else {
 						gameStateWatcherBtn.doClick();
@@ -261,14 +261,11 @@ public class FTLFrame extends JFrame {
 
 				if ( toggleGraphBtn.isSelected() ) {
 					if ( lastGameState != null ) {
-						// spawn window
 						graphFrame.setVisible(true);
-
 					} else {
 						toggleGraphBtn.doClick();
 					}
 				} else {
-					// hide window if it exists
 					graphFrame.setVisible(false);
 				}
 			}
@@ -305,6 +302,26 @@ public class FTLFrame extends JFrame {
 		graphFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				toggleGraphBtn.setSelected(false);
+			}
+		});
+
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent w) {
+				int exitWarning = JOptionPane.showConfirmDialog(
+					null,
+					"Do you want to save the current graph before quitting?\n" +
+					"Quiting " + appName + " will result in losing all data from before the current beacon!",
+					"Please consider before quitting",
+					JOptionPane.YES_NO_CANCEL_OPTION
+				);
+				if (exitWarning == JOptionPane.YES_OPTION) {
+					exportImageBtn.doClick();
+				}
+				if (exitWarning == JOptionPane.NO_OPTION) {
+					setDefaultCloseOperation(EXIT_ON_CLOSE);
+				}
 			}
 		});
 
