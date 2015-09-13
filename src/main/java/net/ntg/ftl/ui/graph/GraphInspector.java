@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
+import javax.swing.border.TitledBorder;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ShipDataParser;
@@ -137,11 +138,48 @@ public class GraphInspector extends JToolBar {
 			GraphRenderer.showTitle = false;
 		}
 
+
+		GraphRenderer.superArray.clear();
+
+
 		// Ship Log
 		shipLogPanel.setValue(TOTAL_DEFEATED, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalShipsDefeated());
 		shipLogPanel.setValue(TOTAL_BEACONS, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalBeaconsExplored());
 		shipLogPanel.setValue(TOTAL_SCRAP, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalScrapCollected());
 		shipLogPanel.setValue(TOTAL_CREW, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired());
+
+		if (shipLogPanel.getState(TOTAL_DEFEATED).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalShipsDefeated());
+			}
+			GraphRenderer.superArray.put(TOTAL_DEFEATED, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_BEACONS).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalBeaconsExplored());
+			}
+			GraphRenderer.superArray.put(TOTAL_BEACONS, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_SCRAP).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalScrapCollected());
+			}
+			GraphRenderer.superArray.put(TOTAL_SCRAP, intArray);
+		}
+
+		if (shipLogPanel.getState(TOTAL_CREW).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalCrewHired());
+			}
+			GraphRenderer.superArray.put(TOTAL_CREW, intArray);
+		}
+
 
 		// Ship Supplies
 		suppliesPanel.setValue(SCRAP, FTLAdventureVisualiser.shipStateArray.get(latest).getScrapAmt());
@@ -152,100 +190,6 @@ public class GraphInspector extends JToolBar {
 		suppliesPanel.setValue(CREW_SIZE, FTLAdventureVisualiser.playerCrewArray.get(latest).size());
 		suppliesPanel.setValue(OXYGEN_LEVEL, ShipDataParser.getShipOxygenLevel(latest));
 
-		// Crewmembers
-		for (int i = lastCrewSize; i < FTLAdventureVisualiser.playerCrewArray.get(latest).size(); i++) {
-
-			TogglePanel crewPanel = new TogglePanel();
-			crewPanel.setBorder(BorderFactory.createTitledBorder(FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getName()));
-			crewPanel.addLabel(CREW_RACE);
-			crewPanel.addToggle(CREW_HEALTH, CREW_HEALTH_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_PILOT, CREW_SKILL_PILOT_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_ENGINE, CREW_SKILL_ENGINE_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_SHIELD, CREW_SKILL_SHIELD_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_WEAPON, CREW_SKILL_WEAPON_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_REPAIR, CREW_SKILL_REPAIR_ICON, false);
-			crewPanel.addToggle(CREW_SKILL_COMBAT, CREW_SKILL_COMBAT_ICON, false);
-			crewPanel.addToggle(CREW_REPAIRS, false);
-			crewPanel.addToggle(CREW_KILLS, false);
-			crewPanel.addToggle(CREW_EVASIONS, false);
-			crewPanel.addToggle(CREW_JUMPS, false);
-			crewPanel.addToggle(CREW_SKILLS, false);
-			this.add(crewPanel);
-
-			crewPanelArray.add(crewPanel);
-
-		}
-		lastCrewSize = FTLAdventureVisualiser.playerCrewArray.get(latest).size();
-
-		for (int i = 0; i < crewPanelArray.size(); i++) {
-
-			crewPanelArray.get(i).setLabelValue(CREW_RACE, ShipDataParser.getFullCrewType(latest, i));
-			crewPanelArray.get(i).setValue(CREW_HEALTH, ShipDataParser.getCrewHealthRatio(latest, i));
-			crewPanelArray.get(i).setValue(CREW_SKILL_PILOT, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getPilotSkill());
-			crewPanelArray.get(i).setValue(CREW_SKILL_ENGINE, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getEngineSkill());
-			crewPanelArray.get(i).setValue(CREW_SKILL_SHIELD, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getShieldSkill());
-			crewPanelArray.get(i).setValue(CREW_SKILL_WEAPON, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getWeaponSkill());
-			crewPanelArray.get(i).setValue(CREW_SKILL_REPAIR, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getRepairSkill());
-			crewPanelArray.get(i).setValue(CREW_SKILL_COMBAT, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getCombatSkill());
-			crewPanelArray.get(i).setValue(CREW_REPAIRS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getRepairs());
-			crewPanelArray.get(i).setValue(CREW_KILLS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getCombatKills());
-			crewPanelArray.get(i).setValue(CREW_EVASIONS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getPilotedEvasions());
-			crewPanelArray.get(i).setValue(CREW_JUMPS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getJumpsSurvived());
-			crewPanelArray.get(i).setValue(CREW_SKILLS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getSkillMasteries());
-
-
-			((FTLFrame)crewPanelArray.get(i).getTopLevelAncestor()).pack();
-			if (
-				frame.getHeight() >
-				GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight()
-			) {
-				frame.setSize(
-					frame.getWidth(),
-					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight() - 50
-				);
-			}
-
-		}
-
-
-		GraphRenderer.superArray.clear();
-
-
-		// Ship Log
-		if (shipLogPanel.getState(TOTAL_DEFEATED).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
-			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
-				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalShipsDefeated());
-			}
-			GraphRenderer.superArray.put(TOTAL_DEFEATED, intArray);
-		}
-
-		if (shipLogPanel.getState(TOTAL_BEACONS).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
-			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
-				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalBeaconsExplored());
-			}
-			GraphRenderer.superArray.put(TOTAL_BEACONS, intArray);
-		}
-
-		if (shipLogPanel.getState(TOTAL_SCRAP).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
-			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
-				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalScrapCollected());
-			}
-			GraphRenderer.superArray.put(TOTAL_SCRAP, intArray);
-		}
-
-		if (shipLogPanel.getState(TOTAL_CREW).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
-			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
-				intArray.add(FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired());
-			}
-			GraphRenderer.superArray.put(TOTAL_CREW, intArray);
-		}
-
-
-		// Ship Supplies
 		if (suppliesPanel.getState(SCRAP).isSelected()) {
 			ArrayList<Integer> intArray = new ArrayList<Integer>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
@@ -304,108 +248,223 @@ public class GraphInspector extends JToolBar {
 
 
 		// Crewmembers
-		// TODO solution to prevent IndexOutOfBoundsException
-		//      when looking trough history of crewmembers that weren't there from the beginning
+		for (int i = lastCrewSize; i < FTLAdventureVisualiser.playerCrewArray.get(latest).size(); i++) {
+
+			TogglePanel crewPanel = new TogglePanel();
+			crewPanel.setBorder(BorderFactory.createTitledBorder(FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getName()));
+			crewPanel.addLabel(CREW_RACE);
+			crewPanel.addToggle(CREW_HEALTH, CREW_HEALTH_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_PILOT, CREW_SKILL_PILOT_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_ENGINE, CREW_SKILL_ENGINE_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_SHIELD, CREW_SKILL_SHIELD_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_WEAPON, CREW_SKILL_WEAPON_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_REPAIR, CREW_SKILL_REPAIR_ICON, false);
+			crewPanel.addToggle(CREW_SKILL_COMBAT, CREW_SKILL_COMBAT_ICON, false);
+			crewPanel.addToggle(CREW_REPAIRS, false);
+			crewPanel.addToggle(CREW_KILLS, false);
+			crewPanel.addToggle(CREW_EVASIONS, false);
+			crewPanel.addToggle(CREW_JUMPS, false);
+			crewPanel.addToggle(CREW_SKILLS, false);
+			this.add(crewPanel);
+
+			crewPanelArray.add(crewPanel);
+
+			((FTLFrame)crewPanelArray.get(i).getTopLevelAncestor()).pack();
+			if (
+				frame.getHeight() >
+				GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight()
+			) {
+				frame.setSize(
+					frame.getWidth(),
+					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight() - 50
+				);
+			}
+
+		}
+		lastCrewSize = FTLAdventureVisualiser.playerCrewArray.get(latest).size();
+
+		// TODO fix bug that resets crew stat history to 0 when losing a crewmember other than the last one in the list
 		for (int i = 0; i < crewPanelArray.size(); i++) {
 
-			String crewName = FTLAdventureVisualiser.playerCrewArray.get(latest).get(i).getName();
+			try {
 
-			if (crewPanelArray.get(i).getState(CREW_HEALTH).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getHealth());
+				for (int k = 0; k < FTLAdventureVisualiser.playerCrewArray.get(latest).size(); k++) {
+
+					if (((TitledBorder)crewPanelArray.get(i).getBorder()).getTitle().equals(FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getName())) {
+
+						log.info(
+							"BorderTitle : " + ((TitledBorder)crewPanelArray.get(i).getBorder()).getTitle() +
+							" CrewName : " + FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getName()
+						);
+
+						crewPanelArray.get(i).setLabelValue(CREW_RACE, ShipDataParser.getFullCrewType(latest, k));
+						crewPanelArray.get(i).setValue(CREW_HEALTH, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getHealth());
+						crewPanelArray.get(i).setValue(CREW_SKILL_PILOT, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getPilotSkill());
+						crewPanelArray.get(i).setValue(CREW_SKILL_ENGINE, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getEngineSkill());
+						crewPanelArray.get(i).setValue(CREW_SKILL_SHIELD, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getShieldSkill());
+						crewPanelArray.get(i).setValue(CREW_SKILL_WEAPON, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getWeaponSkill());
+						crewPanelArray.get(i).setValue(CREW_SKILL_REPAIR, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getRepairSkill());
+						crewPanelArray.get(i).setValue(CREW_SKILL_COMBAT, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getCombatSkill());
+						crewPanelArray.get(i).setValue(CREW_REPAIRS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getRepairs());
+						crewPanelArray.get(i).setValue(CREW_KILLS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getCombatKills());
+						crewPanelArray.get(i).setValue(CREW_EVASIONS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getPilotedEvasions());
+						crewPanelArray.get(i).setValue(CREW_JUMPS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getJumpsSurvived());
+						crewPanelArray.get(i).setValue(CREW_SKILLS, FTLAdventureVisualiser.playerCrewArray.get(latest).get(k).getSkillMasteries());
+
+
+						String crewName = ((TitledBorder)crewPanelArray.get(i).getBorder()).getTitle();
+
+						if (crewPanelArray.get(i).getState(CREW_HEALTH).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getHealth());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_HEALTH, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_PILOT).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getPilotSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_PILOT, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_ENGINE).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getEngineSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_ENGINE, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_SHIELD).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getShieldSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_SHIELD, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_WEAPON).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getWeaponSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_WEAPON, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_REPAIR).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getRepairSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_REPAIR, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILL_COMBAT).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getCombatSkill());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_COMBAT, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_REPAIRS).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getRepairs());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_REPAIRS, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_KILLS).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getCombatKills());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_KILLS, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_EVASIONS).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getPilotedEvasions());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_EVASIONS, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_JUMPS).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getJumpsSurvived());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_JUMPS, intArray);
+						}
+
+						if (crewPanelArray.get(i).getState(CREW_SKILLS).isSelected()) {
+							ArrayList<Integer> intArray = new ArrayList<Integer>();
+							for (int j = 0; j < FTLAdventureVisualiser.playerCrewArray.size(); j++) {
+								try {
+									intArray.add(FTLAdventureVisualiser.playerCrewArray.get(j).get(k).getSkillMasteries());
+								} catch (IndexOutOfBoundsException exception) {
+									intArray.add(-1);
+								}
+							}
+							GraphRenderer.superArray.put(crewName+"_"+CREW_SKILLS, intArray);
+						}
+
+					}
+
 				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_HEALTH, intArray);
-			}
 
-			if (crewPanelArray.get(i).getState(CREW_SKILL_PILOT).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getPilotSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_PILOT, intArray);
+			} catch (IndexOutOfBoundsException exception) {
+				log.info(exception);
 			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILL_ENGINE).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getEngineSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_ENGINE, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILL_SHIELD).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getShieldSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_SHIELD, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILL_WEAPON).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getWeaponSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_WEAPON, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILL_REPAIR).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getRepairSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_REPAIR, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILL_COMBAT).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getCombatSkill());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILL_COMBAT, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_REPAIRS).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getRepairs());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_REPAIRS, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_KILLS).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getCombatKills());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_KILLS, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_EVASIONS).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getPilotedEvasions());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_EVASIONS, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_JUMPS).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getJumpsSurvived());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_JUMPS, intArray);
-			}
-
-			if (crewPanelArray.get(i).getState(CREW_SKILLS).isSelected()) {
-				ArrayList<Integer> intArray = new ArrayList<Integer>();
-				for (int k = 0; k < FTLAdventureVisualiser.gameStateArray.size(); k++) {
-					intArray.add(FTLAdventureVisualiser.playerCrewArray.get(k).get(i).getSkillMasteries());
-				}
-				GraphRenderer.superArray.put(crewName+"_"+CREW_SKILLS, intArray);
-			}
-
 		}
 
 
@@ -424,7 +483,7 @@ public class GraphInspector extends JToolBar {
 			20 : Collections.max(ceilingMeasureArray);
 
 		log.info("superArray size " + GraphRenderer.superArray.size());
-		log.info("superArray " + GraphRenderer.superArray);
+		log.info("superArray:\n" + GraphRenderer.superArray);
 		log.info("Ceiling " + GraphRenderer.ceiling);
 
 	}

@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GraphRenderer extends PApplet {
 
-	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
+	private static Logger log = LogManager.getLogger(GraphRenderer.class);
 
 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
 	public static int ceiling = 20;
@@ -161,6 +161,8 @@ public class GraphRenderer extends PApplet {
 
 			// TODO mouseover+click shows seperate box about event, environment and stats of that particular beacon
 
+			// TODO horizontal scroll if graph becomes too wide and too dense
+
 			background(hudColor.get("BG_DARK"));
 
 			pg.clear();
@@ -192,14 +194,16 @@ public class GraphRenderer extends PApplet {
 					pg.strokeCap(ROUND);
 					pg.beginShape();
 					for (int b = 0; b < lineArray.size(); ++b) {
-						pg.vertex(
-							margin + (canvasWidth / lineArray.size()) * b,
-							map(
-								lineArray.get(b),
-								0, ceiling,
-								margin + canvasHeight, margin
-							)
-						);
+						if (lineArray.get(b) > -1) {
+							pg.vertex(
+								margin + (canvasWidth / lineArray.size()) * b,
+								map(
+									lineArray.get(b),
+									0, ceiling,
+									margin + canvasHeight, margin
+								)
+							);
+						}
 					}
 					pg.endShape();
 
@@ -459,92 +463,96 @@ public class GraphRenderer extends PApplet {
 		int padding  = 6;
 		float keyPos;
 
-		pg.noStroke();
+		if (lastestValue > -1) {
 
-		pg.textFont( mainFont13, textSize );
-		pg.textAlign( LEFT, BOTTOM );
+			pg.noStroke();
 
-		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
-			keyPos = xPos + padding + crewHealth.width + padding + pg.textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
-		} else {
-			keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
-		}
-		// connecting line
-		pg.noFill();
-		pg.stroke( hudColor.get("BORDER") );
-		pg.strokeJoin(ROUND);
-		pg.strokeCap(ROUND);
-		pg.beginShape();
-		pg.vertex(xPos + offset, yPos - offset);
-		pg.vertex(xPos - offset, yPos + offset);
-		pg.endShape();
-		pg.noStroke();
+			pg.textFont( mainFont13, textSize );
+			pg.textAlign( LEFT, BOTTOM );
 
-		// label
-		pg.fill( hudColor.get("BORDER") );
-		pg.beginShape();
-		pg.vertex(xPos, yPos);
-		pg.vertex(keyPos + pg.textWidth("0000"), yPos);
-		pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - padding);
-		pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - (padding + textSize + padding));
-		pg.vertex(xPos + padding, yPos - (padding + textSize + padding));
-		pg.vertex(xPos, yPos - (padding + textSize));
-		pg.endShape(CLOSE);
-
-		// label key
-		pg.tint(hudColor.get("HEADERTEXT_ALT"));
-		pg.fill(hudColor.get("HEADERTEXT_ALT"));
-		if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
-			switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
-				case "HEALTH" :
-					pg.image(crewHealth, xPos + padding, yPos - crewHealth.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
-				break;
-				case "PILOT SKILL" :
-					pg.image(crewPilot, xPos + padding, yPos - crewPilot.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
-				break;
-				case "ENGINE SKILL" :
-					pg.image(crewEngine, xPos + padding, yPos - crewEngine.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
-				break;
-				case "SHIELD SKILL" :
-					pg.image(crewShield, xPos + padding, yPos - crewShield.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
-				break;
-				case "WEAPON SKILL" :
-					pg.image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
-				break;
-				case "REPAIR SKILL" :
-					pg.image(crewRepair, xPos + padding, yPos - crewRepair.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
-				break;
-				case "COMBAT SKILL" :
-					pg.image(crewCombat, xPos + padding, yPos - crewCombat.height);
-					pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
-				break;
-				default : break;
+			if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+				keyPos = xPos + padding + crewHealth.width + padding + pg.textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
+			} else {
+				keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
 			}
-		} else {
-			pg.text( lineLabel, xPos + padding, yPos - padding );
-		}
+			// connecting line
+			pg.noFill();
+			pg.stroke( hudColor.get("BORDER") );
+			pg.strokeJoin(ROUND);
+			pg.strokeCap(ROUND);
+			pg.beginShape();
+			pg.vertex(xPos + offset, yPos - offset);
+			pg.vertex(xPos - offset, yPos + offset);
+			pg.endShape();
+			pg.noStroke();
 
-		// label value
-		pg.beginShape();
-		pg.vertex(keyPos, yPos - 2);
-		pg.vertex(keyPos + pg.textWidth("0000") - 2, yPos - 2);
-		pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - (padding + 2));
-		pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
-		pg.vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
-		pg.endShape(CLOSE);
-		pg.fill( hudColor.get("MAINTEXT") );
-		pg.textAlign(CENTER, BOTTOM);
-		pg.text(
-			lastestValue,
-			keyPos + (((keyPos + pg.textWidth("0000") + padding - 2) - keyPos) / 2),
-			yPos - padding
-		);
+			// label
+			pg.fill( hudColor.get("BORDER") );
+			pg.beginShape();
+			pg.vertex(xPos, yPos);
+			pg.vertex(keyPos + pg.textWidth("0000"), yPos);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - padding);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - (padding + textSize + padding));
+			pg.vertex(xPos + padding, yPos - (padding + textSize + padding));
+			pg.vertex(xPos, yPos - (padding + textSize));
+			pg.endShape(CLOSE);
+
+			// label key
+			pg.tint(hudColor.get("HEADERTEXT_ALT"));
+			pg.fill(hudColor.get("HEADERTEXT_ALT"));
+			if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+				switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
+					case "HEALTH" :
+						pg.image(crewHealth, xPos + padding, yPos - crewHealth.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
+					break;
+					case "PILOT SKILL" :
+						pg.image(crewPilot, xPos + padding, yPos - crewPilot.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
+					break;
+					case "ENGINE SKILL" :
+						pg.image(crewEngine, xPos + padding, yPos - crewEngine.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
+					break;
+					case "SHIELD SKILL" :
+						pg.image(crewShield, xPos + padding, yPos - crewShield.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
+					break;
+					case "WEAPON SKILL" :
+						pg.image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
+					break;
+					case "REPAIR SKILL" :
+						pg.image(crewRepair, xPos + padding, yPos - crewRepair.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
+					break;
+					case "COMBAT SKILL" :
+						pg.image(crewCombat, xPos + padding, yPos - crewCombat.height);
+						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
+					break;
+					default : break;
+				}
+			} else {
+				pg.text( lineLabel, xPos + padding, yPos - padding );
+			}
+
+			// label value
+			pg.beginShape();
+			pg.vertex(keyPos, yPos - 2);
+			pg.vertex(keyPos + pg.textWidth("0000") - 2, yPos - 2);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - (padding + 2));
+			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
+			pg.vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
+			pg.endShape(CLOSE);
+			pg.fill( hudColor.get("MAINTEXT") );
+			pg.textAlign(CENTER, BOTTOM);
+			pg.text(
+				lastestValue,
+				keyPos + (((keyPos + pg.textWidth("0000") + padding - 2) - keyPos) / 2),
+				yPos - padding
+			);
+
+		}
 
 	}
 
