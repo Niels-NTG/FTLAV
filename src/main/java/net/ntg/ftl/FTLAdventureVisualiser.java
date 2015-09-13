@@ -33,10 +33,10 @@ import org.apache.logging.log4j.Logger;
 
 public class FTLAdventureVisualiser {
 
-	private static final Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
+	private static Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
 
-	public static final String APP_NAME = "FTL Adventure Visualiser";
-	public static final int APP_VERSION = 1;
+	public static String APP_NAME = "FTL Adventure Visualiser";
+	public static int APP_VERSION = 1;
 
 	// TODO each time arrays are updated, write this to file for later use
 	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<SavedGameParser.SavedGameState>();

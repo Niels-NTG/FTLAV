@@ -25,61 +25,61 @@ import org.apache.logging.log4j.LogManager;
 
 public class GraphInspector extends JToolBar {
 
-	private static final Logger log = LogManager.getLogger(GraphInspector.class);
+	private static Logger log = LogManager.getLogger(GraphInspector.class);
 
 	private FTLFrame frame;
 
 	// Graph Settings
 	private TogglePanel graphSettings = null;
-	private static final String SHOWTITLE = "Display Title";
-	// private static final String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
+	private static String SHOWTITLE = "Display Title";
+	// private static String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
 
 	// Ship Log
 	private TogglePanel shipLogPanel = null;
-	private static final String TOTAL_DEFEATED = "Total Ships Defeated";
-	private static final String TOTAL_BEACONS  = "Total Beacons Explored";
-	private static final String TOTAL_SCRAP    = "Total Scrap Collected";
-	private static final String TOTAL_CREW     = "Total Crew Hired";
+	private static String TOTAL_DEFEATED = "Total Ships Defeated";
+	private static String TOTAL_BEACONS  = "Total Beacons Explored";
+	private static String TOTAL_SCRAP    = "Total Scrap Collected";
+	private static String TOTAL_CREW     = "Total Crew Hired";
 	// TODO distance to rebel fleet relative to player
 	// TODO bar graph per sector
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
-	private static final String SCRAP 		= "Scrap";
-	private static final String HULL 		= "Hull";
-	private static final String FUEL 		= "Fuel";
-	private static final String DRONE_PARTS = "Drone Parts";
-	private static final String MISSILES 	= "Missiles";
-	private static final String CREW_SIZE	= "Crew Size"; private int lastCrewSize = 0;
-	private static final String CARGO_SIZE  = "Cargo Size";
-	private static final String OXYGEN_LEVEL= "Oxygen Level";
+	private static String SCRAP 		= "Scrap";
+	private static String HULL 		= "Hull";
+	private static String FUEL 		= "Fuel";
+	private static String DRONE_PARTS = "Drone Parts";
+	private static String MISSILES 	= "Missiles";
+	private static String CREW_SIZE	= "Crew Size"; private int lastCrewSize = 0;
+	private static String CARGO_SIZE  = "Cargo Size";
+	private static String OXYGEN_LEVEL= "Oxygen Level";
 
 	// Crewmembers
-	// TODO make it more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
+	// TODO make inspector more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
 	private ArrayList<TogglePanel> crewPanelArray = new ArrayList<TogglePanel>();
-	private static final String CREW_NAME         = "Name";
-	private static final String CREW_RACE         = "Kind"; // battle = Anti Personel Drone, energy = Zoltan, anaerobic = Lanius
-	private static final String CREW_HEALTH       = "Health"; // part of getMaxHealth()
-	private static final String CREW_SKILL_PILOT  = "Pilot Skill";
-	private static final String CREW_SKILL_ENGINE = "Engine Skill";
-	private static final String CREW_SKILL_SHIELD = "Shield Skill";
-	private static final String CREW_SKILL_WEAPON = "Weapon Skill";
-	private static final String CREW_SKILL_REPAIR = "Repair Skill";
-	private static final String CREW_SKILL_COMBAT = "Combat Skill";
-	private static final String CREW_REPAIRS      = "Total Repairs";         // TODO bar graph per sector instead of line graph
-	private static final String CREW_KILLS        = "Total Combat Kills";	 // TODO bar graph per sector instead of line graph
-	private static final String CREW_EVASIONS     = "Total Piloted Evasions";// TODO bar graph per sector instead of line graph
-	private static final String CREW_JUMPS        = "Total Jumps Survided";	 // TODO bar graph per sector instead of line graph
-	private static final String CREW_SKILLS       = "Skills Mastered";       // TODO bar graph per sector instead of line graph
+	private static String CREW_NAME         = "Name";
+	private static String CREW_RACE         = "Kind"; // battle = Anti Personel Drone, energy = Zoltan, anaerobic = Lanius
+	private static String CREW_HEALTH       = "Health"; // part of getMaxHealth()
+	private static String CREW_SKILL_PILOT  = "Pilot Skill";
+	private static String CREW_SKILL_ENGINE = "Engine Skill";
+	private static String CREW_SKILL_SHIELD = "Shield Skill";
+	private static String CREW_SKILL_WEAPON = "Weapon Skill";
+	private static String CREW_SKILL_REPAIR = "Repair Skill";
+	private static String CREW_SKILL_COMBAT = "Combat Skill";
+	private static String CREW_REPAIRS      = "Total Repairs";         // TODO bar graph per sector instead of line graph
+	private static String CREW_KILLS        = "Total Combat Kills";	 // TODO bar graph per sector instead of line graph
+	private static String CREW_EVASIONS     = "Total Piloted Evasions";// TODO bar graph per sector instead of line graph
+	private static String CREW_JUMPS        = "Total Jumps Survided";	 // TODO bar graph per sector instead of line graph
+	private static String CREW_SKILLS       = "Skills Mastered";       // TODO bar graph per sector instead of line graph
 
 	// icons
-	private static final ImageIcon CREW_HEALTH_ICON       = new ImageIcon(ClassLoader.getSystemResource("crew-health.gif"));
-	private static final ImageIcon CREW_SKILL_PILOT_ICON  = new ImageIcon(ClassLoader.getSystemResource("crew-pilot.gif"));
-	private static final ImageIcon CREW_SKILL_ENGINE_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-engine.gif"));
-	private static final ImageIcon CREW_SKILL_SHIELD_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-shield.gif"));
-	private static final ImageIcon CREW_SKILL_WEAPON_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-weapon.gif"));
-	private static final ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repair.gif"));
-	private static final ImageIcon CREW_SKILL_COMBAT_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-combat.gif"));
+	private static ImageIcon CREW_HEALTH_ICON       = new ImageIcon(ClassLoader.getSystemResource("crew-health.gif"));
+	private static ImageIcon CREW_SKILL_PILOT_ICON  = new ImageIcon(ClassLoader.getSystemResource("crew-pilot.gif"));
+	private static ImageIcon CREW_SKILL_ENGINE_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-engine.gif"));
+	private static ImageIcon CREW_SKILL_SHIELD_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-shield.gif"));
+	private static ImageIcon CREW_SKILL_WEAPON_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-weapon.gif"));
+	private static ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repair.gif"));
+	private static ImageIcon CREW_SKILL_COMBAT_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-combat.gif"));
 
 
 
@@ -128,6 +128,7 @@ public class GraphInspector extends JToolBar {
 
 			((FTLFrame)suppliesPanel.getTopLevelAncestor()).pack();
 		}
+
 
 		// Graph Settings
 		if (graphSettings.getState(SHOWTITLE).isSelected()) {

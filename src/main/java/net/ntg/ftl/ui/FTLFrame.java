@@ -53,7 +53,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class FTLFrame extends JFrame {
 
-	private static final Logger log = LogManager.getLogger(FTLFrame.class);
+	private static Logger log = LogManager.getLogger(FTLFrame.class);
 
 	JFrame graphFrame;
 	JFrame helpFrame;
@@ -68,7 +68,7 @@ public class FTLFrame extends JFrame {
 	private ImageIcon helpIcon  = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private URL helpPage = ClassLoader.getSystemResource("help.html");
-	private final HyperlinkListener linkListener;
+	private HyperlinkListener linkListener;
 
 	private JButton gameStateSaveBtn;
 	private GraphInspector inspector;
@@ -126,18 +126,19 @@ public class FTLFrame extends JFrame {
 
 
 	private void setupToolbar (JToolBar toolbar) {
-		log.trace( "Initialising toolbar." );
 
-		toolbar.setMargin( new Insets(5, 5, 5, 5) );
+		log.trace("Initialising toolbar.");
+
+		toolbar.setMargin(new Insets(5, 5, 5, 5));
 		toolbar.setFloatable(false);
 
 
-		JButton gameStateOpenBtn = new JButton( "Open", openIcon );
-		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
-		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
+		JButton gameStateOpenBtn = new JButton("Open", openIcon);
+		JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
+		JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
-		JButton exportImageBtn = new JButton( "Export", exportIcon );
-		JButton helpBtn = new JButton( "Help", helpIcon );
+		JButton exportImageBtn = new JButton("Export", exportIcon);
+		JButton helpBtn = new JButton("Help", helpIcon);
 
 
 		gameStateWatcherBtn.setEnabled(false);
@@ -146,7 +147,7 @@ public class FTLFrame extends JFrame {
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
-		final JFileChooser fc = new JFileChooser();
+		JFileChooser fc = new JFileChooser();
 		fc.setFileHidingEnabled( false );
 		fc.addChoosableFileFilter( new FileFilter() {
 			@Override
@@ -449,8 +450,10 @@ public class FTLFrame extends JFrame {
 			showErrorDialog( String.format(
 				"Error reading saved game (\"%s\"):\n%s: %s\n" +
 				"This error is probably caused by a game-over or the restarting of a game.\n" +
-				"You can still save your graph by pressing the Export button. Restart %s to reset everything.",
-				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName )
+				"If not, please report this on the %s GitHub Issue page.\n" +
+				"You can still save the graph by pressing the Export button.\n" +
+				"Restart %s to reset everything.",
+				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName )
 			);
 
 			exception = f;

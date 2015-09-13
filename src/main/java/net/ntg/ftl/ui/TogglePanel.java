@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class TogglePanel extends JPanel {
 
-	private static final Logger log = LogManager.getLogger(TogglePanel.class);
+	private static Logger log = LogManager.getLogger(TogglePanel.class);
 
 	private Map<String,JToggleButton> toggleMap = new HashMap<String,JToggleButton>();
 	private Map<String,JLabel> toggleLabelMap = new HashMap<String,JLabel>();
