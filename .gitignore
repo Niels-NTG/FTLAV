@@ -16,3 +16,6 @@ hs_err_pid*
 
 # Personal folder for reference material and links
 /proces
+
+# Release folder
+/release

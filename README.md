@@ -1,7 +1,7 @@
 # FTLAV
 *FTL: Faster Than Light Adventure Visualiser*
 
-With this tool you can record and visualise your unique adventures in the videogame [FTL:Faster Than Light](http://www.ftlgame.com/). This could use as a way to archive a particular spectacular FTL session to save it for posterity. Alternatively, this tool could be used for optimising your play style.
+With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](http://www.ftlgame.com/). This could use as a way to archive a particular spectacular FTL session to save it for posterity. Alternatively, this tool could be used for optimising your play style.
 
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png" /></a>
 
@@ -55,25 +55,30 @@ It’s possible to track data from games that are already ongoing. However, it�
 - Export to PNG with transparant background
 - Help menu
 
-### Version 2 (TBA)
+It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you. 
+
+### Future versions
 **Data types**
 
 - Systems and system upgrades
-- Player distance to enemy fleet
+- Player ship distance to enemy fleet
 - Crew skills (pilot, engine, shields, weapons, repairing, combat) as difference per sector
 - Crew stats (total repairs, combat kills, evasions, survived jumps, skills points) as difference per sector
 - Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per sector
+- Generate sequentially numbered backups of `continue.sav` in order to preserve current game history for tracking the same game over multiple sessions.
 
 **Graph Features**
 
 - Bar graphs
 - Second axis
+- Optional logarithmic scale 
 
 **Graph Graphics**
 
 - New graph title style
 - Graph title with sprite of current player ship exterior
 - Crew member key next to graph title with a fitting sprite and line graph colour for each
+- Graph canvas gets horizontal scrollbar when information gets too dense to display it properly
 
 **UI**
 
