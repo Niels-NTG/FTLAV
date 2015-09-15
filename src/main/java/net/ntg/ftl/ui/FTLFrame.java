@@ -135,11 +135,11 @@ public class FTLFrame extends JFrame {
 
 
 		JButton gameStateOpenBtn = new JButton("Open", openIcon);
-		JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
-		JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
+		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
+		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
-		JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		JButton exportDataBtn = new JButton("Export data"); // TODO export data icon
+		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
+		final JButton exportDataBtn = new JButton("Export data"); // TODO export data icon
 		JButton helpBtn = new JButton("Help", helpIcon);
 
 
@@ -150,7 +150,7 @@ public class FTLFrame extends JFrame {
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
-		JFileChooser fc = new JFileChooser();
+		final JFileChooser fc = new JFileChooser();
 		fc.setFileHidingEnabled( false );
 		fc.addChoosableFileFilter( new FileFilter() {
 			@Override
