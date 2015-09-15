@@ -157,8 +157,6 @@ public class GraphRenderer extends PApplet {
 
 		if (current > previous || current == 0 || isResized()) {
 
-			// TODO option for logaritmic rendering
-
 			// TODO mouseover+click shows seperate box about event, environment and stats of that particular beacon
 
 			// TODO horizontal scroll if graph becomes too wide and too dense
@@ -352,7 +350,7 @@ public class GraphRenderer extends PApplet {
 		pg.text(
 			shipType+"\n"+
 			"SCORE  "+ score+"\n"+
-			difficulty + " ("+ae+")",
+			difficulty +" "+ ae,
 			margin + borderWeight + padding, offset + borderWeight + shipNameTextSize
 		);
 

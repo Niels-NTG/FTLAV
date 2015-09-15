@@ -1,9 +1,8 @@
 package net.ntg.ftl.ui.graph;
 
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.GraphicsEnvironment;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -47,13 +46,13 @@ public class GraphInspector extends JToolBar {
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
 	private static String SCRAP 		= "Scrap";
-	private static String HULL 		= "Hull";
-	private static String FUEL 		= "Fuel";
-	private static String DRONE_PARTS = "Drone Parts";
-	private static String MISSILES 	= "Missiles";
-	private static String CREW_SIZE	= "Crew Size"; private int lastCrewSize = 0;
-	private static String CARGO_SIZE  = "Cargo Size";
-	private static String OXYGEN_LEVEL= "Oxygen Level";
+	private static String HULL 		    = "Hull";
+	private static String FUEL 		    = "Fuel";
+	private static String DRONE_PARTS   = "Drone Parts";
+	private static String MISSILES 	    = "Missiles";
+	private static String CREW_SIZE	    = "Crew Size"; private int lastCrewSize = 0;
+	private static String CARGO_SIZE    = "Cargo Size";
+	private static String OXYGEN_LEVEL  = "Oxygen Level";
 
 	// Crewmembers
 	// TODO make inspector more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
@@ -68,9 +67,9 @@ public class GraphInspector extends JToolBar {
 	private static String CREW_SKILL_REPAIR = "Repair Skill";
 	private static String CREW_SKILL_COMBAT = "Combat Skill";
 	private static String CREW_REPAIRS      = "Total Repairs";         // TODO bar graph per sector instead of line graph
-	private static String CREW_KILLS        = "Total Combat Kills";	 // TODO bar graph per sector instead of line graph
+	private static String CREW_KILLS        = "Total Combat Kills";	   // TODO bar graph per sector instead of line graph
 	private static String CREW_EVASIONS     = "Total Piloted Evasions";// TODO bar graph per sector instead of line graph
-	private static String CREW_JUMPS        = "Total Jumps Survided";	 // TODO bar graph per sector instead of line graph
+	private static String CREW_JUMPS        = "Total Jumps Survided";  // TODO bar graph per sector instead of line graph
 	private static String CREW_SKILLS       = "Skills Mastered";       // TODO bar graph per sector instead of line graph
 
 	// icons

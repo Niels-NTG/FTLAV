@@ -39,6 +39,7 @@ import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
+import net.ntg.ftl.parser.CreateCSV;
 
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.MysteryBytes;
@@ -64,7 +65,7 @@ public class FTLFrame extends JFrame {
 	private ImageIcon openIcon  = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
 	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
-	private ImageIcon exportIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private ImageIcon exportImageIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
 	private ImageIcon helpIcon  = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private URL helpPage = ClassLoader.getSystemResource("help.html");
@@ -137,13 +138,15 @@ public class FTLFrame extends JFrame {
 		JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
 		JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
-		JButton exportImageBtn = new JButton("Export", exportIcon);
+		JButton exportImageBtn = new JButton("Export image", exportImageIcon);
+		JButton exportDataBtn = new JButton("Export data"); // TODO export data icon
 		JButton helpBtn = new JButton("Help", helpIcon);
 
 
 		gameStateWatcherBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
+		exportDataBtn.setEnabled(false);
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
@@ -185,7 +188,6 @@ public class FTLFrame extends JFrame {
 					if ("ae_prof.sav".equals(chosenFile.getName()) ||
 						"prof.sav".equals(chosenFile.getName())
 					) {
-
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
 							"Warning: What you are attempting makes no sense.\n"+
@@ -208,6 +210,7 @@ public class FTLFrame extends JFrame {
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
 					exportImageBtn.setEnabled(true);
+					exportDataBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty( "ftlContinuePath", chosenFile.getAbsolutePath() );
@@ -216,6 +219,7 @@ public class FTLFrame extends JFrame {
 					gameStateWatcherBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
+					exportDataBtn.setEnabled(false);
 				} else {
 					log.trace( "Open dialog cancelled." );
 				}
@@ -244,7 +248,7 @@ public class FTLFrame extends JFrame {
 							}
 						};
 						Timer timer = new Timer();
-						timer.schedule( task , new Date(), 1000 );
+						timer.schedule( task , new Date(), 2000 );
 
 					} else {
 						gameStateWatcherBtn.doClick();
@@ -288,6 +292,26 @@ public class FTLFrame extends JFrame {
 				GraphRenderer.captureImage = true;
 
 				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
+
+			}
+		});
+
+
+		exportDataBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed( ActionEvent e ) {
+
+				JFileChooser exportChooser = new JFileChooser();
+				exportChooser.setCurrentDirectory(null);
+				exportChooser.setFileHidingEnabled(true);
+				exportChooser.setDialogTitle("Export raw data as CSV file");
+
+				int chooserResponse = exportChooser.showSaveDialog(null);
+
+				CreateCSV.writeCSV(exportChooser.getSelectedFile().getAbsolutePath());
+
+				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
+
 			}
 		});
 
@@ -329,9 +353,10 @@ public class FTLFrame extends JFrame {
 
 		toolbar.add( gameStateOpenBtn );
 		toolbar.add( gameStateWatcherBtn );
-		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( toggleGraphBtn );
+		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( exportImageBtn );
+		toolbar.add( exportDataBtn );
 		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( helpBtn );
 

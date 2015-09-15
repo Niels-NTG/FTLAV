@@ -16,13 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
 
 public class TogglePanel extends JPanel {
-
-	private static Logger log = LogManager.getLogger(TogglePanel.class);
 
 	private Map<String,JToggleButton> toggleMap = new HashMap<String,JToggleButton>();
 	private Map<String,JLabel> toggleLabelMap = new HashMap<String,JLabel>();
@@ -30,7 +25,7 @@ public class TogglePanel extends JPanel {
 	private Map<String,JLabel> labelLabelMap = new HashMap<String,JLabel>();
 
 	private GridBagConstraints gridC = new GridBagConstraints();
-	private Component valueStrut = Box.createHorizontalStrut( 260 );
+	private Component valueStrut = Box.createHorizontalStrut( 400 );
 
 	public TogglePanel () {
 		super(new GridBagLayout());
