@@ -23,7 +23,7 @@ public class CreateCSV {
 	private static final String FILE_HEADER =
 		"BEACON,"+
 		"SECTOR NUMBER,"+
-		"SECTOR TYPE,",+
+		"SECTOR TYPE,"+
 		"SECTOR TITLE,"+
 		"SCRAP,"+
 		"HULL,"+
