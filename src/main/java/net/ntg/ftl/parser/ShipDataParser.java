@@ -2,6 +2,10 @@ package net.ntg.ftl.parser;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 
+import net.blerf.ftl.parser.DataManager;
+import net.blerf.ftl.parser.SavedGameParser;
+
+
 public class ShipDataParser {
 
 	public static int getShipOxygenLevel ( int index ) {
@@ -18,9 +22,7 @@ public class ShipDataParser {
 	}
 
 
-	public static String getFullShipType () {
-		return getFullShipType(0);
-	}
+	public static String getFullShipType () { return getFullShipType(0); }
 	public static String getFullShipType ( int index ) {
 
 		String shipType = "";
@@ -72,12 +74,33 @@ public class ShipDataParser {
 	}
 
 
-	public static String getCrewHealthRatio ( int index, int crewIndex ) {
-		return Integer.toString(FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getHealth());
-		// TODO figure out how to get max-health
-		//+
-		// " / " +
-		// FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getMaxHealth();
+	public static int getWeaponSlotCount () { return getWeaponSlotCount(0); }
+	public static int getWeaponSlotCount ( int index ) {
+		return DataManager.get().getShip(FTLAdventureVisualiser.shipStateArray.get(index).getShipBlueprintId()).getWeaponSlots();
+	}
+
+
+	public static int getDroneSlotCount () { return getDroneSlotCount(0); }
+	public static int getDroneSlotCount ( int index ) {
+		return DataManager.get().getShip(FTLAdventureVisualiser.shipStateArray.get(index).getShipBlueprintId()).getDroneSlots();
+	}
+
+
+	public static String getCargoListing ( int index ) {
+		String cargo = "";
+		for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().size(); i++) {
+			cargo += FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().get(i) + "\n";
+		}
+		return cargo;
+	}
+
+
+	public static String getAugmentListing ( int index ) {
+		String aug = "";
+		for (int i = 0; i < FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().size(); i++) {
+			aug += FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().get(i) + "\n";
+		}
+		return aug;
 	}
 
 
@@ -107,9 +130,7 @@ public class ShipDataParser {
 	}
 
 
-	public static String getAEEnabled () {
-		return getAEEnabled(0);
-	}
+	public static String getAEEnabled () { return getAEEnabled(0); }
 	public static String getAEEnabled ( int index ) {
 		if (FTLAdventureVisualiser.gameStateArray.get(index).isDLCEnabled()) {
 			return "Advanced";
@@ -146,6 +167,32 @@ public class ShipDataParser {
 		int rebelFudge  = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetFudge();
 
 		return rebelOffset + rebelFudge;
+
+	}
+
+
+	public static String getBeaconHazards ( int index ) {
+
+		String sb = "";
+
+		if (FTLAdventureVisualiser.environmentArray.get(index).isRedGiantPresent()) {
+			sb += "Solar Flare Danger\n";
+		}
+		if (FTLAdventureVisualiser.environmentArray.get(index).isPulsarPresent()) {
+			sb += "Pulsar Star Danger\n";
+		}
+		if (FTLAdventureVisualiser.environmentArray.get(index).isPDSPresent()) {
+			if (FTLAdventureVisualiser.environmentArray.get(index).getVulnerableShips() == SavedGameParser.HazardVulnerability.NEARBY_SHIP) {
+				sb += "Allied Planetary Defense System\n";
+			} else {
+				sb += "Hostile Planetary Defense System\n";
+			}
+		}
+		if (FTLAdventureVisualiser.environmentArray.get(index).getAsteroidField() != null) {
+			sb += "Astroid Field\n";
+		}
+
+		return sb;
 
 	}
 
