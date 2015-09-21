@@ -19,6 +19,8 @@ If you get a game-over by either loosing or winning the game, FTL will delete `c
 
 It’s possible to track data from games that are already ongoing. However, it’s not possible to look into the past from the moment you’ve started tracking. This also means that if you close FTLAV, all data from before the current beacon will be lost. You can however open and close FTL at any moment without using any graph data.
 
+*It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.*
+
 ## Roadmap
 ### Version 1 (13 September 2015)
 **Data types**
@@ -55,23 +57,29 @@ It’s possible to track data from games that are already ongoing. However, it�
 - Export to PNG with transparant background
 - Help menu
 
-It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you. 
+### Version 2 (27 september 2015)
+**Data types**
+
+- Player ship distance to enemy fleet
+- Crew skills (pilot, engine, shields, weapons, repairing, combat) as difference per sector
+- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points) as difference per sector
+- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per sector
+
+**UI**
+
+- Export gather data as CSV
 
 ### Future versions
 **Data types**
 
 - Systems and system upgrades
-- Player ship distance to enemy fleet
-- Crew skills (pilot, engine, shields, weapons, repairing, combat) as difference per sector
-- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points) as difference per sector
-- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per sector
+- Fixed individual crew member tracking
 - Generate sequentially numbered backups of `continue.sav` in order to preserve current game history for tracking the same game over multiple sessions.
 
 **Graph Features**
 
 - Bar graphs
 - Second axis
-- Optional logarithmic scale 
 
 **Graph Graphics**
 
@@ -79,12 +87,13 @@ It’s possible for modded versions of FTL to work with FTLAV, but it might not 
 - Graph title with sprite of current player ship exterior
 - Crew member key next to graph title with a fitting sprite and line graph colour for each
 - Graph canvas gets horizontal scrollbar when information gets too dense to display it properly
+- Option to mouse-over to view extra information on that particular moment of the game
 
 **UI**
 
 - Quick refresh button
-- Export gather data as CSV
 - An Export As… button with options for PNG, PNG with transparancy, TIF, TGA and CSV (data only)
+- CSV export support with individual crew member stats
 - More compact UI (less scrolling, more iconography, less typography)
 
 
