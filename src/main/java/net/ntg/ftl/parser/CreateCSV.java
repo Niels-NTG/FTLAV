@@ -33,6 +33,7 @@ public class CreateCSV {
 			"SECTOR TITLE,"+
 		// Encounter
 			"HAZARDS,"+
+			"EVENT TEXT,"+
 		// Supplies
 			"SCRAP,"+
 			"HULL,"+
@@ -102,6 +103,8 @@ public class CreateCSV {
 		// Augments
 			"AUGMENTS"
 		);
+		// Crew
+
 
 		FileWriter fw = null;
 
@@ -132,6 +135,8 @@ public class CreateCSV {
 				fw.append(FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle());
 				fw.append(DELIMITER);
 				fw.append(ShipDataParser.getBeaconHazards(i));
+				fw.append(DELIMITER);
+				fw.append(FTLAdventureVisualiser.gameStateArray.get(i).getEncounter().getText());
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt()));
 				fw.append(DELIMITER);

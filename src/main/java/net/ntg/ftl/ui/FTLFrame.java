@@ -304,7 +304,7 @@ public class FTLFrame extends JFrame {
 				JFileChooser exportChooser = new JFileChooser();
 				exportChooser.setCurrentDirectory(null);
 				exportChooser.setFileHidingEnabled(true);
-				exportChooser.setDialogTitle("Export raw data as CSV file");
+				exportChooser.setDialogTitle("Export all data as CSV file");
 
 				int chooserResponse = exportChooser.showSaveDialog(null);
 
