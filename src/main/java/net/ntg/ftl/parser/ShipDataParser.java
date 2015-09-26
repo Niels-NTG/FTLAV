@@ -21,6 +21,23 @@ public class ShipDataParser {
 
 	}
 
+	public static int getNearbyShipOxygenLevel ( int index ) {
+
+		if (FTLAdventureVisualiser.nearbyShipStateArray.get(index) != null) {
+			int roomCount = FTLAdventureVisualiser.nearbyShipStateArray.get(index).getRoomList().size();
+			int sum = 0;
+
+			for (int i = 0; i < roomCount; i++) {
+				sum += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getRoomList().get(i).getOxygen();
+			}
+
+			return (int)sum / roomCount;
+		} else {
+			return -1;
+		}
+
+	}
+
 
 	public static String getFullShipType () { return getFullShipType(0); }
 	public static String getFullShipType ( int index ) {
@@ -65,7 +82,7 @@ public class ShipDataParser {
 			case "PLAYER_SHIP_ANAEROBIC_3" : shipType = "Lanius Cruiser C"; break;
 
 			default :
-				shipType = FTLAdventureVisualiser.gameStateArray.get(index).getPlayerShipBlueprintId();
+				shipType = FTLAdventureVisualiser.gameStateArray.get(index).getPlayerShipBlueprintId().replaceAll("_"," ");
 			break;
 		}
 
@@ -91,7 +108,7 @@ public class ShipDataParser {
 		for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().size(); i++) {
 			cargo += FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().get(i) + "; ";
 		}
-		return cargo;
+		return cargo.replaceAll("_"," ");
 	}
 
 
@@ -100,15 +117,32 @@ public class ShipDataParser {
 		for (int i = 0; i < FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().size(); i++) {
 			aug += FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().get(i) + "; ";
 		}
-		return aug;
+		return aug.replaceAll("_"," ");
 	}
 
 
+	public static String getNearbyShipAugmentListing ( int index ) {
+		String aug = "";
+		for (int i = 0; i < FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().size(); i++) {
+			aug += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().get(i) + "; ";
+		}
+		return aug.replaceAll("_"," ");
+	}
+
+
+	public static String getFullEnemyCrewType ( int index, int crewIndex ) {
+		return getFullCrewType(index, crewIndex, true);
+	}
 	public static String getFullCrewType ( int index, int crewIndex ) {
+		return getFullCrewType(index, crewIndex, false);
+	}
+	public static String getFullCrewType ( int index, int crewIndex, boolean isEnemyCrew ) {
 
 		String fullCrewType = "";
 
-		String rawCrewType = FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getRace();
+		String rawCrewType = isEnemyCrew ?
+			FTLAdventureVisualiser.enemyCrewArray.get(index).get(crewIndex).getRace() :
+			FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getRace();
 
 		if (rawCrewType.length() > 1) {
 
@@ -127,16 +161,6 @@ public class ShipDataParser {
 
 		return fullCrewType;
 
-	}
-
-
-	public static String getAEEnabled () { return getAEEnabled(0); }
-	public static String getAEEnabled ( int index ) {
-		if (FTLAdventureVisualiser.gameStateArray.get(index).isDLCEnabled()) {
-			return "Advanced";
-		} else {
-			return "";
-		}
 	}
 
 
@@ -160,8 +184,6 @@ public class ShipDataParser {
 	public static int getRebelFleetDistance ( int index ) {
 
 		// TODO test if this really works
-		// TODO calculate distance from offset to pixel position current beacon player is at. Ask Vhati on how to get pixel coords of current beacon
-		// TODO make exception for The Last Stand to track proximity to BOSS instead of rebelFleet
 
 		int rebelOffset = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetOffset();
 		int rebelFudge  = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetFudge();
@@ -175,7 +197,9 @@ public class ShipDataParser {
 
 		String sb = "";
 
-		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameStateArray.get(index).getBeaconList().get(FTLAdventureVisualiser.gameStateArray.get(index).getCurrentBeaconId());
+		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameStateArray.get(index).getBeaconList().get(
+			FTLAdventureVisualiser.gameStateArray.get(index).getCurrentBeaconId()
+		);
 
 		if (FTLAdventureVisualiser.environmentArray.get(index).isRedGiantPresent()) {
 			sb += "Solar Flare Danger; ";

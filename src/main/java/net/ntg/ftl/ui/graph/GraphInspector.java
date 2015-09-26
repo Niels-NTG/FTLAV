@@ -66,11 +66,11 @@ public class GraphInspector extends JToolBar {
 	private static String CREW_SKILL_WEAPON = "Weapon Skill";
 	private static String CREW_SKILL_REPAIR = "Repair Skill";
 	private static String CREW_SKILL_COMBAT = "Combat Skill";
-	private static String CREW_REPAIRS      = "Total Repairs";         // TODO bar graph per sector instead of line graph
-	private static String CREW_KILLS        = "Total Combat Kills";	   // TODO bar graph per sector instead of line graph
-	private static String CREW_EVASIONS     = "Total Piloted Evasions";// TODO bar graph per sector instead of line graph
-	private static String CREW_JUMPS        = "Total Jumps Survided";  // TODO bar graph per sector instead of line graph
-	private static String CREW_SKILLS       = "Skills Mastered";       // TODO bar graph per sector instead of line graph
+	private static String CREW_REPAIRS      = "Total Repairs";         // TODO difference instead of total
+	private static String CREW_KILLS        = "Total Combat Kills";	   // TODO difference instead of total
+	private static String CREW_EVASIONS     = "Total Piloted Evasions";// TODO difference instead of total
+	private static String CREW_JUMPS        = "Total Jumps Survived";  // TODO difference instead of total
+	private static String CREW_SKILLS       = "Skills Mastered";       // TODO difference instead of total
 
 	// icons
 	private static ImageIcon CREW_HEALTH_ICON       = new ImageIcon(ClassLoader.getSystemResource("crew-health.gif"));
@@ -80,7 +80,6 @@ public class GraphInspector extends JToolBar {
 	private static ImageIcon CREW_SKILL_WEAPON_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-weapon.gif"));
 	private static ImageIcon CREW_SKILL_REPAIR_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-repair.gif"));
 	private static ImageIcon CREW_SKILL_COMBAT_ICON = new ImageIcon(ClassLoader.getSystemResource("crew-combat.gif"));
-
 
 
 	public GraphInspector (FTLFrame frame) {

@@ -235,9 +235,6 @@ public class FTLFrame extends JFrame {
 
 				if ( gameStateWatcherBtn.isSelected() ) {
 					if ( lastGameState != null ) {
-						// start monitor function
-						log.info("Start monitoring save file...");
-
 						TimerTask task = new FileWatcher( chosenFile ) {
 							protected void onChange( File file ) {
 								// here we code the action on a change
@@ -505,19 +502,25 @@ public class FTLFrame extends JFrame {
 			FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
 
 			ArrayList<SavedGameParser.CrewState> currentPlayerCrew = new ArrayList<SavedGameParser.CrewState>();
+			ArrayList<SavedGameParser.CrewState> currentEnemyCrew = new ArrayList<SavedGameParser.CrewState>();
 			for (int i = 0; i < currentGameState.getPlayerShipState().getCrewList().size(); i++) {
 				if (currentGameState.getPlayerShipState().getCrewList().get(i).isPlayerControlled()) {
 					currentPlayerCrew.add(currentGameState.getPlayerShipState().getCrewList().get(i));
+				} else {
+					currentEnemyCrew.add(currentGameState.getPlayerShipState().getCrewList().get(i));
 				}
 			}
 			if (currentGameState.getNearbyShipState() != null) {
 				for (int i = 0; i < currentGameState.getNearbyShipState().getCrewList().size(); i++) {
 					if (currentGameState.getNearbyShipState().getCrewList().get(i).isPlayerControlled()) {
 						currentPlayerCrew.add(currentGameState.getNearbyShipState().getCrewList().get(i));
+					} else {
+						currentEnemyCrew.add(currentGameState.getNearbyShipState().getCrewList().get(i));
 					}
 				}
 			}
 			FTLAdventureVisualiser.playerCrewArray.add(currentPlayerCrew);
+			FTLAdventureVisualiser.enemyCrewArray.add(currentEnemyCrew);
 
 			FTLAdventureVisualiser.sectorArray.clear();
 			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
@@ -538,7 +541,7 @@ public class FTLFrame extends JFrame {
 				columnsOffset += myColumns.get(i).size();
 			}
 
-			if (currentGameState.getEncounter().getText().toLowerCase().contains("giant alien spiders!")) {
+			if (currentGameState.getEncounter().getText().contains("giant alien spiders!")) {
 				log.info("\n" +
 					"     /^\\ ___ /^\\    \n"+
 					"    //^\\(o o)/^\\\\  \n"+

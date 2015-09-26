@@ -146,8 +146,6 @@ public class GraphRenderer extends PApplet {
 		hudColor.put( "SYSTEM_HACKED", color( 212, 70, 253 ) );		// magenta				(system status color)
 		hudColor.put( "SYSTEM_IONIZED", color( 133, 231, 237 ) );	// cyan					(system status color)
 
-		background(hudColor.get("BG_DARK"));
-
 	}
 
 
@@ -300,7 +298,6 @@ public class GraphRenderer extends PApplet {
 	private void drawTitle( int latest ) {
 
 		// TODO title rendering and typography in style of ship window header title
-		// TODO renderer image of spaceship exterior next to written information
 
 		int shipNameTextSize = 39;
 		int textSize         = 13;
@@ -312,7 +309,7 @@ public class GraphRenderer extends PApplet {
 		String shipType      = ShipDataParser.getFullShipType(latest);
 		int score            = ShipDataParser.getCurrentScore(latest);
 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
-		String ae            = ShipDataParser.getAEEnabled(latest);
+		String ae            = FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " Advanced" : "";
 
 		pg.noStroke();
 
