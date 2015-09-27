@@ -69,6 +69,7 @@ public class CreateCSV {
 		// Encounter
 			"HAZARDS,"+
 			"EVENT TEXT,"+
+			"STORE,"+
 		// Supplies
 			"SCRAP,"+
 			"HULL,"+
@@ -279,6 +280,8 @@ public class CreateCSV {
 				fw.append(DELIMITER);
 				fw.append("\"" + FTLAdventureVisualiser.gameStateArray.get(i).getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
 				fw.append(DELIMITER);
+				fw.append("\"" + ShipDataParser.getStoreListing(i) + "\"");
+				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt()));
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.shipStateArray.get(i).getHullAmt()));
@@ -395,9 +398,9 @@ public class CreateCSV {
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.shipStateArray.get(i).getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
 				fw.append(DELIMITER);
-				fw.append(ShipDataParser.getAugmentListing(i));
+				fw.append("\"" + ShipDataParser.getAugmentListing(i) + "\"");
 				fw.append(DELIMITER);
-				fw.append(ShipDataParser.getCargoListing(i));
+				fw.append("\"" + ShipDataParser.getCargoListing(i) + "\"");
 				fw.append(DELIMITER);
 				for (int c = 0; c < FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired(); c++) {
 					try { fw.append(FTLAdventureVisualiser.playerCrewArray.get(i).get(c).getName()); } catch (IndexOutOfBoundsException e) {}
@@ -546,7 +549,7 @@ public class CreateCSV {
 					fw.append(DELIMITER);
 					fw.append(Integer.toString(FTLAdventureVisualiser.nearbyShipStateArray.get(i).getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
 					fw.append(DELIMITER);
-					fw.append(ShipDataParser.getNearbyShipAugmentListing(i));
+					fw.append("\"" + ShipDataParser.getNearbyShipAugmentListing(i) + "\"");
 					fw.append(DELIMITER);
 					for (int c = 0; c < maxEnemyCrewSize; c++) {
 						try { fw.append(FTLAdventureVisualiser.enemyCrewArray.get(i).get(c).getName()); } catch (IndexOutOfBoundsException e) {}

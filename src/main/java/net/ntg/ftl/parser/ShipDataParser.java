@@ -106,27 +106,54 @@ public class ShipDataParser {
 	public static String getCargoListing ( int index ) {
 		String cargo = "";
 		for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().size(); i++) {
-			cargo += FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().get(i) + ". ";
+			cargo += FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().get(i) + ", ";
 		}
-		return cargo.replaceAll("_"," ");
+		return cargo.replaceAll("_"," ").replaceAll(",\\s$","");
 	}
 
 
 	public static String getAugmentListing ( int index ) {
 		String aug = "";
 		for (int i = 0; i < FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().size(); i++) {
-			aug += FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().get(i) + ". ";
+			aug += FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().get(i) + ", ";
 		}
-		return aug.replaceAll("_"," ");
+		return aug.replaceAll("_"," ").replaceAll(",\\s$","");
 	}
 
 
 	public static String getNearbyShipAugmentListing ( int index ) {
 		String aug = "";
 		for (int i = 0; i < FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().size(); i++) {
-			aug += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().get(i) + ". ";
+			aug += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().get(i) + ", ";
 		}
-		return aug.replaceAll("_"," ");
+		return aug.replaceAll("_"," ").replaceAll(",\\s$","");
+	}
+
+
+	public static String getStoreListing ( int index ) {
+
+		String storeItems = "";
+
+		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameStateArray.get(index).getBeaconList().get(
+			FTLAdventureVisualiser.gameStateArray.get(index).getCurrentBeaconId()
+		);
+
+		if (beacon.getStore() != null) {
+			for (int i = 0; i < beacon.getStore().getShelfList().size(); i++) {
+				storeItems.replaceAll(",\\s$","");
+				storeItems += beacon.getStore().getShelfList().get(i).getItemType().toString() + ": ";
+				for (int k = 0; k < beacon.getStore().getShelfList().get(i).getItems().size(); k++) {
+					if (beacon.getStore().getShelfList().get(i).getItemType().toString().equals("Crew")) {
+						storeItems += getFullCrewType(beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId()) + ", ";
+					} else {
+						storeItems += beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId() + ", ";
+					}
+				}
+			}
+		}
+
+		return storeItems.replaceAll("_"," ");
+
 	}
 
 
@@ -137,12 +164,14 @@ public class ShipDataParser {
 		return getFullCrewType(index, crewIndex, false);
 	}
 	public static String getFullCrewType ( int index, int crewIndex, boolean isEnemyCrew ) {
-
-		String fullCrewType = "";
-
 		String rawCrewType = isEnemyCrew ?
 			FTLAdventureVisualiser.enemyCrewArray.get(index).get(crewIndex).getRace() :
 			FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getRace();
+		return getFullCrewType(rawCrewType);
+	}
+	private static String getFullCrewType ( String rawCrewType ) {
+
+		String fullCrewType = "";
 
 		if (rawCrewType.length() > 1) {
 
