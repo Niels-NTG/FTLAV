@@ -64,6 +64,8 @@ public class CreateCSV {
 			"SECTOR NUMBER,"+
 			"SECTOR TYPE,"+
 			"SECTOR TITLE,"+
+			"FLEET ADVANCEMENT,"+
+			"SCORE,"+
 		// Encounter
 			"HAZARDS,"+
 			"EVENT TEXT,"+
@@ -269,9 +271,13 @@ public class CreateCSV {
 				fw.append(DELIMITER);
 				fw.append(FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle());
 				fw.append(DELIMITER);
+				fw.append(ShipDataParser.getRebelFleetAdvancement(i) + "%");
+				fw.append(DELIMITER);
+				fw.append(Integer.toString(ShipDataParser.getCurrentScore(i)));
+				fw.append(DELIMITER);
 				fw.append(ShipDataParser.getBeaconHazards(i));
 				fw.append(DELIMITER);
-				fw.append(FTLAdventureVisualiser.gameStateArray.get(i).getEncounter().getText());
+				fw.append("\"" + FTLAdventureVisualiser.gameStateArray.get(i).getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt()));
 				fw.append(DELIMITER);
@@ -579,6 +585,7 @@ public class CreateCSV {
 			}
 
 			log.info("CSV file has been created");
+			log.info(FTLAdventureVisualiser.gameStateArray.get(latest).getRebelFleetOffset() + " " + FTLAdventureVisualiser.gameStateArray.get(latest).getRebelFleetFudge());
 
 		} catch (Exception e) {
 			log.error("Error creating CSV file!", e);

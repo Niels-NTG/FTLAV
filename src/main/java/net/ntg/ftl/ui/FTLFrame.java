@@ -66,6 +66,7 @@ public class FTLFrame extends JFrame {
 	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
 	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private ImageIcon exportImageIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private ImageIcon exportDataIcon = new ImageIcon(ClassLoader.getSystemResource("table.gif"));
 	private ImageIcon helpIcon  = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private URL helpPage = ClassLoader.getSystemResource("help.html");
@@ -139,7 +140,7 @@ public class FTLFrame extends JFrame {
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		final JButton exportDataBtn = new JButton("Export data"); // TODO export data icon
+		final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
 		JButton helpBtn = new JButton("Help", helpIcon);
 
 
@@ -245,7 +246,7 @@ public class FTLFrame extends JFrame {
 							}
 						};
 						Timer timer = new Timer();
-						timer.schedule( task , new Date(), 2000 );
+						timer.schedule( task , new Date(), 1000 );
 
 					} else {
 						gameStateWatcherBtn.doClick();
@@ -301,7 +302,7 @@ public class FTLFrame extends JFrame {
 				JFileChooser exportChooser = new JFileChooser();
 				exportChooser.setCurrentDirectory(null);
 				exportChooser.setFileHidingEnabled(true);
-				exportChooser.setDialogTitle("Export all data as CSV file");
+				exportChooser.setDialogTitle("Export complete dataset as CSV file");
 
 				int chooserResponse = exportChooser.showSaveDialog(null);
 
