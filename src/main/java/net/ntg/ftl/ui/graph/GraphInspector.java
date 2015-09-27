@@ -40,8 +40,8 @@ public class GraphInspector extends JToolBar {
 	private static String TOTAL_BEACONS  = "Total Beacons Explored";
 	private static String TOTAL_SCRAP    = "Total Scrap Collected";
 	private static String TOTAL_CREW     = "Total Crew Hired";
-	// TODO distance to rebel fleet relative to player
-	// TODO bar graph per sector
+	private static String FLEET_ADVANCE  = "Fleet Advancement";
+	private static String SCORE          = "Score";
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
@@ -58,7 +58,7 @@ public class GraphInspector extends JToolBar {
 	// TODO make inspector more compact by subsituting text with icons in a grid. New method in TogglePanel to make buttons that fit next to each other
 	private ArrayList<TogglePanel> crewPanelArray = new ArrayList<TogglePanel>();
 	private static String CREW_NAME         = "Name";
-	private static String CREW_RACE         = "Kind"; // battle = Anti Personel Drone, energy = Zoltan, anaerobic = Lanius
+	private static String CREW_RACE         = "Kind";
 	private static String CREW_HEALTH       = "Health"; // part of getMaxHealth()
 	private static String CREW_SKILL_PILOT  = "Pilot Skill";
 	private static String CREW_SKILL_ENGINE = "Engine Skill";
@@ -106,16 +106,18 @@ public class GraphInspector extends JToolBar {
 
 			// Ship Log
 			shipLogPanel = new TogglePanel();
-			shipLogPanel.setBorder(BorderFactory.createTitledBorder("Ship Log"));
+			shipLogPanel.setBorder(BorderFactory.createTitledBorder("Graph Ship Log"));
 			shipLogPanel.addToggle(TOTAL_DEFEATED, false);
 			shipLogPanel.addToggle(TOTAL_BEACONS, false);
 			shipLogPanel.addToggle(TOTAL_SCRAP, false);
 			shipLogPanel.addToggle(TOTAL_CREW, false);
+			shipLogPanel.addToggle(FLEET_ADVANCE, false);
+			shipLogPanel.addToggle(SCORE, false);
 			this.add(shipLogPanel);
 
 			// Ship Supplies
 			suppliesPanel = new TogglePanel();
-			suppliesPanel.setBorder(BorderFactory.createTitledBorder("Ship Supplies"));
+			suppliesPanel.setBorder(BorderFactory.createTitledBorder("Graph Ship Supplies"));
 			suppliesPanel.addToggle(SCRAP, false);
 			suppliesPanel.addToggle(HULL, false);
 			suppliesPanel.addToggle(FUEL, false);
@@ -145,6 +147,8 @@ public class GraphInspector extends JToolBar {
 		shipLogPanel.setValue(TOTAL_BEACONS, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalBeaconsExplored());
 		shipLogPanel.setValue(TOTAL_SCRAP, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalScrapCollected());
 		shipLogPanel.setValue(TOTAL_CREW, FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired());
+		shipLogPanel.setValue(FLEET_ADVANCE, ShipDataParser.getRebelFleetAdvancement(latest));
+		shipLogPanel.setValue(SCORE, ShipDataParser.getCurrentScore(latest));
 
 		if (shipLogPanel.getState(TOTAL_DEFEATED).isSelected()) {
 			ArrayList<Integer> intArray = new ArrayList<Integer>();
@@ -176,6 +180,22 @@ public class GraphInspector extends JToolBar {
 				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalCrewHired());
 			}
 			GraphRenderer.superArray.put(TOTAL_CREW, intArray);
+		}
+
+		if (shipLogPanel.getState(FLEET_ADVANCE).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(ShipDataParser.getRebelFleetAdvancement(i));
+			}
+			GraphRenderer.superArray.put(FLEET_ADVANCE, intArray);
+		}
+
+		if (shipLogPanel.getState(SCORE).isSelected()) {
+			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
+				intArray.add(ShipDataParser.getCurrentScore(i));
+			}
+			GraphRenderer.superArray.put(SCORE, intArray);
 		}
 
 

@@ -175,8 +175,24 @@ public class GraphRenderer extends PApplet {
 
 				// graph line
 				int[] gradient;
-				if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+				if (lineLabel.contains("HEALTH") ||
+					lineLabel.contains(" SKILL") ||
+					lineLabel.contains("TOTAL REPAIRS") ||
+					lineLabel.contains("TOTAL COMBAT") ||
+					lineLabel.contains("TOTAL PILOTED") ||
+					lineLabel.contains("TOTAL JUMPS") ||
+					lineLabel.contains("SKILLS MASTERED")
+				) {
 					gradient = purpleGlow;
+				} else if (
+					lineLabel.contains("TOTAL SHIPS DEFEATED") ||
+					lineLabel.contains("TOTAL BEACONS EXPLORED") ||
+					lineLabel.contains("TOTAL SCRAP COLLECTED") ||
+					lineLabel.contains("TOTAL CREW HIRED") ||
+					lineLabel.contains("FLEET") ||
+					lineLabel.contains("SCORE")
+				) {
+					gradient = redGlow;
 				} else {
 					gradient = blueGlow;
 				}
@@ -465,7 +481,9 @@ public class GraphRenderer extends PApplet {
 			pg.textFont( mainFont13, textSize );
 			pg.textAlign( LEFT, BOTTOM );
 
-			if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+			if (lineLabel.contains("HEALTH") ||
+				lineLabel.contains(" SKILL")
+			) {
 				keyPos = xPos + padding + crewHealth.width + padding + pg.textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
 			} else {
 				keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
@@ -495,7 +513,14 @@ public class GraphRenderer extends PApplet {
 			// label key
 			pg.tint(hudColor.get("HEADERTEXT_ALT"));
 			pg.fill(hudColor.get("HEADERTEXT_ALT"));
-			if (lineLabel.contains("HEALTH") || lineLabel.contains("SKILL")) {
+			if (lineLabel.contains("HEALTH") ||
+				lineLabel.contains(" SKILL") ||
+				lineLabel.contains("TOTAL REPAIRS") ||
+				lineLabel.contains("TOTAL COMBAT") ||
+				lineLabel.contains("TOTAL PILOTED") ||
+				lineLabel.contains("TOTAL JUMPS") ||
+				lineLabel.contains("SKILLS MASTERED")
+			) {
 				switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
 					case "HEALTH" :
 						pg.image(crewHealth, xPos + padding, yPos - crewHealth.height);
@@ -525,7 +550,9 @@ public class GraphRenderer extends PApplet {
 						pg.image(crewCombat, xPos + padding, yPos - crewCombat.height);
 						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
 					break;
-					default : break;
+					default :
+						pg.text(lineLabel.replaceAll("_"," "), xPos + padding, yPos - padding);
+					break;
 				}
 			} else {
 				pg.text( lineLabel, xPos + padding, yPos - padding );
