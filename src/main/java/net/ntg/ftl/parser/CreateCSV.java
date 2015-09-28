@@ -65,6 +65,10 @@ public class CreateCSV {
 			"SECTOR TYPE,"+
 			"SECTOR TITLE,"+
 			"FLEET ADVANCEMENT,"+
+		// LOG
+			"TOTAL SHIPS DEFEATED,"+
+			"TOTAL SCRAP COLLECTED,"+
+			"TOTAL CREW HIRED,"+
 			"SCORE,"+
 		// Encounter
 			"HAZARDS,"+
@@ -274,9 +278,15 @@ public class CreateCSV {
 				fw.append(DELIMITER);
 				fw.append(ShipDataParser.getRebelFleetAdvancement(i) + "%");
 				fw.append(DELIMITER);
+				fw.append(Integer.toString(FTLAdventureVisualiser.gameStateArray.get(i).getTotalShipsDefeated()));
+				fw.append(DELIMITER);
+				fw.append(Integer.toString(FTLAdventureVisualiser.gameStateArray.get(i).getTotalScrapCollected()));
+				fw.append(DELIMITER);
+				fw.append(Integer.toString(FTLAdventureVisualiser.gameStateArray.get(i).getTotalCrewHired()));
+				fw.append(DELIMITER);
 				fw.append(Integer.toString(ShipDataParser.getCurrentScore(i)));
 				fw.append(DELIMITER);
-				fw.append(ShipDataParser.getBeaconHazards(i));
+				fw.append("\"" + ShipDataParser.getBeaconHazards(i) + "\"");
 				fw.append(DELIMITER);
 				fw.append("\"" + FTLAdventureVisualiser.gameStateArray.get(i).getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
 				fw.append(DELIMITER);

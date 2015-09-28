@@ -230,36 +230,36 @@ public class ShipDataParser {
 		);
 
 		if (FTLAdventureVisualiser.environmentArray.get(index).isRedGiantPresent()) {
-			sb += "Solar Flares. ";
+			sb += "Solar Flares, ";
 		}
 		if (FTLAdventureVisualiser.environmentArray.get(index).isPulsarPresent()) {
-			sb += "Pulsar Star. ";
+			sb += "Pulsar Star, ";
 		}
 		if (FTLAdventureVisualiser.environmentArray.get(index).isPDSPresent()) {
 			if (FTLAdventureVisualiser.environmentArray.get(index).getVulnerableShips() == SavedGameParser.HazardVulnerability.NEARBY_SHIP) {
-				sb += "Allied Planetary Defense System. ";
+				sb += "Allied Planetary Defense System, ";
 			} else {
-				sb += "Hostile Planetary Defense System. ";
+				sb += "Hostile Planetary Defense System, ";
 			}
 		}
 		if (FTLAdventureVisualiser.environmentArray.get(index).getAsteroidField() != null) {
-			sb += "Astroid Field. ";
+			sb += "Asteroid Field, ";
 		}
 		if (beacon.isEnemyPresent()) {
-			sb += "Enemy Ship. ";
+			sb += "Enemy Ship, ";
 		}
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) {
-			sb += "Rebel Fleet. ";
+			sb += "Rebel Fleet, ";
 		}
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) {
-			sb += "Federation Fleet. ";
+			sb += "Federation Fleet, ";
 		}
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) {
-			sb += "Rebel & Federation Fleet. ";
+			sb += "Rebel & Federation Fleet, ";
 		}
 		// TODO Nebula Storm event
 
-		return sb;
+		return sb.replaceAll(",\\s$","");
 
 	}
 

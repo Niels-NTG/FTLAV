@@ -24,7 +24,7 @@ It’s possible to track data from games that are already ongoing. However, it�
 
 *FTLAV is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher.*
 
-*FTLAV is designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com 
+*FTLAV is designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com*
 
 *It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.*
 
