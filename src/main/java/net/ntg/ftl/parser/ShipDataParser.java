@@ -202,7 +202,7 @@ public class ShipDataParser {
 		switch (FTLAdventureVisualiser.gameStateArray.get(index).getDifficulty().toString()) {
 			case "EASY" : dm = 1f;   break;
 			case "HARD" : dm = 1.5f; break;
-			default     : dm = 1.5f; break;
+			default     : dm = 1.25f; break;
 		}
 
 		return Math.round( (s + 10 * b + 20 * d) * dm );
