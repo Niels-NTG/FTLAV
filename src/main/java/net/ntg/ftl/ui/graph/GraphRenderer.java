@@ -45,14 +45,6 @@ public class GraphRenderer extends PApplet {
 	PFont headerFont;
 	PFont headerFontAlt;
 
-	PImage crewCombat;
-	PImage crewEngine;
-	PImage crewHealth;
-	PImage crewPilot;
-	PImage crewRepair;
-	PImage crewShield;
-	PImage crewWeapon;
-
 	int[] blueGlow = {
 		color(235, 245, 227, 255),
 		color(69, 110, 112, 226),
@@ -119,14 +111,6 @@ public class GraphRenderer extends PApplet {
 		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
 		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
 		headerFontAlt = loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
-
-		crewCombat = loadImage(ClassLoader.getSystemResource("graph/crew-combat.gif").toString());
-		crewEngine = loadImage(ClassLoader.getSystemResource("graph/crew-engine.gif").toString());
-		crewHealth = loadImage(ClassLoader.getSystemResource("graph/crew-health.gif").toString());
-		crewPilot  = loadImage(ClassLoader.getSystemResource("graph/crew-pilot.gif").toString());
-		crewRepair = loadImage(ClassLoader.getSystemResource("graph/crew-repair.gif").toString());
-		crewShield = loadImage(ClassLoader.getSystemResource("graph/crew-shield.gif").toString());
-		crewWeapon = loadImage(ClassLoader.getSystemResource("graph/crew-weapon.gif").toString());
 
 		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
 		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
@@ -481,13 +465,8 @@ public class GraphRenderer extends PApplet {
 			pg.textFont( mainFont13, textSize );
 			pg.textAlign( LEFT, BOTTOM );
 
-			if (lineLabel.contains("HEALTH") ||
-				lineLabel.contains(" SKILL")
-			) {
-				keyPos = xPos + padding + crewHealth.width + padding + pg.textWidth(lineLabel.replaceAll("_(.+)","")) + padding;
-			} else {
-				keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
-			}
+			keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
+
 			// connecting line
 			pg.noFill();
 			pg.stroke( hudColor.get("BORDER") );
@@ -513,50 +492,7 @@ public class GraphRenderer extends PApplet {
 			// label key
 			pg.tint(hudColor.get("HEADERTEXT_ALT"));
 			pg.fill(hudColor.get("HEADERTEXT_ALT"));
-			if (lineLabel.contains("HEALTH") ||
-				lineLabel.contains(" SKILL") ||
-				lineLabel.contains("TOTAL REPAIRS") ||
-				lineLabel.contains("TOTAL COMBAT") ||
-				lineLabel.contains("TOTAL PILOTED") ||
-				lineLabel.contains("TOTAL JUMPS") ||
-				lineLabel.contains("SKILLS MASTERED")
-			) {
-				switch (lineLabel.replaceAll("^([\\w\\-\\s]+)_","")) {
-					case "HEALTH" :
-						pg.image(crewHealth, xPos + padding, yPos - crewHealth.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewHealth.width + padding, yPos - padding);
-					break;
-					case "PILOT SKILL" :
-						pg.image(crewPilot, xPos + padding, yPos - crewPilot.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewPilot.width + padding, yPos - padding);
-					break;
-					case "ENGINE SKILL" :
-						pg.image(crewEngine, xPos + padding, yPos - crewEngine.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewEngine.width + padding, yPos - padding);
-					break;
-					case "SHIELD SKILL" :
-						pg.image(crewShield, xPos + padding, yPos - crewShield.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewShield.width + padding, yPos - padding);
-					break;
-					case "WEAPON SKILL" :
-						pg.image(crewWeapon, xPos + padding, yPos - crewWeapon.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewWeapon.width + padding, yPos - padding);
-					break;
-					case "REPAIR SKILL" :
-						pg.image(crewRepair, xPos + padding, yPos - crewRepair.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewRepair.width + padding, yPos - padding);
-					break;
-					case "COMBAT SKILL" :
-						pg.image(crewCombat, xPos + padding, yPos - crewCombat.height);
-						pg.text(lineLabel.replaceAll("_(.+)",""), xPos + padding + crewCombat.width + padding, yPos - padding);
-					break;
-					default :
-						pg.text(lineLabel.replaceAll("_"," "), xPos + padding, yPos - padding);
-					break;
-				}
-			} else {
-				pg.text( lineLabel, xPos + padding, yPos - padding );
-			}
+			pg.text( lineLabel, xPos + padding, yPos - padding );
 
 			// label value
 			pg.beginShape();
