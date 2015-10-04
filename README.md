@@ -9,6 +9,8 @@ Here’s an example of a full FTL game from beginning to end:
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png" /></a>
 
 ## Usage
+Before you do anything make sure you have FTL: Faster Than Light installed and have downloaded the [latest version of FTLAV from the releases page](https://github.com/Niels-NTG/FTLAV/releases). FTLAV is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher. It’s designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com or some other place. It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.
+
 Start FTL: Faster Than Light; start a new game or continue an existing one. Now start FTLAV. If it's your first time it will ask where your FTL data is located. After this, click ***Open*** and select the file `continue.sav` (this file contains all information regarding your current run). 
 
 If the selected file is valid you will be presented with a second window showing an empty graph. In the main window you can select the types of data you want the graph to keep track of. You can toggle these on or off at any time without loosing any data. Please note that when toggling changes won’t show up instantly, but only when the current gamestate is updated.
@@ -21,12 +23,6 @@ If you get a game-over by either loosing or winning the game, FTL will delete `c
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/game2.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/game2.png" /></a>
 
 It’s possible to track data from games that are already ongoing. However, it’s not possible to look into the past from the moment you’ve started tracking. This also means that if you close FTLAV, all data from before the current beacon will be lost. You can however open and close FTL at any moment without using any graph data.
-
-*FTLAV is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher.*
-
-*FTLAV is designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com*
-
-*It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.*
 
 
 ## Roadmap
@@ -75,35 +71,44 @@ It’s possible to track data from games that are already ongoing. However, it�
 
 - Export the full dataset as a CSV-file
 
+### Version 3 (TBA)
+**Data types**
+
+- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per beacon
+- System upgrades
+- Reactor capacity
+
+**Graph Features**
+
+- Bugfix for displaying large numbers ([issue #5](https://github.com/Niels-NTG/FTLAV/issues/5))
+- Graph canvas gets horizontal scrollbar when information gets too dense to display it properly
+- Second axis using a different scale
+
+**UI**
+
+- Quick-refresh button
+
 ### Future versions
 **Data types**
 
 - Crew skills (pilot, engine, shields, weapons, repairing, combat) as difference per sector
-- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points) as difference per sector
-- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per sector
 - Fixed bugs involving shrinking and growing crews
 - Generate sequentially numbered backups of `continue.sav` in order to preserve current game history for tracking the same game over multiple sessions.
 
 **Graph Features**
 
 - Bar graphs to indicate totals or averages for each sector
-- Systems and system upgrades in graph
-- Second axis using a different scale
+- Systems and system upgrades in graph as icons/sprites
 - Add more interactivity by adding a mouse-over feature that reveals extra information at any beacon
 - Add more interactivity by enabling users to add annotations at any chosen beacon
 - Scatter plots?
 - Separate graphs that show overall player performance
-
-**Graph Graphics**
-
 - New graph title style
 - Crew member key next to graph title with a fitting sprite and line graph colour for each
-- Graph canvas gets horizontal scrollbar when information gets too dense to display it properly
 - PDF export
 
 **UI**
 
-- Quick-refresh button
 - More compact UI (less scrolling, more iconography, less typography)
 
 
