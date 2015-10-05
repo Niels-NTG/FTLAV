@@ -62,12 +62,12 @@ public class FTLFrame extends JFrame {
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	private ImageIcon openIcon  = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
-	private ImageIcon watchIcon = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
-	private ImageIcon graphIcon = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
+	private ImageIcon openIcon       = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	private ImageIcon watchIcon      = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
+	private ImageIcon graphIcon      = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private ImageIcon exportImageIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
 	private ImageIcon exportDataIcon = new ImageIcon(ClassLoader.getSystemResource("table.gif"));
-	private ImageIcon helpIcon  = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
+	private ImageIcon helpIcon       = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private URL helpPage = ClassLoader.getSystemResource("help.html");
 	private HyperlinkListener linkListener;
@@ -139,6 +139,7 @@ public class FTLFrame extends JFrame {
 		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		// TODO JButton "Refresh" to redraw graph
+		final JButton refreshBtn = new JButton("Refresh"); // TODO refresh icon
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
 		final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
 		JButton helpBtn = new JButton("Help", helpIcon);
@@ -146,6 +147,7 @@ public class FTLFrame extends JFrame {
 
 		gameStateWatcherBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
+		refreshBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
 		exportDataBtn.setEnabled(false);
 
@@ -207,6 +209,7 @@ public class FTLFrame extends JFrame {
 					loadGameStateFile( chosenFile );
 					gameStateWatcherBtn.setEnabled(true);
 					toggleGraphBtn.setEnabled(true);
+					refreshBtn.setEnabled(true);
 					gameStateWatcherBtn.doClick();
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
@@ -219,6 +222,7 @@ public class FTLFrame extends JFrame {
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateWatcherBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
+					refreshBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
 					exportDataBtn.setEnabled(false);
 				} else {
@@ -251,6 +255,17 @@ public class FTLFrame extends JFrame {
 					} else {
 						gameStateWatcherBtn.doClick();
 					}
+				}
+			}
+		});
+
+		refreshBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AbstractButton abstractButton = (AbstractButton) e.getSource();
+				refreshBtn.setSelected(abstractButton.getModel().isSelected());
+				if ( refreshBtn.isSelected() ) {
+					inspector.setGameState();
 				}
 			}
 		});
@@ -352,6 +367,7 @@ public class FTLFrame extends JFrame {
 		toolbar.add( gameStateOpenBtn );
 		toolbar.add( gameStateWatcherBtn );
 		toolbar.add( toggleGraphBtn );
+		toolbar.add( refreshBtn );
 		toolbar.add( Box.createHorizontalGlue() );
 		toolbar.add( exportImageBtn );
 		toolbar.add( exportDataBtn );
