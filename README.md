@@ -9,7 +9,7 @@ Here’s an example of a full FTL game from beginning to end:
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png" /></a>
 
 ## Usage
-Before you do anything make sure you have FTL: Faster Than Light installed and have downloaded the [latest version of FTLAV from the releases page](https://github.com/Niels-NTG/FTLAV/releases). FTLAV is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher. It’s designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com or some other place. It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.
+Before you do anything make sure you have FTL: Faster Than Light installed and downloaded the [latest version of FTLAV from the releases page](https://github.com/Niels-NTG/FTLAV/releases). This application is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher. It’s designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com or some other place. It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.
 
 Start FTL: Faster Than Light; start a new game or continue an existing one. Now start FTLAV. If it's your first time it will ask where your FTL data is located. After this, click ***Open*** and select the file `continue.sav` (this file contains all information regarding your current run). 
 

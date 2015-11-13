@@ -261,7 +261,7 @@ public class CreateCSV {
 				").csv"
 			);
 
-			fw.append(fileHeader.toString());
+			fw.append(fileHeader);
 			fw.append(NEW_LINE_SEPARATOR);
 
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {

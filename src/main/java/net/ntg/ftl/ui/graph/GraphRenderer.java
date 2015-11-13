@@ -298,6 +298,7 @@ public class GraphRenderer extends PApplet {
 	private void drawTitle( int latest ) {
 
 		// TODO title rendering and typography in style of ship window header title
+		// TODO draw crew member bios next to ship name
 
 		int shipNameTextSize = 39;
 		int textSize         = 13;

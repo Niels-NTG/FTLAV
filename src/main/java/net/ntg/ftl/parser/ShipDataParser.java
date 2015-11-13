@@ -200,12 +200,13 @@ public class ShipDataParser {
 		int d = FTLAdventureVisualiser.gameStateArray.get(index).getTotalShipsDefeated();
 		float dm;
 		switch (FTLAdventureVisualiser.gameStateArray.get(index).getDifficulty().toString()) {
-			case "EASY" : dm = 1f;   break;
-			case "HARD" : dm = 1.5f; break;
-			default     : dm = 1.25f; break;
+			case "EASY"  : dm = 1.0f; break;
+			case "NORMAL": dm = 1.25f;break;
+			case "HARD"  : dm = 1.5f; break;
+			default      : dm = 1.0f; break;
 		}
 
-		return Math.round( (s + 10 * b + 20 * d) * dm );
+		return (int)((s + 10*b + 20*d) * dm);
 
 	}
 
@@ -257,6 +258,9 @@ public class ShipDataParser {
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) {
 			sb += "Rebel & Federation Fleet, ";
 		}
+		// if (FTLAdventureVisualiser.gameStateArray.get(index).getStateVar("nebula") != null) {
+
+		// }
 		// TODO Nebula Storm event
 
 		return sb.replaceAll(",\\s$","");
