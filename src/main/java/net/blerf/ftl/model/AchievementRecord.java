@@ -16,7 +16,7 @@ public class AchievementRecord {
 	private Difficulty typeCDiff = null;
 
 
-	public AchievementRecord( String achievementId, Difficulty difficulty ) {
+	public AchievementRecord(String achievementId, Difficulty difficulty) {
 		this.achievementId = achievementId;
 		this.difficulty = difficulty;
 	}
@@ -24,7 +24,7 @@ public class AchievementRecord {
 	/**
 	 * Copy constructor.
 	 */
-	public AchievementRecord( AchievementRecord srcAch ) {
+	public AchievementRecord(AchievementRecord srcAch) {
 		achievementId = srcAch.getAchievementId();
 		difficulty = srcAch.getDifficulty();
 
@@ -33,10 +33,10 @@ public class AchievementRecord {
 		typeCDiff = srcAch.getCompletedWithTypeC();
 	}
 
-	public void setAchievementId( String s ) { achievementId = s; }
+	public void setAchievementId(String s) { achievementId = s; }
 	public String getAchievementId() { return achievementId; }
 
-	public void setDifficulty( Difficulty d ) { difficulty = d; }
+	public void setDifficulty(Difficulty d) { difficulty = d; }
 	public Difficulty getDifficulty() { return difficulty; }
 
 	/**
@@ -52,9 +52,9 @@ public class AchievementRecord {
 	 *
 	 * @param d difficulty for that run, or null
 	 */
-	public void setCompletedWithTypeA( Difficulty d ) { typeADiff = d; }
-	public void setCompletedWithTypeB( Difficulty d ) { typeBDiff = d; }
-	public void setCompletedWithTypeC( Difficulty d ) { typeCDiff = d; }
+	public void setCompletedWithTypeA(Difficulty d) { typeADiff = d; }
+	public void setCompletedWithTypeB(Difficulty d) { typeBDiff = d; }
+	public void setCompletedWithTypeC(Difficulty d) { typeCDiff = d; }
 	public Difficulty getCompletedWithTypeA() { return typeADiff; }
 	public Difficulty getCompletedWithTypeB() { return typeBDiff; }
 	public Difficulty getCompletedWithTypeC() { return typeCDiff; }
@@ -75,19 +75,19 @@ public class AchievementRecord {
 	}
 
 
-	public static AchievementRecord getFromListById( List<AchievementRecord> achList, String achievementId ) {
-		for ( AchievementRecord rec : achList ) {
-			if ( rec.getAchievementId().equals(achievementId) ) {
+	public static AchievementRecord getFromListById(List<AchievementRecord> achList, String achievementId) {
+		for (AchievementRecord rec : achList) {
+			if (rec.getAchievementId().equals(achievementId)) {
 				return rec;
 			}
 		}
 		return null;
 	}
 
-	public static void removeFromListById( List<AchievementRecord> achList, String achievementId ) {
-		for ( ListIterator<AchievementRecord> it = achList.listIterator(); it.hasNext(); ) {
+	public static void removeFromListById(List<AchievementRecord> achList, String achievementId) {
+		for (ListIterator<AchievementRecord> it = achList.listIterator(); it.hasNext();) {
 			AchievementRecord rec = it.next();
-			if ( rec.getAchievementId().equals(achievementId) ) {
+			if (rec.getAchievementId().equals(achievementId)) {
 				it.remove();
 			}
 		}

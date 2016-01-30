@@ -57,13 +57,13 @@ public class GNULibCRandom implements RandRNG {
 
 
 	@Override
-	public void srand( int newSeed ) {
-		srandom_r( newSeed, unsafeState );
+	public void srand(int newSeed) {
+		srandom_r(newSeed, unsafeState);
 	}
 
 	@Override
 	public int rand() {
-		return random_r( unsafeState );
+		return random_r(unsafeState);
 	}
 
 
@@ -79,36 +79,36 @@ public class GNULibCRandom implements RandRNG {
 	 * of randtbl[] for default usage relies on values produced by this
 	 * routine.
 	 */
-	public void srandom_r( int newSeed, RandState buf ) {
+	public void srandom_r(int newSeed, RandState buf) {
 		int statePtr = buf.getStatePtr();
 
 		// We must make sure the seed is not 0. Take arbitrarily 1 in this case.
-		if ( newSeed == 0 ) newSeed = 1;
+		if (newSeed == 0) newSeed = 1;
 
-		buf.setTbl( statePtr, newSeed );
-		if ( buf.getRandType() == TYPE_0 ) return;
+		buf.setTbl(statePtr, newSeed);
+		if (buf.getRandType() == TYPE_0) return;
 
 		int dstPtr = statePtr;
 		int word = newSeed;
 		int kc = buf.getRandDeg();
 
-		for ( int i=1; i < kc; i++ ) {
+		for (int i=1; i < kc; i++) {
 			// This does:
 			//   state[i] = (16807 * state[i - 1]) % 2147483647;
 			// but avoids overflowing 31 bits.
 			long hi = word / 127773;
 			long lo = word % 127773;
-			word = (int) ( 16807 * lo - 2836 * hi );
-			if ( word < 0 ) {
+			word = (int) (16807 * lo - 2836 * hi);
+			if (word < 0) {
 				word += 2147483647;
 			}
-			buf.setTbl( ++dstPtr, word );
+			buf.setTbl(++dstPtr, word);
 		}
-		buf.setFPtr( statePtr + buf.getRandSep() );
-		buf.setRPtr( statePtr + 0 );
+		buf.setFPtr(statePtr + buf.getRandSep());
+		buf.setRPtr(statePtr + 0);
 		kc *= 10;
-		while ( --kc >= 0 ) {
-			int discard = random_r( buf );
+		while (--kc >= 0) {
+			int discard = random_r(buf);
 		}
 	}
 
@@ -128,14 +128,14 @@ public class GNULibCRandom implements RandRNG {
 	 * pointers can't wrap on the same call by not testing the rear pointer if
 	 * the front one has wrapped.
 	 */
-	public int random_r( RandState buf ) {
+	public int random_r(RandState buf) {
 		int result;
 
 		int statePtr = buf.getStatePtr();
 
-		if ( buf.randType == TYPE_0 ) {
-			int val = ((buf.getTbl( statePtr + 0 ) * 1103515245) + 12345) & 0x7fffffff;
-			buf.setTbl( statePtr + 0, val );
+		if (buf.randType == TYPE_0) {
+			int val = ((buf.getTbl(statePtr + 0) * 1103515245) + 12345) & 0x7fffffff;
+			buf.setTbl(statePtr + 0, val);
 			result = val;
 		}
 		else {
@@ -143,24 +143,24 @@ public class GNULibCRandom implements RandRNG {
 			int rPtr = buf.getRPtr();
 			int endPtr = buf.getEndPtr();
 
-			buf.setTbl( fPtr, ( buf.getTbl( fPtr ) + buf.getTbl( rPtr ) ) );
-			int val = buf.getTbl( fPtr );
+			buf.setTbl(fPtr, (buf.getTbl(fPtr) + buf.getTbl(rPtr)));
+			int val = buf.getTbl(fPtr);
 			/* Chucking least random bit. */
 			result = (val >> 1) & 0x7fffffff;
 
 			++fPtr;
-			if ( fPtr >= endPtr ) {
+			if (fPtr >= endPtr) {
 				fPtr = statePtr;
 				++rPtr;
 			}
 			else {
 				++rPtr;
-				if ( rPtr >= endPtr ) {
+				if (rPtr >= endPtr) {
 					rPtr = statePtr;
 				}
 			}
-			buf.setFPtr( fPtr );
-			buf.setRPtr( rPtr );
+			buf.setFPtr(fPtr);
+			buf.setRPtr(rPtr);
 		}
 
 		return result;
@@ -195,25 +195,25 @@ public class GNULibCRandom implements RandRNG {
 		public RandState() {
 		}
 
-		public void setRandType( int type ) { randType = type; }
+		public void setRandType(int type) { randType = type; }
 		public int getRandType() { return randType; }
 
-		public void setRandDeg( int n ) { randDeg = n; }
+		public void setRandDeg(int n) { randDeg = n; }
 		public int getRandDeg() { return randDeg; }
 
-		public void setRandSep( int n ) { randSep = n; }
+		public void setRandSep(int n) { randSep = n; }
 		public int getRandSep() { return randSep; }
 
-		public void setTbl( int index, int n ) { randtbl[index] = n; }
-		public int getTbl( int index ) { return randtbl[index]; }
+		public void setTbl(int index, int n) { randtbl[index] = n; }
+		public int getTbl(int index) { return randtbl[index]; }
 
-		public void setStatePtr( int index ) { statePtr = index; }
+		public void setStatePtr(int index) { statePtr = index; }
 		public int getStatePtr() { return statePtr; }
 
-		public void setFPtr( int index ) { fPtr = index; }
+		public void setFPtr(int index) { fPtr = index; }
 		public int getFPtr() { return fPtr; }
 
-		public void setRPtr( int index ) { rPtr = index; }
+		public void setRPtr(int index) { rPtr = index; }
 		public int getRPtr() { return rPtr; }
 
 		public int getEndPtr() { return endPtr; }

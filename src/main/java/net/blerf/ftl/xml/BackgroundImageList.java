@@ -25,7 +25,7 @@ public class BackgroundImageList {
 		return images;
 	}
 
-	public void setImages( List<BackgroundImage> images ) {
+	public void setImages(List<BackgroundImage> images) {
 		this.images = images;
 	}
 
@@ -33,7 +33,7 @@ public class BackgroundImageList {
 		return id;
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

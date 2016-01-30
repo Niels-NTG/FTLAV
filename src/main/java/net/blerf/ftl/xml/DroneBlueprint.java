@@ -31,7 +31,7 @@ public class DroneBlueprint {
 		return id;
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -39,7 +39,7 @@ public class DroneBlueprint {
 		return type;
 	}
 
-	public void setType( String type ) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -47,7 +47,7 @@ public class DroneBlueprint {
 		return title;
 	}
 
-	public void setTitle( String title ) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -55,7 +55,7 @@ public class DroneBlueprint {
 		return shortTitle;
 	}
 
-	public void setShortTitle( String shortTitle ) {
+	public void setShortTitle(String shortTitle) {
 		this.shortTitle = shortTitle;
 	}
 
@@ -63,7 +63,7 @@ public class DroneBlueprint {
 		return desc;
 	}
 
-	public void setDescription( String desc ) {
+	public void setDescription(String desc) {
 		this.desc = desc;
 	}
 
@@ -73,7 +73,7 @@ public class DroneBlueprint {
 		return power;
 	}
 
-	public void setPower( int power ) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 
@@ -81,7 +81,7 @@ public class DroneBlueprint {
 		return cooldown;
 	}
 
-	public void setCooldown( int cooldown ) {
+	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
 
@@ -89,7 +89,7 @@ public class DroneBlueprint {
 		return dodge;
 	}
 
-	public void setDodge( int dodge ) {
+	public void setDodge(int dodge) {
 		this.dodge = dodge;
 	}
 
@@ -97,7 +97,7 @@ public class DroneBlueprint {
 		return speed;
 	}
 
-	public void setSpeed( int speed ) {
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
@@ -105,7 +105,7 @@ public class DroneBlueprint {
 		return cost;
 	}
 
-	public void setCost( int cost ) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 
@@ -113,7 +113,7 @@ public class DroneBlueprint {
 		return droneImage;
 	}
 
-	public void setDroneImage( String droneImage ) {
+	public void setDroneImage(String droneImage) {
 		this.droneImage = droneImage;
 	}
 
@@ -121,7 +121,7 @@ public class DroneBlueprint {
 		return image;
 	}
 
-	public void setImage( String image ) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -129,7 +129,7 @@ public class DroneBlueprint {
 		return weaponId;
 	}
 
-	public void setWeaponId( String weaponId ) {
+	public void setWeaponId(String weaponId) {
 		this.weaponId = weaponId;
 	}
 
@@ -137,7 +137,7 @@ public class DroneBlueprint {
 		return cost;
 	}
 
-	public void setRarity( int rarity ) {
+	public void setRarity(int rarity) {
 		this.rarity = rarity;
 	}
 

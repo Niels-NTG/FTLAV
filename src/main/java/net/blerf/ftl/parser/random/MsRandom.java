@@ -18,12 +18,11 @@ public class MsRandom implements RandRNG {
 	protected int seed = 1;
 
 
-	public MsRandom() {
-	}
+	public MsRandom() {}
 
 
 	@Override
-	public void srand( int newSeed ) {
+	public void srand(int newSeed) {
 		seed = newSeed;
 	}
 

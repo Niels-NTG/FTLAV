@@ -8,21 +8,21 @@ public class ShipAvailability {
 	private boolean unlockedC;
 
 
-	public ShipAvailability( String shipId, boolean unlockedA, boolean unlockedC ) {
+	public ShipAvailability(String shipId, boolean unlockedA, boolean unlockedC) {
 		this.shipId = shipId;
 		this.unlockedA = unlockedA;
 		this.unlockedC = unlockedC;
 	}
 
-	public ShipAvailability( String shipId ) {
-		this( shipId, false, false );
+	public ShipAvailability(String shipId) {
+		this(shipId, false, false);
 	}
 
 	/**
 	 * Copy constructor.
 	 */
-	public ShipAvailability( ShipAvailability srcAvail ) {
-		this( srcAvail.getShipId(), srcAvail.isUnlockedA(), srcAvail.isUnlockedC() );
+	public ShipAvailability(ShipAvailability srcAvail) {
+		this(srcAvail.getShipId(), srcAvail.isUnlockedA(), srcAvail.isUnlockedC());
 	}
 
 	public String getShipId() { return shipId; }
@@ -30,7 +30,7 @@ public class ShipAvailability {
 	/**
 	 * Sets whether the Type-A variant is unlocked.
 	 */
-	public void setUnlockedA( boolean b ) { unlockedA = b; }
+	public void setUnlockedA(boolean b) { unlockedA = b; }
 	public boolean isUnlockedA() { return unlockedA; }
 
 	/**
@@ -38,7 +38,7 @@ public class ShipAvailability {
 	 *
 	 * This was introduced in FTL 1.5.4.
 	 */
-	public void setUnlockedC( boolean b ) { unlockedC = b; }
+	public void setUnlockedC(boolean b) { unlockedC = b; }
 	public boolean isUnlockedC() { return unlockedC; }
 
 	@Override

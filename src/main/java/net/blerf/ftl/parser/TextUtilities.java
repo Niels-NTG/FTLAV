@@ -37,80 +37,80 @@ public class TextUtilities {
 	 * @param is a stream to read
 	 * @param description how error messages should refer to the stream, or null
 	 */
-	public static DecodeResult decodeText( InputStream is, String description ) throws IOException {
+	public static DecodeResult decodeText(InputStream is, String description) throws IOException {
 		String result = null;
 
 		byte[] buf = new byte[4096];
 		int len;
 		ByteArrayOutputStream tmpData = new ByteArrayOutputStream();
-		while ( (len = is.read(buf)) >= 0 ) {
-			tmpData.write( buf, 0, len );
+		while ((len = is.read(buf)) >= 0) {
+			tmpData.write(buf, 0, len);
 		}
 		byte[] allBytes = tmpData.toByteArray();
 		tmpData.reset();
 
 		Map<byte[],String> boms = new LinkedHashMap<byte[],String>();
-		boms.put( new byte[] {(byte)0xEF,(byte)0xBB,(byte)0xBF}, "UTF-8" );
-		boms.put( new byte[] {(byte)0xFF,(byte)0xFE}, "UTF-16LE" );
-		boms.put( new byte[] {(byte)0xFE,(byte)0xFF}, "UTF-16BE" );
+		boms.put(new byte[] {(byte)0xEF,(byte)0xBB,(byte)0xBF}, "UTF-8");
+		boms.put(new byte[] {(byte)0xFF,(byte)0xFE}, "UTF-16LE");
+		boms.put(new byte[] {(byte)0xFE,(byte)0xFF}, "UTF-16BE");
 
 		String encoding = null;
 		byte[] bom = null;
 
-		for ( Map.Entry<byte[],String> entry : boms.entrySet() ) {
+		for (Map.Entry<byte[],String> entry : boms.entrySet()) {
 			byte[] tmpBom = entry.getKey();
-			byte[] firstBytes = Arrays.copyOfRange( allBytes, 0, tmpBom.length );
-			if ( Arrays.equals( tmpBom, firstBytes ) ) {
+			byte[] firstBytes = Arrays.copyOfRange(allBytes, 0, tmpBom.length);
+			if (Arrays.equals(tmpBom, firstBytes)) {
 				encoding = entry.getValue();
 				bom = tmpBom;
 				break;
 			}
 		}
 
-		if ( encoding != null ) {
+		if (encoding != null) {
 			// This may throw CharacterCodingException.
-			CharsetDecoder decoder = Charset.forName( encoding ).newDecoder();
-			ByteBuffer byteBuffer = ByteBuffer.wrap( allBytes, bom.length, allBytes.length-bom.length );
-			result = decoder.decode( byteBuffer ).toString();
+			CharsetDecoder decoder = Charset.forName(encoding).newDecoder();
+			ByteBuffer byteBuffer = ByteBuffer.wrap(allBytes, bom.length, allBytes.length-bom.length);
+			result = decoder.decode(byteBuffer).toString();
 		}
 		else {
-			ByteBuffer byteBuffer = ByteBuffer.wrap( allBytes );
+			ByteBuffer byteBuffer = ByteBuffer.wrap(allBytes);
 
 			Map<String,Exception> errorMap = new LinkedHashMap<String,Exception>();
-			for ( String guess : new String[] {"UTF-8", "windows-1252"} ) {
+			for (String guess : new String[] {"UTF-8", "windows-1252"}) {
 				try {
 					byteBuffer.rewind();
-					byteBuffer.limit( allBytes.length );
-					CharsetDecoder decoder = Charset.forName( guess ).newDecoder();
-					result = decoder.decode( byteBuffer ).toString();
+					byteBuffer.limit(allBytes.length);
+					CharsetDecoder decoder = Charset.forName(guess).newDecoder();
+					result = decoder.decode(byteBuffer).toString();
 					encoding = guess;
 					break;
 				}
-				catch ( CharacterCodingException e ) {
-					errorMap.put( guess, e );
+				catch (CharacterCodingException e) {
+					errorMap.put(guess, e);
 				}
 			}
-			if ( encoding == null ) {
+			if (encoding == null) {
 				// All guesses failed!?
-				String msg = String.format( "Could not guess encoding for %s.", (description!=null ? "\""+description+"\"" : "a file") );
-				for ( Map.Entry<String,Exception> entry : errorMap.entrySet() ) {
-					msg += String.format( "\nFailed to decode as %s: %s", entry.getKey(), entry.getValue() );
+				String msg = String.format("Could not guess encoding for %s.", (description!=null ? "\""+description+"\"" : "a file"));
+				for (Map.Entry<String,Exception> entry : errorMap.entrySet()) {
+					msg += String.format("\nFailed to decode as %s: %s", entry.getKey(), entry.getValue());
 				}
-				throw new IOException( msg );
+				throw new IOException(msg);
 			}
 		}
 
 		// Determine the original line endings.
 		int eol = DecodeResult.EOL_NONE;
-		Matcher m = Pattern.compile( "(\r(?!\n))|((?<!\r)\n)|(\r\n)" ).matcher( result );
-		if ( m.find() ) {
-			if ( m.group(3) != null ) eol = DecodeResult.EOL_CRLF;
-			else if ( m.group(2) != null ) eol = DecodeResult.EOL_LF;
-			else if ( m.group(1) != null ) eol = DecodeResult.EOL_CR;
+		Matcher m = Pattern.compile("(\r(?!\n))|((?<!\r)\n)|(\r\n)").matcher(result);
+		if (m.find()) {
+			if (m.group(3) != null) eol = DecodeResult.EOL_CRLF;
+			else if (m.group(2) != null) eol = DecodeResult.EOL_LF;
+			else if (m.group(1) != null) eol = DecodeResult.EOL_CR;
 		}
 
-		result = result.replaceAll( "\r(?!\n)|\r\n", "\n" );
-		return new DecodeResult( result, encoding, eol, bom );
+		result = result.replaceAll("\r(?!\n)|\r\n", "\n");
+		return new DecodeResult(result, encoding, eol, bom);
 	}
 
 
@@ -124,23 +124,23 @@ public class TextUtilities {
 	 * @see net.vhati.modmanager.core.EmptyAwareSAXHandlerFactory
 	 * @see net.vhati.modmanager.core.SloppyXMLParser
 	 */
-	public static Document parseStrictOrSloppyXML( CharSequence srcSeq, String srcDescription ) throws IOException, JDOMException {
+	public static Document parseStrictOrSloppyXML(CharSequence srcSeq, String srcDescription) throws IOException, JDOMException {
 		Document doc = null;
 
 		try {
 			SAXBuilder strictParser = new SAXBuilder();
-			strictParser.setSAXHandlerFactory( new EmptyAwareSAXHandlerFactory() );
-			doc = strictParser.build( new StringReader( srcSeq.toString() ) );
+			strictParser.setSAXHandlerFactory(new EmptyAwareSAXHandlerFactory());
+			doc = strictParser.build(new StringReader(srcSeq.toString()));
 		}
-		catch ( JDOMParseException e ) {
+		catch (JDOMParseException e) {
 			// Ignore the error, and do a sloppy parse instead.
 
 			try {
 				SloppyXMLParser sloppyParser = new SloppyXMLParser();
-				doc = sloppyParser.build( srcSeq );
+				doc = sloppyParser.build(srcSeq);
 			}
-			catch ( JDOMParseException f ) {
-				throw new JDOMException( String.format( "While processing \"%s\", strict parsing failed, then sloppy parsing failed: %s", srcDescription, f.getMessage() ), f );
+			catch (JDOMParseException f) {
+				throw new JDOMException(String.format("While processing \"%s\", strict parsing failed, then sloppy parsing failed: %s", srcDescription, f.getMessage()), f);
 			}
 		}
 
@@ -168,7 +168,7 @@ public class TextUtilities {
 		public final int eol;
 		public final byte[] bom;
 
-		public DecodeResult( String text, String encoding, int eol, byte[] bom ) {
+		public DecodeResult(String text, String encoding, int eol, byte[] bom) {
 			this.text = text;
 			this.encoding = encoding;
 			this.eol = eol;
@@ -176,9 +176,9 @@ public class TextUtilities {
 		}
 
 		public String getEOLName() {
-			if ( eol == EOL_CRLF ) return "CR-LF";
-			if ( eol == EOL_LF ) return "LF";
-			if ( eol == EOL_CR ) return "CR";
+			if (eol == EOL_CRLF) return "CR-LF";
+			if (eol == EOL_LF) return "LF";
+			if (eol == EOL_CR) return "CR";
 			return "None";
 		}
 	}

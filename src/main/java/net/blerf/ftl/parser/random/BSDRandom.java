@@ -20,12 +20,11 @@ public class BSDRandom implements RandRNG {
 	protected int seed = 1;
 
 
-	public BSDRandom() {
-	}
+	public BSDRandom() {}
 
 
 	@Override
-	public void srand( int newSeed ) {
+	public void srand(int newSeed) {
 		seed = newSeed;
 	}
 

@@ -22,7 +22,7 @@ public class CreateCSV {
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
 
-	public static void writeCSV ( String fileName ) {
+	public static void writeCSV (String fileName) {
 
 		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
@@ -97,17 +97,13 @@ public class CreateCSV {
 			"WEAPONS SYSTEM POWER,"+
 			"WEAPONS SYSTEM DAMAGE,"
 		);
-		for (int i = 0; i < ShipDataParser.getWeaponSlotCount(); i++) {
-			fileHeader += ("WEAPON SLOT " + (i+1) + ",");
-		}
+		for (int i = 0; i < ShipDataParser.getWeaponSlotCount(); i++) fileHeader += "WEAPON SLOT " + (i+1) + ",";
 		fileHeader += (
 			"DRONE CONTROL SYSTEM CAPACITY,"+
 			"DRONE CONTROL SYSTEM POWER,"+
 			"DRONE CONTROL SYSTEM DAMAGE,"
 		);
-		for (int i = 0; i < ShipDataParser.getDroneSlotCount(); i++) {
-			fileHeader += ("DRONE SLOT " + (i+1) + ",");
-		}
+		for (int i = 0; i < ShipDataParser.getDroneSlotCount(); i++) fileHeader += "DRONE SLOT " + (i+1) + ",";
 		fileHeader += (
 			"MEDBAY SYSTEM CAPACITY,"+
 			"MEDBAY SYSTEM POWER,"+
@@ -185,17 +181,13 @@ public class CreateCSV {
 			"NEARBY SHIP WEAPONS SYSTEM POWER,"+
 			"NEARBY SHIP WEAPONS SYSTEM DAMAGE,"
 		);
-		for (int i = 0; i < maxNearbyShipWeaponListSize; i++) {
-			fileHeader += ("NEARBY SHIP WEAPON SLOT " + (i+1) + ",");
-		}
+		for (int i = 0; i < maxNearbyShipWeaponListSize; i++) fileHeader += ("NEARBY SHIP WEAPON SLOT " + (i+1) + ",");
 		fileHeader += (
 			"NEARBY SHIP DRONE CONTROL SYSTEM CAPACITY,"+
 			"NEARBY SHIP DRONE CONTROL SYSTEM POWER,"+
 			"NEARBY SHIP DRONE CONTROL SYSTEM DAMAGE,"
 		);
-		for (int i = 0; i < maxNearbyShipDroneListSize; i++) {
-			fileHeader += ("DRONE SLOT " + (i+1) + ",");
-		}
+		for (int i = 0; i < maxNearbyShipDroneListSize; i++) fileHeader += ("DRONE SLOT " + (i+1) + ",");
 		fileHeader += (
 			"NEARBY SHIP MEDBAY SYSTEM CAPACITY,"+
 			"NEARBY SHIP MEDBAY SYSTEM POWER,"+

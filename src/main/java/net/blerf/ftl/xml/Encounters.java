@@ -23,7 +23,7 @@ public class Encounters {
 	@XmlElement(name="ship")
 	private List<ShipEvent> shipEvents;
 
-	public void setEvents( List<FTLEvent> events ) {
+	public void setEvents(List<FTLEvent> events) {
 		this.events = events;
 	}
 
@@ -31,7 +31,7 @@ public class Encounters {
 		return events;
 	}
 
-	public void setEventLists( List<FTLEventList> eventLists ) {
+	public void setEventLists(List<FTLEventList> eventLists) {
 		this.eventLists = eventLists;
 	}
 
@@ -39,7 +39,7 @@ public class Encounters {
 		return eventLists;
 	}
 
-	public void setShipEvents( List<ShipEvent> shipEvents ) {
+	public void setShipEvents(List<ShipEvent> shipEvents) {
 		this.shipEvents = shipEvents;
 	}
 
@@ -53,12 +53,12 @@ public class Encounters {
 	 * Events and EventLists share a namespace,
 	 * so an id could belong to either.
 	 */
-	public FTLEvent getEventById( String id ) {
-		if ( id == null || events == null ) return null;
+	public FTLEvent getEventById(String id) {
+		if (id == null || events == null) return null;
 
 		FTLEvent result = null;
-		for ( FTLEvent tmpEvent : events ) {
-			if ( id.equals(tmpEvent.getId()) ) result = tmpEvent;
+		for (FTLEvent tmpEvent : events) {
+			if (id.equals(tmpEvent.getId())) result = tmpEvent;
 		}
 
 		return result;
@@ -70,12 +70,12 @@ public class Encounters {
 	 * Events and EventLists share a namespace,
 	 * so an id could belong to either.
 	 */
-	public FTLEventList getEventListById( String id ) {
-		if ( id == null || eventLists == null ) return null;
+	public FTLEventList getEventListById(String id) {
+		if (id == null || eventLists == null) return null;
 
 		FTLEventList result = null;
-		for ( FTLEventList tmpEventList : eventLists ) {
-			if ( id.equals(tmpEventList.getId()) ) result = tmpEventList;
+		for (FTLEventList tmpEventList : eventLists) {
+			if (id.equals(tmpEventList.getId())) result = tmpEventList;
 		}
 
 		return result;
@@ -87,12 +87,12 @@ public class Encounters {
 	 * Events and EventLists share a namespace,
 	 * so an id could belong to either.
 	 */
-	public ShipEvent getShipEventById( String id ) {
-		if ( id == null || shipEvents == null ) return null;
+	public ShipEvent getShipEventById(String id) {
+		if (id == null || shipEvents == null) return null;
 
 		ShipEvent result = null;
-		for ( ShipEvent tmpEvent : shipEvents ) {
-			if ( id.equals(tmpEvent.getId()) ) result = tmpEvent;
+		for (ShipEvent tmpEvent : shipEvents) {
+			if (id.equals(tmpEvent.getId())) result = tmpEvent;
 		}
 
 		return result;

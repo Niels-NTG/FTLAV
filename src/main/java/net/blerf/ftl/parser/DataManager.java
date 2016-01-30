@@ -36,7 +36,7 @@ public abstract class DataManager implements Closeable {
 	protected boolean dlcEnabledByDefault = false;
 
 
-	public static void setInstance( DataManager dataManager ) {
+	public static void setInstance(DataManager dataManager) {
 		instance = dataManager;
 	}
 
@@ -53,7 +53,7 @@ public abstract class DataManager implements Closeable {
 	public void close() {
 	}
 
-	public void setDLCEnabledByDefault( boolean b ) {
+	public void setDLCEnabledByDefault(boolean b) {
 		dlcEnabledByDefault = b;
 	}
 
@@ -61,31 +61,31 @@ public abstract class DataManager implements Closeable {
 		return dlcEnabledByDefault;
 	}
 
-	public boolean hasDataInputStream( String innerPath ) {
+	public boolean hasDataInputStream(String innerPath) {
 		throw new UnsupportedOperationException();
 	}
 
-	public InputStream getDataInputStream( String innerPath ) throws IOException {
+	public InputStream getDataInputStream(String innerPath) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean hasResourceInputStream( String innerPath ) {
+	public boolean hasResourceInputStream(String innerPath) {
 		throw new UnsupportedOperationException();
 	}
 
-	public InputStream getResourceInputStream( String innerPath ) throws IOException {
+	public InputStream getResourceInputStream(String innerPath) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
-	public void extractDataDat( File extractDir ) throws IOException {
+	public void extractDataDat(File extractDir) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
-	public void extractResourceDat( File extractDir ) throws IOException {
+	public void extractResourceDat(File extractDir) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
-	public Achievement getAchievement( String id ) {
+	public Achievement getAchievement(String id) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -93,18 +93,18 @@ public abstract class DataManager implements Closeable {
 		throw new UnsupportedOperationException();
 	}
 
-	public AugBlueprint getAugment( String id, boolean dlcEnabled ) {
+	public AugBlueprint getAugment(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public AugBlueprint getAugment( String id ) {
-		return getAugment( id, dlcEnabledByDefault );
+	public AugBlueprint getAugment(String id) {
+		return getAugment(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, AugBlueprint> getAugments( boolean dlcEnabled ) {
+	public Map<String, AugBlueprint> getAugments(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -112,21 +112,21 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, AugBlueprint> getAugments() {
-		return getAugments( dlcEnabledByDefault );
+		return getAugments(dlcEnabledByDefault);
 	}
 
-	public CrewBlueprint getCrew( String id, boolean dlcEnabled ) {
+	public CrewBlueprint getCrew(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public CrewBlueprint getCrew( String id ) {
-		return getCrew( id, dlcEnabledByDefault );
+	public CrewBlueprint getCrew(String id) {
+		return getCrew(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, CrewBlueprint> getCrews( boolean dlcEnabled ) {
+	public Map<String, CrewBlueprint> getCrews(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -134,21 +134,21 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, CrewBlueprint> getCrews() {
-		return getCrews( dlcEnabledByDefault );
+		return getCrews(dlcEnabledByDefault);
 	}
 
-	public DroneBlueprint getDrone( String id, boolean dlcEnabled ) {
+	public DroneBlueprint getDrone(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public DroneBlueprint getDrone( String id ) {
-		return getDrone( id, dlcEnabledByDefault );
+	public DroneBlueprint getDrone(String id) {
+		return getDrone(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, DroneBlueprint> getDrones( boolean dlcEnabled ) {
+	public Map<String, DroneBlueprint> getDrones(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -156,51 +156,51 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, DroneBlueprint> getDrones() {
-		return getDrones( dlcEnabledByDefault );
+		return getDrones(dlcEnabledByDefault);
 	}
 
-	public SystemBlueprint getSystem( String id, boolean dlcEnabled ) {
+	public SystemBlueprint getSystem(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public SystemBlueprint getSystem( String id ) {
-		return getSystem( id, dlcEnabledByDefault );
+	public SystemBlueprint getSystem(String id) {
+		return getSystem(id, dlcEnabledByDefault);
 	}
 
-	public WeaponBlueprint getWeapon( String id, boolean dlcEnabled ) {
+	public WeaponBlueprint getWeapon(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public WeaponBlueprint getWeapon( String id ) {
-		return getWeapon( id, dlcEnabledByDefault );
+	public WeaponBlueprint getWeapon(String id) {
+		return getWeapon(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, WeaponBlueprint> getWeapons( boolean dlcEnabled ) {
+	public Map<String, WeaponBlueprint> getWeapons(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	public Map<String, WeaponBlueprint> getWeapons() {
-		return getWeapons( dlcEnabledByDefault );
+		return getWeapons(dlcEnabledByDefault);
 	}
 
-	public ShipBlueprint getShip( String id, boolean dlcEnabled ) {
+	public ShipBlueprint getShip(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public ShipBlueprint getShip( String id ) {
-		return getShip( id, dlcEnabledByDefault );
+	public ShipBlueprint getShip(String id) {
+		return getShip(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, ShipBlueprint> getShips( boolean dlcEnabled ) {
+	public Map<String, ShipBlueprint> getShips(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -208,10 +208,10 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, ShipBlueprint> getShips() {
-		return getShips( dlcEnabledByDefault );
+		return getShips(dlcEnabledByDefault);
 	}
 
-	public Map<String, ShipBlueprint> getAutoShips( boolean dlcEnabled ) {
+	public Map<String, ShipBlueprint> getAutoShips(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -219,10 +219,10 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, ShipBlueprint> getAutoShips() {
-		return getAutoShips( dlcEnabledByDefault );
+		return getAutoShips(dlcEnabledByDefault);
 	}
 
-	public Map<String, ShipBlueprint> getPlayerShips( boolean dlcEnabled ) {
+	public Map<String, ShipBlueprint> getPlayerShips(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -230,10 +230,10 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, ShipBlueprint> getPlayerShips() {
-		return getPlayerShips( dlcEnabledByDefault );
+		return getPlayerShips(dlcEnabledByDefault);
 	}
 
-	public List<String> getPlayerShipBaseIds( boolean dlcEnabled ) {
+	public List<String> getPlayerShipBaseIds(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -241,66 +241,66 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public List<String> getPlayerShipBaseIds() {
-		return getPlayerShipBaseIds( dlcEnabledByDefault );
+		return getPlayerShipBaseIds(dlcEnabledByDefault);
 	}
 
-	public ShipBlueprint getPlayerShipVariant( String baseId, int n, boolean dlcEnabled ) {
+	public ShipBlueprint getPlayerShipVariant(String baseId, int n, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public ShipBlueprint getPlayerShipVariant( String baseId, int n ) {
-		return getPlayerShipVariant( baseId, n, dlcEnabledByDefault );
+	public ShipBlueprint getPlayerShipVariant(String baseId, int n) {
+		return getPlayerShipVariant(baseId, n, dlcEnabledByDefault);
 	}
 
-	public List<Achievement> getShipAchievements( ShipBlueprint ship, boolean dlcEnabled ) {
+	public List<Achievement> getShipAchievements(ShipBlueprint ship, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public List<Achievement> getShipAchievements( ShipBlueprint ship ) {
-		return getShipAchievements( ship, dlcEnabledByDefault );
+	public List<Achievement> getShipAchievements(ShipBlueprint ship) {
+		return getShipAchievements(ship, dlcEnabledByDefault);
 	}
 
 	public List<Achievement> getGeneralAchievements() {
 		throw new UnsupportedOperationException();
 	}
 
-	public ShipLayout getShipLayout( String id ) {
+	public ShipLayout getShipLayout(String id) {
 		throw new UnsupportedOperationException();
 	}
 
-	public ShipChassis getShipChassis( String id ) {
+	public ShipChassis getShipChassis(String id) {
 		throw new UnsupportedOperationException();
 	}
 
-	public FTLEvent getEventById( String id, boolean dlcEnabled ) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * A frontend using the global DLC default.
-	 */
-	public FTLEvent getEventById( String id ) {
-		return getEventById( id, dlcEnabledByDefault );
-	}
-
-	public FTLEventList getEventListById( String id, boolean dlcEnabled ) {
+	public FTLEvent getEventById(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public FTLEventList getEventListById( String id ) {
-		return getEventListById( id, dlcEnabledByDefault );
+	public FTLEvent getEventById(String id) {
+		return getEventById(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, Encounters> getEncounters( boolean dlcEnabled ) {
+	public FTLEventList getEventListById(String id, boolean dlcEnabled) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * A frontend using the global DLC default.
+	 */
+	public FTLEventList getEventListById(String id) {
+		return getEventListById(id, dlcEnabledByDefault);
+	}
+
+	public Map<String, Encounters> getEncounters(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -308,21 +308,21 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, Encounters> getEncounters() {
-		return getEncounters( dlcEnabledByDefault );
+		return getEncounters(dlcEnabledByDefault);
 	}
 
-	public ShipEvent getShipEventById( String id, boolean dlcEnabled ) {
+	public ShipEvent getShipEventById(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public ShipEvent getShipEventById( String id ) {
-		return getShipEventById( id, dlcEnabledByDefault );
+	public ShipEvent getShipEventById(String id) {
+		return getShipEventById(id, dlcEnabledByDefault);
 	}
 
-	public Map<String, ShipEvent> getShipEvents( boolean dlcEnabled ) {
+	public Map<String, ShipEvent> getShipEvents(boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -330,29 +330,29 @@ public abstract class DataManager implements Closeable {
 	 * A frontend using the global DLC default.
 	 */
 	public Map<String, ShipEvent> getShipEvents() {
-		return getShipEvents( dlcEnabledByDefault );
+		return getShipEvents(dlcEnabledByDefault);
 	}
 
 	public boolean getCrewSex() {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getCrewName( boolean isMale ) {
+	public String getCrewName(boolean isMale) {
 		throw new UnsupportedOperationException();
 	}
 
-	public SectorType getSectorTypeById( String id, boolean dlcEnabled ) {
+	public SectorType getSectorTypeById(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public SectorType getSectorTypeById( String id ) {
-		return getSectorTypeById( id, dlcEnabledByDefault );
+	public SectorType getSectorTypeById(String id) {
+		return getSectorTypeById(id, dlcEnabledByDefault);
 	}
 
-	public SectorDescription getSectorDescriptionById( String id ) {
+	public SectorDescription getSectorDescriptionById(String id) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -20,17 +20,17 @@ public class AdvancedFTLConstants implements FTLConstants {
 
 	public AdvancedFTLConstants() {
 		List<CrewType> mutableCrewTypes = new ArrayList<CrewType>();
-		mutableCrewTypes.add( CrewType.ANAEROBIC );
-		mutableCrewTypes.add( CrewType.BATTLE );
-		mutableCrewTypes.add( CrewType.CRYSTAL );
-		mutableCrewTypes.add( CrewType.ENERGY );
-		mutableCrewTypes.add( CrewType.ENGI );
-		mutableCrewTypes.add( CrewType.GHOST );
-		mutableCrewTypes.add( CrewType.HUMAN );
-		mutableCrewTypes.add( CrewType.MANTIS );
-		mutableCrewTypes.add( CrewType.ROCK );
-		mutableCrewTypes.add( CrewType.SLUG );
-		crewTypes = Collections.unmodifiableList( mutableCrewTypes );
+		mutableCrewTypes.add(CrewType.ANAEROBIC);
+		mutableCrewTypes.add(CrewType.BATTLE);
+		mutableCrewTypes.add(CrewType.CRYSTAL);
+		mutableCrewTypes.add(CrewType.ENERGY);
+		mutableCrewTypes.add(CrewType.ENGI);
+		mutableCrewTypes.add(CrewType.GHOST);
+		mutableCrewTypes.add(CrewType.HUMAN);
+		mutableCrewTypes.add(CrewType.MANTIS);
+		mutableCrewTypes.add(CrewType.ROCK);
+		mutableCrewTypes.add(CrewType.SLUG);
+		crewTypes = Collections.unmodifiableList(mutableCrewTypes);
 	}
 
 
@@ -39,7 +39,7 @@ public class AdvancedFTLConstants implements FTLConstants {
 
 
 	@Override
-	public int getBatteryPoolCapacity( int batterySystemCapacity ) {
+	public int getBatteryPoolCapacity(int batterySystemCapacity) {
 		return batterySystemCapacity * 2;
 	}
 
@@ -55,38 +55,38 @@ public class AdvancedFTLConstants implements FTLConstants {
 
 
 	@Override
-	public int getMasteryIntervalPilot( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 13;
+	public int getMasteryIntervalPilot(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 13;
 		return 15;
 	}
 
 	@Override
-	public int getMasteryIntervalEngine( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 13;
+	public int getMasteryIntervalEngine(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 13;
 		return 15;
 	}
 
 	@Override
-	public int getMasteryIntervalShield( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 50;
+	public int getMasteryIntervalShield(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 50;
 		return 55;
 	}
 
 	@Override
-	public int getMasteryIntervalWeapon( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 58;
+	public int getMasteryIntervalWeapon(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 58;
 		return 65;
 	}
 
 	@Override
-	public int getMasteryIntervalRepair( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 16;
+	public int getMasteryIntervalRepair(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 16;
 		return 18;
 	}
 
 	@Override
-	public int getMasteryIntervalCombat( String race ) {
-		if ( CrewType.HUMAN.getId().equals(race) ) return 7;
+	public int getMasteryIntervalCombat(String race) {
+		if (CrewType.HUMAN.getId().equals(race)) return 7;
 		return 8;
 	}
 }

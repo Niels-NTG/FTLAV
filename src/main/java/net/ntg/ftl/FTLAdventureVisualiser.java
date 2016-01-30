@@ -48,7 +48,7 @@ public class FTLAdventureVisualiser {
 	public static ArrayList<SectorDot> sectorArray = new ArrayList<SectorDot>();
 
 
-	public static void main( String[] args ) {
+	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -60,76 +60,72 @@ public class FTLAdventureVisualiser {
 
 	private static void guiInit() {
 		// Don't use the hard drive to buffer streams during ImageIO.read().
-		ImageIO.setUseCache(false);  // Small images don't need extra buffering.
+		ImageIO.setUseCache(false); // Small images don't need extra buffering.
 
-		log.debug( String.format( "%s v%s", APP_NAME, APP_VERSION ) );
-		log.debug( String.format( "%s %s", System.getProperty("os.name"), System.getProperty("os.version") ) );
-		log.debug( String.format( "%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch") ) );
+		log.debug(String.format("%s v%s", APP_NAME, APP_VERSION));
+		log.debug(String.format("%s %s", System.getProperty("os.name"), System.getProperty("os.version")));
+		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
 
 		// TODO make ftlav-config.cfg in a seperate class to make it acessible from other places than just here
-		File configFile = new File( "ftlav-config.cfg" );
+		File configFile = new File("ftlav-config.cfg");
 		File datsDir = null;
 
 		boolean writeConfig = false;
 		Properties config = new Properties();
-		config.setProperty( "useDefaultUI", "false" );
+		config.setProperty("useDefaultUI", "false");
 
 		// Read the config file.
 		InputStream in = null;
 		try {
-			if ( configFile.exists() ) {
-				log.trace( "Loading properties from config file." );
-				in = new FileInputStream( configFile );
-				config.load( new InputStreamReader( in, "UTF-8" ) );
+			if (configFile.exists()) {
+				log.trace("Loading properties from config file.");
+				in = new FileInputStream(configFile);
+				config.load(new InputStreamReader(in, "UTF-8"));
 			} else {
 				writeConfig = true; // Create a new cfg, but only if necessary.
 			}
-		}
-		catch ( IOException e ) {
-			log.error( "Error loading config.", e );
-			showErrorDialog( "Error loading config from "+ configFile.getPath() );
-		}
-		finally {
-			try {if ( in != null ) in.close();}
-			catch ( IOException e ) {}
+		} catch (IOException e) {
+			log.error("Error loading config.", e);
+			showErrorDialog("Error loading config from " + configFile.getPath());
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException e) {}
 		}
 
 		// Look-and-Feel.
-		String useDefaultUI = config.getProperty( "useDefaultUI" );
+		String useDefaultUI = config.getProperty("useDefaultUI");
 
-		if ( useDefaultUI == null || !useDefaultUI.equals("true") ) {
+		if (useDefaultUI == null || !useDefaultUI.equals("true")) {
 			try {
-				log.trace( "Using system Look and Feel" );
+				log.trace("Using system Look and Feel");
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e) {
+				log.error("Error setting system Look and Feel.", e);
+				log.info("Setting 'useDefaultUI=true' in the config file will prevent this error.");
 			}
-			catch ( Exception e ) {
-				log.error( "Error setting system Look and Feel.", e );
-				log.info( "Setting 'useDefaultUI=true' in the config file will prevent this error." );
-			}
-		}
-		else {
-			log.debug( "Using default Look and Feel." );
+		} else {
+			log.debug("Using default Look and Feel.");
 		}
 
 		// FTL Resources Path.
-		String datsPath = config.getProperty( "ftlDatsPath" );
+		String datsPath = config.getProperty("ftlDatsPath");
 
-		if ( datsPath != null && datsPath.length() > 0 ) {
-			log.info( "Using FTL dats path from config: "+ datsPath );
-			datsDir = new File( datsPath );
-			if ( FTLUtilities.isDatsDirValid( datsDir ) == false ) {
-				log.error( "The config's ftlDatsPath does not exist, or it lacks data.dat." );
+		if (datsPath != null && datsPath.length() > 0) {
+			log.info("Using FTL dats path from config: " + datsPath);
+			datsDir = new File(datsPath);
+			if (FTLUtilities.isDatsDirValid(datsDir) == false) {
+				log.error("The config's ftlDatsPath does not exist, or it lacks data.dat.");
 				datsDir = null;
 			}
-		}
-		else {
-			log.trace( "No FTL dats path previously set." );
+		} else {
+			log.trace("No FTL dats path previously set.");
 		}
 
 		// Find/prompt for the path to set in the config.
-		if ( datsDir == null ) {
+		if (datsDir == null) {
 			datsDir = FTLUtilities.findDatsDir();
-			if ( datsDir != null ) {
+			if (datsDir != null) {
 				// TODO a more welcoming confirm dialog
 				int response = JOptionPane.showConfirmDialog(
 					null,
@@ -138,48 +134,47 @@ public class FTLAdventureVisualiser {
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE
 				);
-				if ( response == JOptionPane.NO_OPTION ) datsDir = null;
+				if (response == JOptionPane.NO_OPTION) datsDir = null;
 			}
 
-			if ( datsDir == null ) {
-				log.debug( "FTL dats path was not located automatically. Prompting user for location." );
-				datsDir = FTLUtilities.promptForDatsDir( null );
+			if (datsDir == null) {
+				log.debug("FTL dats path was not located automatically. Prompting user for location.");
+				datsDir = FTLUtilities.promptForDatsDir(null);
 			}
 
-			if ( datsDir != null ) {
-				config.setProperty( "ftlDatsPath", datsDir.getAbsolutePath() );
+			if (datsDir != null) {
+				config.setProperty("ftlDatsPath", datsDir.getAbsolutePath());
 				writeConfig = true;
-				log.info( "FTL dats located at: "+ datsDir.getAbsolutePath() );
+				log.info("FTL dats located at: "+ datsDir.getAbsolutePath());
 			}
 		}
 
-		if ( datsDir == null ) {
-			showErrorDialog( "FTL data was not found.\nFTL Adventure Visualiser will now exit." );
-			log.debug( "No FTL dats path found, exiting." );
-			System.exit( 1 );
+		if (datsDir == null) {
+			showErrorDialog("FTL data was not found.\nFTL Adventure Visualiser will now exit.");
+			log.debug("No FTL dats path found, exiting.");
+			System.exit(1);
 		}
 
-		if ( writeConfig ) {
+		if (writeConfig) {
 			OutputStream out = null;
 			try {
-				out = new FileOutputStream( configFile );
+				out = new FileOutputStream(configFile);
 				String configComments = "FTL Adventure Visualiser - Config File";
 
-				OutputStreamWriter writer = new OutputStreamWriter( out, "UTF-8" );
-				config.store( writer, configComments );
+				OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+				config.store(writer, configComments);
 				writer.flush();
-			}
-			catch ( IOException e ) {
-				log.error( "Error saving config to "+ configFile.getPath(), e );
-				showErrorDialog( "Error saving config to "+ configFile.getPath() );
-			}
-			finally {
-				try {if ( out != null ) out.close();}
-				catch ( IOException e ) {}
+			} catch (IOException e) {
+				log.error("Error saving config to "+ configFile.getPath(), e);
+				showErrorDialog("Error saving config to " + configFile.getPath());
+			} finally {
+				try {
+					if (out != null) out.close();
+				} catch (IOException e) {}
 			}
 		}
 
-		// if ( writeConfig ) {
+		// if (writeConfig) {
 		// 	String wipMsg = "";
 		// 	wipMsg += "FTL: Faster Than Light Adventure Visualiser (FTLAV) is a tool to visualize your FTL playsessions\n";
 		// 	wipMsg += "\n";
@@ -196,29 +191,27 @@ public class FTLAdventureVisualiser {
 
 		// Parse the dats.
 		try {
-			DefaultDataManager dataManager = new DefaultDataManager( datsDir );
-			DataManager.setInstance( dataManager );
-			dataManager.setDLCEnabledByDefault( true );
-		}
-		catch ( Exception e ) {
-			log.error( "Error parsing FTL resources.", e );
-			showErrorDialog( "Error parsing FTL resources." );
+			DefaultDataManager dataManager = new DefaultDataManager(datsDir);
+			DataManager.setInstance(dataManager);
+			dataManager.setDLCEnabledByDefault(true);
+		} catch (Exception e) {
+			log.error("Error parsing FTL resources.", e);
+			showErrorDialog("Error parsing FTL resources.");
 			System.exit(1);
 		}
 
 		try {
-			FTLFrame frame = new FTLFrame( APP_NAME, APP_VERSION );
+			FTLFrame frame = new FTLFrame(APP_NAME, APP_VERSION);
 			frame.setVisible(true);
-		}
-		catch ( Exception e ) {
-			log.error( "Exception while creating FTLFrame.", e );
-			System.exit( 1 );
+		} catch (Exception e) {
+			log.error("Exception while creating FTLFrame.", e);
+			System.exit(1);
 		}
 
 	}
 
 
-	private static void showErrorDialog( String message ) {
+	private static void showErrorDialog(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 

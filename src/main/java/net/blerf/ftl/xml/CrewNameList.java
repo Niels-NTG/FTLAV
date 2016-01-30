@@ -27,7 +27,7 @@ public class CrewNameList {
 		public String name;
 	}
 
-	public void setRace( String race ) {
+	public void setRace(String race) {
 		this.race = race;
 	}
 
@@ -35,7 +35,7 @@ public class CrewNameList {
 		return race;
 	}
 
-	public void setSex( String sex ) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -43,7 +43,7 @@ public class CrewNameList {
 		return sex;
 	}
 
-	public void setNames( List<CrewName> names ) {
+	public void setNames(List<CrewName> names) {
 		this.names = names;
 	}
 

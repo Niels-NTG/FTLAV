@@ -15,7 +15,7 @@ public class ShipEvents {
 	@XmlElement(name="ship")
 	private List<ShipEvent> shipEvents;
 
-	public void setShipEvents( List<ShipEvent> shipEvents ) {
+	public void setShipEvents(List<ShipEvent> shipEvents) {
 		this.shipEvents = shipEvents;
 	}
 

@@ -80,7 +80,7 @@ public class ShipChassis {
 		}
 	}
 
-	public void setImageBounds( ChassisImageBounds imageBounds ) {
+	public void setImageBounds(ChassisImageBounds imageBounds) {
 		this.imageBounds = imageBounds;
 	}
 
@@ -88,7 +88,7 @@ public class ShipChassis {
 		return imageBounds;
 	}
 
-	public void setOffsets( Offsets offsets ) {
+	public void setOffsets(Offsets offsets) {
 		this.offsets = offsets;
 	}
 
@@ -96,7 +96,7 @@ public class ShipChassis {
 		return offsets;
 	}
 
-	public void setWeaponMountList( WeaponMountList weaponMountList ) {
+	public void setWeaponMountList(WeaponMountList weaponMountList) {
 		this.weaponMountList = weaponMountList;
 	}
 

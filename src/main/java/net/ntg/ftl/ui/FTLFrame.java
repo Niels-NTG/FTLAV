@@ -62,12 +62,12 @@ public class FTLFrame extends JFrame {
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	private ImageIcon openIcon       = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
-	private ImageIcon watchIcon      = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
-	private ImageIcon graphIcon      = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
-	private ImageIcon exportImageIcon= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
-	private ImageIcon exportDataIcon = new ImageIcon(ClassLoader.getSystemResource("table.gif"));
-	private ImageIcon helpIcon       = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
+	private ImageIcon openIcon        = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	private ImageIcon watchIcon       = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
+	private ImageIcon graphIcon       = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
+	private ImageIcon exportImageIcon = new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private ImageIcon exportDataIcon  = new ImageIcon(ClassLoader.getSystemResource("table.gif"));
+	private ImageIcon helpIcon        = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private URL helpPage = ClassLoader.getSystemResource("help.html");
 	private HyperlinkListener linkListener;
@@ -78,24 +78,23 @@ public class FTLFrame extends JFrame {
 	private String appName;
 	private int appVersion;
 
-	public FTLFrame (String appName, int appVersion) {
+	public FTLFrame(String appName, int appVersion) {
 
 		this.appName = appName;
 		this.appVersion = appVersion;
 
 		linkListener = new HyperlinkListener() {
 			@Override
-			public void hyperlinkUpdate( HyperlinkEvent e ) {
-				if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ) {
-					log.trace( "Dialog link clicked: "+ e.getURL() );
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+					log.trace("Dialog link clicked: " + e.getURL());
 
-					if ( Desktop.isDesktopSupported() ) {
+					if (Desktop.isDesktopSupported()) {
 						try {
-							Desktop.getDesktop().browse( e.getURL().toURI() );
-							log.trace( "Link opened in external browser." );
-						}
-						catch ( Exception f ) {
-							log.error( "Unable to open link.", f );
+							Desktop.getDesktop().browse(e.getURL().toURI());
+							log.trace("Link opened in external browser.");
+						} catch (Exception f) {
+							log.error("Unable to open link.", f);
 						}
 					}
 				}
@@ -127,7 +126,7 @@ public class FTLFrame extends JFrame {
 	}
 
 
-	private void setupToolbar (JToolBar toolbar) {
+	private void setupToolbar(JToolBar toolbar) {
 
 		log.trace("Initialising toolbar.");
 
@@ -154,40 +153,40 @@ public class FTLFrame extends JFrame {
 
 		// TODO get continue.sav automaticly if it exist on the expected location
 		final JFileChooser fc = new JFileChooser();
-		fc.setFileHidingEnabled( false );
-		fc.addChoosableFileFilter( new FileFilter() {
+		fc.setFileHidingEnabled(false);
+		fc.addChoosableFileFilter(new FileFilter() {
 			@Override
 			public String getDescription() {
 				return "FTL Saved Game (continue.sav)";
 			}
 			@Override
 			public boolean accept(File f) {
-			return f.isDirectory() || f.getName().equalsIgnoreCase("continue.sav");
+				return f.isDirectory() || f.getName().equalsIgnoreCase("continue.sav");
 			}
 		});
 
-		File candidateSaveFile = new File( FTLUtilities.findUserDataDir(), "continue.sav" );
-		if ( candidateSaveFile.exists() ) {
-			fc.setSelectedFile( candidateSaveFile );
+		File candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
+		if (candidateSaveFile.exists()) {
+			fc.setSelectedFile(candidateSaveFile);
 		} else {
-			fc.setCurrentDirectory( FTLUtilities.findUserDataDir() );
+			fc.setCurrentDirectory(FTLUtilities.findUserDataDir());
 		}
 		fc.setMultiSelectionEnabled(false);
 
 
-		gameStateOpenBtn.addActionListener( new ActionListener() {
+		gameStateOpenBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed( ActionEvent e ) {
-				log.trace( "Open saved game button clicked." );
+			public void actionPerformed(ActionEvent e) {
+				log.trace("Open saved game button clicked.");
 
 				gameStateWatcherBtn.doClick();
 
-				fc.setDialogTitle( "Select continue.sav (saved game)" );
+				fc.setDialogTitle("Select continue.sav (saved game)");
 				int chooserResponse = fc.showOpenDialog(null);
 				chosenFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
 
-				if ( chooserResponse == JFileChooser.APPROVE_OPTION ) {
+				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 					if ("ae_prof.sav".equals(chosenFile.getName()) ||
 						"prof.sav".equals(chosenFile.getName())
 					) {
@@ -201,12 +200,12 @@ public class FTLFrame extends JFrame {
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.WARNING_MESSAGE
 						);
-						if ( sillyResponse != JOptionPane.YES_OPTION ) sillyMistake = true;
+						if (sillyResponse != JOptionPane.YES_OPTION) sillyMistake = true;
 					}
 				}
 
-				if ( chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake ) {
-					loadGameStateFile( chosenFile );
+				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
+					loadGameStateFile(chosenFile);
 					gameStateWatcherBtn.setEnabled(true);
 					toggleGraphBtn.setEnabled(true);
 					refreshBtn.setEnabled(true);
@@ -217,7 +216,7 @@ public class FTLFrame extends JFrame {
 					exportDataBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
-					// config.setProperty( "ftlContinuePath", chosenFile.getAbsolutePath() );
+					// config.setProperty("ftlContinuePath", chosenFile.getAbsolutePath());
 
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateWatcherBtn.setEnabled(false);
@@ -226,7 +225,7 @@ public class FTLFrame extends JFrame {
 					exportImageBtn.setEnabled(false);
 					exportDataBtn.setEnabled(false);
 				} else {
-					log.trace( "Open dialog cancelled." );
+					log.trace("Open dialog cancelled.");
 				}
 			}
 		});
@@ -235,23 +234,20 @@ public class FTLFrame extends JFrame {
 		gameStateWatcherBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AbstractButton abstractButton = (AbstractButton) e.getSource();
+				AbstractButton abstractButton = (AbstractButton)e.getSource();
 				gameStateWatcherBtn.setSelected(abstractButton.getModel().isSelected());
 
-				if ( gameStateWatcherBtn.isSelected() ) {
-					if ( lastGameState != null ) {
-						TimerTask task = new FileWatcher( chosenFile ) {
-							protected void onChange( File file ) {
+				if (gameStateWatcherBtn.isSelected()) {
+					if (lastGameState != null) {
+						TimerTask task = new FileWatcher(chosenFile) {
+							protected void onChange(File file) {
 								// here we code the action on a change
-								log.info( "\nFILE "+ file.getName() +" HAS CHANGED !" );
-								if (gameStateWatcherBtn.isSelected()) {
-									loadGameStateFile ( chosenFile );
-								}
+								log.info("\nFILE "+ file.getName() +" HAS CHANGED !");
+								if (gameStateWatcherBtn.isSelected()) loadGameStateFile(chosenFile);
 							}
 						};
 						Timer timer = new Timer();
 						timer.schedule( task , new Date(), 1000 );
-
 					} else {
 						gameStateWatcherBtn.doClick();
 					}
@@ -262,11 +258,9 @@ public class FTLFrame extends JFrame {
 		refreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AbstractButton abstractButton = (AbstractButton) e.getSource();
+				AbstractButton abstractButton = (AbstractButton)e.getSource();
 				refreshBtn.setSelected(abstractButton.getModel().isSelected());
-				if ( refreshBtn.isSelected() ) {
-					inspector.setGameState();
-				}
+				if (refreshBtn.isSelected()) inspector.setGameState();
 			}
 		});
 
@@ -274,11 +268,11 @@ public class FTLFrame extends JFrame {
 		toggleGraphBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AbstractButton abstractButton = (AbstractButton) e.getSource();
+				AbstractButton abstractButton = (AbstractButton)e.getSource();
 				toggleGraphBtn.setSelected(abstractButton.getModel().isSelected());
 
 				if ( toggleGraphBtn.isSelected() ) {
-					if ( lastGameState != null ) {
+					if (lastGameState != null) {
 						graphFrame.setVisible(true);
 					} else {
 						toggleGraphBtn.doClick();
@@ -286,13 +280,14 @@ public class FTLFrame extends JFrame {
 				} else {
 					graphFrame.setVisible(false);
 				}
+
 			}
 		});
 
 
 		exportImageBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed( ActionEvent e ) {
+			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser exportChooser = new JFileChooser();
 				exportChooser.setCurrentDirectory(null);
@@ -312,7 +307,7 @@ public class FTLFrame extends JFrame {
 
 		exportDataBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed( ActionEvent e ) {
+			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser exportChooser = new JFileChooser();
 				exportChooser.setCurrentDirectory(null);
@@ -331,7 +326,7 @@ public class FTLFrame extends JFrame {
 
 		helpBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed( ActionEvent e ) {
+			public void actionPerformed(ActionEvent e) {
 				helpFrame.setVisible(true);
 			}
 		});
@@ -354,25 +349,21 @@ public class FTLFrame extends JFrame {
 					"Please consider before quitting",
 					JOptionPane.YES_NO_CANCEL_OPTION
 				);
-				if (exitWarning == JOptionPane.YES_OPTION) {
-					exportImageBtn.doClick();
-				}
-				if (exitWarning == JOptionPane.NO_OPTION) {
-					setDefaultCloseOperation(EXIT_ON_CLOSE);
-				}
+				if (exitWarning == JOptionPane.YES_OPTION) exportImageBtn.doClick();
+				if (exitWarning == JOptionPane.NO_OPTION) setDefaultCloseOperation(EXIT_ON_CLOSE);
 			}
 		});
 
 
-		toolbar.add( gameStateOpenBtn );
-		toolbar.add( gameStateWatcherBtn );
-		toolbar.add( toggleGraphBtn );
-		toolbar.add( refreshBtn );
-		toolbar.add( Box.createHorizontalGlue() );
-		toolbar.add( exportImageBtn );
-		toolbar.add( exportDataBtn );
-		toolbar.add( Box.createHorizontalGlue() );
-		toolbar.add( helpBtn );
+		toolbar.add(gameStateOpenBtn);
+		toolbar.add(gameStateWatcherBtn);
+		toolbar.add(toggleGraphBtn);
+		toolbar.add(refreshBtn);
+		toolbar.add(Box.createHorizontalGlue());
+		toolbar.add(exportImageBtn);
+		toolbar.add(exportDataBtn);
+		toolbar.add(Box.createHorizontalGlue());
+		toolbar.add(helpBtn);
 
 	}
 
@@ -422,8 +413,8 @@ public class FTLFrame extends JFrame {
 
 		processing.core.PApplet graphRenderer = new GraphRenderer();
 		graphFrame.add(graphRenderer);
-		GraphRenderer.panelWidth = graphFrame.getWidth();
-		GraphRenderer.panelHeight= graphFrame.getHeight();
+		GraphRenderer.panelWidth  = graphFrame.getWidth();
+		GraphRenderer.panelHeight = graphFrame.getHeight();
 		graphRenderer.init();
 
 		graphFrame.setVisible(false);
@@ -450,67 +441,70 @@ public class FTLFrame extends JFrame {
 		Exception exception = null;
 
 		try {
-			log.info( "Opening game state: "+ file.getAbsolutePath() );
+			log.info("Opening game state: "+ file.getAbsolutePath());
 
-			in = new FileInputStream( file );
+			in = new FileInputStream(file);
 
 			// Read the content in advance, in case an error ocurs.
 			byte[] buf = new byte[4096];
 			int len = 0;
-			while ( (len = in.read(buf)) >= 0 ) {
+			while ((len = in.read(buf)) >= 0) {
 				for (int j=0; j < len; j++) {
-					hexBuf.append( String.format( "%02x", buf[j] ) );
-					if ( (j+1) % 32 == 0 ) {
-						hexBuf.append( "\n" );
-					}
+					hexBuf.append(String.format("%02x", buf[j]));
+					if ((j+1) % 32 == 0) hexBuf.append("\n");
 				}
 			}
-			in.getChannel().position( 0 );
+			in.getChannel().position(0);
 
 			SavedGameParser parser = new SavedGameParser();
-			SavedGameParser.SavedGameState gs = parser.readSavedGame( in );
-			loadGameState( gs );
+			SavedGameParser.SavedGameState gs = parser.readSavedGame(in);
+			loadGameState(gs);
 
-			log.trace( "Game state read successfully." );
+			log.trace("Game state read successfully.");
 
 			if ( lastGameState.getMysteryList().size() > 0 ) {
-				StringBuilder musteryBuf = new StringBuilder();
-				musteryBuf.append("This saved game file contains mystery bytes the developers hadn't anticipated!\n");
+				StringBuilder mysteryBuf = new StringBuilder();
+				mysteryBuf.append("This saved game file contains mystery bytes the developers hadn't anticipated!\n");
 				boolean first = true;
 				for (MysteryBytes m : lastGameState.getMysteryList()) {
-					if (first) { first = false; }
-					else { musteryBuf.append( ",\n" ); }
-					musteryBuf.append(m.toString().replaceAll( "(^|\n)(.+)", "$1  $2") );
+					if (first) {
+						first = false;
+					} else {
+						mysteryBuf.append(",\n");
+					}
+					mysteryBuf.append(m.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 				}
-				log.warn( musteryBuf.toString() );
+				log.warn( mysteryBuf.toString() );
 			}
 		} catch ( Exception f ) {
-			log.error( String.format("Error reading saved game (\"%s\").", chosenFile.getName()), f );
-			showErrorDialog( String.format(
+			log.error(String.format("Error reading saved game (\"%s\").", chosenFile.getName()), f);
+			showErrorDialog(String.format(
 				"Error reading saved game (\"%s\"):\n%s: %s\n" +
 				"This error is probably caused by a game-over or the restarting of a game.\n" +
 				"If not, please report this on the %s GitHub Issue page.\n" +
 				"You can still save the graph by pressing the Export button.\n" +
 				"Restart %s to reset everything.",
-				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName )
-			);
+				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName
+			));
 
 			exception = f;
 		} finally {
-			try { if ( in != null ) in.close(); }
-			catch ( IOException f ) {}
+			try {
+				if ( in != null ) in.close();
+			} catch ( IOException f ) {}
 		}
 	}
 
 
-	public void loadGameState (SavedGameParser.SavedGameState currentGameState) {
+	public void loadGameState(SavedGameParser.SavedGameState currentGameState) {
 
-		log.info( "------" );
-		log.info( "Ship Name : " + currentGameState.getPlayerShipName() );
-		log.info( "Currently at beacon number : " + currentGameState.getTotalBeaconsExplored() );
-		log.info( "Currently in sector : " + currentGameState.getSectorNumber() + 1 );
+		log.info("------");
+		log.info("Ship Name : " + currentGameState.getPlayerShipName());
+		log.info("Currently at beacon number : " + currentGameState.getTotalBeaconsExplored());
+		log.info("Currently in sector : " + currentGameState.getSectorNumber() + 1);
 
-		if (FTLAdventureVisualiser.gameStateArray.isEmpty() ||
+		if (
+			FTLAdventureVisualiser.gameStateArray.isEmpty() ||
 			currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored()
 		) {
 			FTLAdventureVisualiser.gameStateArray.add(currentGameState);
@@ -540,7 +534,7 @@ public class FTLFrame extends JFrame {
 			FTLAdventureVisualiser.enemyCrewArray.add(currentEnemyCrew);
 
 			FTLAdventureVisualiser.sectorArray.clear();
-			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator( new NativeRandom() );
+			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator(new NativeRandom());
 			List<List<SectorDot>> myColumns = myGen.generateSectorTree(
 				currentGameState.getSectorTreeSeed(),
 				currentGameState.isDLCEnabled()
@@ -575,7 +569,7 @@ public class FTLFrame extends JFrame {
 	}
 
 
-	private void showErrorDialog (String message) {
+	private void showErrorDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

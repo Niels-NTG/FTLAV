@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="weaponBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WeaponBlueprint {
-	
+
 	@XmlAttribute(name="name")
 	private String id;
 	private String type, title;
@@ -27,7 +27,7 @@ public class WeaponBlueprint {
 	private String image;
 	private SoundList launchSounds, hitShipSounds, hitShieldSounds, missSounds;
 	private String weaponArt;
-	
+
 	@XmlRootElement
 	@XmlAccessorType(XmlAccessType.FIELD)
 	public static class SoundList {
@@ -38,7 +38,7 @@ public class WeaponBlueprint {
 		return id;
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -46,7 +46,7 @@ public class WeaponBlueprint {
 		return type;
 	}
 
-	public void setType( String type ) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -54,7 +54,7 @@ public class WeaponBlueprint {
 		return title;
 	}
 
-	public void setTitle( String title ) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -62,7 +62,7 @@ public class WeaponBlueprint {
 		return shortTitle;
 	}
 
-	public void setShortTitle( String shortTitle ) {
+	public void setShortTitle(String shortTitle) {
 		this.shortTitle = shortTitle;
 	}
 
@@ -70,7 +70,7 @@ public class WeaponBlueprint {
 		return desc;
 	}
 
-	public void setDescription( String desc ) {
+	public void setDescription(String desc) {
 		this.desc = desc;
 	}
 
@@ -78,7 +78,7 @@ public class WeaponBlueprint {
 		return tooltip;
 	}
 
-	public void setTooltip( String tooltip ) {
+	public void setTooltip(String tooltip) {
 		this.tooltip = tooltip;
 	}
 
@@ -86,7 +86,7 @@ public class WeaponBlueprint {
 		return shieldPiercing;
 	}
 
-	public void setShieldPiercing( int shieldPiercing ) {
+	public void setShieldPiercing(int shieldPiercing) {
 		this.shieldPiercing = shieldPiercing;
 	}
 
@@ -96,7 +96,7 @@ public class WeaponBlueprint {
 		return damage;
 	}
 
-	public void setDamage( int damage ) {
+	public void setDamage(int damage) {
 		this.damage = damage;
 	}
 
@@ -104,7 +104,7 @@ public class WeaponBlueprint {
 		return shots;
 	}
 
-	public void setShots( int shots ) {
+	public void setShots(int shots) {
 		this.shots = shots;
 	}
 
@@ -112,7 +112,7 @@ public class WeaponBlueprint {
 		return fireChance;
 	}
 
-	public void setFireChance( int fireChance ) {
+	public void setFireChance(int fireChance) {
 		this.fireChance = fireChance;
 	}
 
@@ -120,7 +120,7 @@ public class WeaponBlueprint {
 		return breachChance;
 	}
 
-	public void setBreachChance( int breachChance ) {
+	public void setBreachChance(int breachChance) {
 		this.breachChance = breachChance;
 	}
 
@@ -128,7 +128,7 @@ public class WeaponBlueprint {
 		return cooldown;
 	}
 
-	public void setCooldown( int cooldown ) {
+	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
 
@@ -136,7 +136,7 @@ public class WeaponBlueprint {
 		return power;
 	}
 
-	public void setPower( int power ) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 
@@ -144,7 +144,7 @@ public class WeaponBlueprint {
 		return cost;
 	}
 
-	public void setCost( int cost ) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 
@@ -152,7 +152,7 @@ public class WeaponBlueprint {
 		return cost;
 	}
 
-	public void setRarity( int rarity ) {
+	public void setRarity(int rarity) {
 		this.rarity = rarity;
 	}
 

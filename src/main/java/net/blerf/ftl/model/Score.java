@@ -22,8 +22,7 @@ public class Score implements Comparable<Score> {
 	 *
 	 * All attributes will need to be set afterward.
 	 */
-	public Score() {
-	}
+	public Score() {}
 
 	/**
 	 * Constructs a Score.
@@ -36,7 +35,7 @@ public class Score implements Comparable<Score> {
 	 *
 	 * @see #setDLCEnabled(boolean)
 	 */
-	public Score( String shipName, String shipId, int value, int sector, Difficulty difficulty, boolean victory ) {
+	public Score(String shipName, String shipId, int value, int sector, Difficulty difficulty, boolean victory) {
 		this.shipName = shipName;
 		this.shipId = shipId;
 		this.value = value;
@@ -48,7 +47,7 @@ public class Score implements Comparable<Score> {
 	/**
 	 * Copy constructor.
 	 */
-	public Score( Score srcScore ) {
+	public Score(Score srcScore) {
 		this();
 		this.shipName = srcScore.getShipName();
 		this.shipId = srcScore.getShipId();
@@ -59,9 +58,9 @@ public class Score implements Comparable<Score> {
 		this.dlcEnabled = srcScore.isDLCEnabled();
 	}
 
-	public void setShipName( String s ) { shipName = s; }
-	public void setShipId( String s ) { shipId = s; }
-	public void setValue( int n ) { value = n; }
+	public void setShipName(String s) { shipName = s; }
+	public void setShipId(String s) { shipId = s; }
+	public void setValue(int n) { value = n; }
 
 	public String getShipName() { return shipName; }
 	public String getShipId() { return shipId; }
@@ -70,11 +69,11 @@ public class Score implements Comparable<Score> {
 	/**
 	 * Sets the 1-based sector the player was in when that campaign ended.
 	 */
-	public void setSector( int n ) { sector = n; }
+	public void setSector(int n) { sector = n; }
 	public int getSector() { return sector; }
 
-	public void setDifficulty( Difficulty d ) { difficulty = d; }
-	public void setVictory( boolean b ) { victory = b; }
+	public void setDifficulty(Difficulty d) { difficulty = d; }
+	public void setVictory(boolean b) { victory = b; }
 
 	public Difficulty getDifficulty() { return difficulty; }
 	public boolean isVictory() { return victory; }
@@ -84,14 +83,14 @@ public class Score implements Comparable<Score> {
 	 *
 	 * This was introduced in FTL 1.5.4.
 	 */
-	public void setDLCEnabled( boolean b ) { dlcEnabled = b; }
+	public void setDLCEnabled(boolean b) { dlcEnabled = b; }
 	public boolean isDLCEnabled() { return dlcEnabled; }
 
 
 	@Override
-	public int compareTo( Score other ) {
-		if ( this.getValue() > other.getValue() ) return 1;
-		if ( this.getValue() < other.getValue() ) return -1;
+	public int compareTo(Score other) {
+		if (this.getValue() > other.getValue()) return 1;
+		if (this.getValue() < other.getValue()) return -1;
 		return 0;
 	}
 

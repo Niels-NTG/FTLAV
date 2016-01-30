@@ -112,23 +112,23 @@ public class GraphRenderer extends PApplet {
 		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
 		headerFontAlt = loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
 
-		hudColor.put( "BG_NORMAL", color( 55, 45, 46 ) );			// dark purple brown 	(background color)
-		hudColor.put( "BG_LIGHT", color( 122, 100, 99 ) );			// light purple brown	(background color)
-		hudColor.put( "BG_DARK", color( 24, 20, 19 ) );				// dark brown			(background color)
-		hudColor.put( "BORDER", color( 235, 245, 229 ) );			// white-greenish		(panel border color)
-		hudColor.put( "BUTTON", color( 235, 245, 229 ) );			// white-greenish		(button color)
-		hudColor.put( "BUTTON_ACTIVE", color( 255, 230, 94 ) );		// yellow				(button color)
-		hudColor.put( "MAINTEXT", color( 255, 255, 255 ) );			// white				(standard text color)
-		hudColor.put( "HEADERTEXT", color( 65, 120, 128 ) );		// turquoise			(standard text color)
-		hudColor.put( "HEADERTEXT_ALT", color( 54, 78, 80 ) );		// dark turquoise		(standard text color)
-		hudColor.put( "SECTOR_CIVILIAN", color( 135, 199, 74 ) );	// bright green			(sector color)
-		hudColor.put( "SECTOR_HOSTILE", color( 214, 50, 50 ) );		// bright red			(sector color)
-		hudColor.put( "SECTOR_NEBULA", color( 128, 51, 210 ) );		// pure purple			(sector color)
-		hudColor.put( "SYSTEM_ACTIVE", color( 100, 255, 99 ) );		// bright green			(system status color)
-		hudColor.put( "SYSTEM_OFF", color( 211, 211, 211 ) );		// light grey			(system status color)
-		hudColor.put( "SYSTEM_DAMAGE", color( 248, 59, 51 ) );		// bright red			(system status color)
-		hudColor.put( "SYSTEM_HACKED", color( 212, 70, 253 ) );		// magenta				(system status color)
-		hudColor.put( "SYSTEM_IONIZED", color( 133, 231, 237 ) );	// cyan					(system status color)
+		hudColor.put("BG_NORMAL", color(55, 45, 46));			// dark purple brown 	(background color)
+		hudColor.put("BG_LIGHT", color(122, 100, 99));			// light purple brown	(background color)
+		hudColor.put("BG_DARK", color(24, 20, 19));				// dark brown			(background color)
+		hudColor.put("BORDER", color(235, 245, 229));			// white-greenish		(panel border color)
+		hudColor.put("BUTTON", color(235, 245, 229));			// white-greenish		(button color)
+		hudColor.put("BUTTON_ACTIVE", color(255, 230, 94));		// yellow				(button color)
+		hudColor.put("MAINTEXT", color(255, 255, 255));			// white				(standard text color)
+		hudColor.put("HEADERTEXT", color(65, 120, 128));		// turquoise			(standard text color)
+		hudColor.put("HEADERTEXT_ALT", color(54, 78, 80));		// dark turquoise		(standard text color)
+		hudColor.put("SECTOR_CIVILIAN", color(135, 199, 74));	// bright green			(sector color)
+		hudColor.put("SECTOR_HOSTILE", color(214, 50, 50));		// bright red			(sector color)
+		hudColor.put("SECTOR_NEBULA", color(128, 51, 210));		// pure purple			(sector color)
+		hudColor.put("SYSTEM_ACTIVE", color(100, 255, 99));		// bright green			(system status color)
+		hudColor.put("SYSTEM_OFF", color(211, 211, 211));		// light grey			(system status color)
+		hudColor.put("SYSTEM_DAMAGE", color(248, 59, 51));		// bright red			(system status color)
+		hudColor.put("SYSTEM_HACKED", color(212, 70, 253));		// magenta				(system status color)
+		hudColor.put("SYSTEM_IONIZED", color(133, 231, 237));	// cyan					(system status color)
 
 	}
 
@@ -159,7 +159,8 @@ public class GraphRenderer extends PApplet {
 
 				// graph line
 				int[] gradient;
-				if (lineLabel.contains("HEALTH") ||
+				if (
+					lineLabel.contains("HEALTH") ||
 					lineLabel.contains(" SKILL") ||
 					lineLabel.contains("TOTAL REPAIRS") ||
 					lineLabel.contains("TOTAL COMBAT") ||
@@ -193,11 +194,7 @@ public class GraphRenderer extends PApplet {
 						if (lineArray.get(b) > -1) {
 							pg.vertex(
 								margin + (canvasWidth / lineArray.size()) * b,
-								map(
-									lineArray.get(b),
-									0, ceiling,
-									margin + canvasHeight, margin
-								)
+								map(lineArray.get(b), 0, ceiling, margin + canvasHeight, margin)
 							);
 						}
 					}
@@ -206,7 +203,7 @@ public class GraphRenderer extends PApplet {
 				}
 
 				// draw label at end of line
-				drawLineLabel( a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1) );
+				drawLineLabel(a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1));
 
 				// graph x labels
 				for (int b = 0; b < lineArray.size(); ++b) {
@@ -216,19 +213,17 @@ public class GraphRenderer extends PApplet {
 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
 					) {
-						drawSectorLabel( b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(), lineArray.size() );
+						drawSectorLabel(b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(), lineArray.size());
 					}
 
 					// beacon numbers
-					drawBeaconLabel( b, lineArray.size() );
+					drawBeaconLabel(b, lineArray.size());
 
 				}
 
 			}
 
-			if (current >= 0 && showTitle) {
-				drawTitle( current );
-			}
+			if (current >= 0 && showTitle) drawTitle(current);
 
 			pg.endDraw();
 
@@ -249,13 +244,13 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private boolean isResized () {
+	private boolean isResized() {
 
-		if( width != panelWidth || height != panelHeight ) {
-			panelWidth = width;
-			panelHeight = height;
-			canvasWidth = panelWidth  - (margin * 2);
-			canvasHeight= panelHeight - (margin * 2);
+		if (width != panelWidth || height != panelHeight) {
+			panelWidth   = width;
+			panelHeight  = height;
+			canvasWidth  = panelWidth  - (margin * 2);
+			canvasHeight = panelHeight - (margin * 2);
 			pg = createGraphics(panelWidth, panelHeight);
 			return true;
 		} else {
@@ -295,7 +290,7 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private void drawTitle( int latest ) {
+	private void drawTitle(int latest) {
 
 		// TODO title rendering and typography in style of ship window header title
 		// TODO draw crew member bios next to ship name
@@ -314,9 +309,9 @@ public class GraphRenderer extends PApplet {
 
 		pg.noStroke();
 
-		pg.textAlign( LEFT, TOP );
+		pg.textAlign(LEFT, TOP);
 
-		pg.textFont( mainFont39, shipNameTextSize );
+		pg.textFont(mainFont39, shipNameTextSize);
 		int titleLabelWidth  = round(shipName.length() < 9 ? pg.textWidth("XXXXXXXX") : pg.textWidth(shipName) + (2 * (padding + borderWeight)));
 		int titleLabelHeight = round((textSize * 3) + shipNameTextSize + padding);
 
@@ -344,7 +339,7 @@ public class GraphRenderer extends PApplet {
 		pg.fill(hudColor.get("MAINTEXT"));
 		pg.text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
 
-		pg.textFont( mainFont13, textSize);
+		pg.textFont(mainFont13, textSize);
 		pg.text(
 			shipType+"\n"+
 			"SCORE  "+ score+"\n"+
@@ -355,7 +350,7 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private void drawBeaconLabel ( int b, int lineSize ) {
+	private void drawBeaconLabel(int b, int lineSize) {
 
 		// TODO do not render all the numbers if screen pixel space is limited
 
@@ -376,7 +371,7 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private void drawSectorLabel( int b, int sectorNumber, int lineSize ) {
+	private void drawSectorLabel(int b, int sectorNumber, int lineSize) {
 
 		// TODO do not render sectorTitle if screenspace becomes too narrow
 
@@ -397,17 +392,17 @@ public class GraphRenderer extends PApplet {
 
 		pg.noStroke();
 
-		pg.textAlign( LEFT, TOP );
+		pg.textAlign(LEFT, TOP);
 
 		// sector title label
-		pg.textFont( headerFont, textSize );
+		pg.textFont(headerFont, textSize);
 
-		pg.fill( hudColor.get("BORDER") );
+		pg.fill(hudColor.get("BORDER"));
 		pg.beginShape();
-		pg.vertex( xPos, yPos );																				  // TL
-		pg.vertex( xPos, yPos + textSize + padding );															  // BL
-		pg.vertex( textSize + padding + pg.textWidth( sectorTitle ) + xPos + padding, yPos + textSize + padding );// BR
-		pg.vertex( textSize + padding + pg.textWidth( sectorTitle ) + xPos + padding + textSize, yPos );		  // TR
+		pg.vertex(xPos, yPos);																					// TL
+		pg.vertex(xPos, yPos + textSize + padding);																// BL
+		pg.vertex(textSize + padding + pg.textWidth(sectorTitle)+ xPos + padding, yPos + textSize + padding);	// BR
+		pg.vertex(textSize + padding + pg.textWidth(sectorTitle)+ xPos + padding + textSize, yPos);				// TR
 		pg.endShape(CLOSE);
 
 		// glow color
@@ -424,7 +419,7 @@ public class GraphRenderer extends PApplet {
 
 		// apply glow effect
 		noStroke();
-		fill( hudColor.get("BG_DARK") ); // tape over existing glow
+		fill(hudColor.get("BG_DARK")); // tape over existing glow
 		int glowSize = gradient.length - 1;
 		rect(xPos, yPos - (glowSize * glowSpread) + 1, (canvasWidth + margin) - xPos, glowSize * glowSpread);
 		for (int s = glowSize; s >= 0; --s) {
@@ -435,26 +430,26 @@ public class GraphRenderer extends PApplet {
 		pg.rect(xPos, yPos, (canvasWidth + margin) - xPos, padding);
 
 		// sector title text
-		pg.fill( hudColor.get("HEADERTEXT_ALT") );
-		pg.text( sectorTitle, padding + textSize + xPos + padding, yPos + padding );
+		pg.fill(hudColor.get("HEADERTEXT_ALT"));
+		pg.text(sectorTitle, padding + textSize + xPos + padding, yPos + padding);
 
 		// sector number label
-		pg.fill( hudColor.get("BG_LIGHT") );
-		pg.rect( xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2 ), textSize );
+		pg.fill(hudColor.get("BG_LIGHT"));
+		pg.rect(xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2), textSize);
 
 		// sector number text
-		pg.fill( hudColor.get("MAINTEXT") );
-		pg.textFont( headerFontAlt, textSize );
-		pg.text( Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding );
+		pg.fill(hudColor.get("MAINTEXT"));
+		pg.textFont(headerFontAlt, textSize);
+		pg.text(Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding);
 
 	}
 
 
-	private void drawLineLabel( int a, String lineLabel, int lineSize, int lastestValue ) {
+	private void drawLineLabel(int a, String lineLabel, int lineSize, int lastestValue) {
 
 		int textSize = 13;
 		int offset   = 8;
-		int xPos     = (margin + (canvasWidth / lineSize) * (lineSize-1)) + offset;
+		int xPos     = margin + (canvasWidth / lineSize) * (lineSize-1) + offset;
 		int yPos     = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset;
 		int padding  = 6;
 		float keyPos;
@@ -463,14 +458,14 @@ public class GraphRenderer extends PApplet {
 
 			pg.noStroke();
 
-			pg.textFont( mainFont13, textSize );
-			pg.textAlign( LEFT, BOTTOM );
+			pg.textFont(mainFont13, textSize);
+			pg.textAlign(LEFT, BOTTOM);
 
 			keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
 
 			// connecting line
 			pg.noFill();
-			pg.stroke( hudColor.get("BORDER") );
+			pg.stroke(hudColor.get("BORDER"));
 			pg.strokeJoin(ROUND);
 			pg.strokeCap(ROUND);
 			pg.beginShape();
@@ -480,7 +475,7 @@ public class GraphRenderer extends PApplet {
 			pg.noStroke();
 
 			// label
-			pg.fill( hudColor.get("BORDER") );
+			pg.fill(hudColor.get("BORDER"));
 			pg.beginShape();
 			pg.vertex(xPos, yPos);
 			pg.vertex(keyPos + pg.textWidth("0000"), yPos);
@@ -493,7 +488,7 @@ public class GraphRenderer extends PApplet {
 			// label key
 			pg.tint(hudColor.get("HEADERTEXT_ALT"));
 			pg.fill(hudColor.get("HEADERTEXT_ALT"));
-			pg.text( lineLabel, xPos + padding, yPos - padding );
+			pg.text(lineLabel, xPos + padding, yPos - padding);
 
 			// label value
 			pg.beginShape();
@@ -503,7 +498,7 @@ public class GraphRenderer extends PApplet {
 			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
 			pg.vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
 			pg.endShape(CLOSE);
-			pg.fill( hudColor.get("MAINTEXT") );
+			pg.fill(hudColor.get("MAINTEXT"));
 			pg.textAlign(CENTER, BOTTOM);
 			pg.text(
 				lastestValue,

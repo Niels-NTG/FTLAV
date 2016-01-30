@@ -19,7 +19,7 @@ public class SectorType {
 	@XmlElement(name="sector")
 	public List<String> sectorIds;
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -27,7 +27,7 @@ public class SectorType {
 		return id;
 	}
 
-	public void setSectorIds( List<String> sectorIds ) {
+	public void setSectorIds(List<String> sectorIds) {
 		this.sectorIds = sectorIds;
 	}
 

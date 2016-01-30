@@ -19,13 +19,12 @@ public class NativeRandom implements RandRNG {
 	protected int seed = 1;
 
 
-	public NativeRandom() {
-	}
+	public NativeRandom() {}
 
 
 	@Override
-	public void srand( int newSeed ) {
-		CLibrary.INSTANCE.srand( newSeed );
+	public void srand(int newSeed) {
+		CLibrary.INSTANCE.srand(newSeed);
 		seed = newSeed;
 	}
 
@@ -38,7 +37,7 @@ public class NativeRandom implements RandRNG {
 
 	public interface CLibrary extends Library {
 		/** A singleton to use for making native function calls. */
-		CLibrary INSTANCE = (CLibrary)Native.loadLibrary( (Platform.isWindows() ? "msvcrt" : "c"), CLibrary.class );
+		CLibrary INSTANCE = (CLibrary)Native.loadLibrary((Platform.isWindows() ? "msvcrt" : "c"), CLibrary.class);
 
 		/**
 		 * Returns a random int from 0 to RAND_MAX.
@@ -63,6 +62,6 @@ public class NativeRandom implements RandRNG {
 		 * If multiple classes/objects load the underlying native library to call
 		 * RNG funcs, they will interfere with each other.
 		 */
-		void srand( int seed );
+		void srand(int seed);
 	}
 }

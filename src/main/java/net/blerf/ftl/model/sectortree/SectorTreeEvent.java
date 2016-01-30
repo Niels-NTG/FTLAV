@@ -11,16 +11,16 @@ public class SectorTreeEvent extends EventObject {
 	private final int type;
 
 
-	public SectorTreeEvent( Object source, int type ) {
-		super( source );
+	public SectorTreeEvent(Object source, int type) {
+		super(source);
 		this.type = type;
 	}
 
 	/**
 	 * Copy constructor.
 	 */
-	public SectorTreeEvent( SectorTreeEvent srcEvent) {
-		super( srcEvent.getSource() );
+	public SectorTreeEvent(SectorTreeEvent srcEvent) {
+		super(srcEvent.getSource());
 		this.type = srcEvent.getType();
 	}
 

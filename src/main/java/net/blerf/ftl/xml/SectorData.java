@@ -20,7 +20,7 @@ public class SectorData {
 	@XmlElement(name="sectorDescription")
 	private List<SectorDescription> sectorDescriptions;
 
-	public void setSectorTypes( List<SectorType> sectorTypes ) {
+	public void setSectorTypes(List<SectorType> sectorTypes) {
 		this.sectorTypes = sectorTypes;
 	}
 
@@ -28,7 +28,7 @@ public class SectorData {
 		return sectorTypes;
 	}
 
-	public void setSectorDescriptions( List<SectorDescription> sectorDescriptions ) {
+	public void setSectorDescriptions(List<SectorDescription> sectorDescriptions) {
 		this.sectorDescriptions = sectorDescriptions;
 	}
 
@@ -39,11 +39,11 @@ public class SectorData {
 	/**
 	 * Returns a SectorType with a given id.
 	 */
-	public SectorType getSectorTypeById( String id ) {
-		if ( id == null || sectorTypes == null ) return null;
+	public SectorType getSectorTypeById(String id) {
+		if (id == null || sectorTypes == null) return null;
 
-		for ( SectorType tmpType : sectorTypes ) {
-			if ( id.equals(tmpType.getId()) ) return tmpType;
+		for (SectorType tmpType : sectorTypes) {
+			if (id.equals(tmpType.getId())) return tmpType;
 		}
 
 		return null;
@@ -52,12 +52,12 @@ public class SectorData {
 	/**
 	 * Returns a SectorDescription with a given id.
 	 */
-	public SectorDescription getSectorDescriptionById( String id ) {
-		if ( id == null || sectorDescriptions == null ) return null;
+	public SectorDescription getSectorDescriptionById(String id) {
+		if (id == null || sectorDescriptions == null) return null;
 
 		SectorDescription result = null;
-		for ( SectorDescription tmpDesc : sectorDescriptions ) {
-			if ( id.equals(tmpDesc.getId()) ) result = tmpDesc;
+		for (SectorDescription tmpDesc : sectorDescriptions) {
+			if (id.equals(tmpDesc.getId())) result = tmpDesc;
 		}
 
 		return result;

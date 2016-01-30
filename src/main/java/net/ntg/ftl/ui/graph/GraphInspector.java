@@ -45,17 +45,17 @@ public class GraphInspector extends JToolBar {
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
-	private static String SCRAP 		= "Scrap";
-	private static String HULL 		    = "Hull";
-	private static String FUEL 		    = "Fuel";
-	private static String DRONE_PARTS   = "Drone Parts";
-	private static String MISSILES 	    = "Missiles";
-	private static String CREW_SIZE	    = "Crew Size"; private int lastCrewSize = 0;
-	private static String CARGO_SIZE    = "Cargo Size";
-	private static String OXYGEN_LEVEL  = "Oxygen Level";
+	private static String SCRAP 	   = "Scrap";
+	private static String HULL 		   = "Hull";
+	private static String FUEL 		   = "Fuel";
+	private static String DRONE_PARTS  = "Drone Parts";
+	private static String MISSILES 	   = "Missiles";
+	private static String CREW_SIZE	   = "Crew Size";
+	private static String CARGO_SIZE   = "Cargo Size";
+	private static String OXYGEN_LEVEL = "Oxygen Level";
 
 
-	public GraphInspector (FTLFrame frame) {
+	public GraphInspector(FTLFrame frame) {
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setFloatable(false);
@@ -105,11 +105,7 @@ public class GraphInspector extends JToolBar {
 
 
 		// Graph Settings
-		if (graphSettings.getState(SHOWTITLE).isSelected()) {
-			GraphRenderer.showTitle = true;
-		} else {
-			GraphRenderer.showTitle = false;
-		}
+		GraphRenderer.showTitle = graphSettings.getState(SHOWTITLE).isSelected();
 
 
 		GraphRenderer.superArray.clear();
@@ -242,11 +238,7 @@ public class GraphInspector extends JToolBar {
 		ArrayList<Integer> ceilingMeasureArray = new ArrayList<Integer>();
 		for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
 			ceilingMeasureArray.add(
-				Collections.max(
-					new ArrayList<ArrayList<Integer>>(
-						GraphRenderer.superArray.values()
-					).get(i)
-				)
+				Collections.max(new ArrayList<ArrayList<Integer>>(GraphRenderer.superArray.values()).get(i))
 			);
 		}
 		GraphRenderer.ceiling = ceilingMeasureArray.isEmpty() || Collections.max(ceilingMeasureArray) <= 20 ?

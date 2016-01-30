@@ -35,8 +35,8 @@ import org.jdom2.input.sax.SAXHandlerFactory;
 public class EmptyAwareSAXHandlerFactory implements SAXHandlerFactory {
 
 	@Override
-	public SAXHandler createSAXHandler( JDOMFactory factory ) {
-		return new EmptyAwareSAXHandler( factory );
+	public SAXHandler createSAXHandler(JDOMFactory factory) {
+		return new EmptyAwareSAXHandler(factory);
 	}
 
 
@@ -47,45 +47,45 @@ public class EmptyAwareSAXHandlerFactory implements SAXHandlerFactory {
 		int startTagLine = -1;
 		int startTagColumn = -1;
 
-		public EmptyAwareSAXHandler( JDOMFactory factory ) {
-			super( factory );
+		public EmptyAwareSAXHandler(JDOMFactory factory) {
+			super(factory);
 		}
 
 		@Override
-		public void startElement( String namespaceURI, String localName, String qName, Attributes atts ) throws SAXException {
+		public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
 			emptyTag = true;
 			startTagLine = -1;
 			startTagColumn = -1;
 
 			Locator loc = getDocumentLocator();
-			if ( loc != null ) {
+			if (loc != null) {
 				startTagLine = loc.getLineNumber();
 				startTagColumn = loc.getColumnNumber();
 			}
-			super.startElement( namespaceURI, localName, qName, atts );
+			super.startElement(namespaceURI, localName, qName, atts);
 		}
 
 		@Override
-		public void comment( char[] ch, final int start, final int length ) throws SAXException {
+		public void comment(char[] ch, final int start, final int length) throws SAXException {
 			emptyTag = false;
-			super.comment( ch, start, length );
+			super.comment(ch, start, length);
 		}
 
 		@Override
-		public void characters( char[] ch, final int start, final int length ) throws SAXException {
+		public void characters(char[] ch, final int start, final int length) throws SAXException {
 			emptyTag = false;
-			super.characters( ch, start, length );
+			super.characters(ch, start, length);
 		}
 
 		@Override
-		public void ignorableWhitespace( char[] ch, int start, int length) throws SAXException {
+		public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
 			emptyTag = false;
-			super.characters( ch, start, length );
+			super.characters(ch, start, length);
 		}
 
 		@Override
-		public void processingInstruction( String target, String data ) throws SAXException {
-			super.processingInstruction( target, data );
+		public void processingInstruction(String target, String data) throws SAXException {
+			super.processingInstruction(target, data);
 		}
 
 		@Override
@@ -95,31 +95,31 @@ public class EmptyAwareSAXHandlerFactory implements SAXHandlerFactory {
 		}
 
 		@Override
-		public void endElement( String namespaceURI, String localName, String qName ) throws SAXException {
+		public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
 			Element closedElement = getCurrentElement();
 			boolean twoPartTag = false;
 
 			Locator loc = getDocumentLocator();
-			if ( loc != null ) {
+			if (loc != null) {
 				int endTagLine = loc.getLineNumber();
 				int endTagColumn = loc.getColumnNumber();
 
-				if ( startTagLine != -1 && endTagLine != -1 && startTagLine != endTagLine) {
+				if (startTagLine != -1 && endTagLine != -1 && startTagLine != endTagLine) {
 					twoPartTag = true;
 				}
-				else if ( startTagColumn != -1 && endTagColumn != -1 && startTagColumn != endTagColumn ) {
+				else if (startTagColumn != -1 && endTagColumn != -1 && startTagColumn != endTagColumn) {
 					twoPartTag = true;
 				}
 			}
 
-			super.endElement( namespaceURI, localName, qName );
+			super.endElement(namespaceURI, localName, qName);
 
-			if ( emptyTag && twoPartTag && closedElement.getContent().isEmpty() ) {
+			if (emptyTag && twoPartTag && closedElement.getContent().isEmpty()) {
 				// This is a separate closing tag after an empty value.
 				// Add a blank text node.
 
-				final Text text = getFactory().text( "" );
-				getFactory().addContent( closedElement, text );
+				final Text text = getFactory().text("");
+				getFactory().addContent(closedElement, text);
 			}
 		}
 	}

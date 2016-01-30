@@ -5,6 +5,6 @@ import net.blerf.ftl.model.sectortree.SectorTreeEvent;
 
 public interface SectorTreeListener {
 
-	public void sectorTreeChanged( SectorTreeEvent e );
+	public void sectorTreeChanged(SectorTreeEvent e);
 
 }

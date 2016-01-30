@@ -50,7 +50,7 @@ public class CrewBlueprint {
 		}
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -58,7 +58,7 @@ public class CrewBlueprint {
 		return id;
 	}
 
-	public void setSpriteTintLayerList( List<SpriteTintLayer> layerList ) {
+	public void setSpriteTintLayerList(List<SpriteTintLayer> layerList) {
 		spriteTintLayerList = layerList;
 	}
 

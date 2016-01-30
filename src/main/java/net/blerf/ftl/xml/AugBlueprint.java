@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="augBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AugBlueprint {
-	
+
 	@XmlAttribute(name="name")
 	private String id;
 	private String title;
@@ -25,7 +25,7 @@ public class AugBlueprint {
 		return id;
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -33,7 +33,7 @@ public class AugBlueprint {
 		return title;
 	}
 
-	public void setTitle( String title ) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -41,7 +41,7 @@ public class AugBlueprint {
 		return desc;
 	}
 
-	public void setDescription( String desc ) {
+	public void setDescription(String desc) {
 		this.desc = desc;
 	}
 
@@ -51,7 +51,7 @@ public class AugBlueprint {
 		return cost;
 	}
 
-	public void setCost( int cost ) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 
@@ -59,7 +59,7 @@ public class AugBlueprint {
 		return cost;
 	}
 
-	public void setRarity( int rarity ) {
+	public void setRarity(int rarity) {
 		this.rarity = rarity;
 	}
 
@@ -67,7 +67,7 @@ public class AugBlueprint {
 		return stackable;
 	}
 
-	public void setStackable( boolean b ) {
+	public void setStackable(boolean b) {
 		stackable = b;
 	}
 
@@ -75,7 +75,7 @@ public class AugBlueprint {
 		return value;
 	}
 
-	public void setValue( float n ) {
+	public void setValue(float n) {
 		value = n;
 	}
 

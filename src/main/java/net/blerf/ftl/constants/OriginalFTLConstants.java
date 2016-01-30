@@ -18,16 +18,16 @@ public class OriginalFTLConstants implements FTLConstants {
 
 	public OriginalFTLConstants() {
 		List<CrewType> mutableCrewTypes = new ArrayList<CrewType>();
-		mutableCrewTypes.add( CrewType.BATTLE );
-		mutableCrewTypes.add( CrewType.CRYSTAL );
-		mutableCrewTypes.add( CrewType.ENERGY );
-		mutableCrewTypes.add( CrewType.ENGI );
-		mutableCrewTypes.add( CrewType.GHOST );
-		mutableCrewTypes.add( CrewType.HUMAN );
-		mutableCrewTypes.add( CrewType.MANTIS );
-		mutableCrewTypes.add( CrewType.ROCK );
-		mutableCrewTypes.add( CrewType.SLUG );
-		crewTypes = Collections.unmodifiableList( mutableCrewTypes );
+		mutableCrewTypes.add(CrewType.BATTLE);
+		mutableCrewTypes.add(CrewType.CRYSTAL);
+		mutableCrewTypes.add(CrewType.ENERGY);
+		mutableCrewTypes.add(CrewType.ENGI);
+		mutableCrewTypes.add(CrewType.GHOST);
+		mutableCrewTypes.add(CrewType.HUMAN);
+		mutableCrewTypes.add(CrewType.MANTIS);
+		mutableCrewTypes.add(CrewType.ROCK);
+		mutableCrewTypes.add(CrewType.SLUG);
+		crewTypes = Collections.unmodifiableList(mutableCrewTypes);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class OriginalFTLConstants implements FTLConstants {
 
 
 	@Override
-	public int getBatteryPoolCapacity( int batterySystemCapacity ) {
+	public int getBatteryPoolCapacity(int batterySystemCapacity) {
 		return 0;  // There was no battery in FTL 1.01-1.03.3. :P
 	}
 
@@ -51,20 +51,20 @@ public class OriginalFTLConstants implements FTLConstants {
 
 
 	@Override
-	public int getMasteryIntervalPilot( String race ) { return 15; }
+	public int getMasteryIntervalPilot(String race) { return 15; }
 
 	@Override
-	public int getMasteryIntervalEngine( String race ) { return 15; }
+	public int getMasteryIntervalEngine(String race) { return 15; }
 
 	@Override
-	public int getMasteryIntervalShield( String race ) { return 55; }
+	public int getMasteryIntervalShield(String race) { return 55; }
 
 	@Override
-	public int getMasteryIntervalWeapon( String race ) { return 65; }
+	public int getMasteryIntervalWeapon(String race) { return 65; }
 
 	@Override
-	public int getMasteryIntervalRepair( String race ) { return 18; }
+	public int getMasteryIntervalRepair(String race) { return 18; }
 
 	@Override
-	public int getMasteryIntervalCombat( String race ) { return 8; }
+	public int getMasteryIntervalCombat(String race) { return 8; }
 }

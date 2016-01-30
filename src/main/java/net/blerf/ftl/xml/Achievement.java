@@ -91,7 +91,7 @@ public class Achievement {
 		return victory;
 	}
 
-	public void setVictory( boolean b ) {
+	public void setVictory(boolean b) {
 		victory = b;
 	}
 
@@ -99,7 +99,7 @@ public class Achievement {
 		return quest;
 	}
 
-	public void setQuest( boolean b ) {
+	public void setQuest(boolean b) {
 		quest = b;
 	}
 }

@@ -57,7 +57,7 @@ public class SectorDescription {
 	}
 
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -65,7 +65,7 @@ public class SectorDescription {
 		return id;
 	}
 
-	public void setMinSector( int minSector ) {
+	public void setMinSector(int minSector) {
 		this.minSector = minSector;
 	}
 
@@ -73,7 +73,7 @@ public class SectorDescription {
 		return minSector;
 	}
 
-	public void setUnique( boolean unique ) {
+	public void setUnique(boolean unique) {
 		this.unique = unique;
 	}
 
@@ -81,7 +81,7 @@ public class SectorDescription {
 		return unique;
 	}
 
-	public void setNameList( NameList nameList ) {
+	public void setNameList(NameList nameList) {
 		this.nameList = nameList;
 	}
 
@@ -89,7 +89,7 @@ public class SectorDescription {
 		return nameList;
 	}
 
-	public void setTrackList( TrackList trackList ) {
+	public void setTrackList(TrackList trackList) {
 		this.trackList = trackList;
 	}
 
@@ -97,7 +97,7 @@ public class SectorDescription {
 		return trackList;
 	}
 
-	public void setStartEvent( String startEvent ) {
+	public void setStartEvent(String startEvent) {
 		this.startEvent = startEvent;
 	}
 
@@ -105,7 +105,7 @@ public class SectorDescription {
 		return startEvent;
 	}
 
-	public void setEventDistributions( List<EventDistribution> eventDistributions ) {
+	public void setEventDistributions(List<EventDistribution> eventDistributions) {
 		this.eventDistributions = eventDistributions;
 	}
 

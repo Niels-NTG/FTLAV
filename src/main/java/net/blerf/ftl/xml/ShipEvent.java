@@ -25,7 +25,7 @@ public class ShipEvent {
 		return id;
 	}
 
-	public void setId( String id ) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -33,7 +33,7 @@ public class ShipEvent {
 		return autoBlueprintId;
 	}
 
-	public void setAutoBlueprintId( String autoBlueprintId ) {
+	public void setAutoBlueprintId(String autoBlueprintId) {
 		this.autoBlueprintId = autoBlueprintId;
 	}
 

@@ -22,12 +22,12 @@ public class ShipLayout {
 	 */
 	public ShipLayout() {}
 
-	public void setOffsetX( int n ) { offsetX = n; }
-	public void setOffsetY( int n ) { offsetY = n; }
-	public void setHorizontal( int n ) { horizontal = n; }
-	public void setVertical( int n ) { vertical = n; }
+	public void setOffsetX(int n) { offsetX = n; }
+	public void setOffsetY(int n) { offsetY = n; }
+	public void setHorizontal(int n) { horizontal = n; }
+	public void setVertical(int n) { vertical = n; }
 
-	public void setShieldEllipse( int w, int h, int x, int y ) {
+	public void setShieldEllipse(int w, int h, int x, int y) {
 		shieldEllipse = new Rectangle(x, y, w, h);
 	}
 
@@ -46,18 +46,18 @@ public class ShipLayout {
 	 * @param squaresH horizontal count of tiles
 	 * @param squaresV certical count of tiles
 	 */
-	public void setRoom( int roomId, int locationX, int locationY, int squaresH, int squaresV ) {
+	public void setRoom(int roomId, int locationX, int locationY, int squaresH, int squaresV) {
 		Integer roomIdObj = new Integer(roomId);
 		EnumMap<RoomInfo,Integer> infoMap = new EnumMap<RoomInfo,Integer>(RoomInfo.class);
-		infoMap.put( RoomInfo.LOCATION_X, new Integer(locationX) );
-		infoMap.put( RoomInfo.LOCATION_Y, new Integer(locationY) );
-		infoMap.put( RoomInfo.SQUARES_H, new Integer(squaresH) );
-		infoMap.put( RoomInfo.SQUARES_V, new Integer(squaresV) );
-		roomMap.put( roomIdObj, infoMap );
+		infoMap.put(RoomInfo.LOCATION_X, new Integer(locationX));
+		infoMap.put(RoomInfo.LOCATION_Y, new Integer(locationY));
+		infoMap.put(RoomInfo.SQUARES_H, new Integer(squaresH));
+		infoMap.put(RoomInfo.SQUARES_V, new Integer(squaresV));
+		roomMap.put(roomIdObj, infoMap);
 	}
 
-	public EnumMap<RoomInfo, Integer> getRoomInfo( int roomId ) {
-		return roomMap.get( new Integer(roomId) );
+	public EnumMap<RoomInfo, Integer> getRoomInfo(int roomId) {
+		return roomMap.get(new Integer(roomId));
 	}
 
 	/**
@@ -81,16 +81,16 @@ public class ShipLayout {
 	 * @param roomIdA an adjacent roomId, or -1 for vacuum
 	 * @param roomIdB an adjacent roomId, or -1 for vacuum
 	 */
-	public void setDoor( int wallX, int wallY, int vertical, int roomIdA, int roomIdB ) {
-		DoorCoordinate doorCoord = new DoorCoordinate( wallX, wallY, vertical );
+	public void setDoor(int wallX, int wallY, int vertical, int roomIdA, int roomIdB) {
+		DoorCoordinate doorCoord = new DoorCoordinate(wallX, wallY, vertical);
 		EnumMap<DoorInfo, Integer> infoMap = new EnumMap<DoorInfo, Integer>(DoorInfo.class);
-		infoMap.put( DoorInfo.ROOM_ID_A, new Integer(roomIdA) );
-		infoMap.put( DoorInfo.ROOM_ID_B, new Integer(roomIdB) );
-		doorMap.put( doorCoord, infoMap );
+		infoMap.put(DoorInfo.ROOM_ID_A, new Integer(roomIdA));
+		infoMap.put(DoorInfo.ROOM_ID_B, new Integer(roomIdB));
+		doorMap.put(doorCoord, infoMap);
 	}
 
-	public EnumMap<DoorInfo, Integer> getDoorInfo( int wallX, int wallY, int vertical ) {
-		return doorMap.get( new DoorCoordinate( wallX, wallY, vertical ) );
+	public EnumMap<DoorInfo, Integer> getDoorInfo(int wallX, int wallY, int vertical) {
+		return doorMap.get(new DoorCoordinate(wallX, wallY, vertical));
 	}
 
 	public int getDoorCount() {
@@ -116,17 +116,17 @@ public class ShipLayout {
 		public int y = 0;
 		public int v = 0;
 
-		public DoorCoordinate( int x, int y, int v ) {
+		public DoorCoordinate(int x, int y, int v) {
 			this.x = x;
 			this.y = y;
 			this.v = v;
 		}
 
 		@Override
-		public boolean equals( Object o ) {
-			if ( !(o instanceof DoorCoordinate) ) return false;
+		public boolean equals(Object o) {
+			if (!(o instanceof DoorCoordinate)) return false;
 			DoorCoordinate d = (DoorCoordinate)o;
-			return ( x==d.x && y==d.y && v==d.v );
+			return (x==d.x && y==d.y && v==d.v);
 		}
 
 		@Override
@@ -137,7 +137,7 @@ public class ShipLayout {
 		// Use Z-Order Curve to interleve coords' bits for uniqueness.
 		// http://stackoverflow.com/questions/9858376/hashcode-for-3d-integer-coordinates-with-high-spatial-coherence
 		// http://www.opensourcescripts.com/info/interleave-bits--aka-morton-ize-aka-z-order-curve-.html
-		private int mangle( int n ) {
+		private int mangle(int n) {
 			n &= 0x000003ff;
 			n = (n ^ (n << 16)) & 0xff0000ff;
 			n = (n ^ (n <<  8)) & 0x0300f00f;

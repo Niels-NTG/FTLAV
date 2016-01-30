@@ -15,7 +15,7 @@ public class CrewNameLists {
 	@XmlElement(name="nameList")
 	private List<CrewNameList> crewNameLists;
 
-	public void setCrewNameLists( List<CrewNameList> crewNameLists ) {
+	public void setCrewNameLists(List<CrewNameList> crewNameLists) {
 		this.crewNameLists = crewNameLists;
 	}
 
