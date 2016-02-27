@@ -10,13 +10,13 @@ import processing.core.*;
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ShipDataParser;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+// import org.apache.logging.log4j.LogManager;
+// import org.apache.logging.log4j.Logger;
 
 
 public class GraphRenderer extends PApplet {
 
-	private static Logger log = LogManager.getLogger(GraphRenderer.class);
+	// private static Logger log = LogManager.getLogger(GraphRenderer.class);
 
 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
 	public static int ceiling = 20;
@@ -106,6 +106,8 @@ public class GraphRenderer extends PApplet {
 
 		// graphics
 		pg = createGraphics(panelWidth, panelHeight);
+		pg.strokeJoin(ROUND);
+		pg.strokeCap(ROUND);
 
 		mainFont13    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
 		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
@@ -187,8 +189,6 @@ public class GraphRenderer extends PApplet {
 					pg.noFill();
 					pg.stroke(gradient[s]);
 					pg.strokeWeight(s == gradient.length - 1 ? 4 : 4 + (s * 2));
-					pg.strokeJoin(ROUND);
-					pg.strokeCap(ROUND);
 					pg.beginShape();
 					for (int b = 0; b < lineArray.size(); ++b) {
 						if (lineArray.get(b) > -1) {
@@ -307,6 +307,9 @@ public class GraphRenderer extends PApplet {
 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
 		String ae            = FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " Advanced" : "";
 
+		pg.pushMatrix();
+		pg.translate(margin, margin);
+
 		pg.noStroke();
 
 		pg.textAlign(LEFT, TOP);
@@ -320,32 +323,31 @@ public class GraphRenderer extends PApplet {
 			pg.fill(hudColor.get("BG_LIGHT"));
 			pg.stroke(blueGlow[s]);
 			pg.strokeWeight(s == blueGlow.length - 1 ? borderWeight : borderWeight + (s * 2));
-			pg.strokeJoin(ROUND);
-			pg.strokeCap(ROUND);
 			pg.beginShape();
-			pg.vertex(margin, offset + padding);
-			pg.vertex(margin + padding, offset);
-			pg.vertex(margin + (titleLabelWidth - padding), offset);
-			pg.vertex(margin + titleLabelWidth, offset + padding);
-			pg.vertex(margin + titleLabelWidth, offset + (titleLabelHeight - padding));
-			pg.vertex(margin + (titleLabelWidth - padding), offset + titleLabelHeight);
-			pg.vertex(margin + padding, offset + titleLabelHeight);
-			pg.vertex(margin, offset + (titleLabelHeight - padding));
+			pg.vertex(0, offset + padding);
+			pg.vertex(padding, offset);
+			pg.vertex(titleLabelWidth - padding, offset);
+			pg.vertex(titleLabelWidth, offset + padding);
+			pg.vertex(titleLabelWidth, offset + (titleLabelHeight - padding));
+			pg.vertex(titleLabelWidth - padding, offset + titleLabelHeight);
+			pg.vertex(padding, offset + titleLabelHeight);
+			pg.vertex(0, offset + (titleLabelHeight - padding));
 			pg.endShape(CLOSE);
 		}
 		pg.noStroke();
 
 		// title text
 		pg.fill(hudColor.get("MAINTEXT"));
-		pg.text(shipName, margin + borderWeight + padding, offset + borderWeight + padding);
-
+		pg.text(shipName, borderWeight + padding, offset + borderWeight + padding);
 		pg.textFont(mainFont13, textSize);
 		pg.text(
 			shipType+"\n"+
 			"SCORE  "+ score+"\n"+
 			difficulty +" "+ ae,
-			margin + borderWeight + padding, offset + borderWeight + shipNameTextSize
+			borderWeight + padding, offset + borderWeight + shipNameTextSize
 		);
+
+		pg.popMatrix();
 
 	}
 
@@ -357,7 +359,6 @@ public class GraphRenderer extends PApplet {
 		// TODO indicator to show if there where enemy ships, environmental hazards or BOSS at the beacon
 
 		pg.noStroke();
-
 		pg.fill(hudColor.get("MAINTEXT"));
 
 		pg.textFont(mainFont13, 13);
@@ -376,8 +377,6 @@ public class GraphRenderer extends PApplet {
 		// TODO do not render sectorTitle if screenspace becomes too narrow
 
 		int textSize       = 22;
-		int xPos           = margin + (canvasWidth / lineSize) * b;
-		int yPos           = canvasHeight + margin + (margin / 3);
 		int padding        = 6;
 		float glowSpread   = 1.3f;
 		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
@@ -390,6 +389,9 @@ public class GraphRenderer extends PApplet {
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bTHE\\b\\s*","");
 		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*"," HOME");
 
+		pg.pushMatrix();
+		pg.translate(margin + (canvasWidth / lineSize) * b, canvasHeight + margin + (margin / 3));
+
 		pg.noStroke();
 
 		pg.textAlign(LEFT, TOP);
@@ -399,10 +401,10 @@ public class GraphRenderer extends PApplet {
 
 		pg.fill(hudColor.get("BORDER"));
 		pg.beginShape();
-		pg.vertex(xPos, yPos);																					// TL
-		pg.vertex(xPos, yPos + textSize + padding);																// BL
-		pg.vertex(textSize + padding + pg.textWidth(sectorTitle)+ xPos + padding, yPos + textSize + padding);	// BR
-		pg.vertex(textSize + padding + pg.textWidth(sectorTitle)+ xPos + padding + textSize, yPos);				// TR
+		pg.vertex(0, 0);																		// TL
+		pg.vertex(0, textSize + padding);														// BL
+		pg.vertex(textSize + padding + pg.textWidth(sectorTitle) + padding, textSize + padding);// BR
+		pg.vertex(textSize + padding + pg.textWidth(sectorTitle) + padding + textSize, 0);		// TR
 		pg.endShape(CLOSE);
 
 		// glow color
@@ -421,90 +423,93 @@ public class GraphRenderer extends PApplet {
 		noStroke();
 		fill(hudColor.get("BG_DARK")); // tape over existing glow
 		int glowSize = gradient.length - 1;
-		rect(xPos, yPos - (glowSize * glowSpread) + 1, (canvasWidth + margin) - xPos, glowSize * glowSpread);
+		rect(0, -(glowSize * glowSpread), canvasWidth + margin, glowSize * glowSpread);
 		for (int s = glowSize; s >= 0; --s) {
 			fill(gradient[s]);
-			rect(xPos, yPos - (s * glowSpread), (canvasWidth + margin) - xPos, padding);
+			rect(0, -(s * glowSpread), canvasWidth + margin, padding);
 		}
 		pg.fill(gradient[0]);
-		pg.rect(xPos, yPos, (canvasWidth + margin) - xPos, padding);
+		pg.rect(0, 0, canvasWidth + margin, padding);
 
 		// sector title text
 		pg.fill(hudColor.get("HEADERTEXT_ALT"));
-		pg.text(sectorTitle, padding + textSize + xPos + padding, yPos + padding);
+		pg.text(sectorTitle, padding + textSize + padding, padding);
 
 		// sector number label
 		pg.fill(hudColor.get("BG_LIGHT"));
-		pg.rect(xPos + (padding / 2), yPos + (padding / 2), textSize + (padding / 2), textSize);
+		pg.rect(padding / 2, padding / 2, textSize + (padding / 2), textSize);
 
 		// sector number text
 		pg.fill(hudColor.get("MAINTEXT"));
 		pg.textFont(headerFontAlt, textSize);
-		pg.text(Integer.toString(sectorNumber + 1), xPos + (textSize / 2), yPos + padding);
+		pg.text(Integer.toString(sectorNumber + 1), textSize / 2, padding);
+
+		pg.popMatrix();
 
 	}
 
 
 	private void drawLineLabel(int a, String lineLabel, int lineSize, int lastestValue) {
 
-		int textSize = 13;
-		int offset   = 8;
-		int xPos     = margin + (canvasWidth / lineSize) * (lineSize-1) + offset;
-		int yPos     = round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset;
-		int padding  = 6;
-		float keyPos;
-
 		if (lastestValue > -1) {
 
-			pg.noStroke();
+		int textSize = 13;
+		int offset   = 8;
+		int padding  = 6;
+
+			pg.pushMatrix();
+			pg.translate(
+				margin + (canvasWidth / lineSize) * (lineSize - 1) + offset,
+				round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset
+			);
 
 			pg.textFont(mainFont13, textSize);
 			pg.textAlign(LEFT, BOTTOM);
 
-			keyPos = xPos + padding + pg.textWidth(lineLabel) + padding;
+			float keyPos = padding + pg.textWidth(lineLabel) + padding;
 
 			// connecting line
 			pg.noFill();
 			pg.stroke(hudColor.get("BORDER"));
-			pg.strokeJoin(ROUND);
-			pg.strokeCap(ROUND);
 			pg.beginShape();
-			pg.vertex(xPos + offset, yPos - offset);
-			pg.vertex(xPos - offset, yPos + offset);
+			pg.vertex(offset, -offset);
+			pg.vertex(-offset, offset);
 			pg.endShape();
-			pg.noStroke();
 
 			// label
+			pg.noStroke();
 			pg.fill(hudColor.get("BORDER"));
 			pg.beginShape();
-			pg.vertex(xPos, yPos);
-			pg.vertex(keyPos + pg.textWidth("0000"), yPos);
-			pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - padding);
-			pg.vertex(keyPos + pg.textWidth("0000") + padding, yPos - (padding + textSize + padding));
-			pg.vertex(xPos + padding, yPos - (padding + textSize + padding));
-			pg.vertex(xPos, yPos - (padding + textSize));
+			pg.vertex(0, 0);
+			pg.vertex(keyPos + pg.textWidth("0000"), 0);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding, -padding);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding, -(padding + textSize + padding));
+			pg.vertex(padding, -(padding + textSize + padding));
+			pg.vertex(0, -(padding + textSize));
 			pg.endShape(CLOSE);
 
 			// label key
 			pg.tint(hudColor.get("HEADERTEXT_ALT"));
 			pg.fill(hudColor.get("HEADERTEXT_ALT"));
-			pg.text(lineLabel, xPos + padding, yPos - padding);
+			pg.text(lineLabel, padding, -padding);
 
 			// label value
 			pg.beginShape();
-			pg.vertex(keyPos, yPos - 2);
-			pg.vertex(keyPos + pg.textWidth("0000") - 2, yPos - 2);
-			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - (padding + 2));
-			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, yPos - ((padding + textSize + padding) - 2));
-			pg.vertex(keyPos, yPos - ((padding + textSize + padding) - 2));
+			pg.vertex(keyPos, -2);
+			pg.vertex(keyPos + pg.textWidth("0000") - 2, -2);
+			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, -(padding + 2));
+			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, -((padding + textSize + padding) - 2));
+			pg.vertex(keyPos, -((padding + textSize + padding) - 2));
 			pg.endShape(CLOSE);
 			pg.fill(hudColor.get("MAINTEXT"));
 			pg.textAlign(CENTER, BOTTOM);
 			pg.text(
 				lastestValue,
 				keyPos + (((keyPos + pg.textWidth("0000") + padding - 2) - keyPos) / 2),
-				yPos - padding
+				-padding
 			);
+
+			pg.popMatrix();
 
 		}
 
