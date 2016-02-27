@@ -142,7 +142,6 @@ public class ShipDataParser {
 
 		if (beacon.getStore() != null) {
 			for (int i = 0; i < beacon.getStore().getShelfList().size(); i++) {
-				storeItems.replaceAll(",\\s$","");
 				storeItems += beacon.getStore().getShelfList().get(i).getItemType().toString() + ": ";
 				for (int k = 0; k < beacon.getStore().getShelfList().get(i).getItems().size(); k++) {
 					if (beacon.getStore().getShelfList().get(i).getItemType().toString().equals("Crew")) {
@@ -151,6 +150,7 @@ public class ShipDataParser {
 						storeItems += beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId() + ", ";
 					}
 				}
+				storeItems.replaceAll(",\\s$","");
 			}
 		}
 
