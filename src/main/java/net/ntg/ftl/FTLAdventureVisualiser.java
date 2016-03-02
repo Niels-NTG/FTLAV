@@ -36,7 +36,7 @@ public class FTLAdventureVisualiser {
 	private static Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
 
 	public static String APP_NAME = "FTL Adventure Visualiser";
-	public static int APP_VERSION = 2;
+	public static int APP_VERSION = 3;
 
 	// TODO each time arrays are updated, write this to file for later use
 	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<SavedGameParser.SavedGameState>();
