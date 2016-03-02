@@ -25,6 +25,7 @@ public class CreateCSV {
 		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
 		String fileHeader = (
+			"TIME" + DELIMITER +
 		// Location
 			"BEACON" + DELIMITER +
 			"SECTOR NUMBER" + DELIMITER +
@@ -147,6 +148,8 @@ public class CreateCSV {
 
 				int sectorNumber = FTLAdventureVisualiser.gameStateArray.get(i).getSectorNumber();
 
+				fw.append(getTimeStamp());
+				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.gameStateArray.get(i).getTotalBeaconsExplored()));
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(sectorNumber + 1));
