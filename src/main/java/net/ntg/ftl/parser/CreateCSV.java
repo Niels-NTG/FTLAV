@@ -3,6 +3,8 @@ package net.ntg.ftl.parser;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.util.Calendar;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -322,8 +324,16 @@ public class CreateCSV {
 
 			}
 
+			String footer = (
+				FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName() + " (" + ShipDataParser.getFullShipType() + ") - " +
+ 				FTLAdventureVisualiser.gameStateArray.get(0).getDifficulty().toString() + " difficulty (" +
+				(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? "AE enabled" : "AE disabled") +
+				") - " + FTLAdventureVisualiser.APP_NAME + " version " + FTLAdventureVisualiser.APP_VERSION + " - " +
+				getTimeStamp()
+			);
+			fw.append(footer);
+
 			log.info("CSV file has been created");
-			log.info(FTLAdventureVisualiser.gameStateArray.get(latest).getRebelFleetOffset() + " " + FTLAdventureVisualiser.gameStateArray.get(latest).getRebelFleetFudge());
 
 		} catch (Exception e) {
 			log.error("Error creating CSV file!", e);
@@ -336,6 +346,14 @@ public class CreateCSV {
 			}
 		}
 
+	}
+
+	private static String getTimeStamp() {
+		Calendar cal = Calendar.getInstance();
+		return (
+			cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + " " +
+			cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
+		);
 	}
 
 }
