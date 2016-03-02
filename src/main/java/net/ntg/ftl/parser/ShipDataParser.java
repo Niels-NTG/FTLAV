@@ -186,8 +186,6 @@ public class ShipDataParser {
 				break;
 			}
 
-		} else {
-			fullCrewType = "";
 		}
 
 		return fullCrewType;
@@ -246,10 +244,7 @@ public class ShipDataParser {
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) sb += "Rebel Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) sb += "Federation Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) sb += "Rebel & Federation Fleet, ";
-		// if (FTLAdventureVisualiser.gameStateArray.get(index).getStateVar("nebula") != null) {
-
-		// }
-		// TODO Nebula Storm event
+		// if (FTLAdventureVisualiser.gameStateArray.get(index).getStateVar("nebula") != null) // TODO Nebula Storm event
 
 		return sb.replaceAll(",\\s$","");
 
