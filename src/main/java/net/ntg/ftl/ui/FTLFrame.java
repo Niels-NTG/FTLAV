@@ -35,11 +35,10 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
+import net.ntg.ftl.parser.ParseCSV;
 import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
-import net.ntg.ftl.parser.ParseCSV;
-// import net.ntg.ftl.parser.CreateCSV;
 
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.MysteryBytes;
@@ -137,7 +136,7 @@ public class FTLFrame extends JFrame {
 		final JButton recordingImportBtn = new JButton("Import recording"); // TODO icon for import recording (opened folder)
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		// final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
+		final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
 		final JButton helpBtn = new JButton("Help", helpIcon);
 
 
@@ -145,7 +144,7 @@ public class FTLFrame extends JFrame {
 		gameStateRecordBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
-		// exportDataBtn.setEnabled(false);
+		exportDataBtn.setEnabled(false);
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
@@ -208,7 +207,7 @@ public class FTLFrame extends JFrame {
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
 					exportImageBtn.setEnabled(true);
-					// exportDataBtn.setEnabled(true);
+					exportDataBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty("ftlContinuePath", chosenFile.getAbsolutePath());
@@ -217,7 +216,7 @@ public class FTLFrame extends JFrame {
 					gameStateRecordBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
-					// exportDataBtn.setEnabled(false);
+					exportDataBtn.setEnabled(false);
 				}
 			}
 		});
@@ -259,7 +258,9 @@ public class FTLFrame extends JFrame {
 
 				int chooserResponse = fileChooser.showSaveDialog(null);
 
-				ParseCSV.writeCSV(fileChooser.getSelectedFile().getAbsolutePath());
+				FTLAdventureVisualiser.recordFile = fileChooser.getSelectedFile();
+
+				ParseCSV.writeCSV(FTLAdventureVisualiser.recordFile.getAbsolutePath());
 			}
 		});
 
@@ -304,23 +305,23 @@ public class FTLFrame extends JFrame {
 		});
 
 
-		// exportDataBtn.addActionListener(new ActionListener() {
-		// 	@Override
-		// 	public void actionPerformed(ActionEvent e) {
+		exportDataBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-		// 		JFileChooser exportChooser = new JFileChooser();
-		// 		exportChooser.setCurrentDirectory(null);
-		// 		exportChooser.setFileHidingEnabled(true);
-		// 		exportChooser.setDialogTitle("Export complete dataset as CSV file");
+				JFileChooser exportChooser = new JFileChooser();
+				exportChooser.setCurrentDirectory(null);
+				exportChooser.setFileHidingEnabled(true);
+				exportChooser.setDialogTitle("Export complete dataset as CSV file");
 
-		// 		int chooserResponse = exportChooser.showSaveDialog(null);
+				int chooserResponse = exportChooser.showSaveDialog(null);
 
-		// 		CreateCSV.writeCSV(exportChooser.getSelectedFile().getAbsolutePath());
+				ParseCSV.createCSV(exportChooser.getSelectedFile().getAbsolutePath());
 
-		// 		log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
+				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
 
-		// 	}
-		// });
+			}
+		});
 
 
 		helpBtn.addActionListener(new ActionListener() {
@@ -361,7 +362,7 @@ public class FTLFrame extends JFrame {
 		toolbar.add(toggleGraphBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
-		// toolbar.add(exportDataBtn);
+		toolbar.add(exportDataBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(helpBtn);
 

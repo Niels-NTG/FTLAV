@@ -44,6 +44,9 @@ public class FTLAdventureVisualiser {
 	public static ArrayList<List<SavedGameParser.CrewState>> enemyCrewArray = new ArrayList<>();
 	public static ArrayList<SavedGameParser.EnvironmentState> environmentArray = new ArrayList<>();
 	public static ArrayList<SectorDot> sectorArray = new ArrayList<>();
+	public static ArrayList<String> timeStampArray = new ArrayList<>();
+
+	public static File recordFile;
 
 
 	public static void main(String[] args) {
