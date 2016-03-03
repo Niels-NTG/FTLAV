@@ -127,27 +127,25 @@ public class FTLFrame extends JFrame {
 
 	private void setupToolbar(JToolBar toolbar) {
 
-		log.trace("Initialising toolbar.");
-
 		toolbar.setMargin(new Insets(5, 5, 5, 5));
 		toolbar.setFloatable(false);
 
 
-		JButton gameStateOpenBtn = new JButton("Open", openIcon);
-		final JToggleButton gameStateWatcherBtn = new JToggleButton("Monitor save game", watchIcon, false);
+		final JButton gameStateLoadBtn = new JButton("Load save game", openIcon); // TODO new icon load savegame load (tiny spaceship?)
+		final JToggleButton gameStateRecordBtn = new JToggleButton("Record save game", watchIcon, false); // TODO new "record" icon (red dot)
+		final JButton recordingNewBtn = new JButton("New recording"); // TODO icon for new recording (piece of paper with plus sign)
+		final JButton recordingImportBtn = new JButton("Import recording"); // TODO icon for import recording (opened folder)
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
-		// TODO JButton "Refresh" to redraw graph
-		final JButton refreshBtn = new JButton("Refresh"); // TODO refresh icon
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
-		JButton helpBtn = new JButton("Help", helpIcon);
+		// final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
+		final JButton helpBtn = new JButton("Help", helpIcon);
 
 
-		gameStateWatcherBtn.setEnabled(false);
+
+		gameStateRecordBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
-		refreshBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
-		exportDataBtn.setEnabled(false);
+		// exportDataBtn.setEnabled(false);
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
@@ -173,12 +171,11 @@ public class FTLFrame extends JFrame {
 		fc.setMultiSelectionEnabled(false);
 
 
-		gameStateOpenBtn.addActionListener(new ActionListener() {
+		gameStateLoadBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				log.trace("Open saved game button clicked.");
 
-				gameStateWatcherBtn.doClick();
+				gameStateRecordBtn.doClick();
 
 				fc.setDialogTitle("Select continue.sav (saved game)");
 				int chooserResponse = fc.showOpenDialog(null);
@@ -205,61 +202,64 @@ public class FTLFrame extends JFrame {
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					loadGameStateFile(chosenFile);
-					gameStateWatcherBtn.setEnabled(true);
+					gameStateRecordBtn.setEnabled(true);
+					gameStateRecordBtn.doClick();
 					toggleGraphBtn.setEnabled(true);
-					refreshBtn.setEnabled(true);
-					gameStateWatcherBtn.doClick();
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
 					exportImageBtn.setEnabled(true);
-					exportDataBtn.setEnabled(true);
+					// exportDataBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty("ftlContinuePath", chosenFile.getAbsolutePath());
 
 				} else if (sillyMistake || lastGameState == null) {
-					gameStateWatcherBtn.setEnabled(false);
+					gameStateRecordBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
-					refreshBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
-					exportDataBtn.setEnabled(false);
-				} else {
-					log.trace("Open dialog cancelled.");
+					// exportDataBtn.setEnabled(false);
 				}
 			}
 		});
 
 
-		gameStateWatcherBtn.addActionListener(new ActionListener() {
+		gameStateRecordBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AbstractButton abstractButton = (AbstractButton)e.getSource();
-				gameStateWatcherBtn.setSelected(abstractButton.getModel().isSelected());
+				gameStateRecordBtn.setSelected(abstractButton.getModel().isSelected());
 
-				if (gameStateWatcherBtn.isSelected()) {
+				if (gameStateRecordBtn.isSelected()) {
 					if (lastGameState != null) {
 						TimerTask task = new FileWatcher(chosenFile) {
 							protected void onChange(File file) {
 								// here we code the action on a change
 								log.info("\nFILE "+ file.getName() +" HAS CHANGED !");
-								if (gameStateWatcherBtn.isSelected()) loadGameStateFile(chosenFile);
+								if (gameStateRecordBtn.isSelected()) loadGameStateFile(chosenFile);
 							}
 						};
 						Timer timer = new Timer();
 						timer.schedule( task , new Date(), 1000 );
 					} else {
-						gameStateWatcherBtn.doClick();
+						gameStateRecordBtn.doClick();
 					}
 				}
+
 			}
 		});
 
-		refreshBtn.addActionListener(new ActionListener() {
+		recordingNewBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AbstractButton abstractButton = (AbstractButton)e.getSource();
-				refreshBtn.setSelected(abstractButton.getModel().isSelected());
-				if (refreshBtn.isSelected()) inspector.setGameState();
+
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(null);
+				fileChooser.setFileHidingEnabled(true);
+				fileChooser.setDialogTitle("Pick a location to store your recording");
+
+				int chooserResponse = fileChooser.showSaveDialog(null);
+
+				ParseCSV.writeCSV(fileChooser.getSelectedFile().getAbsolutePath());
 			}
 		});
 
@@ -304,23 +304,23 @@ public class FTLFrame extends JFrame {
 		});
 
 
-		exportDataBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		// exportDataBtn.addActionListener(new ActionListener() {
+		// 	@Override
+		// 	public void actionPerformed(ActionEvent e) {
 
-				JFileChooser exportChooser = new JFileChooser();
-				exportChooser.setCurrentDirectory(null);
-				exportChooser.setFileHidingEnabled(true);
-				exportChooser.setDialogTitle("Export complete dataset as CSV file");
+		// 		JFileChooser exportChooser = new JFileChooser();
+		// 		exportChooser.setCurrentDirectory(null);
+		// 		exportChooser.setFileHidingEnabled(true);
+		// 		exportChooser.setDialogTitle("Export complete dataset as CSV file");
 
-				int chooserResponse = exportChooser.showSaveDialog(null);
+		// 		int chooserResponse = exportChooser.showSaveDialog(null);
 
-				CreateCSV.writeCSV(exportChooser.getSelectedFile().getAbsolutePath());
+		// 		CreateCSV.writeCSV(exportChooser.getSelectedFile().getAbsolutePath());
 
-				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
+		// 		log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
 
-			}
-		});
+		// 	}
+		// });
 
 
 		helpBtn.addActionListener(new ActionListener() {
@@ -354,13 +354,14 @@ public class FTLFrame extends JFrame {
 		});
 
 
-		toolbar.add(gameStateOpenBtn);
-		toolbar.add(gameStateWatcherBtn);
+		toolbar.add(gameStateLoadBtn);
+		toolbar.add(gameStateRecordBtn);
+		toolbar.add(recordingNewBtn);
+		toolbar.add(recordingImportBtn);
 		toolbar.add(toggleGraphBtn);
-		toolbar.add(refreshBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
-		toolbar.add(exportDataBtn);
+		// toolbar.add(exportDataBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(helpBtn);
 
