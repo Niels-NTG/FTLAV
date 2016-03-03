@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -512,9 +513,10 @@ public class FTLFrame extends JFrame {
 			FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
 			FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
 			FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
+			FTLAdventureVisualiser.timeStampArray.add(getTimeStamp());
 
-			ArrayList<SavedGameParser.CrewState> currentPlayerCrew = new ArrayList<SavedGameParser.CrewState>();
-			ArrayList<SavedGameParser.CrewState> currentEnemyCrew = new ArrayList<SavedGameParser.CrewState>();
+			ArrayList<SavedGameParser.CrewState> currentPlayerCrew = new ArrayList<>();
+			ArrayList<SavedGameParser.CrewState> currentEnemyCrew = new ArrayList<>();
 			for (int i = 0; i < currentGameState.getPlayerShipState().getCrewList().size(); i++) {
 				if (currentGameState.getPlayerShipState().getCrewList().get(i).isPlayerControlled()) {
 					currentPlayerCrew.add(currentGameState.getPlayerShipState().getCrewList().get(i));
@@ -567,6 +569,16 @@ public class FTLFrame extends JFrame {
 		}
 
 		lastGameState = currentGameState;
+	}
+
+
+	private String getTimeStamp() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(chosenFile.lastModified());
+		return (
+			cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + " " +
+			cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
+		);
 	}
 
 
