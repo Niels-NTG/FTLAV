@@ -12,11 +12,9 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.filechooser.FileFilter;
 
 import net.vhati.modmanager.core.FTLUtilities;
 
@@ -33,19 +31,19 @@ import org.apache.logging.log4j.Logger;
 
 public class FTLAdventureVisualiser {
 
-	private static Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
+	private static final Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
 
 	public static String APP_NAME = "FTL Adventure Visualiser";
 	public static int APP_VERSION = 3;
 
 	// TODO each time arrays are updated, write this to file for later use
-	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<SavedGameParser.SavedGameState>();
-	public static ArrayList<SavedGameParser.ShipState> shipStateArray = new ArrayList<SavedGameParser.ShipState>();
-	public static ArrayList<SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList<SavedGameParser.ShipState>();
-	public static ArrayList<List<SavedGameParser.CrewState>> playerCrewArray = new ArrayList<List<SavedGameParser.CrewState>>();
-	public static ArrayList<List<SavedGameParser.CrewState>> enemyCrewArray = new ArrayList<List<SavedGameParser.CrewState>>();
-	public static ArrayList<SavedGameParser.EnvironmentState> environmentArray = new ArrayList<SavedGameParser.EnvironmentState>();
-	public static ArrayList<SectorDot> sectorArray = new ArrayList<SectorDot>();
+	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<>();
+	public static ArrayList<SavedGameParser.ShipState> shipStateArray = new ArrayList<>();
+	public static ArrayList<SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList<>();
+	public static ArrayList<List<SavedGameParser.CrewState>> playerCrewArray = new ArrayList<>();
+	public static ArrayList<List<SavedGameParser.CrewState>> enemyCrewArray = new ArrayList<>();
+	public static ArrayList<SavedGameParser.EnvironmentState> environmentArray = new ArrayList<>();
+	public static ArrayList<SectorDot> sectorArray = new ArrayList<>();
 
 
 	public static void main(String[] args) {

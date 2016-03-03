@@ -9,14 +9,13 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.parser.ShipDataParser;
 
 import net.blerf.ftl.parser.SavedGameParser;
 
 
 public class CreateCSV {
 
-	private static Logger log = LogManager.getLogger(CreateCSV.class);
+	private static final Logger log = LogManager.getLogger(CreateCSV.class);
 
 	private static final String DELIMITER = ";";
 

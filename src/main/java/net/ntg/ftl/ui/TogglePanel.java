@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,13 +18,13 @@ import javax.swing.JToggleButton;
 
 public class TogglePanel extends JPanel {
 
-	private Map<String,JToggleButton> toggleMap = new HashMap<String,JToggleButton>();
-	private Map<String,JLabel> toggleLabelMap = new HashMap<String,JLabel>();
-	private Map<String,JLabel> labelMap = new HashMap<String,JLabel>();
-	private Map<String,JLabel> labelLabelMap = new HashMap<String,JLabel>();
+	private final Map<String,JToggleButton> toggleMap = new HashMap<>();
+	private final Map<String,JLabel> toggleLabelMap = new HashMap<>();
+	private final Map<String,JLabel> labelMap = new HashMap<>();
+	private final Map<String,JLabel> labelLabelMap = new HashMap<String,JLabel>();
 
-	private GridBagConstraints gridC = new GridBagConstraints();
-	private Component valueStrut = Box.createHorizontalStrut(512);
+	private final GridBagConstraints gridC = new GridBagConstraints();
+	private final Component valueStrut = Box.createHorizontalStrut(512);
 
 	public TogglePanel() {
 		super(new GridBagLayout());

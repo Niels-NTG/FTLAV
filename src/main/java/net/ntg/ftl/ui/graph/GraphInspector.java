@@ -1,22 +1,15 @@
 package net.ntg.ftl.ui.graph;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
-import javax.swing.border.TitledBorder;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ShipDataParser;
 import net.ntg.ftl.ui.FTLFrame;
-import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.ui.TogglePanel;
 
 import org.apache.logging.log4j.Logger;
@@ -25,34 +18,34 @@ import org.apache.logging.log4j.LogManager;
 
 public class GraphInspector extends JToolBar {
 
-	private static Logger log = LogManager.getLogger(GraphInspector.class);
+	private static final Logger log = LogManager.getLogger(GraphInspector.class);
 
-	private FTLFrame frame;
+	private final FTLFrame frame;
 
 	// Graph Settings
 	private TogglePanel graphSettings = null;
-	private static String SHOWTITLE = "Display Title";
+	private static final String SHOWTITLE = "Display Title";
 	// private static String SHOWCREW  = "Display Crew"; // TODO toggle crew labels on/off
 
 	// Ship Log
 	private TogglePanel shipLogPanel = null;
-	private static String TOTAL_DEFEATED = "Total Ships Defeated";
-	private static String TOTAL_BEACONS  = "Total Beacons Explored";
-	private static String TOTAL_SCRAP    = "Total Scrap Collected";
-	private static String TOTAL_CREW     = "Total Crew Hired";
-	private static String FLEET_ADVANCE  = "Fleet Advancement";
-	private static String SCORE          = "Score";
+	private static final String TOTAL_DEFEATED	= "Total Ships Defeated";
+	private static final String TOTAL_BEACONS	= "Total Beacons Explored";
+	private static final String TOTAL_SCRAP		= "Total Scrap Collected";
+	private static final String TOTAL_CREW		= "Total Crew Hired";
+	private static final String FLEET_ADVANCE	= "Fleet Advancement";
+	private static final String SCORE			= "Score";
 
 	// Ship Supplies
 	private TogglePanel suppliesPanel = null;
-	private static String SCRAP 	   = "Scrap";
-	private static String HULL 		   = "Hull";
-	private static String FUEL 		   = "Fuel";
-	private static String DRONE_PARTS  = "Drone Parts";
-	private static String MISSILES 	   = "Missiles";
-	private static String CREW_SIZE	   = "Crew Size";
-	private static String CARGO_SIZE   = "Cargo Size";
-	private static String OXYGEN_LEVEL = "Oxygen Level";
+	private static final String SCRAP			= "Scrap";
+	private static final String HULL			= "Hull";
+	private static final String FUEL			= "Fuel";
+	private static final String DRONE_PARTS		= "Drone Parts";
+	private static final String MISSILES		= "Missiles";
+	private static final String CREW_SIZE		= "Crew Size";
+	private static final String CARGO_SIZE		= "Cargo Size";
+	private static final String OXYGEN_LEVEL	= "Oxygen Level";
 
 
 	public GraphInspector(FTLFrame frame) {
@@ -120,7 +113,7 @@ public class GraphInspector extends JToolBar {
 		shipLogPanel.setValue(SCORE, ShipDataParser.getCurrentScore(latest));
 
 		if (shipLogPanel.getState(TOTAL_DEFEATED).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalShipsDefeated());
 			}
@@ -128,7 +121,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (shipLogPanel.getState(TOTAL_BEACONS).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalBeaconsExplored());
 			}
@@ -136,7 +129,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (shipLogPanel.getState(TOTAL_SCRAP).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalScrapCollected());
 			}
@@ -144,7 +137,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (shipLogPanel.getState(TOTAL_CREW).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.gameStateArray.get(i).getTotalCrewHired());
 			}
@@ -152,7 +145,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (shipLogPanel.getState(FLEET_ADVANCE).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(ShipDataParser.getRebelFleetAdvancement(i));
 			}
@@ -160,7 +153,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (shipLogPanel.getState(SCORE).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(ShipDataParser.getCurrentScore(i));
 			}
@@ -178,7 +171,7 @@ public class GraphInspector extends JToolBar {
 		suppliesPanel.setValue(OXYGEN_LEVEL, ShipDataParser.getShipOxygenLevel(latest));
 
 		if (suppliesPanel.getState(SCRAP).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getScrapAmt());
 			}
@@ -186,7 +179,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(HULL).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getHullAmt());
 			}
@@ -194,7 +187,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(FUEL).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getFuelAmt());
 			}
@@ -202,7 +195,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(DRONE_PARTS).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getDronePartsAmt());
 			}
@@ -210,7 +203,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(MISSILES).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.shipStateArray.get(i).getMissilesAmt());
 			}
@@ -218,7 +211,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(CREW_SIZE).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(FTLAdventureVisualiser.playerCrewArray.get(i).size());
 			}
@@ -226,7 +219,7 @@ public class GraphInspector extends JToolBar {
 		}
 
 		if (suppliesPanel.getState(OXYGEN_LEVEL).isSelected()) {
-			ArrayList<Integer> intArray = new ArrayList<Integer>();
+			ArrayList<Integer> intArray = new ArrayList<>();
 			for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.size(); i++) {
 				intArray.add(ShipDataParser.getShipOxygenLevel(i));
 			}
@@ -235,7 +228,7 @@ public class GraphInspector extends JToolBar {
 
 
 		// calculate ceiling value
-		ArrayList<Integer> ceilingMeasureArray = new ArrayList<Integer>();
+		ArrayList<Integer> ceilingMeasureArray = new ArrayList<>();
 		for (int i = 0; i < GraphRenderer.superArray.size(); i++) {
 			ceilingMeasureArray.add(
 				Collections.max(new ArrayList<ArrayList<Integer>>(GraphRenderer.superArray.values()).get(i))

@@ -11,15 +11,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Insets;
+import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.event.HyperlinkEvent;
@@ -39,12 +38,13 @@ import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
-import net.ntg.ftl.parser.CreateCSV;
+import net.ntg.ftl.parser.ParseCSV;
+// import net.ntg.ftl.parser.CreateCSV;
 
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.MysteryBytes;
 import net.blerf.ftl.parser.random.NativeRandom;
-import net.blerf.ftl.parser.SavedGameParser; // TODO remove write methods from SavedGameParser
+import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 import net.vhati.modmanager.core.FTLUtilities;
 
@@ -54,7 +54,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class FTLFrame extends JFrame {
 
-	private static Logger log = LogManager.getLogger(FTLFrame.class);
+	private static final Logger log = LogManager.getLogger(FTLFrame.class);
 
 	JFrame graphFrame;
 	JFrame helpFrame;
@@ -62,21 +62,21 @@ public class FTLFrame extends JFrame {
 	private File chosenFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	private ImageIcon openIcon        = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
-	private ImageIcon watchIcon       = new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
-	private ImageIcon graphIcon       = new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
-	private ImageIcon exportImageIcon = new ImageIcon(ClassLoader.getSystemResource("save.gif"));
-	private ImageIcon exportDataIcon  = new ImageIcon(ClassLoader.getSystemResource("table.gif"));
-	private ImageIcon helpIcon        = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
+	private final ImageIcon openIcon		= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	private final ImageIcon watchIcon		= new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
+	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
+	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private final ImageIcon exportDataIcon	= new ImageIcon(ClassLoader.getSystemResource("table.gif"));
+	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
-	private URL helpPage = ClassLoader.getSystemResource("help.html");
-	private HyperlinkListener linkListener;
+	private final URL helpPage = ClassLoader.getSystemResource("help.html");
+	private final HyperlinkListener linkListener;
 
 	private JButton gameStateSaveBtn;
 	private GraphInspector inspector;
 
-	private String appName;
-	private int appVersion;
+	private final String appName;
+	private final int appVersion;
 
 	public FTLFrame(String appName, int appVersion) {
 
@@ -88,12 +88,11 @@ public class FTLFrame extends JFrame {
 			public void hyperlinkUpdate(HyperlinkEvent e) {
 				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 					log.trace("Dialog link clicked: " + e.getURL());
-
 					if (Desktop.isDesktopSupported()) {
 						try {
 							Desktop.getDesktop().browse(e.getURL().toURI());
 							log.trace("Link opened in external browser.");
-						} catch (Exception f) {
+						} catch (URISyntaxException | IOException f) {
 							log.error("Unable to open link.", f);
 						}
 					}
@@ -405,7 +404,7 @@ public class FTLFrame extends JFrame {
 		graphFrame = new JFrame();
 
 		graphFrame.setSize(1200, 700);
-		// graphFrame.setType(JFrame.Type.UTILITY);
+		graphFrame.setType(JFrame.Type.UTILITY);
 		graphFrame.setResizable(true);
 		graphFrame.setLocationRelativeTo(null);
 		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
@@ -546,7 +545,7 @@ public class FTLFrame extends JFrame {
 							columnsOffset, columnsOffset + myColumns.get(i).size()
 						).get(k)
 					) {
-						FTLAdventureVisualiser.sectorArray.add( myColumns.get(i).get(k) );
+						FTLAdventureVisualiser.sectorArray.add(myColumns.get(i).get(k));
 					}
 				}
 				columnsOffset += myColumns.get(i).size();

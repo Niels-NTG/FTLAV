@@ -18,7 +18,7 @@ public class GraphRenderer extends PApplet {
 
 	// private static Logger log = LogManager.getLogger(GraphRenderer.class);
 
-	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<String,ArrayList<Integer>>();
+	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<>();
 	public static int ceiling = 20;
 
 	int current  = 0;
@@ -30,7 +30,9 @@ public class GraphRenderer extends PApplet {
 
 	private int canvasWidth;
 	private int canvasHeight;
-	private int margin = 64; // px
+	private final int margin = 64; // px
+
+	public static boolean refreshed = false;
 
 	public static boolean captureImage = false;
 	public static String  exportPath   = "FTLAV_######";
@@ -93,7 +95,7 @@ public class GraphRenderer extends PApplet {
 		color(70, 1, 90, 25)
 	};
 
-	Map<String,Integer> hudColor = new HashMap<String,Integer>();
+	Map<String,Integer> hudColor = new HashMap<>();
 
 
 	public void setup() {
@@ -101,8 +103,8 @@ public class GraphRenderer extends PApplet {
 		// window
 		size(panelWidth, panelHeight);
 
-		canvasWidth = panelWidth  - (margin * 2);
-		canvasHeight= panelHeight - (margin * 2);
+		canvasWidth  = panelWidth  - (margin * 2);
+		canvasHeight = panelHeight - (margin * 2);
 
 		// graphics
 		pg = createGraphics(panelWidth, panelHeight);
@@ -139,7 +141,9 @@ public class GraphRenderer extends PApplet {
 
 		current = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
-		if (current > previous || current == 0 || isResized()) {
+		if (current > previous || current == 0 || isResized() || refreshed) {
+
+			refreshed = false;
 
 			// TODO mouseover+click shows seperate box about event, environment and stats of that particular beacon
 
@@ -156,8 +160,8 @@ public class GraphRenderer extends PApplet {
 
 			for (int a = 0; a < superArray.size(); ++a) {
 
-				ArrayList<Integer> lineArray = (new ArrayList<ArrayList<Integer>>(superArray.values())).get(a);
-				String lineLabel = (new ArrayList<String>(superArray.keySet())).get(a).toUpperCase();
+				ArrayList<Integer> lineArray = (new ArrayList<>(superArray.values())).get(a);
+				String lineLabel = (new ArrayList<>(superArray.keySet())).get(a).toUpperCase();
 
 				// graph line
 				int[] gradient;
@@ -233,7 +237,7 @@ public class GraphRenderer extends PApplet {
 		}
 
 		if (captureImage) {
-			String fileTimestamp = " "+year()+"-"+month()+"-"+day()+" "+hour()+"-"+minute();
+			String fileTimestamp = " " + year() + "-" + month() + "-" + day() + " " + hour() + "-" + minute();
 			pg.save(exportPath + fileTimestamp + " (alpha).png");
 			saveFrame(exportPath + fileTimestamp + ".png");
 			captureImage = false;
@@ -408,16 +412,21 @@ public class GraphRenderer extends PApplet {
 		pg.endShape(CLOSE);
 
 		// glow color
-		int[] gradient;
-		if (sectorType == "CIVILIAN") {
-			gradient = greenGlow;
-		} else if (sectorType == "HOSTILE") {
-			gradient = redGlow;
-		} else if (sectorType == "NEBULA") {
-			gradient = purpleGlow;
-		} else {
-			gradient = blueGlow;
-		}
+		int[] gradient = null;
+		if (null != sectorType) switch (sectorType) {
+                case "CIVILIAN":
+                    gradient = greenGlow;
+                    break;
+                case "HOSTILE":
+                    gradient = redGlow;
+                    break;
+                case "NEBULA":
+                    gradient = purpleGlow;
+                    break;
+                default:
+                    gradient = blueGlow;
+                    break;
+            }
 
 		// apply glow effect
 		noStroke();
@@ -453,9 +462,9 @@ public class GraphRenderer extends PApplet {
 
 		if (lastestValue > -1) {
 
-		int textSize = 13;
-		int offset   = 8;
-		int padding  = 6;
+			int textSize = 13;
+			int offset   = 8;
+			int padding  = 6;
 
 			pg.pushMatrix();
 			pg.translate(
