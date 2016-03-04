@@ -86,7 +86,7 @@ public class SectorTree {
 
 			for (int r=0; r < columnDots.size(); r++) {
 				boolean visited = columnDots.get(r).isVisited();
-				result.add(new Boolean(visited));
+				result.add(visited);
 			}
 		}
 
@@ -437,7 +437,7 @@ public class SectorTree {
 	 * Checks a potential tree for obvious problems and throws exceptions.
 	 */
 	public static void validate(List<List<SectorDot>> newColumns) throws SectorTreeException {
-		if (newColumns.size() == 0) {
+		if (newColumns.isEmpty()) {
 			throw new SectorTreeException("Columns count is zero.");
 		}
 
@@ -446,7 +446,7 @@ public class SectorTree {
 
 		for (int c=0; c < newColumns.size(); c++) {
 			List<SectorDot> columnDots = newColumns.get(c);
-			if (columnDots.size() == 0) {
+			if (columnDots.isEmpty()) {
 				SectorTreeException ex = new SectorTreeException(String.format("Empty column: %d", c));
 				ex.setColumn(c);
 				throw ex;

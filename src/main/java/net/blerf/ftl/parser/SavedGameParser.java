@@ -163,7 +163,7 @@ public class SavedGameParser extends Parser {
 			int sectorVisitationCount = readInt(in);
 			List<Boolean> route = new ArrayList<Boolean>();
 			for (int i=0; i < sectorVisitationCount; i++) {
-				route.add(new Boolean(readBool(in)));
+				route.add(readBool(in));
 			}
 			gameState.setSectorVisitation(route);
 
@@ -2382,7 +2382,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		 * @param visited true if visited, false otherwise
 		 */
 		public void setSectorVisited(int sector, boolean visited) {
-			sectorVisitationList.set(sector, new Boolean(visited));
+			sectorVisitationList.set(sector, visited);
 		}
 
 		/**
