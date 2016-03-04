@@ -185,14 +185,15 @@ public class FTLFrame extends JFrame {
 				boolean sillyMistake = false;
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
-					if ("ae_prof.sav".equals(chosenFile.getName()) ||
+					if (
+						"ae_prof.sav".equals(chosenFile.getName()) ||
 						"prof.sav".equals(chosenFile.getName())
 					) {
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
-							"Warning: What you are attempting makes no sense.\n"+
-							"This is the SavedGame tab, and you're opening \""+
-							chosenFile.getName()+
+							"Warning: What you are attempting makes no sense.\n" +
+							"We are looking for a savegame here, and you're opening \"" +
+							chosenFile.getName() +
 							"\".\n\n Are you sure you know what you're doing?",
 							"Really!?",
 							JOptionPane.YES_NO_OPTION,
@@ -253,6 +254,7 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
+
 		recordingNewBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -279,12 +281,53 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-				int chooserResponse = fileChooser.showSaveDialog(null);
 
-				FTLAdventureVisualiser.recordFile = fileChooser.getSelectedFile();
-				FTLAdventureVisualiser.recordFile = fc.getSelectedFile().getAbsolutePath();
+		recordingImportBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-				ParseCSV.readCSV(FTLAdventureVisualiser.recordFile);
+				// TODO file filter
+
+				JFileChooser fc = new JFileChooser();
+				fc.setCurrentDirectory(null);
+				fc.setFileHidingEnabled(true);
+				fc.setDialogTitle("Pick a location to store your recording");
+
+				fc.addChoosableFileFilter(new FileFilter() {
+					@Override
+					public String getDescription() {
+						return "FTLAV CSV file (*.csv)";
+					}
+					@Override
+					public boolean accept(File f) {
+						return f.isDirectory() || f.getName().endsWith(".csv");
+					}
+				});
+
+				int chooserResponse = fc.showOpenDialog(null);
+
+				File chosenFile = fc.getSelectedFile();
+				boolean sillyMistake = false;
+
+				// TODO check if CSV is valid
+				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
+					if (!ParseCSV.isValidCSV(chosenFile.getAbsolutePath())) {
+						int sillyResponse = JOptionPane.showConfirmDialog(
+							FTLFrame.this,
+							"Warning: This doesn't seem to be a CSV FTLAV can read.\n" +
+							"Opening  \""+ chosenFile.getName() + "\" might cause unexpected results.\n",
+							"Are you sure you want to continue?",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE
+						);
+						if (sillyResponse != JOptionPane.YES_OPTION) sillyMistake = true;
+					}
+				}
+
+				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
+					FTLAdventureVisualiser.recordFile = fc.getSelectedFile().getAbsolutePath();
+					ParseCSV.readCSV(FTLAdventureVisualiser.recordFile);
+				}
 
 				log.info("Imported record from " + FTLAdventureVisualiser.recordFile);
 

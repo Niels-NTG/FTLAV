@@ -1,8 +1,8 @@
 package net.ntg.ftl.parser;
 
-// import com.opencsv.CSVReader;
-// import com.opencsv.CSVWriter;
+import com.opencsv.CSVReader;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -41,7 +41,27 @@ public class ParseCSV {
 
 	public static void readCSV(String fileName) {
 
+		try {
+			CSVReader reader = new CSVReader(new FileReader(fileName), DELIMITER);
+			String[] nextLine;
+			while((nextLine = reader.readNext()) != null) {
+				for (int i = 0; i < nextLine.length; i++) {
+					log.info(nextLine[i]);
+				}
+			}
+		} catch (IOException e) {
+			log.error("Error while reading " + fileName);
+			log.trace(e);
+		}
 
+	}
+
+
+	public static boolean isValidCSV(String fileName) {
+
+		// TODO check if CSV file is valid
+
+		return true;
 
 	}
 
@@ -55,11 +75,6 @@ public class ParseCSV {
 		writeCSV(fileName, false);
 	}
 	private static void writeCSV(String fileName, boolean createNewFile) {
-
-		// if (!createNewFile) {
-			// do a readCSV first
-			// write all
-		// }
 
 		int latest = FTLAdventureVisualiser.gameStateArray.size() - 1;
 
@@ -174,6 +189,12 @@ public class ParseCSV {
 
 		try {
 
+			// if (!createNewFile) {
+				// do a readCSV first, get results
+				// write results from readCSV + newest entry (.get(latest))
+			// }
+
+			fw = new FileWriter(fileName);
 
 			fw.append(fileHeader);
 			fw.append("\n");
