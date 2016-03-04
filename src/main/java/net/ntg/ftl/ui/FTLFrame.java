@@ -141,8 +141,9 @@ public class FTLFrame extends JFrame {
 		final JButton helpBtn = new JButton("Help", helpIcon);
 
 
-
 		gameStateRecordBtn.setEnabled(false);
+		recordingNewBtn.setEnabled(false);
+		recordingImportBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
 		exportDataBtn.setEnabled(false);
@@ -203,6 +204,8 @@ public class FTLFrame extends JFrame {
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					loadGameStateFile(chosenFile);
 					gameStateRecordBtn.setEnabled(true);
+					recordingNewBtn.setEnabled(true);
+					recordingImportBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
 					toggleGraphBtn.setEnabled(true);
 					toggleGraphBtn.setSelected(true);
@@ -212,9 +215,10 @@ public class FTLFrame extends JFrame {
 
 					// TODO write into configFile from here to remember chosenFile for later sessions
 					// config.setProperty("ftlContinuePath", chosenFile.getAbsolutePath());
-
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateRecordBtn.setEnabled(false);
+					recordingNewBtn.setEnabled(false);
+					recordingImportBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
 					exportDataBtn.setEnabled(false);
