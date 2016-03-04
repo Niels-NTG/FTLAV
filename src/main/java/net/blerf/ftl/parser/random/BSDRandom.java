@@ -1,7 +1,5 @@
 package net.blerf.ftl.parser.random;
 
-import net.blerf.ftl.parser.random.RandRNG;
-
 
 /**
  * An implementation of srand()/rand() from BSD.

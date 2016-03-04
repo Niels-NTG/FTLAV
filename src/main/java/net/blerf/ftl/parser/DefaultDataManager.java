@@ -1,6 +1,5 @@
 package net.blerf.ftl.parser;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,11 +16,8 @@ import javax.xml.bind.JAXBException;
 import org.jdom2.JDOMException;
 
 import net.vhati.ftldat.FTLDat;
-import net.vhati.ftldat.FTLDat.FolderPack;
-import net.vhati.ftldat.FTLDat.FTLPack;
 
 import net.blerf.ftl.model.ShipLayout;
-import net.blerf.ftl.parser.DatParser;
 import net.blerf.ftl.xml.Achievement;
 import net.blerf.ftl.xml.AugBlueprint;
 import net.blerf.ftl.xml.BackgroundImageList;
@@ -37,7 +33,6 @@ import net.blerf.ftl.xml.SectorDescription;
 import net.blerf.ftl.xml.SectorType;
 import net.blerf.ftl.xml.ShipBlueprint;
 import net.blerf.ftl.xml.ShipEvent;
-import net.blerf.ftl.xml.ShipEvents;
 import net.blerf.ftl.xml.ShipChassis;
 import net.blerf.ftl.xml.SystemBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;

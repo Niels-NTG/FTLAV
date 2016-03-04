@@ -4,8 +4,6 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 
-import net.blerf.ftl.parser.random.RandRNG;
-
 
 /**
  * This class calls srand()/rand() from platform-dependent C libraries.

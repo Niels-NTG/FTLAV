@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.blerf.ftl.constants.NewbieTipLevel;
-import net.blerf.ftl.model.ShipAvailability;
 import net.blerf.ftl.model.Stats.StatType;
 
 

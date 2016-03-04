@@ -7,7 +7,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.jdom2.Element;
 import org.jdom2.JDOMFactory;
-import org.jdom2.Parent;
 import org.jdom2.Text;
 import org.jdom2.input.sax.SAXHandler;
 import org.jdom2.input.sax.SAXHandlerFactory;

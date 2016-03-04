@@ -1,13 +1,7 @@
 package net.blerf.ftl.model.sectortree;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.blerf.ftl.model.sectortree.SectorDot;
-import net.blerf.ftl.model.sectortree.SectorTreeEvent;
-import net.blerf.ftl.model.sectortree.SectorTreeException;
-import net.blerf.ftl.model.sectortree.SectorTreeListener;
 
 
 public class SectorTree {

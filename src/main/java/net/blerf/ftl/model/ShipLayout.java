@@ -1,6 +1,5 @@
 package net.blerf.ftl.model;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;

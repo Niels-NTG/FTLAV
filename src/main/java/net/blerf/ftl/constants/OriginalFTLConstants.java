@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.blerf.ftl.constants.FTLConstants;
 import net.blerf.ftl.parser.SavedGameParser.CrewType;
 
 
@@ -17,7 +16,7 @@ public class OriginalFTLConstants implements FTLConstants {
 
 
 	public OriginalFTLConstants() {
-		List<CrewType> mutableCrewTypes = new ArrayList<CrewType>();
+		List<CrewType> mutableCrewTypes = new ArrayList<>();
 		mutableCrewTypes.add(CrewType.BATTLE);
 		mutableCrewTypes.add(CrewType.CRYSTAL);
 		mutableCrewTypes.add(CrewType.ENERGY);

@@ -1,30 +1,21 @@
 package net.blerf.ftl.parser;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import org.xml.sax.SAXParseException;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.output.DOMOutputter;
 
 import net.blerf.ftl.model.ShipLayout;
-import net.blerf.ftl.parser.TextUtilities;
 import net.blerf.ftl.xml.Achievement;
 import net.blerf.ftl.xml.Achievements;
 import net.blerf.ftl.xml.BackgroundImageList;
@@ -34,7 +25,6 @@ import net.blerf.ftl.xml.CrewNameList;
 import net.blerf.ftl.xml.CrewNameLists;
 import net.blerf.ftl.xml.Encounters;
 import net.blerf.ftl.xml.SectorData;
-import net.blerf.ftl.xml.ShipBlueprint;
 import net.blerf.ftl.xml.ShipChassis;
 import net.blerf.ftl.xml.ShipEvent;
 import net.blerf.ftl.xml.ShipEvents;

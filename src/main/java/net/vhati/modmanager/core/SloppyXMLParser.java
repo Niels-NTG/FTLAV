@@ -14,7 +14,6 @@ import org.jdom2.Attribute;
 import org.jdom2.AttributeType;
 import org.jdom2.CDATA;
 import org.jdom2.Comment;
-import org.jdom2.Content;
 import org.jdom2.DefaultJDOMFactory;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -22,7 +21,6 @@ import org.jdom2.IllegalAddException;
 import org.jdom2.JDOMFactory;
 import org.jdom2.Namespace;
 import org.jdom2.Parent;
-import org.jdom2.Text;
 import org.jdom2.input.JDOMParseException;
 
 

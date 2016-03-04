@@ -15,6 +15,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.xml.bind.JAXBException;
 
 import net.vhati.modmanager.core.FTLUtilities;
 
@@ -27,6 +28,7 @@ import net.ntg.ftl.ui.FTLFrame;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.JDOMException;
 
 
 public class FTLAdventureVisualiser {
@@ -195,7 +197,7 @@ public class FTLAdventureVisualiser {
 			DefaultDataManager dataManager = new DefaultDataManager(datsDir);
 			DataManager.setInstance(dataManager);
 			dataManager.setDLCEnabledByDefault(true);
-		} catch (Exception e) {
+		} catch (IOException | JAXBException | JDOMException e) {
 			log.error("Error parsing FTL resources.", e);
 			showErrorDialog("Error parsing FTL resources.");
 			System.exit(1);
