@@ -37,6 +37,7 @@ import javax.swing.JToolBar;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ParseCSV;
+import net.ntg.ftl.parser.ShipDataParser;
 import net.ntg.ftl.ui.graph.GraphInspector;
 import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
@@ -256,16 +257,37 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(null);
-				fileChooser.setFileHidingEnabled(true);
-				fileChooser.setDialogTitle("Pick a location to store your recording");
+				JFileChooser fc = new JFileChooser();
+				fc.setCurrentDirectory(null);
+				fc.setFileHidingEnabled(true);
+				fc.setDialogTitle("Pick a location to store your recording");
+
+				int chooserResponse = fc.showSaveDialog(null);
+
+				FTLAdventureVisualiser.recordFile = (
+					fc.getSelectedFile().getAbsolutePath() + " (" +
+					ShipDataParser.getFullShipType() + " - " +
+					FTLAdventureVisualiser.gameStateArray.get(0).getDifficulty().toString() +
+					(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " AE" : "") +
+					") " + getTimeStamp().replaceAll("[/:]", "") + ".csv"
+				);
+
+				ParseCSV.writeCSV(FTLAdventureVisualiser.recordFile);
+
+				log.info("Created new record at " + FTLAdventureVisualiser.recordFile);
+
+			}
+		});
 
 				int chooserResponse = fileChooser.showSaveDialog(null);
 
 				FTLAdventureVisualiser.recordFile = fileChooser.getSelectedFile();
+				FTLAdventureVisualiser.recordFile = fc.getSelectedFile().getAbsolutePath();
 
-				ParseCSV.writeCSV(FTLAdventureVisualiser.recordFile.getAbsolutePath());
+				ParseCSV.readCSV(FTLAdventureVisualiser.recordFile);
+
+				log.info("Imported record from " + FTLAdventureVisualiser.recordFile);
+
 			}
 		});
 

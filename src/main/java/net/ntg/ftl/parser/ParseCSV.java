@@ -174,14 +174,6 @@ public class ParseCSV {
 
 		try {
 
-			fw = new FileWriter(
-				fileName +
-				" (" +
-				ShipDataParser.getFullShipType() + " - " +
-				FTLAdventureVisualiser.gameStateArray.get(0).getDifficulty().toString() +
-				(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " AE" : "") +
-				").csv"
-			);
 
 			fw.append(fileHeader);
 			fw.append("\n");
