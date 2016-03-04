@@ -164,7 +164,10 @@ public class ParseCSV {
 			fileHeader += ("CREW MEMBER " + (i+1) + " COMBAT KILLS" + DELIMITER);
 			fileHeader += ("CREW MEMBER " + (i+1) + " PILOTED EVASIONS" + DELIMITER);
 			fileHeader += ("CREW MEMBER " + (i+1) + " JUMPS SURVIVED" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " SKILLS MASTERED" + DELIMITER);
+			fileHeader += ("CREW MEMBER " + (i+1) + " SKILLS MASTERED");
+			if (i < FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired() - 1) {
+				fileHeader += DELIMITER;
+			}
 		}
 
 		FileWriter fw = null;
@@ -361,6 +364,9 @@ public class ParseCSV {
 					try { fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewArray.get(i).get(c).getJumpsSurvived())); } catch (IndexOutOfBoundsException e) {}
 					fw.append(DELIMITER);
 					try { fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewArray.get(i).get(c).getSkillMasteries())); } catch (IndexOutOfBoundsException e) {}
+					if (c < FTLAdventureVisualiser.gameStateArray.get(latest).getTotalCrewHired() - 1) {
+						fw.append(DELIMITER);
+					}
 				}
 				fw.append("\n");
 
