@@ -1,7 +1,5 @@
 package net.ntg.ftl.parser;
 
-import com.opencsv.CSVReader;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,18 +39,7 @@ public class ParseCSV {
 
 	public static void readCSV(String fileName) {
 
-		try {
-			CSVReader reader = new CSVReader(new FileReader(fileName), DELIMITER);
-			String[] nextLine;
-			while((nextLine = reader.readNext()) != null) {
-				for (int i = 0; i < nextLine.length; i++) {
-					log.info(nextLine[i]);
-				}
-			}
-		} catch (IOException e) {
-			log.error("Error while reading " + fileName);
-			log.trace(e);
-		}
+
 
 	}
 
@@ -61,7 +48,7 @@ public class ParseCSV {
 
 		// TODO check if CSV file is valid
 
-		return true;
+		return true; // EVERYTHING IS FINE!
 
 	}
 
