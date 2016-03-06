@@ -645,8 +645,12 @@ public class FTLFrame extends JFrame {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(chosenFile.lastModified());
 		return (
-			cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + " " +
-			cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
+			cal.get(Calendar.YEAR) + "/" +
+			String.format("%02d", cal.get(Calendar.MONTH) + 1) + "/" +
+			String.format("%02d", cal.get(Calendar.DAY_OF_MONTH)) + " " +
+			String.format("%02d", cal.get(Calendar.HOUR_OF_DAY)) + ":" +
+			String.format("%02d", cal.get(Calendar.MINUTE)) + ":" +
+			String.format("%02d", cal.get(Calendar.SECOND))
 		);
 	}
 
