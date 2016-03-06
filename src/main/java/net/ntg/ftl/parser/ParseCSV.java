@@ -67,6 +67,10 @@ public class ParseCSV {
 
 		String fileHeader = (
 			"TIME" + DELIMITER +
+			"SHIP NAME" + DELIMITER +
+			"SHIP TYPE" + DELIMITER +
+			"DIFFICULTY" + DELIMITER +
+			"AE CONTENT" + DELIMITER +
 		// Location
 			"BEACON" + DELIMITER +
 			"SECTOR NUMBER" + DELIMITER +
@@ -191,6 +195,14 @@ public class ParseCSV {
 				int sectorNumber = FTLAdventureVisualiser.gameStateArray.get(i).getSectorNumber();
 
 				fw.append(FTLAdventureVisualiser.timeStampArray.get(i));
+				fw.append(DELIMITER);
+				fw.append(FTLAdventureVisualiser.gameStateArray.get(i).getPlayerShipName());
+				fw.append(DELIMITER);
+				fw.append(ShipDataParser.getFullShipType());
+				fw.append(DELIMITER);
+				fw.append(FTLAdventureVisualiser.gameStateArray.get(i).getDifficulty().toString());
+				fw.append(DELIMITER);
+				fw.append(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? "enabled" : "disabled");
 				fw.append(DELIMITER);
 				fw.append(Integer.toString(FTLAdventureVisualiser.gameStateArray.get(i).getTotalBeaconsExplored()));
 				fw.append(DELIMITER);
@@ -371,14 +383,6 @@ public class ParseCSV {
 				fw.append("\n");
 
 			}
-
-			String footer = (
-				FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName() + " (" + ShipDataParser.getFullShipType() + ") - " +
- 				FTLAdventureVisualiser.gameStateArray.get(0).getDifficulty().toString() + " difficulty (" +
-				(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? "AE enabled" : "AE disabled") +
-				") - " + FTLAdventureVisualiser.APP_NAME + " version " + FTLAdventureVisualiser.APP_VERSION
-			);
-			fw.append(footer);
 
 			log.info("CSV file has been created");
 
