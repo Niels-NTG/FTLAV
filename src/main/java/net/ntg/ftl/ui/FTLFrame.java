@@ -38,8 +38,8 @@ import javax.swing.JToolBar;
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ParseCSV;
 import net.ntg.ftl.parser.ShipDataParser;
-import net.ntg.ftl.ui.graph.GraphInspector;
-import net.ntg.ftl.ui.graph.GraphRenderer;
+// import net.ntg.ftl.ui.graph.GraphInspector;
+// import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
 
 import net.blerf.ftl.model.sectortree.SectorDot;
@@ -119,7 +119,7 @@ public class FTLFrame extends JFrame {
 		add(toolbar, BorderLayout.NORTH);
 
 		// inspector options
-		setupInspector();
+		// setupInspector();
 
 		pack();
 
@@ -366,27 +366,8 @@ public class FTLFrame extends JFrame {
 
 				int chooserResponse = exportChooser.showSaveDialog(null);
 
-				GraphRenderer.exportPath = exportChooser.getSelectedFile().getAbsolutePath();
-				GraphRenderer.captureImage = true;
-
-				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
-
-			}
-		});
-
-
-		exportDataBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				JFileChooser exportChooser = new JFileChooser();
-				exportChooser.setCurrentDirectory(null);
-				exportChooser.setFileHidingEnabled(true);
-				exportChooser.setDialogTitle("Export complete dataset as CSV file");
-
-				int chooserResponse = exportChooser.showSaveDialog(null);
-
-				ParseCSV.createCSV(exportChooser.getSelectedFile().getAbsolutePath());
+				// GraphRenderer.exportPath = exportChooser.getSelectedFile().getAbsolutePath();
+				// GraphRenderer.captureImage = true;
 
 				log.info("Export path " + exportChooser.getSelectedFile().getAbsolutePath());
 
@@ -482,28 +463,28 @@ public class FTLFrame extends JFrame {
 		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
 		graphFrame.setLayout(new BorderLayout());
 
-		processing.core.PApplet graphRenderer = new GraphRenderer();
-		graphFrame.add(graphRenderer);
-		GraphRenderer.panelWidth  = graphFrame.getWidth();
-		GraphRenderer.panelHeight = graphFrame.getHeight();
-		graphRenderer.init();
+		// processing.core.PApplet graphRenderer = new GraphRenderer();
+		// graphFrame.add(graphRenderer);
+		// GraphRenderer.panelWidth  = graphFrame.getWidth();
+		// GraphRenderer.panelHeight = graphFrame.getHeight();
+		// graphRenderer.init();
 
 		graphFrame.setVisible(false);
 
 	}
 
-	private void setupInspector() {
+	// private void setupInspector() {
 
-		inspector = new GraphInspector(this);
-		JScrollPane inspectorScrollPane = new JScrollPane(
-			inspector,
-			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-		);
-		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-		add(inspectorScrollPane, BorderLayout.CENTER);
+	// 	inspector = new GraphInspector(this);
+	// 	JScrollPane inspectorScrollPane = new JScrollPane(
+	// 		inspector,
+	// 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+	// 		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+	// 	);
+	// 	inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+	// 	add(inspectorScrollPane, BorderLayout.CENTER);
 
-	}
+	// }
 
 
 	public void loadGameStateFile(File file) {
@@ -634,7 +615,7 @@ public class FTLFrame extends JFrame {
 				);
 			}
 
-			inspector.setGameState();
+			// inspector.setGameState();
 		}
 
 		lastGameState = currentGameState;
