@@ -1,6 +1,5 @@
 package net.ntg.ftl;
 
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,24 +10,26 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
+import org.jdom2.JDOMException;
 
 import net.vhati.modmanager.core.FTLUtilities;
 
+import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
-import net.blerf.ftl.model.sectortree.SectorDot;
 
 import net.ntg.ftl.ui.FTLFrame;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jdom2.JDOMException;
+import org.apache.logging.log4j.LogManager;
 
 
 public class FTLAdventureVisualiser {
@@ -38,17 +39,18 @@ public class FTLAdventureVisualiser {
 	public static String APP_NAME = "FTL Adventure Visualiser";
 	public static int APP_VERSION = 3;
 
-	// TODO each time arrays are updated, write this to file for later use
-	public static ArrayList<SavedGameParser.SavedGameState> gameStateArray = new ArrayList<>();
-	public static ArrayList<SavedGameParser.ShipState> shipStateArray = new ArrayList<>();
-	public static ArrayList<SavedGameParser.ShipState> nearbyShipStateArray = new ArrayList<>();
-	public static ArrayList<List<SavedGameParser.CrewState>> playerCrewArray = new ArrayList<>();
-	public static ArrayList<List<SavedGameParser.CrewState>> enemyCrewArray = new ArrayList<>();
-	public static ArrayList<SavedGameParser.EnvironmentState> environmentArray = new ArrayList<>();
+	public static SavedGameParser.SavedGameState gameState = null;
+	public static SavedGameParser.ShipState shipState = null;
+	// public static SavedGameParser.ShipState nearbyShipState = null;
+	public static List<SavedGameParser.CrewState> playerCrewState;
+	public static List<SavedGameParser.CrewState> enemyCrewState;
+	public static SavedGameParser.EnvironmentState environmentState = null;
 	public static ArrayList<SectorDot> sectorArray = new ArrayList<>();
-	public static ArrayList<String> timeStampArray = new ArrayList<>();
+	public static String fileChangedTimeStamp;
 
-	public static String recordFile;
+	public static String recordFilePath;
+	public static ArrayList<Map<String, String>> recording = new ArrayList<>();
+	public static String[] recordingHeaders;
 
 
 	public static void main(String[] args) {

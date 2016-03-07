@@ -8,45 +8,43 @@ import net.blerf.ftl.parser.SavedGameParser;
 
 public class ShipDataParser {
 
-	public static int getShipOxygenLevel(int index) {
+	public static int getShipOxygenLevel() {
 
-		int roomCount = FTLAdventureVisualiser.shipStateArray.get(index).getRoomList().size();
+		int roomCount = FTLAdventureVisualiser.shipState.getRoomList().size();
 		int sum = 0;
 
 		for (int i = 0; i < roomCount; i++) {
-			sum += FTLAdventureVisualiser.shipStateArray.get(index).getRoomList().get(i).getOxygen();
+			sum += FTLAdventureVisualiser.shipState.getRoomList().get(i).getOxygen();
 		}
 
 		return (int)sum / roomCount;
 
 	}
 
-	public static int getNearbyShipOxygenLevel(int index) {
 
-		if (FTLAdventureVisualiser.nearbyShipStateArray.get(index) != null) {
-			int roomCount = FTLAdventureVisualiser.nearbyShipStateArray.get(index).getRoomList().size();
-			int sum = 0;
+	// public static int getNearbyShipOxygenLevel() {
 
-			for (int i = 0; i < roomCount; i++) {
-				sum += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getRoomList().get(i).getOxygen();
-			}
+	// 	if (FTLAdventureVisualiser.nearbyShipState != null) {
+	// 		int roomCount = FTLAdventureVisualiser.nearbyShipState.getRoomList().size();
+	// 		int sum = 0;
 
-			return (int)sum / roomCount;
-		} else {
-			return -1;
-		}
+	// 		for (int i = 0; i < roomCount; i++) {
+	// 			sum += FTLAdventureVisualiser.nearbyShipState.getRoomList().get(i).getOxygen();
+	// 		}
 
-	}
+	// 		return (int)sum / roomCount;
+	// 	} else {
+	// 		return -1;
+	// 	}
+
+	// }
 
 
 	public static String getFullShipType() {
-		return getFullShipType(0);
-	}
-	public static String getFullShipType(int index) {
 
 		String shipType = "";
 
-		switch (FTLAdventureVisualiser.gameStateArray.get(index).getPlayerShipBlueprintId()) {
+		switch (FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId()) {
 			case "PLAYER_SHIP_HARD"   : shipType = "Kestrel Cruiser A"; break;
 			case "PLAYER_SHIP_HARD_2" : shipType = "Kestrel Cruiser B"; break;
 			case "PLAYER_SHIP_HARD_3" : shipType = "Kestrel Cruiser C"; break;
@@ -84,7 +82,7 @@ public class ShipDataParser {
 			case "PLAYER_SHIP_ANAEROBIC_3" : shipType = "Lanius Cruiser C"; break;
 
 			default :
-				shipType = FTLAdventureVisualiser.gameStateArray.get(index).getPlayerShipBlueprintId().replaceAll("_"," ");
+				shipType = FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().replaceAll("_"," ");
 			break;
 		}
 
@@ -93,51 +91,49 @@ public class ShipDataParser {
 	}
 
 
-	public static int getWeaponSlotCount() { return getWeaponSlotCount(0); }
-	public static int getWeaponSlotCount(int index) {
-		return DataManager.get().getShip(FTLAdventureVisualiser.shipStateArray.get(index).getShipBlueprintId()).getWeaponSlots();
+	public static int getWeaponSlotCount() {
+		return DataManager.get().getShip(FTLAdventureVisualiser.shipState.getShipBlueprintId()).getWeaponSlots();
 	}
 
 
-	public static int getDroneSlotCount() { return getDroneSlotCount(0); }
-	public static int getDroneSlotCount(int index) {
-		return DataManager.get().getShip(FTLAdventureVisualiser.shipStateArray.get(index).getShipBlueprintId()).getDroneSlots();
+	public static int getDroneSlotCount() {
+		return DataManager.get().getShip(FTLAdventureVisualiser.shipState.getShipBlueprintId()).getDroneSlots();
 	}
 
 
-	public static String getCargoListing(int index) {
+	public static String getCargoListing() {
 		String cargo = "";
-		for (int i = 0; i < FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().size(); i++) {
-			cargo += FTLAdventureVisualiser.gameStateArray.get(index).getCargoIdList().get(i) + ", ";
+		for (int i = 0; i < FTLAdventureVisualiser.gameState.getCargoIdList().size(); i++) {
+			cargo += FTLAdventureVisualiser.gameState.getCargoIdList().get(i) + ", ";
 		}
 		return cargo.replaceAll("_"," ").replaceAll(",\\s$","");
 	}
 
 
-	public static String getAugmentListing(int index) {
+	public static String getAugmentListing() {
 		String aug = "";
-		for (int i = 0; i < FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().size(); i++) {
-			aug += FTLAdventureVisualiser.shipStateArray.get(index).getAugmentIdList().get(i) + ", ";
+		for (int i = 0; i < FTLAdventureVisualiser.shipState.getAugmentIdList().size(); i++) {
+			aug += FTLAdventureVisualiser.shipState.getAugmentIdList().get(i) + ", ";
 		}
 		return aug.replaceAll("_"," ").replaceAll(",\\s$","");
 	}
 
 
-	public static String getNearbyShipAugmentListing(int index) {
-		String aug = "";
-		for (int i = 0; i < FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().size(); i++) {
-			aug += FTLAdventureVisualiser.nearbyShipStateArray.get(index).getAugmentIdList().get(i) + ", ";
-		}
-		return aug.replaceAll("_"," ").replaceAll(",\\s$","");
-	}
+	// public static String getNearbyShipAugmentListing() {
+	// 	String aug = "";
+	// 	for (int i = 0; i < FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().size(); i++) {
+	// 		aug += FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().get(i) + ", ";
+	// 	}
+	// 	return aug.replaceAll("_"," ").replaceAll(",\\s$","");
+	// }
 
 
-	public static String getStoreListing(int index) {
+	public static String getStoreListing() {
 
 		String storeItems = "";
 
-		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameStateArray.get(index).getBeaconList().get(
-			FTLAdventureVisualiser.gameStateArray.get(index).getCurrentBeaconId()
+		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameState.getBeaconList().get(
+			FTLAdventureVisualiser.gameState.getCurrentBeaconId()
 		);
 
 		if (beacon.getStore() != null) {
@@ -159,16 +155,16 @@ public class ShipDataParser {
 	}
 
 
-	public static String getFullEnemyCrewType(int index, int crewIndex) {
-		return getFullCrewType(index, crewIndex, true);
+	public static String getFullEnemyCrewType(int crewIndex) {
+		return getFullCrewType(crewIndex, true);
 	}
-	public static String getFullCrewType(int index, int crewIndex) {
-		return getFullCrewType(index, crewIndex, false);
+	public static String getFullCrewType(int crewIndex) {
+		return getFullCrewType(crewIndex, false);
 	}
-	public static String getFullCrewType(int index, int crewIndex, boolean isEnemyCrew) {
+	public static String getFullCrewType(int crewIndex, boolean isEnemyCrew) {
 		String rawCrewType = isEnemyCrew ?
-			FTLAdventureVisualiser.enemyCrewArray.get(index).get(crewIndex).getRace() :
-			FTLAdventureVisualiser.playerCrewArray.get(index).get(crewIndex).getRace();
+			FTLAdventureVisualiser.enemyCrewState.get(crewIndex).getRace() :
+			FTLAdventureVisualiser.playerCrewState.get(crewIndex).getRace();
 		return getFullCrewType(rawCrewType);
 	}
 	private static String getFullCrewType(String rawCrewType) {
@@ -193,13 +189,13 @@ public class ShipDataParser {
 	}
 
 
-	public static int getCurrentScore(int index) {
+	public static int getCurrentScore() {
 
-		int s = FTLAdventureVisualiser.gameStateArray.get(index).getTotalScrapCollected();
-		int b = FTLAdventureVisualiser.gameStateArray.get(index).getTotalBeaconsExplored();
-		int d = FTLAdventureVisualiser.gameStateArray.get(index).getTotalShipsDefeated();
+		int s = FTLAdventureVisualiser.gameState.getTotalScrapCollected();
+		int b = FTLAdventureVisualiser.gameState.getTotalBeaconsExplored();
+		int d = FTLAdventureVisualiser.gameState.getTotalShipsDefeated();
 		float dm;
-		switch (FTLAdventureVisualiser.gameStateArray.get(index).getDifficulty().toString()) {
+		switch (FTLAdventureVisualiser.gameState.getDifficulty().toString()) {
 			case "EASY"  : dm = 1.0f;  break;
 			case "NORMAL": dm = 1.25f; break;
 			case "HARD"  : dm = 1.5f;  break;
@@ -211,10 +207,10 @@ public class ShipDataParser {
 	}
 
 
-	public static int getRebelFleetAdvancement(int index) {
+	public static int getRebelFleetAdvancement() {
 
-		int rebelOffset = Math.abs(FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetOffset());
-		int rebelFudge  = FTLAdventureVisualiser.gameStateArray.get(index).getRebelFleetFudge();
+		int rebelOffset = Math.abs(FTLAdventureVisualiser.gameState.getRebelFleetOffset());
+		int rebelFudge  = FTLAdventureVisualiser.gameState.getRebelFleetFudge();
 
 		int result = (int)(100 - (((rebelOffset - rebelFudge) * 100f) / 650));
 		return result < 0 ? 0 : result;
@@ -222,29 +218,29 @@ public class ShipDataParser {
 	}
 
 
-	public static String getBeaconHazards(int index) {
+	public static String getBeaconHazards() {
 
 		String sb = "";
 
-		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameStateArray.get(index).getBeaconList().get(
-			FTLAdventureVisualiser.gameStateArray.get(index).getCurrentBeaconId()
+		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameState.getBeaconList().get(
+			FTLAdventureVisualiser.gameState.getCurrentBeaconId()
 		);
 
-		if (FTLAdventureVisualiser.environmentArray.get(index).isRedGiantPresent()) sb += "Solar Flares, ";
-		if (FTLAdventureVisualiser.environmentArray.get(index).isPulsarPresent()) sb += "Pulsar Star, ";
-		if (FTLAdventureVisualiser.environmentArray.get(index).isPDSPresent()) {
-			if (FTLAdventureVisualiser.environmentArray.get(index).getVulnerableShips() == SavedGameParser.HazardVulnerability.NEARBY_SHIP) {
+		if (FTLAdventureVisualiser.environmentState.isRedGiantPresent()) sb += "Solar Flares, ";
+		if (FTLAdventureVisualiser.environmentState.isPulsarPresent()) sb += "Pulsar Star, ";
+		if (FTLAdventureVisualiser.environmentState.isPDSPresent()) {
+			if (FTLAdventureVisualiser.environmentState.getVulnerableShips() == SavedGameParser.HazardVulnerability.NEARBY_SHIP) {
 				sb += "Allied Planetary Defense System, ";
 			} else {
 				sb += "Hostile Planetary Defense System, ";
 			}
 		}
-		if (FTLAdventureVisualiser.environmentArray.get(index).getAsteroidField() != null) sb += "Asteroid Field, ";
+		if (FTLAdventureVisualiser.environmentState.getAsteroidField() != null) sb += "Asteroid Field, ";
 		if (beacon.isEnemyPresent()) sb += "Enemy Ship, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) sb += "Rebel Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) sb += "Federation Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) sb += "Rebel & Federation Fleet, ";
-		// if (FTLAdventureVisualiser.gameStateArray.get(index).getStateVar("nebula") != null) // TODO Nebula Storm event
+		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
 
 		return sb.replaceAll(",\\s$","");
 

@@ -37,7 +37,6 @@ import javax.swing.JToolBar;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ParseCSV;
-import net.ntg.ftl.parser.ShipDataParser;
 // import net.ntg.ftl.ui.graph.GraphInspector;
 // import net.ntg.ftl.ui.graph.GraphRenderer;
 import net.ntg.ftl.util.FileWatcher;
@@ -60,21 +59,20 @@ public class FTLFrame extends JFrame {
 	JFrame graphFrame;
 	JFrame helpFrame;
 
-	private File chosenFile;
+	private File chosenGameStateFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
 	private final ImageIcon openIcon		= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private final ImageIcon watchIcon		= new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
 	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
-	private final ImageIcon exportDataIcon	= new ImageIcon(ClassLoader.getSystemResource("table.gif"));
 	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private final URL helpPage = ClassLoader.getSystemResource("help.html");
 	private final HyperlinkListener linkListener;
 
 	private JButton gameStateSaveBtn;
-	private GraphInspector inspector;
+	// private GraphInspector inspector;
 
 	private final String appName;
 	private final int appVersion;
@@ -138,7 +136,6 @@ public class FTLFrame extends JFrame {
 		final JButton recordingImportBtn = new JButton("Import recording"); // TODO icon for import recording (opened folder)
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		final JButton exportDataBtn = new JButton("Export data", exportDataIcon);
 		final JButton helpBtn = new JButton("Help", helpIcon);
 
 
@@ -147,7 +144,6 @@ public class FTLFrame extends JFrame {
 		recordingImportBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
-		exportDataBtn.setEnabled(false);
 
 
 		// TODO get continue.sav automaticly if it exist on the expected location
@@ -181,19 +177,19 @@ public class FTLFrame extends JFrame {
 
 				fc.setDialogTitle("Select continue.sav (saved game)");
 				int chooserResponse = fc.showOpenDialog(null);
-				chosenFile = fc.getSelectedFile();
+				chosenGameStateFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 					if (
-						"ae_prof.sav".equals(chosenFile.getName()) ||
-						"prof.sav".equals(chosenFile.getName())
+						"ae_prof.sav".equals(chosenGameStateFile.getName()) ||
+						"prof.sav".equals(chosenGameStateFile.getName())
 					) {
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
 							"Warning: What you are attempting makes no sense.\n" +
 							"We are looking for a savegame here, and you're opening \"" +
-							chosenFile.getName() +
+							chosenGameStateFile.getName() +
 							"\".\n\n Are you sure you know what you're doing?",
 							"Really!?",
 							JOptionPane.YES_NO_OPTION,
@@ -204,8 +200,7 @@ public class FTLFrame extends JFrame {
 				}
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
-					loadGameStateFile(chosenFile);
-					gameStateRecordBtn.setEnabled(true);
+					loadGameStateFile(chosenGameStateFile);
 					recordingNewBtn.setEnabled(true);
 					recordingImportBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
@@ -213,17 +208,15 @@ public class FTLFrame extends JFrame {
 					toggleGraphBtn.setSelected(true);
 					graphFrame.setVisible(true);
 					exportImageBtn.setEnabled(true);
-					exportDataBtn.setEnabled(true);
 
-					// TODO write into configFile from here to remember chosenFile for later sessions
-					// config.setProperty("ftlContinuePath", chosenFile.getAbsolutePath());
+					// TODO write into configFile from here to remember chosenGameStateFile for later sessions
+					// config.setProperty("ftlContinuePath", chosenGameStateFile.getAbsolutePath());
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateRecordBtn.setEnabled(false);
 					recordingNewBtn.setEnabled(false);
 					recordingImportBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
-					exportDataBtn.setEnabled(false);
 				}
 			}
 		});
@@ -237,11 +230,11 @@ public class FTLFrame extends JFrame {
 
 				if (gameStateRecordBtn.isSelected()) {
 					if (lastGameState != null) {
-						TimerTask task = new FileWatcher(chosenFile) {
+						TimerTask task = new FileWatcher(chosenGameStateFile) {
 							protected void onChange(File file) {
 								// here we code the action on a change
 								log.info("\nFILE "+ file.getName() +" HAS CHANGED !");
-								if (gameStateRecordBtn.isSelected()) loadGameStateFile(chosenFile);
+								if (gameStateRecordBtn.isSelected()) loadGameStateFile(chosenGameStateFile);
 							}
 						};
 						Timer timer = new Timer();
@@ -266,17 +259,18 @@ public class FTLFrame extends JFrame {
 
 				int chooserResponse = fc.showSaveDialog(null);
 
-				FTLAdventureVisualiser.recordFile = (
-					fc.getSelectedFile().getAbsolutePath() + " (" +
-					ShipDataParser.getFullShipType() + " - " +
-					FTLAdventureVisualiser.gameStateArray.get(0).getDifficulty().toString() +
-					(FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " AE" : "") +
-					") " + getTimeStamp().replaceAll("[/:]", "") + ".csv"
+				FTLAdventureVisualiser.recordFilePath = (
+					fc.getSelectedFile().getAbsolutePath() +
+					" (" + FTLAdventureVisualiser.APP_NAME + " " + FTLAdventureVisualiser.APP_VERSION + ") " +
+					getTimeStamp().replaceAll("[/:]", "") + ".csv"
 				);
+				// ParseCSV.createCSV(FTLAdventureVisualiser.recordFilePath);
 
-				ParseCSV.writeCSV(FTLAdventureVisualiser.recordFile);
+				loadGameStateFile(chosenGameStateFile);
+				gameStateRecordBtn.setEnabled(true);
+				gameStateRecordBtn.doClick();
 
-				log.info("Created new record at " + FTLAdventureVisualiser.recordFile);
+				log.info("Created new record at " + FTLAdventureVisualiser.recordFilePath);
 
 			}
 		});
@@ -306,16 +300,16 @@ public class FTLFrame extends JFrame {
 
 				int chooserResponse = fc.showOpenDialog(null);
 
-				File chosenFile = fc.getSelectedFile();
+				File chosenCSVFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
 
 				// TODO check if CSV is valid
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
-					if (!ParseCSV.isValidCSV(chosenFile.getAbsolutePath())) {
+					if (!ParseCSV.isValidCSV(chosenCSVFile.getAbsolutePath())) {
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
 							"Warning: This doesn't seem to be a CSV FTLAV can read.\n" +
-							"Opening  \""+ chosenFile.getName() + "\" might cause unexpected results.\n",
+							"Opening  \""+ chosenCSVFile.getName() + "\" might cause unexpected results.\n",
 							"Are you sure you want to continue?",
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.WARNING_MESSAGE
@@ -325,11 +319,14 @@ public class FTLFrame extends JFrame {
 				}
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
-					FTLAdventureVisualiser.recordFile = fc.getSelectedFile().getAbsolutePath();
-					ParseCSV.readCSV(FTLAdventureVisualiser.recordFile);
+					FTLAdventureVisualiser.recordFilePath = fc.getSelectedFile().getAbsolutePath();
+					// ParseCSV ParseCSV.readCSV(FTLAdventureVisualiser.recordFilePath);
+					gameStateRecordBtn.setEnabled(true);
+					gameStateRecordBtn.doClick();
+					loadGameStateFile(chosenGameStateFile);
 				}
 
-				log.info("Imported record from " + FTLAdventureVisualiser.recordFile);
+				log.info("Imported record from " + FTLAdventureVisualiser.recordFilePath);
 
 			}
 		});
@@ -341,7 +338,7 @@ public class FTLFrame extends JFrame {
 				AbstractButton abstractButton = (AbstractButton)e.getSource();
 				toggleGraphBtn.setSelected(abstractButton.getModel().isSelected());
 
-				if ( toggleGraphBtn.isSelected() ) {
+				if (toggleGraphBtn.isSelected()) {
 					if (lastGameState != null) {
 						graphFrame.setVisible(true);
 					} else {
@@ -413,7 +410,6 @@ public class FTLFrame extends JFrame {
 		toolbar.add(toggleGraphBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
-		toolbar.add(exportDataBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(helpBtn);
 
@@ -493,7 +489,7 @@ public class FTLFrame extends JFrame {
 		Exception exception = null;
 
 		try {
-			log.info("Opening game state: "+ file.getAbsolutePath());
+			log.info("Opening game state: " + file.getAbsolutePath());
 
 			in = new FileInputStream(file);
 
@@ -510,40 +506,42 @@ public class FTLFrame extends JFrame {
 
 			SavedGameParser parser = new SavedGameParser();
 			SavedGameParser.SavedGameState gs = parser.readSavedGame(in);
-			loadGameState(gs);
+			if (FTLAdventureVisualiser.recordFilePath != null)  {
+				loadGameState(gs);
 
-			log.trace("Game state read successfully.");
+				log.trace("Game state read successfully.");
 
-			if ( lastGameState.getMysteryList().size() > 0 ) {
-				StringBuilder mysteryBuf = new StringBuilder();
-				mysteryBuf.append("This saved game file contains mystery bytes the developers hadn't anticipated!\n");
-				boolean first = true;
-				for (MysteryBytes m : lastGameState.getMysteryList()) {
-					if (first) {
-						first = false;
-					} else {
-						mysteryBuf.append(",\n");
+				if (lastGameState.getMysteryList().size() > 0) {
+					StringBuilder mysteryBuf = new StringBuilder();
+					mysteryBuf.append("This saved game file contains mystery bytes the developers hadn't anticipated!\n");
+					boolean first = true;
+					for (MysteryBytes m : lastGameState.getMysteryList()) {
+						if (first) {
+							first = false;
+						} else {
+							mysteryBuf.append(",\n");
+						}
+						mysteryBuf.append(m.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 					}
-					mysteryBuf.append(m.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
+					log.warn( mysteryBuf.toString() );
 				}
-				log.warn( mysteryBuf.toString() );
 			}
-		} catch ( Exception f ) {
-			log.error(String.format("Error reading saved game (\"%s\").", chosenFile.getName()), f);
+
+		} catch (Exception f) {
+			log.error(String.format("Error reading saved game (\"%s\").", chosenGameStateFile.getName()), f);
 			showErrorDialog(String.format(
 				"Error reading saved game (\"%s\"):\n%s: %s\n" +
 				"This error is probably caused by a game-over or the restarting of a game.\n" +
 				"If not, please report this on the %s GitHub Issue page.\n" +
 				"You can still save the graph by pressing the Export button.\n" +
 				"Restart %s to reset everything.",
-				chosenFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName
+				chosenGameStateFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName
 			));
-
 			exception = f;
 		} finally {
 			try {
-				if ( in != null ) in.close();
-			} catch ( IOException f ) {}
+				if (in != null) in.close();
+			} catch (IOException f) {}
 		}
 	}
 
@@ -553,17 +551,17 @@ public class FTLFrame extends JFrame {
 		log.info("------");
 		log.info("Ship Name : " + currentGameState.getPlayerShipName());
 		log.info("Currently at beacon number : " + currentGameState.getTotalBeaconsExplored());
-		log.info("Currently in sector : " + currentGameState.getSectorNumber() + 1);
+		log.info("Currently in sector : " + (currentGameState.getSectorNumber() + 1));
 
 		if (
-			FTLAdventureVisualiser.gameStateArray.isEmpty() ||
+			FTLAdventureVisualiser.gameState == null ||
 			currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored()
 		) {
-			FTLAdventureVisualiser.gameStateArray.add(currentGameState);
-			FTLAdventureVisualiser.shipStateArray.add(currentGameState.getPlayerShipState());
-			FTLAdventureVisualiser.nearbyShipStateArray.add(currentGameState.getNearbyShipState());
-			FTLAdventureVisualiser.environmentArray.add(currentGameState.getEnvironment());
-			FTLAdventureVisualiser.timeStampArray.add(getTimeStamp());
+			FTLAdventureVisualiser.gameState = currentGameState;
+			FTLAdventureVisualiser.shipState = currentGameState.getPlayerShipState();
+			// FTLAdventureVisualiser.nearbyShipState = currentGameState.getNearbyShipState();
+			FTLAdventureVisualiser.environmentState = currentGameState.getEnvironment();
+			FTLAdventureVisualiser.fileChangedTimeStamp = getTimeStamp();
 
 			ArrayList<SavedGameParser.CrewState> currentPlayerCrew = new ArrayList<>();
 			ArrayList<SavedGameParser.CrewState> currentEnemyCrew = new ArrayList<>();
@@ -583,8 +581,8 @@ public class FTLFrame extends JFrame {
 					}
 				}
 			}
-			FTLAdventureVisualiser.playerCrewArray.add(currentPlayerCrew);
-			FTLAdventureVisualiser.enemyCrewArray.add(currentEnemyCrew);
+			FTLAdventureVisualiser.playerCrewState = currentPlayerCrew;
+			FTLAdventureVisualiser.enemyCrewState = currentEnemyCrew;
 
 			FTLAdventureVisualiser.sectorArray.clear();
 			RandomSectorTreeGenerator myGen = new RandomSectorTreeGenerator(new NativeRandom());
@@ -605,7 +603,7 @@ public class FTLFrame extends JFrame {
 				columnsOffset += myColumns.get(i).size();
 			}
 
-			if (currentGameState.getEncounter().getText().contains("giant alien spiders!")) {
+			if (currentGameState.getEncounter().getText().toLowerCase().contains("giant alien spiders")) {
 				log.info("\n" +
 					"     /^\\ ___ /^\\    \n"+
 					"    //^\\(o o)/^\\\\  \n"+
@@ -615,6 +613,16 @@ public class FTLFrame extends JFrame {
 				);
 			}
 
+			// TODO read/write/read first, then inspector.setGameState()
+			if (new File(FTLAdventureVisualiser.recordFilePath).exists()) {
+				log.info("Reading existing data...");
+				new ParseCSV().readCSV(FTLAdventureVisualiser.recordFilePath);
+				log.info("Start adding new row to CSV..");
+				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
+			} else {
+				log.info("CSV doesn't exist yet. Creating new CSV...");
+				new ParseCSV().createCSV(FTLAdventureVisualiser.recordFilePath);
+			}
 			// inspector.setGameState();
 		}
 
@@ -624,7 +632,7 @@ public class FTLFrame extends JFrame {
 
 	private String getTimeStamp() {
 		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(chosenFile.lastModified());
+		cal.setTimeInMillis(chosenGameStateFile.lastModified());
 		return (
 			cal.get(Calendar.YEAR) + "/" +
 			String.format("%02d", cal.get(Calendar.MONTH) + 1) + "/" +
