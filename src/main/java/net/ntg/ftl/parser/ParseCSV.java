@@ -14,49 +14,27 @@ import org.apache.logging.log4j.Logger;
 
 import org.supercsv.io.*;
 import org.supercsv.prefs.CsvPreference;
+import org.supercsv.quote.AlwaysQuoteMode;
 
 
 public class ParseCSV {
 
 	private static final Logger log = LogManager.getLogger(ParseCSV.class);
 
-	private static final char DELIMITER = ';';
-	private static final String NEWLINE = "\n";
-	private static final String EMPTY = "\"\"";
+	private static final CsvPreference FTLCSV = (
+		new CsvPreference.Builder('"', ';', "\n").useQuoteMode(new AlwaysQuoteMode()).surroundingSpacesNeedQuotes(true).build()
+	);
+	private static final char DELIMITER = (char) FTLCSV.getDelimiterChar();
+	private static final String NEWLINE = FTLCSV.getEndOfLineSymbols();
 
-	// TODO
-
-	// NEW
-	// when a new file is created, just write a new file with createCSV
-	// EXISTING
-	// when a adding a new entry, read the current file,
-	// append the new row to the result,
-	// then write the new result to a file with the same name
-
-	// WHEN TO WRITE
-	// replace line 565 in FTLFrame with a trigger to write to existing file
-
-	// WHEN TO READ
-	// when ParseCSV is done writing the new result,
-	// send columns titles to GraphInspector
-	// send result to GraphRenderer where it gets converted to Processing.data.Table
-	// when GraphInspector checkboxes has changed, redraw GraphRenderer
 
 	public void readCSV(String fileName) {
-
-		// final CellProcessor[] cellProcessors = new CellProcessor[] {
-		// 	new ParseDate("yyyy/MM/dd - HH:mm:ss"), // TIME
-		// 	// LOCATION
-		// 	new ParseInt(), // BEACON
-		// 	new ParseInt(), // SECTOR NUMBER
-		// 	new NotNull(),  // SECTOR TYPE
-		// };
 
 		FTLAdventureVisualiser.recording.clear();
 
 		ICsvMapReader mapReader = null;
 		try {
-			mapReader = new CsvMapReader(new FileReader(fileName), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
+			mapReader = new CsvMapReader(new FileReader(fileName), FTLCSV);
 
 			final String[] header = mapReader.getHeader(true);
 			FTLAdventureVisualiser.recordingHeaders = header;
@@ -71,7 +49,7 @@ public class ParseCSV {
 				));
 				FTLAdventureVisualiser.recording.add(customerMap);
 			}
-		} catch (Exception e | SuperCsvException e) {
+		} catch (Exception e) {
 			log.error("Something went wrong while reading " + fileName, e);
 		} finally {
 			if (mapReader != null) {
@@ -79,7 +57,7 @@ public class ParseCSV {
 					mapReader.close();
 
 					log.info(FTLAdventureVisualiser.recordingHeaders);
-					log.info("FTLAdventureVisualiser.recording.size() = " + FTLAdventureVisualiser.recording.size());
+					log.info("FTLAdventureVisualiser.recording.size() : " + FTLAdventureVisualiser.recording.size());
 					for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
 						log.info(FTLAdventureVisualiser.recording.get(i).toString());
 					}
@@ -229,13 +207,11 @@ public class ParseCSV {
 
 			fw = new FileWriter(fileName);
 
+			fw.append(fileHeader);
+			fw.append(NEWLINE);
 
+			// TODO use superCSV mapWriter to write the data (so it doesn't print null where it is empty or doesn't apply qoutes where needed)
 			if (!isNewFile) {
-				// do a readCSV first, get results
-				// new this.readCSV(fileName);
-				// write results to new table
-				fw.append(fileHeader);
-				fw.append(NEWLINE);
 				log.info("Adding existing data...");
 				String[] headerArray = fileHeader.split(Character.toString(DELIMITER));
 				for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
@@ -245,7 +221,7 @@ public class ParseCSV {
 						} catch (NullPointerException e) {
 							log.error(headerArray[k] + " does not exist in FTLAdventureVisualiser.recording", e);
 						}
-						fw.append(DELIMITER);
+						if (k < headerArray.length - 1) fw.append(DELIMITER);
 					}
 					fw.append(NEWLINE);
 				}
@@ -330,9 +306,7 @@ public class ParseCSV {
 			for (int w = 0; w < ShipDataParser.getWeaponSlotCount(); w++) {
 				try {
 					fw.append(FTLAdventureVisualiser.shipState.getWeaponList().get(w).getWeaponId().replaceAll("_"," "));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 			}
 			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getCapacity()));
@@ -344,9 +318,7 @@ public class ParseCSV {
 			for (int d = 0; d < ShipDataParser.getDroneSlotCount(); d++) {
 				try {
 					fw.append(FTLAdventureVisualiser.shipState.getDroneList().get(d).getDroneId().replaceAll("_"," "));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 			}
 			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getCapacity()));
@@ -414,94 +386,63 @@ public class ParseCSV {
 			for (int c = 0; c < FTLAdventureVisualiser.gameState.getTotalCrewHired(); c++) {
 				try {
 					fw.append(FTLAdventureVisualiser.playerCrewState.get(c).getName());
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(ShipDataParser.getFullCrewType(c));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getHealth()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getEngineSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getShieldSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getWeaponSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatSkill()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairs()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatKills()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotedEvasions()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getJumpsSurvived()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				fw.append(DELIMITER);
 				try {
 					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getSkillMasteries()));
-				} catch (IndexOutOfBoundsException e) {
-					fw.append(EMPTY);
-				}
+				} catch (IndexOutOfBoundsException e) {}
 				if (c < FTLAdventureVisualiser.gameState.getTotalCrewHired() - 1) {
 					fw.append(DELIMITER);
 				}
 			}
-			fw.append(NEWLINE);
-
-			log.info("CSV file has been written");
 
 		} catch (Exception e) {
 			log.error("Error creating CSV file!", e);
@@ -509,6 +450,7 @@ public class ParseCSV {
 			try {
 				fw.flush();
 				fw.close();
+				log.info("CSV file has been written to " + fileName);
 			} catch (IOException e) {
 				log.error("Error while closing filewriter!", e);
 			}

@@ -615,6 +615,8 @@ public class FTLFrame extends JFrame {
 
 			// TODO read/write/read first, then inspector.setGameState()
 			if (new File(FTLAdventureVisualiser.recordFilePath).exists()) {
+				// TODO prevent duplicate rows
+				// 		perhaps this move into currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() block ?
 				log.info("Reading existing data...");
 				new ParseCSV().readCSV(FTLAdventureVisualiser.recordFilePath);
 				log.info("Start adding new row to CSV..");
