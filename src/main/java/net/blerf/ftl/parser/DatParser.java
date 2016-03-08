@@ -32,7 +32,7 @@ import net.blerf.ftl.xml.ShipEvents;
 
 public class DatParser {
 
-	private Pattern xmlDeclPtn = Pattern.compile("<[?]xml [^>]*?[?]>\n*");
+	private final Pattern xmlDeclPtn = Pattern.compile("<[?]xml [^>]*?[?]>\n*");
 
 
 	public DatParser() {

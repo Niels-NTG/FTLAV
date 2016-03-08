@@ -161,7 +161,7 @@ public class SavedGameParser extends Parser {
 			}
 
 			int sectorVisitationCount = readInt(in);
-			List<Boolean> route = new ArrayList<Boolean>();
+			List<Boolean> route = new ArrayList<>();
 			for (int i=0; i < sectorVisitationCount; i++) {
 				route.add(readBool(in));
 			}
@@ -446,7 +446,7 @@ public class SavedGameParser extends Parser {
 		}
 
 		// System info is stored in this order.
-		List<SystemType> systemTypes = new ArrayList<SystemType>();
+		List<SystemType> systemTypes = new ArrayList<>();
 		systemTypes.add(SystemType.SHIELDS);
 		systemTypes.add(SystemType.ENGINES);
 		systemTypes.add(SystemType.OXYGEN);
@@ -569,14 +569,14 @@ public class SavedGameParser extends Parser {
 		// order is different at runtime. Vacuum-adjacent doors
 		// are plucked out and moved to the end... for some
 		// reason.
-		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> vacuumDoorMap = new LinkedHashMap<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>>();
+		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> vacuumDoorMap = new LinkedHashMap<>();
 		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> layoutDoorMap = shipLayout.getDoorMap();
 		for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : layoutDoorMap.entrySet()) {
 			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
 			EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
 
 			if (doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_A).intValue() == -1 ||
-			     doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
+				 doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
 				vacuumDoorMap.put(doorCoord, doorInfo);
 				continue;
 			}
@@ -594,7 +594,7 @@ public class SavedGameParser extends Parser {
 
 			if (headerAlpha == 8 || headerAlpha == 9) {
 				int crystalCount = readInt(in);
-				List<LockdownCrystal> crystalList = new ArrayList<LockdownCrystal>();
+				List<LockdownCrystal> crystalList = new ArrayList<>();
 				for (int i=0; i < crystalCount; i++) {
 					crystalList.add(readLockdownCrystal(in));
 				}
@@ -674,7 +674,7 @@ public class SavedGameParser extends Parser {
 		}
 
 		// System info is stored in this order.
-		List<SystemType> systemTypes = new ArrayList<SystemType>();
+		List<SystemType> systemTypes = new ArrayList<>();
 		systemTypes.add(SystemType.SHIELDS);
 		systemTypes.add(SystemType.ENGINES);
 		systemTypes.add(SystemType.OXYGEN);
@@ -759,7 +759,7 @@ public class SavedGameParser extends Parser {
 
 				writeMinMaxedInt(out, cloakingInfo.getCloakTicks());
 			}
-    }
+	}
 
 		int roomCount = shipLayout.getRoomCount();
 		for (int r=0; r < roomCount; r++) {
@@ -783,14 +783,14 @@ public class SavedGameParser extends Parser {
 		// are plucked out and moved to the end... for some
 		// reason.
 		Map<ShipLayout.DoorCoordinate, DoorState> shipDoorMap = shipState.getDoorMap();
-		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> vacuumDoorMap = new LinkedHashMap<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>>();
+		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> vacuumDoorMap = new LinkedHashMap<>();
 		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> layoutDoorMap = shipLayout.getDoorMap();
 		for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : layoutDoorMap.entrySet()) {
 			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
 			EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
 
 			if (doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_A).intValue() == -1 ||
-			     doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
+				 doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
 				vacuumDoorMap.put(doorCoord, doorInfo);
 				continue;
 			}
@@ -864,9 +864,9 @@ public class SavedGameParser extends Parser {
 			int deathOrder = readInt(in);  // Redundant. Exactly the same as Clonebay Priority.
 
 			int tintCount = readInt(in);
-			List<Integer> spriteTintIndeces = new ArrayList<Integer>();
+			List<Integer> spriteTintIndeces = new ArrayList<>();
 			for (int i=0; i < tintCount; i++) {
-				spriteTintIndeces.add(new Integer(readInt(in)));
+				spriteTintIndeces.add(readInt(in));
 			}
 			crew.setSpriteTintIndeces(spriteTintIndeces);
 
@@ -1356,7 +1356,7 @@ public class SavedGameParser extends Parser {
 				// FTL 1.5.4 requires at least one shelf.
 				int shelfReq = 1;
 
-				List<StoreShelf> pendingShelves = new ArrayList<StoreShelf>();
+				List<StoreShelf> pendingShelves = new ArrayList<>();
 				pendingShelves.addAll(store.getShelfList());
 
 				while (pendingShelves.size() < shelfReq) {
@@ -1449,7 +1449,7 @@ public class SavedGameParser extends Parser {
 		encounter.setAffectedCrewSeed(readInt(in));
 
 		int choiceCount = readInt(in);
-		List<Integer> choiceList = new ArrayList<Integer>();
+		List<Integer> choiceList = new ArrayList<>();
 		for (int i=0; i < choiceCount; i++) {
 			choiceList.add(new Integer(readInt(in)));
 		}
@@ -2024,9 +2024,9 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private String playerShipBlueprintId = "";
 		private int sectorNumber = 1;
 		private int unknownBeta = 0;
-		private Map<String, Integer> stateVars = new LinkedHashMap<String, Integer>();
+		private Map<String, Integer> stateVars = new LinkedHashMap<>();
 		private ShipState playerShipState = null;
-		private List<String> cargoIdList = new ArrayList<String>();
+		private List<String> cargoIdList = new ArrayList<>();
 		private int sectorTreeSeed = 42;      // Arbitrary default.
 		private int sectorLayoutSeed = 42;    // Arbitrary default.
 		private int rebelFleetOffset = -750;  // Arbitrary default.
@@ -2042,23 +2042,23 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private boolean rebelFlagshipMoving = false;
 		private int unknownKappa = 0;
 		private int rebelFlagshipBaseTurns = 0;
-		private List<Boolean> sectorVisitationList = new ArrayList<Boolean>();
+		private List<Boolean> sectorVisitationList = new ArrayList<>();
 		private boolean sectorIsHiddenCrystalWorlds = false;
-		private List<BeaconState> beaconList = new ArrayList<BeaconState>();
-		private Map<String, Integer> questEventMap = new LinkedHashMap<String, Integer>();
-		private List<String> distantQuestEventList = new ArrayList<String>();
+		private List<BeaconState> beaconList = new ArrayList<>();
+		private Map<String, Integer> questEventMap = new LinkedHashMap<>();
+		private List<String> distantQuestEventList = new ArrayList<>();
 		private int unknownMu = 0;
 		private EncounterState encounter = null;
 		private boolean rebelFlagshipNearby = false;
 		private ShipState nearbyShipState = null;
 		private NearbyShipAIState nearbyShipAI = null;
 		private EnvironmentState environment = null;
-		private List<ProjectileState> projectileList = new ArrayList<ProjectileState>();
+		private List<ProjectileState> projectileList = new ArrayList<>();
 		private int unknownNu = 0;
 		private Integer unknownXi = null;
 		private boolean autofire = false;
 		private RebelFlagshipState rebelFlagshipState = null;
-		private List<MysteryBytes> mysteryList = new ArrayList<MysteryBytes>();
+		private List<MysteryBytes> mysteryList = new ArrayList<>();
 
 
 		public SavedGameState() {
@@ -2728,22 +2728,22 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private boolean auto = false;  // Is autoShip.
 		private String shipName, shipBlueprintId, shipLayoutId;
 		private String shipGfxBaseName;
-		private List<StartingCrewState> startingCrewList = new ArrayList<StartingCrewState>();
+		private List<StartingCrewState> startingCrewList = new ArrayList<>();
 		private int jumpTicks = 0;
 		private int hullAmt = 0, fuelAmt = 0, dronePartsAmt = 0, missilesAmt = 0, scrapAmt = 0;
-		private List<CrewState> crewList = new ArrayList<CrewState>();
+		private List<CrewState> crewList = new ArrayList<>();
 		private int reservePowerCapacity = 0;
-		private Map<SystemType, List<SystemState>> systemsMap = new LinkedHashMap<SystemType, List<SystemState>>();
-		private List<ExtendedSystemInfo> extendedSystemInfoList = new ArrayList<ExtendedSystemInfo>();
-		private List<RoomState> roomList = new ArrayList<RoomState>();
-		private Map<Point, Integer> breachMap = new LinkedHashMap<Point, Integer>();
-		private Map<ShipLayout.DoorCoordinate, DoorState> doorMap = new LinkedHashMap<ShipLayout.DoorCoordinate, DoorState>();
+		private Map<SystemType, List<SystemState>> systemsMap = new EnumMap<>(SystemType.class);
+		private List<ExtendedSystemInfo> extendedSystemInfoList = new ArrayList<>();
+		private List<RoomState> roomList = new ArrayList<>();
+		private Map<Point, Integer> breachMap = new LinkedHashMap<>();
+		private Map<ShipLayout.DoorCoordinate, DoorState> doorMap = new LinkedHashMap<>();
 		private int cloakAnimTicks = 0;
-		private List<LockdownCrystal> lockdownCrystalList = new ArrayList<LockdownCrystal>();
-		private List<WeaponState> weaponList = new ArrayList<WeaponState>();
-		private List<DroneState> droneList = new ArrayList<DroneState>();
-		private List<String> augmentIdList = new ArrayList<String>();
-		private List<StandaloneDroneState> standaloneDroneList = new ArrayList<StandaloneDroneState>();
+		private List<LockdownCrystal> lockdownCrystalList = new ArrayList<>();
+		private List<WeaponState> weaponList = new ArrayList<>();
+		private List<DroneState> droneList = new ArrayList<>();
+		private List<String> augmentIdList = new ArrayList<>();
+		private List<StandaloneDroneState> standaloneDroneList = new ArrayList<>();
 
 		private int unknownAlpha = 0;
 		private int unknownGamma = 0;
@@ -3522,7 +3522,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private int roomSquare = -1;
 		private boolean playerControlled = false;
 		private int cloneReady = 0;
-		private List<Integer> spriteTintIndeces = new ArrayList<Integer>();
+		private List<Integer> spriteTintIndeces = new ArrayList<>();
 		private boolean mindControlled = false;
 		private int savedRoomId = 0;
 		private int savedRoomSquare = 0;
@@ -3573,7 +3573,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			cloneReady = srcCrew.getCloneReady();
 
 			for (Integer colorIndex : srcCrew.getSpriteTintIndeces()) {
-				spriteTintIndeces.add(new Integer(colorIndex));
+				spriteTintIndeces.add(colorIndex);
 			}
 
 			mindControlled = srcCrew.isMindControlled();
@@ -4558,7 +4558,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 	public static class RoomState {
 		private int oxygen = 100;
-		private List<SquareState> squareList = new ArrayList<SquareState>();
+		private List<SquareState> squareList = new ArrayList<>();
 		private int stationSquare = -1;
 		private StationDirection stationDirection = StationDirection.NONE;
 
@@ -5458,7 +5458,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 	public static class StoreState {
 		private int fuel = 0, missiles = 0, droneParts = 0;
-		private List<StoreShelf> shelfList = new ArrayList<StoreShelf>(3);
+		private List<StoreShelf> shelfList = new ArrayList<>(3);
 
 
 		/**
@@ -5530,7 +5530,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 	public static class StoreShelf {
 		private StoreItemType itemType = StoreItemType.WEAPON;
-		private List<StoreItem> items = new ArrayList<StoreItem>(3);
+		private List<StoreItem> items = new ArrayList<>(3);
 
 
 		/**
@@ -5643,7 +5643,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private String lastEventId = "";
 		private String text = "";
 		private int affectedCrewSeed = -1;
-		private List<Integer> choiceList = new ArrayList<Integer>();
+		private List<Integer> choiceList = new ArrayList<>();
 
 
 		public EncounterState() {
@@ -6052,7 +6052,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private int pendingStage = 1;
 		private int unknownGamma = 30000;
 		private int unknownDelta = 0;
-		private Map<Integer, Integer> occupancyMap = new LinkedHashMap<Integer, Integer>();
+		private Map<Integer, Integer> occupancyMap = new LinkedHashMap<>();
 
 
 		/**
@@ -8043,12 +8043,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			goalPosX = srcPod.getGoalPositionX();
 			goalPosY = srcPod.getGoalPositionY();
 
-			for (int i=0; i < unknownBeta.length; i++) {
-				unknownBeta[i] = srcPod.getUnknownBeta()[i];
-			}
-			for (int i=0; i < unknownGamma.length; i++) {
-				unknownGamma[i] = srcPod.getUnknownGamma()[i];
-			}
+						System.arraycopy(srcPod.getUnknownBeta(), 0, unknownBeta, 0, unknownBeta.length);
+						System.arraycopy(srcPod.getUnknownGamma(), 0, unknownGamma, 0, unknownGamma.length);
 
 			deathAnim = srcPod.getDeathAnim();
 
@@ -8763,8 +8759,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private int boost = 0;
 		private int charge = 0;
 
-		private List<ReticleCoordinate> currentTargets = new ArrayList<ReticleCoordinate>();
-		private List<ReticleCoordinate> prevTargets = new ArrayList<ReticleCoordinate>();
+		private List<ReticleCoordinate> currentTargets = new ArrayList<>();
+		private List<ReticleCoordinate> prevTargets = new ArrayList<>();
 
 		private boolean autofire = false;
 		private boolean fireWhenReady = false;
@@ -8777,7 +8773,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		private AnimState chargeAnim = new AnimState();
 		private int lastProjectileId = -1;
 
-		private List<ProjectileState> pendingProjectiles = new ArrayList<ProjectileState>();
+		private List<ProjectileState> pendingProjectiles = new ArrayList<>();
 
 
 		/**
@@ -9321,7 +9317,7 @@ System.err.println(String.format("Extended Ship Info: @%d", in.getChannel().posi
 			if (droneType == null) throw new IOException(String.format("DroneBlueprint \"%s\" has an unrecognized type: %s", droneId, droneBlueprint.getType()));
 
 			if (DroneType.REPAIR.equals(droneType) ||
-			     DroneType.BATTLE.equals(droneType)) {
+				 DroneType.BATTLE.equals(droneType)) {
 				// No drone pod for these types.
 			}
 			else {
@@ -9538,7 +9534,7 @@ System.err.println(String.format("Drone Pod: @%d", in.getChannel().position()));
 			extendedInfo = hackingPodInfo;
 		}
 		else if (DroneType.COMBAT.equals(droneType) ||
-		          DroneType.BEAM.equals(droneType)) {
+				  DroneType.BEAM.equals(droneType)) {
 
 			IntegerDronePodInfo intPodInfo = new IntegerDronePodInfo(5);
 			for (int i=0; i < intPodInfo.getSize(); i++) {
@@ -9644,14 +9640,14 @@ System.err.println(String.format("Weapon Module: @%d", in.getChannel().position(
 		weaponMod.setCharge(readInt(in));
 
 		int currentTargetsCount = readInt(in);
-		List<ReticleCoordinate> currentTargetsList = new ArrayList<ReticleCoordinate>();
+		List<ReticleCoordinate> currentTargetsList = new ArrayList<>();
 		for (int i=0; i < currentTargetsCount; i++) {
 			currentTargetsList.add(readReticleCoordinate(in));
 		}
 		weaponMod.setCurrentTargets(currentTargetsList);
 
 		int prevTargetsCount = readInt(in);
-		List<ReticleCoordinate> prevTargetsList = new ArrayList<ReticleCoordinate>();
+		List<ReticleCoordinate> prevTargetsList = new ArrayList<>();
 		for (int i=0; i < prevTargetsCount; i++) {
 			prevTargetsList.add(readReticleCoordinate(in));
 		}
@@ -9675,7 +9671,7 @@ System.err.println(String.format("Weapon Module: @%d", in.getChannel().position(
 		weaponMod.setLastProjectileId(readInt(in));
 
 		int pendingProjectilesCount = readInt(in);
-		List<ProjectileState> pendingProjectiles = new ArrayList<ProjectileState>();
+		List<ProjectileState> pendingProjectiles = new ArrayList<>();
 		for (int i=0; i < pendingProjectilesCount; i++) {
 			pendingProjectiles.add(readProjectile(in));
 		}

@@ -13,8 +13,8 @@ public class ShipLayout {
 
 	private int offsetX = 0, offsetY = 0, horizontal = 0, vertical = 0;
 	private Rectangle shieldEllipse = new Rectangle();
-	private TreeMap<Integer, EnumMap<RoomInfo,Integer>> roomMap = new TreeMap<Integer, EnumMap<RoomInfo,Integer>>();
-	private LinkedHashMap<DoorCoordinate, EnumMap<DoorInfo,Integer>> doorMap = new LinkedHashMap<DoorCoordinate, EnumMap<DoorInfo,Integer>>();
+	private final TreeMap<Integer, EnumMap<RoomInfo,Integer>> roomMap = new TreeMap<>();
+	private final LinkedHashMap<DoorCoordinate, EnumMap<DoorInfo,Integer>> doorMap = new LinkedHashMap<>();
 
 	/**
 	 * Constructs a layout with uninteresting defaults.
@@ -46,17 +46,17 @@ public class ShipLayout {
 	 * @param squaresV certical count of tiles
 	 */
 	public void setRoom(int roomId, int locationX, int locationY, int squaresH, int squaresV) {
-		Integer roomIdObj = new Integer(roomId);
-		EnumMap<RoomInfo,Integer> infoMap = new EnumMap<RoomInfo,Integer>(RoomInfo.class);
-		infoMap.put(RoomInfo.LOCATION_X, new Integer(locationX));
-		infoMap.put(RoomInfo.LOCATION_Y, new Integer(locationY));
-		infoMap.put(RoomInfo.SQUARES_H, new Integer(squaresH));
-		infoMap.put(RoomInfo.SQUARES_V, new Integer(squaresV));
+		Integer roomIdObj = roomId;
+		EnumMap<RoomInfo,Integer> infoMap = new EnumMap<>(RoomInfo.class);
+		infoMap.put(RoomInfo.LOCATION_X, locationX);
+		infoMap.put(RoomInfo.LOCATION_Y, locationY);
+		infoMap.put(RoomInfo.SQUARES_H, squaresH);
+		infoMap.put(RoomInfo.SQUARES_V, squaresV);
 		roomMap.put(roomIdObj, infoMap);
 	}
 
 	public EnumMap<RoomInfo, Integer> getRoomInfo(int roomId) {
-		return roomMap.get(new Integer(roomId));
+		return roomMap.get(roomId);
 	}
 
 	/**
@@ -64,8 +64,7 @@ public class ShipLayout {
 	 */
 	public int getRoomCount() {
 		try {
-			Integer lastKey = roomMap.lastKey();
-			return lastKey.intValue()+1;
+			return 1 + roomMap.lastKey();
 		} catch (NoSuchElementException e) {
 			return 0;
 		}
@@ -82,9 +81,9 @@ public class ShipLayout {
 	 */
 	public void setDoor(int wallX, int wallY, int vertical, int roomIdA, int roomIdB) {
 		DoorCoordinate doorCoord = new DoorCoordinate(wallX, wallY, vertical);
-		EnumMap<DoorInfo, Integer> infoMap = new EnumMap<DoorInfo, Integer>(DoorInfo.class);
-		infoMap.put(DoorInfo.ROOM_ID_A, new Integer(roomIdA));
-		infoMap.put(DoorInfo.ROOM_ID_B, new Integer(roomIdB));
+		EnumMap<DoorInfo, Integer> infoMap = new EnumMap<>(DoorInfo.class);
+		infoMap.put(DoorInfo.ROOM_ID_A, roomIdA);
+		infoMap.put(DoorInfo.ROOM_ID_B, roomIdB);
 		doorMap.put(doorCoord, infoMap);
 	}
 

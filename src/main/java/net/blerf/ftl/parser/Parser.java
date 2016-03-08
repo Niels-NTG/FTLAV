@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 public class Parser {
 
-	private byte[] intbuf = new byte[4];
+	private final byte[] intbuf = new byte[4];
 
 	/**
 	 * Reads a little-endian int from a stream, as a boolean.

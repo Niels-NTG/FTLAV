@@ -6,13 +6,13 @@ import java.util.List;
 
 public class SectorTree {
 
-	private List<SectorTreeListener> treeListenerList = new ArrayList<SectorTreeListener>();
+	private final List<SectorTreeListener> treeListenerList = new ArrayList<>();
 
 	private List<List<SectorDot>> dotColumns;
 
 
 	public SectorTree() {
-		dotColumns = new ArrayList<List<SectorDot>>(8);
+		dotColumns = new ArrayList<>(8);
 	}
 
 	public SectorTree(SectorTree srcTree) {

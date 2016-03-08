@@ -35,7 +35,7 @@ public class Stats {
 		TOTAL_GAMES_PLAYED    ("Total Games Played"),
 		TOTAL_VICTORIES       ("Total Victories");
 
-		private String name;
+		private final String name;
 		private StatType(String name) {
 			this.name = name;
 		}
@@ -43,11 +43,11 @@ public class Stats {
 		public String toString() { return name; }
 	}
 
-	private List<Score> topScores = new ArrayList<Score>();
-	private List<Score> shipBest = new ArrayList<Score>();
+	private List<Score> topScores = new ArrayList<>();
+	private List<Score> shipBest = new ArrayList<>();
 
-	private Map<StatType,CrewRecord> crewMap = new EnumMap<StatType,CrewRecord>(StatType.class);
-	private Map<StatType,Integer> intMap = new EnumMap<StatType,Integer>(StatType.class);
+	private final Map<StatType,CrewRecord> crewMap = new EnumMap<>(StatType.class);
+	private final Map<StatType,Integer> intMap = new EnumMap<>(StatType.class);
 
 
 	public Stats() {
@@ -72,7 +72,7 @@ public class Stats {
 		}
 
 		for (Map.Entry<StatType, Integer> entry : srcStats.getIntRecordMap().entrySet()) {
-			intMap.put(entry.getKey(), new Integer(entry.getValue()));
+			intMap.put(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -95,12 +95,12 @@ public class Stats {
 	}
 
 	public void setIntRecord(StatType type, int n) {
-		intMap.put(type, new Integer(n));
+		intMap.put(type, n);
 	}
 	public int getIntRecord(StatType type) {
 		if (!intMap.containsKey(type))
 			log.error("No int record found for type: "+ type);
-		return intMap.get(type).intValue();
+		return intMap.get(type);
 	}
 
 	public void setMostShipsDefeated(int n) { setIntRecord(StatType.MOST_SHIPS_DEFEATED, n); }

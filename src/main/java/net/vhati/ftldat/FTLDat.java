@@ -439,7 +439,7 @@ public class FTLDat {
 
 
 	public static class FTLPack extends AbstractPack {
-		private CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+		private final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
 
 		private File datFile = null;
 		private RandomAccessFile raf = null;

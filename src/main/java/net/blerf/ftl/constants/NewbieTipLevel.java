@@ -14,8 +14,8 @@ public enum NewbieTipLevel {
 	SHIP_LIST_INTRO ("Ship List Intro", "An intro when the ship list is displayed."),
 	VETERAN         ("Veteran", "No further tips.");
 
-	private String name;
-	private String description;
+	private final String name;
+	private final String description;
 	private NewbieTipLevel(String name, String description) {
 		this.name = name;
 		this.description = description;

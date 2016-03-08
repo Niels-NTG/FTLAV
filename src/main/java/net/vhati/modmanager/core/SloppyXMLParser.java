@@ -57,23 +57,23 @@ import org.jdom2.input.JDOMParseException;
  */
 public class SloppyXMLParser {
 
-	private Pattern declPtn = Pattern.compile( "(\\s*)<[?]xml [^?]*[?]>" );
-	private Pattern emptyCommentPtn = Pattern.compile( "(\\s*)<!---->" );
-	private Pattern commentPtn = Pattern.compile( "(?s)(\\s*)<!--((?:.(?!-->))*.)-->" );
-	private Pattern emptyCDATAPtn = Pattern.compile( "(\\s*)<!\\[CDATA\\[\\]\\]>" );
-	private Pattern cdataPtn = Pattern.compile( "(?s)(\\s*)<!\\[CDATA\\[((?:.(?!\\]\\]>))*.)\\]\\]>" );
-	private Pattern sTagPtn = Pattern.compile( "(\\s*)<(?:([\\w.-]+):)?([\\w.-]+)((?: [^>]+?)??)\\s*(/?)>" );
-	private Pattern eTagPtn = Pattern.compile( "([^<]*)</\\s*([^>]+)>" );
-	private Pattern endSpacePtn = Pattern.compile( "\\s+$" );
-	private Pattern strayCharsPtn = Pattern.compile( "(\\s*)(?:-->|[-.>,])" );
+	private final Pattern declPtn = Pattern.compile( "(\\s*)<[?]xml [^?]*[?]>" );
+	private final Pattern emptyCommentPtn = Pattern.compile( "(\\s*)<!---->" );
+	private final Pattern commentPtn = Pattern.compile( "(?s)(\\s*)<!--((?:.(?!-->))*.)-->" );
+	private final Pattern emptyCDATAPtn = Pattern.compile( "(\\s*)<!\\[CDATA\\[\\]\\]>" );
+	private final Pattern cdataPtn = Pattern.compile( "(?s)(\\s*)<!\\[CDATA\\[((?:.(?!\\]\\]>))*.)\\]\\]>" );
+	private final Pattern sTagPtn = Pattern.compile( "(\\s*)<(?:([\\w.-]+):)?([\\w.-]+)((?: [^>]+?)??)\\s*(/?)>" );
+	private final Pattern eTagPtn = Pattern.compile( "([^<]*)</\\s*([^>]+)>" );
+	private final Pattern endSpacePtn = Pattern.compile( "\\s+$" );
+	private final Pattern strayCharsPtn = Pattern.compile( "(\\s*)(?:-->|[-.>,])" );
 
-	private Pattern attrPtn = Pattern.compile( "\\s*(?:([\\w.-]+):)?([\\w.-]+)\\s*=\\s*(\"[^\"]*\"|'[^']*')" );
-	private Pattern entityPtn = Pattern.compile( "&(?:(?:#([0-9]+))|(?:#x([0-9A-Fa-f]+))|([^;]+));" );
+	private final Pattern attrPtn = Pattern.compile( "\\s*(?:([\\w.-]+):)?([\\w.-]+)\\s*=\\s*(\"[^\"]*\"|'[^']*')" );
+	private final Pattern entityPtn = Pattern.compile( "&(?:(?:#([0-9]+))|(?:#x([0-9A-Fa-f]+))|([^;]+));" );
 
-	private Pattern breakPtn = Pattern.compile( "\n" );
+	private final Pattern breakPtn = Pattern.compile( "\n" );
 
-	private List<Pattern> chunkPtns = new ArrayList<Pattern>();
-	private Map<String,String> entityMap = new HashMap<String,String>();
+	private final List<Pattern> chunkPtns = new ArrayList<>();
+	private final Map<String,String> entityMap = new HashMap<>();
 
 	private JDOMFactory factory;
 
