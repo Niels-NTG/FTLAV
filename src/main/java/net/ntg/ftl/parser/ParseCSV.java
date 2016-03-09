@@ -3,18 +3,22 @@ package net.ntg.ftl.parser;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.blerf.ftl.parser.SavedGameParser;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
-import org.supercsv.io.*;
+import org.supercsv.io.CsvMapReader;
+import org.supercsv.io.CsvMapWriter;
+import org.supercsv.io.ICsvMapReader;
+import org.supercsv.io.ICsvMapWriter;
 import org.supercsv.prefs.CsvPreference;
-import org.supercsv.quote.AlwaysQuoteMode;
+import org.supercsv.quote.AlwaysQuoteMode; // TODO check if AlwaysQouteMode is actually required
 
 
 public class ParseCSV {
@@ -24,9 +28,6 @@ public class ParseCSV {
 	private static final CsvPreference FTLCSV = (
 		new CsvPreference.Builder('"', ';', "\n").useQuoteMode(new AlwaysQuoteMode()).surroundingSpacesNeedQuotes(true).build()
 	);
-	private static final char DELIMITER = (char) FTLCSV.getDelimiterChar();
-	private static final String NEWLINE = FTLCSV.getEndOfLineSymbols();
-
 
 	public void readCSV(String fileName) {
 
@@ -39,7 +40,7 @@ public class ParseCSV {
 			final String[] header = mapReader.getHeader(true);
 			FTLAdventureVisualiser.recordingHeaders = header;
 
-			Map<String, String> customerMap;
+			Map<String,String> customerMap;
 			while((customerMap = mapReader.read(header)) != null) {
 				log.info(String.format(
 					"lineNo=%s, rowNo=%s, customerMap=%s",
@@ -55,13 +56,6 @@ public class ParseCSV {
 			if (mapReader != null) {
 				try {
 					mapReader.close();
-
-					log.info(FTLAdventureVisualiser.recordingHeaders);
-					log.info("FTLAdventureVisualiser.recording.size() : " + FTLAdventureVisualiser.recording.size());
-					for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
-						log.info(FTLAdventureVisualiser.recording.get(i).toString());
-					}
-
 				} catch (IOException ex) {
 					log.error(ex);
 				}
@@ -90,369 +84,149 @@ public class ParseCSV {
 	}
 	private void writeCSV(String fileName, boolean isNewFile) {
 
-		String fileHeader = (
-			"TIME" + DELIMITER +
-			"SHIP NAME" + DELIMITER +
-			"SHIP TYPE" + DELIMITER +
-			"DIFFICULTY" + DELIMITER +
-			"AE CONTENT" + DELIMITER +
+		int sectorNumber = FTLAdventureVisualiser.gameState.getSectorNumber();
+
+		LinkedHashMap<String, String> newRow = new LinkedHashMap<>();
+		newRow.put("TIME", FTLAdventureVisualiser.fileChangedTimeStamp);
+		newRow.put("SHIP NAME", FTLAdventureVisualiser.gameState.getPlayerShipName());
+		newRow.put("SHIP TYPE", ShipDataParser.getFullShipType());
+		newRow.put("DIFFICULTY", FTLAdventureVisualiser.gameState.getDifficulty().toString());
+		newRow.put("AE CONTENT", FTLAdventureVisualiser.gameState.isDLCEnabled() ? "enabled" : "disabled");
 		// Location
-			"BEACON" + DELIMITER +
-			"SECTOR NUMBER" + DELIMITER +
-			"SECTOR TYPE" + DELIMITER +
-			"SECTOR TITLE" + DELIMITER +
-			"FLEET ADVANCEMENT" + DELIMITER +
-		// LOG
-			"TOTAL SHIPS DEFEATED" + DELIMITER +
-			"TOTAL SCRAP COLLECTED" + DELIMITER +
-			"TOTAL CREW HIRED" + DELIMITER +
-			"SCORE" + DELIMITER +
+		newRow.put("BEACON", Integer.toString(FTLAdventureVisualiser.gameState.getTotalBeaconsExplored()));
+		newRow.put("SECTOR NUMBER", Integer.toString(sectorNumber + 1));
+		newRow.put("SECTOR TYPE", FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType());
+		newRow.put("SECTOR TITLE", FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle());
+		newRow.put("FLEET ADVANCEMENT", ShipDataParser.getRebelFleetAdvancement() + "%");
+		// Log
+		newRow.put("TOTAL SHIPS DEFEATED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalShipsDefeated()));
+		newRow.put("TOTAL SCRAP COLLECTED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalScrapCollected()));
+		newRow.put("TOTAL CREW HIRED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalCrewHired()));
+		newRow.put("SCORE", Integer.toString(ShipDataParser.getCurrentScore()));
 		// Encounter
-			"HAZARDS" + DELIMITER +
-			"EVENT TEXT" + DELIMITER +
-			"STORE" + DELIMITER +
+		newRow.put("HAZARDS", "\"" + ShipDataParser.getBeaconHazards() + "\"");
+		newRow.put("EVENT TEXT", "\"" + FTLAdventureVisualiser.gameState.getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
+		newRow.put("STORE", "\"" + ShipDataParser.getStoreListing() + "\"");
 		// Supplies
-			"SCRAP" + DELIMITER +
-			"HULL" + DELIMITER +
-			"FUEL" + DELIMITER +
-			"DRONE PARTS" + DELIMITER +
-			"MISSILES" + DELIMITER +
-			"CREW SIZE" + DELIMITER +
-			"OXYGEN LEVEL" + DELIMITER +
-		// Ship Systems
-			"POWER CAPACITY" + DELIMITER +
-			"SHIELDS CAPACITY" + DELIMITER +
-			"SHIELD POWER" + DELIMITER +
-			"SHIELD DAMAGE" + DELIMITER +
-			"ENGINES CAPACITY" + DELIMITER +
-			"ENGINES POWER" + DELIMITER +
-			"ENGINES DAMAGE" + DELIMITER +
-			"OXYGEN SYSTEM CAPACITY" + DELIMITER +
-			"OXYGEN SYSTEM POWER" + DELIMITER +
-			"OXYGEN SYSTEM DAMAGE" + DELIMITER +
-			"WEAPONS SYSTEM CAPACITY" + DELIMITER +
-			"WEAPONS SYSTEM POWER" + DELIMITER +
-			"WEAPONS SYSTEM DAMAGE" + DELIMITER
-		);
-		for (int i = 0; i < ShipDataParser.getWeaponSlotCount(); i++) {
-			fileHeader += "WEAPON SLOT " + (i+1) + DELIMITER;
+		newRow.put("SCRAP", Integer.toString(FTLAdventureVisualiser.shipState.getScrapAmt()));
+		newRow.put("HULL", Integer.toString(FTLAdventureVisualiser.shipState.getHullAmt()));
+		newRow.put("FUEL", Integer.toString(FTLAdventureVisualiser.shipState.getFuelAmt()));
+		newRow.put("DRONE PARTS", Integer.toString(FTLAdventureVisualiser.shipState.getDronePartsAmt()));
+		newRow.put("MISSILES", Integer.toString(FTLAdventureVisualiser.shipState.getMissilesAmt()));
+		newRow.put("CREW SIZE", Integer.toString(FTLAdventureVisualiser.playerCrewState.size()));
+		newRow.put("CARGO", "\"" + ShipDataParser.getCargoListing() + "\"");
+		newRow.put("AUGMENTS", "\"" + ShipDataParser.getAugmentListing() + "\"");
+		newRow.put("OXYGEN LEVEL", Integer.toString(ShipDataParser.getShipOxygenLevel()));
+		// Systems
+		newRow.put("POWER CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getReservePowerCapacity()));
+		newRow.put("SHIELD SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getCapacity()));
+		newRow.put("SHIELD SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getPower()));
+		newRow.put("SHIELD SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getDamagedBars()));
+		newRow.put("ENGINE SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getCapacity()));
+		newRow.put("ENGINE SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getPower()));
+		newRow.put("ENGINE SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getDamagedBars()));
+		newRow.put("OXYGEN SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getCapacity()));
+		newRow.put("OXYGEN SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getPower()));
+		newRow.put("OXYGEN SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getDamagedBars()));
+		newRow.put("WEAPONS SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getCapacity()));
+		newRow.put("WEAPONS SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getPower()));
+		newRow.put("WEAPONS SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getDamagedBars()));
+		for (int w = 0; w < ShipDataParser.getWeaponSlotCount(); w++) {
+			try {
+				newRow.put("WEAPON SLOT " + (w+1), FTLAdventureVisualiser.shipState.getWeaponList().get(w).getWeaponId().replaceAll("_"," "));
+			} catch (IndexOutOfBoundsException e) {}
 		}
-		fileHeader += (
-			"DRONE CONTROL SYSTEM CAPACITY" + DELIMITER +
-			"DRONE CONTROL SYSTEM POWER" + DELIMITER +
-			"DRONE CONTROL SYSTEM DAMAGE" + DELIMITER
-		);
-		for (int i = 0; i < ShipDataParser.getDroneSlotCount(); i++) {
-			fileHeader += "DRONE SLOT " + (i+1) + DELIMITER;
+		newRow.put("DRONE CONTROL SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getCapacity()));
+		newRow.put("DRONE CONTROL SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getPower()));
+		newRow.put("DRONE CONTROL SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getDamagedBars()));
+		for (int d = 0; d < ShipDataParser.getDroneSlotCount(); d++) {
+			try {
+				newRow.put("DRONE SLOT " + (d+1), FTLAdventureVisualiser.shipState.getDroneList().get(d).getDroneId().replaceAll("_"," "));
+			} catch (IndexOutOfBoundsException e) {}
 		}
-		fileHeader += (
-			"MEDBAY SYSTEM CAPACITY" + DELIMITER +
-			"MEDBAY SYSTEM POWER" + DELIMITER +
-			"MEDBAY SYSTEM DAMAGE" + DELIMITER +
-			"TELEPORTER SYSTEM CAPACITY" + DELIMITER +
-			"TELEPORTER SYSTEM POWER" + DELIMITER +
-			"TELEPORTER SYSTEM DAMAGE" + DELIMITER +
-			"CLOAKING SYSTEM CAPACITY" + DELIMITER +
-			"CLOAKING SYSTEM POWER" + DELIMITER +
-			"CLOAKING SYSTEM DAMAGE" + DELIMITER +
-			"ARTILLERY SYSTEM CAPACITY" + DELIMITER +
-			"ARTILLERY SYSTEM POWER" + DELIMITER +
-			"ARTILLERY SYSTEM DAMAGE" + DELIMITER +
-			"CLONEBAY SYSTEM CAPACITY" + DELIMITER +
-			"CLONEBAY SYSTEM POWER" + DELIMITER +
-			"CLONEBAY SYSTEM DAMAGE" + DELIMITER +
-			"MINDCONTROL SYSTEM CAPACITY" + DELIMITER +
-			"MINDCONTROL SYSTEM POWER" + DELIMITER +
-			"MINDCONTROL SYSTEM DAMAGE" + DELIMITER +
-			"HACKING SYSTEM CAPACITY" + DELIMITER +
-			"HACKING SYSTEM POWER" + DELIMITER +
-			"HACKING SYSTEM DAMAGE" + DELIMITER +
-			"PILOT SYTEM CAPACITY" + DELIMITER +
-			"PILOT SYSTEM DAMAGE" + DELIMITER +
-			"SENSORS SYSTEM CAPACITY" + DELIMITER +
-			"SENSORS SYSTEM DAMAGE" + DELIMITER +
-			"DOORS SYSTEM CAPACITY" + DELIMITER +
-			"DOORS SYSTEM DAMAGE" + DELIMITER +
-			"BATTERY SYSTEM CAPACITY" + DELIMITER +
-			"BATTERY SYSTEM DAMAGE" + DELIMITER +
-		// Augments
-			"AUGMENTS" + DELIMITER +
-		// Cargo
-			"CARGO" + DELIMITER
-		);
-		// Crew
-		for (int i = 0; i < FTLAdventureVisualiser.gameState.getTotalCrewHired(); i++) {
-			fileHeader += ("CREW MEMBER " + (i+1) + " NAME" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " SPECIES" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " HEALTH" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " PILOT SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " ENGINE SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " SHIELD SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " WEAPON SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " REPAIR SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " COMBAT SKILL" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " REPAIRS" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " COMBAT KILLS" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " PILOTED EVASIONS" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " JUMPS SURVIVED" + DELIMITER);
-			fileHeader += ("CREW MEMBER " + (i+1) + " SKILLS MASTERED");
-			if (i < FTLAdventureVisualiser.gameState.getTotalCrewHired() - 1) {
-				fileHeader += DELIMITER;
-			}
+		newRow.put("MEDBAY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getCapacity()));
+		newRow.put("MEDBAY SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getPower()));
+		newRow.put("MEDBAY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getDamagedBars()));
+		newRow.put("TELEPORTER SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getCapacity()));
+		newRow.put("TELEPORTER SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getPower()));
+		newRow.put("TELEPORTER SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getDamagedBars()));
+		newRow.put("CLOAKING SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getCapacity()));
+		newRow.put("CLOAKING SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getPower()));
+		newRow.put("CLOAKING SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getDamagedBars()));
+		newRow.put("ARTILLERY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getCapacity()));
+		newRow.put("ARTILLERY SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getPower()));
+		newRow.put("ARTILLERY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getDamagedBars()));
+		newRow.put("CLONEBAY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getCapacity()));
+		newRow.put("CLONEBAY SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getPower()));
+		newRow.put("CLONEBAY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getDamagedBars()));
+		newRow.put("MINDCONTROL SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getCapacity()));
+		newRow.put("MINDCONTROL SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getPower()));
+		newRow.put("MINDCONTROL SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getDamagedBars()));
+		newRow.put("HACKING SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getCapacity()));
+		newRow.put("HACKING SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getPower()));
+		newRow.put("HACKING SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getDamagedBars()));
+		newRow.put("PILOT SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.PILOT).getCapacity()));
+		newRow.put("PILOT SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.PILOT).getCapacity()));
+		newRow.put("SENSOR SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getCapacity()));
+		newRow.put("SENSOR SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getDamagedBars()));
+		newRow.put("DOOR SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DOORS).getCapacity()));
+		newRow.put("DOOR SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DOORS).getDamagedBars()));
+		newRow.put("BATTERY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getCapacity()));
+		newRow.put("BATTERY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
+		// crew
+		for (int c = 0; c < FTLAdventureVisualiser.gameState.getTotalCrewHired(); c++) {
+			try {
+				newRow.put("CREW MEMBER " + (c+1) + " NAME", FTLAdventureVisualiser.playerCrewState.get(c).getName());
+				newRow.put("CREW MEMBER " + (c+1) + " SPECIES", ShipDataParser.getFullCrewType(c));
+				newRow.put("CREW MEMBER " + (c+1) + " HEALTH", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getHealth()));
+				newRow.put("CREW MEMBER " + (c+1) + " PILOT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " ENGINE SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getEngineSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " SHIELD SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getShieldSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " WEAPON SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getWeaponSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " REPAIR SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " COMBAT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatSkill()));
+				newRow.put("CREW MEMBER " + (c+1) + " REPAIRS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairs()));
+				newRow.put("CREW MEMBER " + (c+1) + " COMBAT KILLS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatKills()));
+				newRow.put("CREW MEMBER " + (c+1) + " PILOTED EVASIONS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotedEvasions()));
+				newRow.put("CREW MEMBER " + (c+1) + " JUMPS SURVIVED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getJumpsSurvived()));
+				newRow.put("CREW MEMBER " + (c+1) + " SKILLS MASTERED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getSkillMasteries()));
+			} catch (IndexOutOfBoundsException e) {}
 		}
 
-		FileWriter fw = null;
+		FTLAdventureVisualiser.recording.add((Map<String,String>) newRow);
 
+		String[] header = (String[]) newRow.keySet().toArray(new String[newRow.size()]);
+
+		// TODO use superCSV mapWriter to write the data (so it doesn't print null where it is empty or doesn't apply qoutes where needed)
+		// change Fileheader to a map cunstructor that assembles header + new data at the same time
+		// fileHeader.put("SENSORS SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getDamagedBars()));
+		// then append the result FTLAdventureVisualiser.recording.add(fileHeader)
+		// then a loop writes FTLAdventureVisualiser.recording.get(i) to the CSV file, using the header of the last entry of FTLAdventureVisualiser.recording keys
+
+		// TODO prevent duplicate rows
+
+		ICsvMapWriter mapWriter = null;
 		try {
+			mapWriter = new CsvMapWriter(new FileWriter(fileName), FTLCSV);
 
-			fw = new FileWriter(fileName);
+			// writer header
+			mapWriter.writeHeader(header);
 
-			fw.append(fileHeader);
-			fw.append(NEWLINE);
-
-			// TODO use superCSV mapWriter to write the data (so it doesn't print null where it is empty or doesn't apply qoutes where needed)
-			if (!isNewFile) {
-				log.info("Adding existing data...");
-				String[] headerArray = fileHeader.split(Character.toString(DELIMITER));
-				for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
-					for (int k = 0; k < headerArray.length; k++) {
-						try {
-							fw.append(FTLAdventureVisualiser.recording.get(i).get(headerArray[k]));
-						} catch (NullPointerException e) {
-							log.error(headerArray[k] + " does not exist in FTLAdventureVisualiser.recording", e);
-						}
-						if (k < headerArray.length - 1) fw.append(DELIMITER);
-					}
-					fw.append(NEWLINE);
-				}
+			// write all entries
+			for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
+				// try {
+					// if (!FTLAdventureVisualiser.recording.get(i).equals(FTLAdventureVisualiser.recording.get(i+1))) {
+						mapWriter.write(FTLAdventureVisualiser.recording.get(i), header);
+					// }
+				// } catch (IndexOutOfBoundsException e) {}
 			}
-
-			int sectorNumber = FTLAdventureVisualiser.gameState.getSectorNumber();
-
-			fw.append(FTLAdventureVisualiser.fileChangedTimeStamp);
-			fw.append(DELIMITER);
-			fw.append(FTLAdventureVisualiser.gameState.getPlayerShipName());
-			fw.append(DELIMITER);
-			fw.append(ShipDataParser.getFullShipType());
-			fw.append(DELIMITER);
-			fw.append(FTLAdventureVisualiser.gameState.getDifficulty().toString());
-			fw.append(DELIMITER);
-			fw.append(FTLAdventureVisualiser.gameState.isDLCEnabled() ? "enabled" : "disabled");
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.gameState.getTotalBeaconsExplored()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(sectorNumber + 1));
-			fw.append(DELIMITER);
-			fw.append(FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType());
-			fw.append(DELIMITER);
-			fw.append(FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle());
-			fw.append(DELIMITER);
-			fw.append(ShipDataParser.getRebelFleetAdvancement() + "%");
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.gameState.getTotalShipsDefeated()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.gameState.getTotalScrapCollected()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.gameState.getTotalCrewHired()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(ShipDataParser.getCurrentScore()));
-			fw.append(DELIMITER);
-			fw.append("\"" + ShipDataParser.getBeaconHazards() + "\"");
-			fw.append(DELIMITER);
-			fw.append("\"" + FTLAdventureVisualiser.gameState.getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
-			fw.append(DELIMITER);
-			fw.append("\"" + ShipDataParser.getStoreListing() + "\"");
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getScrapAmt()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getHullAmt()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getFuelAmt()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getDronePartsAmt()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getMissilesAmt()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.size()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(ShipDataParser.getShipOxygenLevel()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getReservePowerCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SHIELDS).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ENGINES).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.OXYGEN).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getDamagedBars()));
-			fw.append(DELIMITER);
-			for (int w = 0; w < ShipDataParser.getWeaponSlotCount(); w++) {
-				try {
-					fw.append(FTLAdventureVisualiser.shipState.getWeaponList().get(w).getWeaponId().replaceAll("_"," "));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-			}
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getDamagedBars()));
-			fw.append(DELIMITER);
-			for (int d = 0; d < ShipDataParser.getDroneSlotCount(); d++) {
-				try {
-					fw.append(FTLAdventureVisualiser.shipState.getDroneList().get(d).getDroneId().replaceAll("_"," "));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-			}
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.TELEPORTER).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLOAKING).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.ARTILLERY).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.CLONEBAY).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MIND).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getPower()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.HACKING).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.PILOT).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.PILOT).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DOORS).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DOORS).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getCapacity()));
-			fw.append(DELIMITER);
-			fw.append(Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
-			fw.append(DELIMITER);
-			fw.append("\"" + ShipDataParser.getAugmentListing() + "\"");
-			fw.append(DELIMITER);
-			fw.append("\"" + ShipDataParser.getCargoListing() + "\"");
-			fw.append(DELIMITER);
-			for (int c = 0; c < FTLAdventureVisualiser.gameState.getTotalCrewHired(); c++) {
-				try {
-					fw.append(FTLAdventureVisualiser.playerCrewState.get(c).getName());
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(ShipDataParser.getFullCrewType(c));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getHealth()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getEngineSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getShieldSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getWeaponSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatSkill()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairs()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatKills()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotedEvasions()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getJumpsSurvived()));
-				} catch (IndexOutOfBoundsException e) {}
-				fw.append(DELIMITER);
-				try {
-					fw.append(Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getSkillMasteries()));
-				} catch (IndexOutOfBoundsException e) {}
-				if (c < FTLAdventureVisualiser.gameState.getTotalCrewHired() - 1) {
-					fw.append(DELIMITER);
-				}
-			}
-
 		} catch (Exception e) {
-			log.error("Error creating CSV file!", e);
+			log.error("Something went wrong while writing " + fileName, e);
 		} finally {
 			try {
-				fw.flush();
-				fw.close();
-				log.info("CSV file has been written to " + fileName);
-			} catch (IOException e) {
-				log.error("Error while closing filewriter!", e);
+				mapWriter.close();
+			} catch (IOException ex) {
+				log.error("Something went wrong closing fileWriter", ex);
 			}
 		}
 
