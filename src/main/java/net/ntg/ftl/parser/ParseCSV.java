@@ -197,13 +197,6 @@ public class ParseCSV {
 
 		String[] header = (String[]) newRow.keySet().toArray(new String[newRow.size()]);
 
-		// TODO use superCSV mapWriter to write the data (so it doesn't print null where it is empty or doesn't apply qoutes where needed)
-		// change Fileheader to a map cunstructor that assembles header + new data at the same time
-		// fileHeader.put("SENSORS SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.SENSORS).getDamagedBars()));
-		// then append the result FTLAdventureVisualiser.recording.add(fileHeader)
-		// then a loop writes FTLAdventureVisualiser.recording.get(i) to the CSV file, using the header of the last entry of FTLAdventureVisualiser.recording keys
-
-		// TODO prevent duplicate rows
 
 		ICsvMapWriter mapWriter = null;
 		try {
@@ -214,11 +207,16 @@ public class ParseCSV {
 
 			// write all entries
 			for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
-				// try {
-					// if (!FTLAdventureVisualiser.recording.get(i).equals(FTLAdventureVisualiser.recording.get(i+1))) {
+				// TODO prevent duplicate rows
+				try {
+					if (!FTLAdventureVisualiser.recording.get(i).equals(FTLAdventureVisualiser.recording.get(i+1))) {
 						mapWriter.write(FTLAdventureVisualiser.recording.get(i), header);
-					// }
-				// } catch (IndexOutOfBoundsException e) {}
+					} else {
+						log.error(i + " seems to be a duplicate, moving on...");
+					}
+				} catch (IndexOutOfBoundsException e) {
+					break;
+				}
 			}
 		} catch (Exception e) {
 			log.error("Something went wrong while writing " + fileName, e);
