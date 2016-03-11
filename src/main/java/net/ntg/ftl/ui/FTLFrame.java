@@ -71,7 +71,6 @@ public class FTLFrame extends JFrame {
 	private final URL helpPage = ClassLoader.getSystemResource("help.html");
 	private final HyperlinkListener linkListener;
 
-	private JButton gameStateSaveBtn;
 	// private GraphInspector inspector;
 
 	private final String appName;
@@ -387,6 +386,7 @@ public class FTLFrame extends JFrame {
 		});
 
 
+		// TODO change text to inform user about importing CSV
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent w) {
@@ -486,7 +486,6 @@ public class FTLFrame extends JFrame {
 	public void loadGameStateFile(File file) {
 		FileInputStream in = null;
 		StringBuilder hexBuf = new StringBuilder();
-		Exception exception = null;
 
 		try {
 			log.info("Opening game state: " + file.getAbsolutePath());
@@ -537,7 +536,6 @@ public class FTLFrame extends JFrame {
 				"Restart %s to reset everything.",
 				chosenGameStateFile.getName(), f.getClass().getSimpleName(), f.getMessage(), appName, appName
 			));
-			exception = f;
 		} finally {
 			try {
 				if (in != null) in.close();
@@ -613,18 +611,16 @@ public class FTLFrame extends JFrame {
 				);
 			}
 
-			// TODO read/write/read first, then inspector.setGameState()
 			if (new File(FTLAdventureVisualiser.recordFilePath).exists()) {
-				// TODO prevent duplicate rows
-				// 		perhaps this move into currentGameState.getTotalBeaconsExplored() > lastGameState.getTotalBeaconsExplored() block ?
 				log.info("Reading existing data...");
 				new ParseCSV().readCSV(FTLAdventureVisualiser.recordFilePath);
-				log.info("Start adding new row to CSV..");
+				log.info("Start adding new row to CSV...");
 				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
 			} else {
 				log.info("CSV doesn't exist yet. Creating new CSV...");
 				new ParseCSV().createCSV(FTLAdventureVisualiser.recordFilePath);
 			}
+			// TODO read/write/read first, then inspector.setGameState()
 			// inspector.setGameState();
 		}
 
