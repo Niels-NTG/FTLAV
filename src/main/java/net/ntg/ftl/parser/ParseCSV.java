@@ -18,7 +18,6 @@ import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapReader;
 import org.supercsv.io.ICsvMapWriter;
 import org.supercsv.prefs.CsvPreference;
-import org.supercsv.quote.AlwaysQuoteMode; // TODO check if AlwaysQouteMode is actually required
 
 
 public class ParseCSV {
@@ -26,7 +25,7 @@ public class ParseCSV {
 	private static final Logger log = LogManager.getLogger(ParseCSV.class);
 
 	private static final CsvPreference FTLCSV = (
-		new CsvPreference.Builder('"', ';', "\n").useQuoteMode(new AlwaysQuoteMode()).surroundingSpacesNeedQuotes(true).build()
+		new CsvPreference.Builder('"', ';', "\n").surroundingSpacesNeedQuotes(true).build()
 	);
 
 	public void readCSV(String fileName) {
@@ -104,9 +103,9 @@ public class ParseCSV {
 		newRow.put("TOTAL CREW HIRED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalCrewHired()));
 		newRow.put("SCORE", Integer.toString(ShipDataParser.getCurrentScore()));
 		// Encounter
-		newRow.put("HAZARDS", "\"" + ShipDataParser.getBeaconHazards() + "\"");
-		newRow.put("EVENT TEXT", "\"" + FTLAdventureVisualiser.gameState.getEncounter().getText().replaceAll("(\")|(\\n+)","") + "\"");
-		newRow.put("STORE", "\"" + ShipDataParser.getStoreListing() + "\"");
+		newRow.put("HAZARDS", ShipDataParser.getBeaconHazards());
+		newRow.put("EVENT TEXT", FTLAdventureVisualiser.gameState.getEncounter().getText().replaceAll("(\")|(\\n+)", ""));
+		newRow.put("STORE", ShipDataParser.getStoreListing());
 		// Supplies
 		newRow.put("SCRAP", Integer.toString(FTLAdventureVisualiser.shipState.getScrapAmt()));
 		newRow.put("HULL", Integer.toString(FTLAdventureVisualiser.shipState.getHullAmt()));
@@ -114,8 +113,8 @@ public class ParseCSV {
 		newRow.put("DRONE PARTS", Integer.toString(FTLAdventureVisualiser.shipState.getDronePartsAmt()));
 		newRow.put("MISSILES", Integer.toString(FTLAdventureVisualiser.shipState.getMissilesAmt()));
 		newRow.put("CREW SIZE", Integer.toString(FTLAdventureVisualiser.playerCrewState.size()));
-		newRow.put("CARGO", "\"" + ShipDataParser.getCargoListing() + "\"");
-		newRow.put("AUGMENTS", "\"" + ShipDataParser.getAugmentListing() + "\"");
+		newRow.put("CARGO", ShipDataParser.getCargoListing());
+		newRow.put("AUGMENTS", ShipDataParser.getAugmentListing());
 		newRow.put("OXYGEN LEVEL", Integer.toString(ShipDataParser.getShipOxygenLevel()));
 		// Systems
 		newRow.put("POWER CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getReservePowerCapacity()));
@@ -194,9 +193,7 @@ public class ParseCSV {
 		}
 
 		FTLAdventureVisualiser.recording.add((Map<String,String>) newRow);
-
 		String[] header = (String[]) newRow.keySet().toArray(new String[newRow.size()]);
-
 
 		ICsvMapWriter mapWriter = null;
 		try {
@@ -208,15 +205,7 @@ public class ParseCSV {
 			// write all entries
 			for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
 				// TODO prevent duplicate rows
-				try {
-					if (!FTLAdventureVisualiser.recording.get(i).equals(FTLAdventureVisualiser.recording.get(i+1))) {
-						mapWriter.write(FTLAdventureVisualiser.recording.get(i), header);
-					} else {
-						log.error(i + " seems to be a duplicate, moving on...");
-					}
-				} catch (IndexOutOfBoundsException e) {
-					break;
-				}
+				mapWriter.write(FTLAdventureVisualiser.recording.get(i), header);
 			}
 		} catch (Exception e) {
 			log.error("Something went wrong while writing " + fileName, e);
