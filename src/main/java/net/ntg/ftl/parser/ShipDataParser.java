@@ -146,7 +146,7 @@ public class ShipDataParser {
 						storeItems += beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId() + ", ";
 					}
 				}
-				storeItems.replaceAll(",\\s$","");
+				storeItems.replaceAll(",\\s*$","");
 			}
 		}
 
@@ -240,9 +240,10 @@ public class ShipDataParser {
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) sb += "Rebel Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) sb += "Federation Fleet, ";
 		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) sb += "Rebel & Federation Fleet, ";
+		// TODO pulsar ion storm hazard
 		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
 
-		return sb.replaceAll(",\\s$","");
+		return sb.replaceAll(",\\s*$","");
 
 	}
 
