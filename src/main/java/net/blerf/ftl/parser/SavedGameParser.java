@@ -106,8 +106,6 @@ public class SavedGameParser extends Parser {
 			String playerShipBlueprintId = readString(in);  // Redundant.
 			gameState.setPlayerShipBlueprintId(playerShipBlueprintId);
 
-			int oneBasedSectorNumber = readInt(in);  // Redundant.
-
 			// Always 0?
 			gameState.setUnknownBeta(readInt(in));
 
@@ -584,8 +582,6 @@ public class SavedGameParser extends Parser {
 		}
 		for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : vacuumDoorMap.entrySet()) {
 			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
-			EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
-
 			shipState.setDoor(doorCoord.x, doorCoord.y, doorCoord.v, readDoor(in, headerAlpha));
 		}
 
@@ -860,8 +856,6 @@ public class SavedGameParser extends Parser {
 
 		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
 			crew.setCloneReady(readInt(in));
-
-			int deathOrder = readInt(in);  // Redundant. Exactly the same as Clonebay Priority.
 
 			int tintCount = readInt(in);
 			List<Integer> spriteTintIndeces = new ArrayList<>();
@@ -2840,8 +2834,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> layoutDoorMap = shipLayout.getDoorMap();
 			for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : layoutDoorMap.entrySet()) {
 				ShipLayout.DoorCoordinate doorCoord = entry.getKey();
-				EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
-
 				setDoor(doorCoord.x, doorCoord.y, doorCoord.v, new DoorState());
 			}
 
@@ -4074,8 +4066,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
-
 			CrewBlueprint crewBlueprint = DataManager.get().getCrew(race);
 
 			List<CrewBlueprint.SpriteTintLayer> tintLayerList = null;
@@ -6788,19 +6778,9 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public void setDronePod(DronePodState pod) { dronePod = pod; }
 		public DronePodState getDronePod() { return dronePod; }
 
-
-		private String prettyInt(int n) {
-			if (n == Integer.MIN_VALUE) return "MIN";
-			if (n == Integer.MAX_VALUE) return "MAX";
-
-			return String.format("%d", n);
-		}
-
-
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
 
 			result.append(String.format("SystemId:                 %s\n", SystemType.HACKING.toString()));
 			result.append(String.format("Alpha?:                 %7d\n", unknownAlpha));
@@ -7353,7 +7333,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			ionDamage = srcDamage.getIonDamage();
 			systemDamage = srcDamage.getSystemDamage();
 			personnelDamage = srcDamage.getPersonnelDamage();
-			boolean hullBuster = srcDamage.isHullBuster();
 			ownerId = srcDamage.getOwnerId();
 			selfId = srcDamage.getSelfId();
 			lockdown = srcDamage.isLockdown();
@@ -8158,7 +8137,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
 
 			result.append(String.format("Drone Type:        %s\n", droneType.getId()));
 			result.append(String.format("Mourning Ticks:    %7d (Decrements to 0 from 10000)\n", mourningTicks));
