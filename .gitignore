@@ -19,3 +19,7 @@ hs_err_pid*
 
 # Release folder
 /release
+
+# IDEA
+.idea
+ftl-adventure-visualiser.iml
