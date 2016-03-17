@@ -1,22 +1,53 @@
 package net.ntg.ftl.ui.graph;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import processing.core.*;
+import processing.core.PApplet;
+import processing.data.Table;
+import processing.data.TableRow;
 
-import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.parser.ShipDataParser;
-
-// import org.apache.logging.log4j.LogManager;
-// import org.apache.logging.log4j.Logger;
+import static net.ntg.ftl.FTLAdventureVisualiser.recording;
+import static net.ntg.ftl.FTLAdventureVisualiser.recordingHeaders;
 
 
-// public class GraphRenderer extends PApplet {
+public class GraphRenderer extends PApplet {
 
-// 	// private static Logger log = LogManager.getLogger(GraphRenderer.class);
+	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
+
+	// TODO constrcut Table from FTLAdventureVisualiser.recording with FTLAdventureVisualer.recodingHeaders as collumn names
+	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(collumName iterator)
+
+	public Table constructTable() {
+		Table table = new Table();
+		for (int i = 0; i < recordingHeaders.length; i++) {
+			table.addColumn(recordingHeaders[i]);
+		}
+		for (int i = 0; i < recording.size(); i++) {
+			TableRow newRow = table.addRow();
+			for (int k = 0; k < recordingHeaders.length; k++) {
+				try {
+					newRow.setString(
+						recordingHeaders[k],
+						recording.get(i).get(recordingHeaders[k])
+					);
+				} catch (NullPointerException e) {
+					newRow.setString(recordingHeaders[k], "");
+				}
+			}
+		}
+
+		return table;
+	}
+
+	public void setup() {
+		Table table = constructTable();
+		for (int i = 0; i < table.getRowCount(); i++) {
+			log.info(table.getRow(i));
+		}
+	}
+
+}
 
 // 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<>();
 // 	public static int ceiling = 20;

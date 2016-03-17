@@ -51,6 +51,7 @@ public class FTLAdventureVisualiser {
 	public static String recordFilePath;
 	public static ArrayList<Map<String, String>> recording = new ArrayList<>();
 	public static String[] recordingHeaders;
+	public static Map<String, Boolean> enabledRecordingHeaders;
 
 
 	public static void main(String[] args) {

@@ -1,23 +1,20 @@
 package net.ntg.ftl.parser;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import net.blerf.ftl.parser.SavedGameParser;
-
 import net.ntg.ftl.FTLAdventureVisualiser;
-
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-
+import org.apache.logging.log4j.Logger;
 import org.supercsv.io.CsvMapReader;
 import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapReader;
 import org.supercsv.io.ICsvMapWriter;
 import org.supercsv.prefs.CsvPreference;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class ParseCSV {
@@ -39,7 +36,7 @@ public class ParseCSV {
 			final String[] header = mapReader.getHeader(true);
 			FTLAdventureVisualiser.recordingHeaders = header;
 
-			Map<String,String> customerMap;
+			Map<String, String> customerMap;
 			while((customerMap = mapReader.read(header)) != null) {
 				log.info(String.format(
 					"lineNo=%s, rowNo=%s, customerMap=%s",
@@ -47,7 +44,10 @@ public class ParseCSV {
 					mapReader.getRowNumber(),
 					customerMap
 				));
-				FTLAdventureVisualiser.recording.add(customerMap);
+
+				if (!FTLAdventureVisualiser.recording.contains(customerMap)) {
+					FTLAdventureVisualiser.recording.add(customerMap);
+				}
 			}
 		} catch (Exception e) {
 			log.error("Something went wrong while reading " + fileName, e);
@@ -64,7 +64,7 @@ public class ParseCSV {
 	}
 
 
-	public static boolean isValidCSV(String fileName) {
+	public boolean isValidCSV(String fileName) {
 
 		// TODO check if CSV file is valid
 
@@ -173,6 +173,7 @@ public class ParseCSV {
 		newRow.put("BATTERY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getCapacity()));
 		newRow.put("BATTERY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
 		// crew
+		// TODO keep track of which crewmember is which to prevent them shifting collumns
 		for (int c = 0; c < FTLAdventureVisualiser.gameState.getTotalCrewHired(); c++) {
 			try {
 				newRow.put("CREW MEMBER " + (c+1) + " NAME", FTLAdventureVisualiser.playerCrewState.get(c).getName());
@@ -192,8 +193,12 @@ public class ParseCSV {
 			} catch (IndexOutOfBoundsException e) {}
 		}
 
-		FTLAdventureVisualiser.recording.add((Map<String,String>) newRow);
+		if (!FTLAdventureVisualiser.recording.contains((Map<String,String>) newRow)) {
+			FTLAdventureVisualiser.recording.add((Map<String,String>) newRow);
+		}
 		String[] header = (String[]) newRow.keySet().toArray(new String[newRow.size()]);
+
+		// TODO prevent duplicate rows by casting FTLAdventureVisualiser.recording to a Hashset and back again
 
 		ICsvMapWriter mapWriter = null;
 		try {
@@ -204,7 +209,6 @@ public class ParseCSV {
 
 			// write all entries
 			for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
-				// TODO prevent duplicate rows
 				mapWriter.write(FTLAdventureVisualiser.recording.get(i), header);
 			}
 		} catch (Exception e) {

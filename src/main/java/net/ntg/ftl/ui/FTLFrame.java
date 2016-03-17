@@ -1,8 +1,30 @@
 package net.ntg.ftl.ui;
 
+import net.blerf.ftl.model.sectortree.SectorDot;
+import net.blerf.ftl.parser.MysteryBytes;
+import net.blerf.ftl.parser.SavedGameParser;
+import net.blerf.ftl.parser.random.NativeRandom;
+import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
+import net.ntg.ftl.FTLAdventureVisualiser;
+import net.ntg.ftl.parser.ParseCSV;
+import net.ntg.ftl.util.FileWatcher;
+import net.vhati.modmanager.core.FTLUtilities;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,45 +33,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import java.awt.BorderLayout;
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.Insets;
-import java.net.URISyntaxException;
-
-import javax.swing.AbstractButton;
-import javax.swing.Box;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-
-import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.parser.ParseCSV;
 // import net.ntg.ftl.ui.graph.GraphInspector;
 // import net.ntg.ftl.ui.graph.GraphRenderer;
-import net.ntg.ftl.util.FileWatcher;
-
-import net.blerf.ftl.model.sectortree.SectorDot;
-import net.blerf.ftl.parser.MysteryBytes;
-import net.blerf.ftl.parser.random.NativeRandom;
-import net.blerf.ftl.parser.SavedGameParser;
-import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
-import net.vhati.modmanager.core.FTLUtilities;
-
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 
 public class FTLFrame extends JFrame {
@@ -304,7 +289,7 @@ public class FTLFrame extends JFrame {
 
 				// TODO check if CSV is valid
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
-					if (!ParseCSV.isValidCSV(chosenCSVFile.getAbsolutePath())) {
+					if (!new ParseCSV().isValidCSV(chosenCSVFile.getAbsolutePath())) {
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
 							"Warning: This doesn't seem to be a CSV FTLAV can read.\n" +
@@ -483,7 +468,8 @@ public class FTLFrame extends JFrame {
 	// }
 
 
-	public void loadGameStateFile(File file) {
+	private void loadGameStateFile(File file) {
+
 		FileInputStream in = null;
 		StringBuilder hexBuf = new StringBuilder();
 
@@ -541,10 +527,11 @@ public class FTLFrame extends JFrame {
 				if (in != null) in.close();
 			} catch (IOException f) {}
 		}
+
 	}
 
 
-	public void loadGameState(SavedGameParser.SavedGameState currentGameState) {
+	private void loadGameState(SavedGameParser.SavedGameState currentGameState) {
 
 		log.info("------");
 		log.info("Ship Name : " + currentGameState.getPlayerShipName());
@@ -625,6 +612,7 @@ public class FTLFrame extends JFrame {
 		}
 
 		lastGameState = currentGameState;
+
 	}
 
 

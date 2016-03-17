@@ -1,14 +1,10 @@
 package net.ntg.ftl.ui.graph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import javax.swing.BorderFactory;
 import javax.swing.JToolBar;
 import javax.swing.BoxLayout;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.parser.ShipDataParser;
 import net.ntg.ftl.ui.FTLFrame;
 import net.ntg.ftl.ui.TogglePanel;
 
@@ -16,9 +12,15 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 
-// public class GraphInspector extends JToolBar {
+public class GraphInspector extends JToolBar {
 
-// 	private static final Logger log = LogManager.getLogger(GraphInspector.class);
+	private static final Logger log = LogManager.getLogger(GraphInspector.class);
+
+	// TODO refactor class so it creates a list of checkboxes from the keys of FTLAdventureVisualier.recordingHeaders
+	// TODO get values from latest entry FTLAdventureVisualer.recording
+	// TODO output checkbox status to FTLAdventureVisualer.enabledRecordingHeaders as true/false
+
+}
 
 // 	private final FTLFrame frame;
 
