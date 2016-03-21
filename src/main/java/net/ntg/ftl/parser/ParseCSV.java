@@ -96,7 +96,7 @@ public class ParseCSV {
 		newRow.put("SECTOR NUMBER", Integer.toString(sectorNumber + 1));
 		newRow.put("SECTOR TYPE", FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType());
 		newRow.put("SECTOR TITLE", FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle());
-		newRow.put("FLEET ADVANCEMENT", ShipDataParser.getRebelFleetAdvancement() + "%");
+		newRow.put("FLEET ADVANCEMENT", ShipDataParser.getRebelFleetAdvancement());
 		// Log
 		newRow.put("TOTAL SHIPS DEFEATED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalShipsDefeated()));
 		newRow.put("TOTAL SCRAP COLLECTED", Integer.toString(FTLAdventureVisualiser.gameState.getTotalScrapCollected()));
