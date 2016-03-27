@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-// import net.ntg.ftl.ui.graph.GraphInspector;
-// import net.ntg.ftl.ui.graph.GraphRenderer;
+ import net.ntg.ftl.ui.graph.GraphInspector;
+ import net.ntg.ftl.ui.graph.GraphRenderer;
 
 
 public class FTLFrame extends JFrame {
@@ -56,7 +56,8 @@ public class FTLFrame extends JFrame {
 	private final URL helpPage = ClassLoader.getSystemResource("help.html");
 	private final HyperlinkListener linkListener;
 
-	// private GraphInspector inspector;
+	private GraphInspector inspector;
+	private processing.core.PApplet graphRenderer;
 
 	private final String appName;
 	private final int appVersion;
@@ -101,7 +102,7 @@ public class FTLFrame extends JFrame {
 		add(toolbar, BorderLayout.NORTH);
 
 		// inspector options
-		// setupInspector();
+		setupInspector();
 
 		pack();
 
@@ -245,10 +246,9 @@ public class FTLFrame extends JFrame {
 
 				FTLAdventureVisualiser.recordFilePath = (
 					fc.getSelectedFile().getAbsolutePath() +
-					" (" + FTLAdventureVisualiser.APP_NAME + " " + FTLAdventureVisualiser.APP_VERSION + ") " +
+					" (FTLAV " + appVersion + ") " +
 					getTimeStamp().replaceAll("[/:]", "") + ".csv"
 				);
-				// ParseCSV.createCSV(FTLAdventureVisualiser.recordFilePath);
 
 				loadGameStateFile(chosenGameStateFile);
 				gameStateRecordBtn.setEnabled(true);
@@ -304,7 +304,6 @@ public class FTLFrame extends JFrame {
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					FTLAdventureVisualiser.recordFilePath = fc.getSelectedFile().getAbsolutePath();
-					// ParseCSV ParseCSV.readCSV(FTLAdventureVisualiser.recordFilePath);
 					gameStateRecordBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
 					loadGameStateFile(chosenGameStateFile);
@@ -444,28 +443,29 @@ public class FTLFrame extends JFrame {
 		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
 		graphFrame.setLayout(new BorderLayout());
 
-		// processing.core.PApplet graphRenderer = new GraphRenderer();
-		// graphFrame.add(graphRenderer);
+		graphRenderer = new GraphRenderer();
+		graphFrame.add(graphRenderer);
 		// GraphRenderer.panelWidth  = graphFrame.getWidth();
 		// GraphRenderer.panelHeight = graphFrame.getHeight();
-		// graphRenderer.init();
+		graphRenderer.init();
 
 		graphFrame.setVisible(false);
 
 	}
 
-	// private void setupInspector() {
 
-	// 	inspector = new GraphInspector(this);
-	// 	JScrollPane inspectorScrollPane = new JScrollPane(
-	// 		inspector,
-	// 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-	// 		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-	// 	);
-	// 	inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-	// 	add(inspectorScrollPane, BorderLayout.CENTER);
+	 private void setupInspector() {
 
-	// }
+	 	inspector = new GraphInspector(this);
+	 	JScrollPane inspectorScrollPane = new JScrollPane(
+	 		inspector,
+	 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+	 		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+	 	);
+	 	inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+	 	add(inspectorScrollPane, BorderLayout.CENTER);
+
+	 }
 
 
 	private void loadGameStateFile(File file) {
@@ -608,7 +608,11 @@ public class FTLFrame extends JFrame {
 				new ParseCSV().createCSV(FTLAdventureVisualiser.recordFilePath);
 			}
 			// TODO read/write/read first, then inspector.setGameState()
-			// inspector.setGameState();
+			// inspector.setGraphSettings();
+
+			// graphRenderer.destroy();
+			// graphRenderer.init();
+
 		}
 
 		lastGameState = currentGameState;

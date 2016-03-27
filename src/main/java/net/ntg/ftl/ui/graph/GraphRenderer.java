@@ -2,8 +2,10 @@ package net.ntg.ftl.ui.graph;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.core.PFont;
+import processing.core.PImage;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -15,11 +17,108 @@ public class GraphRenderer extends PApplet {
 
 	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
 
-	// TODO constrcut Table from FTLAdventureVisualiser.recording with FTLAdventureVisualer.recodingHeaders as collumn names
+	// TODO make complete version in Processing
+	// TODO port Processing version to this class
+
 	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(collumName iterator)
 
-	public Table constructTable() {
-		Table table = new Table();
+	Table table;
+	float maxTableValue;
+	int startIndex = 0;
+
+	// graphics
+	int margin = 32; // px
+	int jumpSize = 32; // px
+	int graphWidth;
+	int graphHeigth;
+
+	PFont mainFont13;
+	PFont mainFont39;
+	PFont headerFont;
+	PFont headerFontAlt;
+
+	PImage crewCombat;
+	PImage crewEngine;
+	PImage crewHealth;
+	PImage crewPilot;
+	PImage crewRepairs;
+	PImage crewShield;
+	PImage crewWeapon;
+
+	final int BG_NORMAL = color(55, 45, 46);			// dark purple brown 	(background color)
+	final int BG_LIGHT = color(122, 100, 99);			// light purple brown	(background color)
+	final int BG_DARK = color(24, 20, 19);			// dark brown			(background color)
+	final int BORDER = color(235, 245, 229);			// white-greenish		(panel border color)
+	final int BUTTON = color(235, 245, 229);			// white-greenish		(button color)
+	final int BUTTON_ACTIVE = color(255, 230, 94);	// yellow				(button color)
+	final int MAINTEXT = color(255, 255, 255);		// white				(standard text color)
+	final int HEADERTEXT = color(65, 120, 128);		// turquoise			(standard text color)
+	final int HEADERTEXT_ALT = color(54, 78, 80);		// dark turquoise		(standard text color)
+	final int SECTOR_CIVILIAN = color(135, 199, 74);	// bright green			(sector color)
+	final int SECTOR_HOSTILE = color(214, 50, 50);	// bright red			(sector color)
+	final int SECTOR_NEBULA = color(128, 51, 210);	// pure purple			(sector color)
+	final int SYSTEM_ACTIVE = color(100, 255, 99);	// bright green			(system status color)
+	final int SYSTEM_OFF = color(211, 211, 211);		// light grey			(system status color)
+	final int SYSTEM_DAMAGE = color(248, 59, 51);		// bright red			(system status color)
+	final int SYSTEM_HACKED = color(212, 70, 253);	// magenta				(system status color)
+	final int SYSTEM_IONIZED = color(133, 231, 237);	// cyan					(system status color)
+
+	int[] GLOW_BLUE = {
+		BORDER,
+		color(69, 110, 112, 226),
+		color(61, 94, 97, 198),
+		color(53, 80, 81, 170),
+		color(47, 69, 70, 141),
+		color(44, 61, 62, 113),
+		color(40, 54, 54, 85),
+		color(37, 50, 49, 56),
+		color(36, 47, 46, 28)
+	};
+	int[] GLOW_GREEN = {
+		BORDER,
+		color(66, 119, 17, 226),
+		color(53, 106, 4, 198),
+		color(45, 92, 1, 170),
+		color(40, 80, 1, 141),
+		color(36, 72, 1, 113),
+		color(32, 65, 1, 85),
+		color(30, 61, 1, 56),
+		color(29, 58, 1, 25)
+	};
+	int[] GLOW_RED = {
+		BORDER,
+		color(182, 30, 30, 226),
+		color(162, 24, 24, 198),
+		color(140, 19, 19, 170),
+		color(122, 14, 14, 141),
+		color(112, 11, 11, 113),
+		color(100, 7, 7, 85),
+		color(93, 7, 7, 56),
+		color(88, 5, 5, 25)
+	};
+	int[] GLOW_PURPLE = {
+		BORDER,
+		color(130, 4, 165, 226),
+		color(117, 1, 150, 198),
+		color(106, 1, 135, 170),
+		color(95, 1, 121, 141),
+		color(90, 1, 115, 113),
+		color(83, 1, 106, 85),
+		color(74, 1, 95, 56),
+		color(70, 1, 90, 25)
+	};
+
+
+	public void setup() {
+
+		// window
+		size(800, 800);
+
+		graphWidth = width - (margin + margin);
+		graphHeigth = height - (margin + margin + margin);
+
+		// data
+		table = new Table();
 		for (int i = 0; i < recordingHeaders.length; i++) {
 			table.addColumn(recordingHeaders[i]);
 		}
@@ -37,522 +136,302 @@ public class GraphRenderer extends PApplet {
 			}
 		}
 
-		return table;
+		maxTableValue = 1000f; // TODO figure efficient way to get max value table
+
+		// graphics
+		mainFont13		= loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
+		mainFont39		= loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
+		headerFont		= loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
+		headerFontAlt	= loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
+
+		crewCombat	= loadImage(ClassLoader.getSystemResource("graph/crew-combat.gif").toString());
+		crewEngine	= loadImage(ClassLoader.getSystemResource("graph/crew-engine.gif").toString());
+		crewHealth	= loadImage(ClassLoader.getSystemResource("graph/crew-health.gif").toString());
+		crewPilot	= loadImage(ClassLoader.getSystemResource("graph/crew-pilot.gif").toString());
+		crewRepairs	= loadImage(ClassLoader.getSystemResource("graph/crew-repair.gif").toString());
+		crewShield	= loadImage(ClassLoader.getSystemResource("graph/crew-shield.gif").toString());
+		crewWeapon	= loadImage(ClassLoader.getSystemResource("graph/crew-weapon.gif").toString());
+
 	}
 
-	public void setup() {
-		Table table = constructTable();
-		for (int i = 0; i < table.getRowCount(); i++) {
-			log.info(table.getRow(i));
+
+	public void draw() {
+
+		// background
+		background(BG_DARK);
+
+		// graphics with transparant background
+		image(generateGraphics(), 0, 0);
+
+		// overlay graphics (mouseover, etc)
+
+		noLoop();
+
+	}
+
+
+	private PGraphics generateGraphics() {
+
+		PGraphics pg = createGraphics(width, height);
+		pg.beginDraw();
+
+		try {
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn("SCORE")), GLOW_BLUE), margin, margin);
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn("TOTAL SCRAP COLLECTED")), GLOW_PURPLE), margin, margin);
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn("FLEET ADVANCEMENT")), GLOW_RED), margin, margin);
+		} catch (IllegalArgumentException e) {
+			println(e);
+		}
+		pg.image(drawStandardAxisY(), margin, margin + graphHeigth);
+
+		pg.image(drawHeader(), 1, 1);
+
+		pg.endDraw();
+		return pg;
+
+	}
+
+
+	private PGraphics drawGraphLine(int[] dataPoints) {
+		return drawGraphLine(dataPoints, GLOW_BLUE);
+	}
+	private PGraphics drawGraphLine(int[] dataPoints, int[] gradient) {
+
+		PGraphics glowLine = createGraphics(graphWidth, graphHeigth);
+		glowLine.beginDraw();
+		glowLine.strokeCap(ROUND);
+		glowLine.strokeJoin(ROUND);
+
+		glowLine.noFill();
+		for (int g = gradient.length - 1; g >= 0; --g) {
+			glowLine.beginShape();
+			glowLine.stroke(gradient[g]);
+			glowLine.strokeWeight(g == gradient.length - 1 ? 2 : 2 + (g * 2));
+			for (int i = 0; i < dataPoints.length; ++i) {
+				glowLine.vertex(
+					jumpSize * i,
+					map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - gradient.length
+				);
+			}
+			glowLine.endShape();
+		}
+
+		glowLine.endDraw();
+		return glowLine;
+
+	}
+
+
+	private PGraphics drawStandardAxisY() {
+
+		int[] beaconNumber = getDataRange(table.getIntColumn("BEACON"));
+		int[] sectorNumber = getDataRange(table.getIntColumn("SECTOR NUMBER"));
+		String[] sectorType = getDataRange(table.getStringColumn("SECTOR TYPE"));
+		String[] sectorName = getDataRange(table.getStringColumn("SECTOR TITLE"));
+
+		int lastSectorNumber = sectorNumber[0];
+
+		PGraphics graphics = createGraphics(graphWidth, margin * 2);
+		graphics.beginDraw();
+		graphics.noStroke();
+		graphics.textAlign(LEFT, TOP);
+
+		for (int i = 0; i < beaconNumber.length; ++i) {
+
+			graphics.pushMatrix();
+			graphics.translate(jumpSize * i, 0);
+
+			// draw sector label
+			if (i == 0 || sectorNumber[i] != lastSectorNumber) {
+
+				graphics.textFont(mainFont13, 13);
+				int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
+				int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
+				sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim();
+				graphics.textFont(headerFontAlt, 22);
+				int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i])) * 2;
+				graphics.textFont(headerFont, 22);
+				int sectorNameTextWidth = (int)graphics.textWidth(sectorName[i]);
+
+				// draw sectorName box
+				graphics.fill(BORDER);
+				graphics.beginShape();
+				graphics.vertex(0, 18);
+				graphics.vertex(jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, 18);
+				graphics.vertex(jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, 20);
+				graphics.vertex(sectorNumberTextWidth + sectorNameTextWidth + 28, 20);
+				graphics.vertex(sectorNumberTextWidth + sectorNameTextWidth + 6, 46);
+				graphics.vertex(6, 46);
+				graphics.vertex(0, 40);
+				graphics.endShape();
+
+				// draw sectorName text
+				graphics.fill(HEADERTEXT_ALT);
+				graphics.text(sectorName[i], sectorNumberTextWidth + 4, 22);
+
+				// draw sectorNumber box
+				graphics.fill(HEADERTEXT_ALT);
+				graphics.beginShape();
+				graphics.vertex(2, 20);
+				graphics.vertex(sectorNumberTextWidth, 20);
+				graphics.vertex(sectorNumberTextWidth, 44);
+				graphics.vertex(8, 44);
+				graphics.vertex(2, 38);
+				graphics.endShape();
+
+				// draw sectorNumber text
+				graphics.fill(MAINTEXT);
+				graphics.textAlign(CENTER, TOP);
+				graphics.textFont(headerFontAlt, 22);
+				graphics.text(sectorNumber[i], sectorNumberTextWidth / 2 + 2, 24);
+
+				// draw glow accent
+				int[] gradient;
+				switch (sectorType[i]) {
+					case "CIVILIAN": gradient = GLOW_GREEN; break;
+					case "HOSTILE" : gradient = GLOW_RED; break;
+					case "NEBULA"  : gradient = GLOW_PURPLE; break;
+					default: gradient = GLOW_BLUE; break;
+				}
+				for (int g = 1; g < gradient.length; ++g) {
+					graphics.fill(gradient[g]);
+					graphics.rect(0, 18, jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, (float) (-g * 1.6));
+				}
+
+				// reset
+				graphics.textAlign(LEFT, TOP);
+
+			}
+
+			graphics.textFont(mainFont13, 13);
+			graphics.fill(MAINTEXT);
+			graphics.text(beaconNumber[i], 0, (float) 6.5);
+
+			graphics.popMatrix();
+
+			lastSectorNumber = sectorNumber[i];
+
+		}
+
+		graphics.endDraw();
+		return graphics;
+
+	}
+
+
+	private PGraphics drawHeader() {
+
+		int lastRowIndex = table.getRowCount() - 1;
+		String lastChangedTimestamp = table.getString(lastRowIndex, "TIME");
+		String shipName = table.getString(lastRowIndex, "SHIP NAME");
+		String shipType = table.getString(lastRowIndex, "SHIP TYPE");
+		String difficulty = table.getString(lastRowIndex, "DIFFICULTY");
+		String ae = "AE content " + table.getString(lastRowIndex, "AE CONTENT");
+
+		PGraphics graphics = createGraphics(width, height);
+		graphics.beginDraw();
+
+		graphics.textFont(mainFont13, 13);
+		int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 16;
+		graphics.textFont(mainFont39, 39);
+		int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
+
+		// container
+		graphics.fill(BORDER);
+		graphics.beginShape();
+		graphics.vertex(4, 0);
+		graphics.vertex(lastChangedTimestampTextWidth + 4, 0);
+		graphics.vertex(lastChangedTimestampTextWidth + 8, 4);
+		graphics.vertex(lastChangedTimestampTextWidth + 8, 34);
+		graphics.vertex(shipNameTextWidth + 4, 34);
+		graphics.vertex(shipNameTextWidth + 8, 38);
+		graphics.vertex(shipNameTextWidth + 8, 77);
+		graphics.vertex(shipNameTextWidth + 4, 81);
+		graphics.vertex(4, 81);
+		graphics.vertex(0, 77);
+		graphics.vertex(0, 4);
+		graphics.endShape();
+
+		// shipName box
+		graphics.fill(BG_NORMAL);
+		graphics.beginShape();
+		graphics.vertex(8, 38);
+		graphics.vertex(shipNameTextWidth, 38);
+		graphics.vertex(shipNameTextWidth + 4, 42);
+		graphics.vertex(shipNameTextWidth + 4, 73);
+		graphics.vertex(shipNameTextWidth, 77);
+		graphics.vertex(8, 77);
+		graphics.vertex(4, 73);
+		graphics.vertex(4, 42);
+		graphics.endShape();
+
+		// info text
+		graphics.fill(BG_DARK);
+		graphics.textAlign(LEFT, CENTER);
+		graphics.textFont(mainFont13, 13);
+		graphics.text("FTLAV 3\n" + lastChangedTimestamp, 8, 18);
+
+		// shipName text
+		graphics.fill(MAINTEXT);
+		graphics.textAlign(CENTER, CENTER);
+		graphics.textFont(mainFont39, 39);
+		graphics.text(shipName, 4 + shipNameTextWidth / 2, (float) 57.5);
+
+		graphics.endDraw();
+		return graphics;
+
+	}
+
+
+	// data util
+	private int[] getDataRange(int[] dataPoints) {
+		int count = dataPoints.length;
+		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
+		while (graphWidth / count + 1 < jumpSize) count--;
+		dataPoints = subset(dataPoints, constrain(startIndex, 0, dataPoints.length - count), count);
+		return dataPoints;
+	}
+	private String[] getDataRange(String[] dataPoints) {
+		int count = dataPoints.length;
+		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
+		while (graphWidth / count + 1 < jumpSize) count--;
+		dataPoints = subset(dataPoints, constrain(startIndex, 0, dataPoints.length - count), count);
+		return dataPoints;
+	}
+
+
+	private int indexOfIntArray(int[] array, int key) {
+		int returnvalue = -1;
+		for (int i = 0; i < array.length; ++i) {
+			if (key == array[i]) {
+				returnvalue = i;
+				break;
+			}
+		}
+		return returnvalue;
+	}
+	private int lastIndexOfIntArray(int[] array, int key) {
+		int returnvalue = -1;
+		for (int i = array.length - 1; i >= 0; --i) {
+			if (key == array[i]) {
+				returnvalue = i;
+				break;
+			}
+		}
+		return returnvalue;
+	}
+
+
+	// Processing environment
+	public void keyPressed() {
+		if (key == CODED) {
+			if (keyCode == LEFT || keyCode == RIGHT) {
+				if (keyCode == LEFT) startIndex--;
+				if (keyCode == RIGHT) startIndex++;
+				startIndex = constrain(startIndex, 0, table.getRowCount()); // TODO fix max value
+				redraw();
+			}
 		}
 	}
 
 }
-
-// 	public static LinkedHashMap<String,ArrayList<Integer>> superArray = new LinkedHashMap<>();
-// 	public static int ceiling = 20;
-
-// 	int current  = 0;
-// 	int previous = 0;
-
-// 	// window
-// 	public static int panelWidth;
-// 	public static int panelHeight;
-
-// 	private int canvasWidth;
-// 	private int canvasHeight;
-// 	private final int margin = 64; // px
-
-// 	public static boolean refreshed = false;
-
-// 	public static boolean captureImage = false;
-// 	public static String  exportPath   = "FTLAV_######";
-
-// 	// graphics
-// 	PGraphics pg;
-
-// 	public static boolean showTitle = true;
-
-// 	PFont mainFont13;
-// 	PFont mainFont39;
-// 	PFont headerFont;
-// 	PFont headerFontAlt;
-
-// 	int[] blueGlow = {
-// 		color(235, 245, 227, 255),
-// 		color(69, 110, 112, 226),
-// 		color(61, 94, 97, 198),
-// 		color(53, 80, 81, 170),
-// 		color(47, 69, 70, 141),
-// 		color(44, 61, 62, 113),
-// 		color(40, 54, 54, 85),
-// 		color(37, 50, 49, 56),
-// 		color(36, 47, 46, 28)
-// 	};
-
-// 	int[] greenGlow = {
-// 		color(235, 245, 229, 255),
-// 		color(66, 119, 17, 226),
-// 		color(53, 106, 4, 198),
-// 		color(45, 92, 1, 170),
-// 		color(40, 80, 1, 141),
-// 		color(36, 72, 1, 113),
-// 		color(32, 65, 1, 85),
-// 		color(30, 61, 1, 56),
-// 		color(29, 58, 1, 25)
-// 	};
-
-// 	int[] redGlow = {
-// 		color(235, 245, 229, 255),
-// 		color(182, 30, 30, 226),
-// 		color(162, 24, 24, 198),
-// 		color(140, 19, 19, 170),
-// 		color(122, 14, 14, 141),
-// 		color(112, 11, 11, 113),
-// 		color(100, 7, 7, 85),
-// 		color(93, 7, 7, 56),
-// 		color(88, 5, 5, 25)
-// 	};
-
-// 	int[] purpleGlow = {
-// 		color(235, 245, 229, 255),
-// 		color(130, 4, 165, 226),
-// 		color(117, 1, 150, 198),
-// 		color(106, 1, 135, 170),
-// 		color(95, 1, 121, 141),
-// 		color(90, 1, 115, 113),
-// 		color(83, 1, 106, 85),
-// 		color(74, 1, 95, 56),
-// 		color(70, 1, 90, 25)
-// 	};
-
-// 	Map<String,Integer> hudColor = new HashMap<>();
-
-
-// 	public void setup() {
-
-// 		// window
-// 		size(panelWidth, panelHeight);
-
-// 		canvasWidth  = panelWidth  - (margin * 2);
-// 		canvasHeight = panelHeight - (margin * 2);
-
-// 		// graphics
-// 		pg = createGraphics(panelWidth, panelHeight);
-// 		pg.strokeJoin(ROUND);
-// 		pg.strokeCap(ROUND);
-
-// 		mainFont13    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
-// 		mainFont39    = loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
-// 		headerFont    = loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
-// 		headerFontAlt = loadFont(ClassLoader.getSystemResource("graph/Half-Life1-22.vlw").toString());
-
-// 		hudColor.put("BG_NORMAL", color(55, 45, 46));			// dark purple brown 	(background color)
-// 		hudColor.put("BG_LIGHT", color(122, 100, 99));			// light purple brown	(background color)
-// 		hudColor.put("BG_DARK", color(24, 20, 19));				// dark brown			(background color)
-// 		hudColor.put("BORDER", color(235, 245, 229));			// white-greenish		(panel border color)
-// 		hudColor.put("BUTTON", color(235, 245, 229));			// white-greenish		(button color)
-// 		hudColor.put("BUTTON_ACTIVE", color(255, 230, 94));		// yellow				(button color)
-// 		hudColor.put("MAINTEXT", color(255, 255, 255));			// white				(standard text color)
-// 		hudColor.put("HEADERTEXT", color(65, 120, 128));		// turquoise			(standard text color)
-// 		hudColor.put("HEADERTEXT_ALT", color(54, 78, 80));		// dark turquoise		(standard text color)
-// 		hudColor.put("SECTOR_CIVILIAN", color(135, 199, 74));	// bright green			(sector color)
-// 		hudColor.put("SECTOR_HOSTILE", color(214, 50, 50));		// bright red			(sector color)
-// 		hudColor.put("SECTOR_NEBULA", color(128, 51, 210));		// pure purple			(sector color)
-// 		hudColor.put("SYSTEM_ACTIVE", color(100, 255, 99));		// bright green			(system status color)
-// 		hudColor.put("SYSTEM_OFF", color(211, 211, 211));		// light grey			(system status color)
-// 		hudColor.put("SYSTEM_DAMAGE", color(248, 59, 51));		// bright red			(system status color)
-// 		hudColor.put("SYSTEM_HACKED", color(212, 70, 253));		// magenta				(system status color)
-// 		hudColor.put("SYSTEM_IONIZED", color(133, 231, 237));	// cyan					(system status color)
-
-// 	}
-
-
-// 	public void draw() {
-
-// 		current = FTLAdventureVisualiser.gameStateArray.size() - 1;
-
-// 		if (current > previous || current == 0 || isResized() || refreshed) {
-
-// 			refreshed = false;
-
-// 			// TODO mouseover+click shows seperate box about event, environment and stats of that particular beacon
-
-// 			// TODO horizontal scroll if graph becomes too wide and too dense
-
-// 			background(hudColor.get("BG_DARK"));
-
-// 			pg.clear();
-// 			pg = createGraphics(panelWidth, panelHeight);
-// 			pg.beginDraw();
-
-// 			// graph y labels
-// 			drawYLabel();
-
-// 			for (int a = 0; a < superArray.size(); ++a) {
-
-// 				ArrayList<Integer> lineArray = (new ArrayList<>(superArray.values())).get(a);
-// 				String lineLabel = (new ArrayList<>(superArray.keySet())).get(a).toUpperCase();
-
-// 				// graph line
-// 				int[] gradient;
-// 				if (
-// 					lineLabel.contains("HEALTH") ||
-// 					lineLabel.contains(" SKILL") ||
-// 					lineLabel.contains("TOTAL REPAIRS") ||
-// 					lineLabel.contains("TOTAL COMBAT") ||
-// 					lineLabel.contains("TOTAL PILOTED") ||
-// 					lineLabel.contains("TOTAL JUMPS") ||
-// 					lineLabel.contains("SKILLS MASTERED")
-// 				) {
-// 					gradient = purpleGlow;
-// 				} else if (
-// 					lineLabel.contains("TOTAL SHIPS DEFEATED") ||
-// 					lineLabel.contains("TOTAL BEACONS EXPLORED") ||
-// 					lineLabel.contains("TOTAL SCRAP COLLECTED") ||
-// 					lineLabel.contains("TOTAL CREW HIRED") ||
-// 					lineLabel.contains("FLEET") ||
-// 					lineLabel.contains("SCORE")
-// 				) {
-// 					gradient = redGlow;
-// 				} else {
-// 					gradient = blueGlow;
-// 				}
-
-// 				for (int s = gradient.length - 1; s >= 0; --s) {
-
-// 					pg.noFill();
-// 					pg.stroke(gradient[s]);
-// 					pg.strokeWeight(s == gradient.length - 1 ? 4 : 4 + (s * 2));
-// 					pg.beginShape();
-// 					for (int b = 0; b < lineArray.size(); ++b) {
-// 						if (lineArray.get(b) > -1) {
-// 							pg.vertex(
-// 								margin + (canvasWidth / lineArray.size()) * b,
-// 								map(lineArray.get(b), 0, ceiling, margin + canvasHeight, margin)
-// 							);
-// 						}
-// 					}
-// 					pg.endShape();
-
-// 				}
-
-// 				// draw label at end of line
-// 				drawLineLabel(a, lineLabel, lineArray.size(), lineArray.get(lineArray.size()-1));
-
-// 				// graph x labels
-// 				for (int b = 0; b < lineArray.size(); ++b) {
-
-// 					// sector name labels
-// 					if (b == 0 ||
-// 						FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber() >
-// 						FTLAdventureVisualiser.gameStateArray.get(b-1).getSectorNumber()
-// 					) {
-// 						drawSectorLabel(b, FTLAdventureVisualiser.gameStateArray.get(b).getSectorNumber(), lineArray.size());
-// 					}
-
-// 					// beacon numbers
-// 					drawBeaconLabel(b, lineArray.size());
-
-// 				}
-
-// 			}
-
-// 			if (current >= 0 && showTitle) drawTitle(current);
-
-// 			pg.endDraw();
-
-// 			tint(255);
-// 			image(pg, 0, 0);
-
-// 		}
-
-// 		if (captureImage) {
-// 			String fileTimestamp = " " + year() + "-" + month() + "-" + day() + " " + hour() + "-" + minute();
-// 			pg.save(exportPath + fileTimestamp + " (alpha).png");
-// 			saveFrame(exportPath + fileTimestamp + ".png");
-// 			captureImage = false;
-// 		}
-
-// 		previous = current;
-
-// 	}
-
-
-// 	private boolean isResized() {
-
-// 		if (width != panelWidth || height != panelHeight) {
-// 			panelWidth   = width;
-// 			panelHeight  = height;
-// 			canvasWidth  = panelWidth  - (margin * 2);
-// 			canvasHeight = panelHeight - (margin * 2);
-// 			pg = createGraphics(panelWidth, panelHeight);
-// 			return true;
-// 		} else {
-// 			return false;
-// 		}
-
-// 	}
-
-
-// 	// TODO design bar graph rendering
-// 	// TODO draw bar graph option
-
-// 	// TODO draw a label next to the title for each indivual crew member
-// 	// TODO corosponding line color for each crewmember. These lines are thinners than the others
-
-
-// 	private void drawYLabel() {
-
-// 		pg.noStroke();
-// 		pg.fill(235, 245, 227);
-// 		pg.textFont(mainFont13, 13);
-// 		pg.textAlign(RIGHT, BOTTOM);
-// 		for (int y = 0; y < canvasHeight; ++y) {
-// 			if (y % 10 == 0) {
-// 				pg.text(
-// 					Integer.toString(y),
-// 					margin - (margin / 2),
-// 					map(y, 0, ceiling, canvasHeight + margin, margin)
-// 				);
-// 				pg.rect(
-// 					margin, map(y, 0, ceiling, canvasHeight + margin, margin),
-// 					canvasWidth, 0.2f
-// 				);
-// 			}
-// 		}
-
-// 	}
-
-
-// 	private void drawTitle(int latest) {
-
-// 		// TODO title rendering and typography in style of ship window header title
-// 		// TODO draw crew member bios next to ship name
-
-// 		int shipNameTextSize = 39;
-// 		int textSize         = 13;
-// 		int padding          = 6;
-// 		int offset           = margin / 2;
-// 		int borderWeight     = 4;
-// 		float glowSpread     = 1.3f;
-// 		String shipName      = FTLAdventureVisualiser.gameStateArray.get(latest).getPlayerShipName();
-// 		String shipType      = ShipDataParser.getFullShipType(latest);
-// 		int score            = ShipDataParser.getCurrentScore(latest);
-// 		String difficulty    = FTLAdventureVisualiser.gameStateArray.get(latest).getDifficulty().toString();
-// 		String ae            = FTLAdventureVisualiser.gameStateArray.get(0).isDLCEnabled() ? " Advanced" : "";
-
-// 		pg.pushMatrix();
-// 		pg.translate(margin, margin);
-
-// 		pg.noStroke();
-
-// 		pg.textAlign(LEFT, TOP);
-
-// 		pg.textFont(mainFont39, shipNameTextSize);
-// 		int titleLabelWidth  = round(shipName.length() < 9 ? pg.textWidth("XXXXXXXX") : pg.textWidth(shipName) + (2 * (padding + borderWeight)));
-// 		int titleLabelHeight = round((textSize * 3) + shipNameTextSize + padding);
-
-// 		// title label
-// 		for (int s = blueGlow.length - 1; s >= 0; --s) {
-// 			pg.fill(hudColor.get("BG_LIGHT"));
-// 			pg.stroke(blueGlow[s]);
-// 			pg.strokeWeight(s == blueGlow.length - 1 ? borderWeight : borderWeight + (s * 2));
-// 			pg.beginShape();
-// 			pg.vertex(0, offset + padding);
-// 			pg.vertex(padding, offset);
-// 			pg.vertex(titleLabelWidth - padding, offset);
-// 			pg.vertex(titleLabelWidth, offset + padding);
-// 			pg.vertex(titleLabelWidth, offset + (titleLabelHeight - padding));
-// 			pg.vertex(titleLabelWidth - padding, offset + titleLabelHeight);
-// 			pg.vertex(padding, offset + titleLabelHeight);
-// 			pg.vertex(0, offset + (titleLabelHeight - padding));
-// 			pg.endShape(CLOSE);
-// 		}
-// 		pg.noStroke();
-
-// 		// title text
-// 		pg.fill(hudColor.get("MAINTEXT"));
-// 		pg.text(shipName, borderWeight + padding, offset + borderWeight + padding);
-// 		pg.textFont(mainFont13, textSize);
-// 		pg.text(
-// 			shipType+"\n"+
-// 			"SCORE  "+ score+"\n"+
-// 			difficulty +" "+ ae,
-// 			borderWeight + padding, offset + borderWeight + shipNameTextSize
-// 		);
-
-// 		pg.popMatrix();
-
-// 	}
-
-
-// 	private void drawBeaconLabel(int b, int lineSize) {
-
-// 		// TODO do not render all the numbers if screen pixel space is limited
-
-// 		// TODO indicator to show if there where enemy ships, environmental hazards or BOSS at the beacon
-
-// 		pg.noStroke();
-// 		pg.fill(hudColor.get("MAINTEXT"));
-
-// 		pg.textFont(mainFont13, 13);
-// 		pg.textAlign(LEFT, BOTTOM);
-// 		pg.text(
-// 			FTLAdventureVisualiser.gameStateArray.get(b).getTotalBeaconsExplored(),
-// 			margin + (canvasWidth / lineSize) * b,
-// 			canvasHeight + margin + (margin / 4)
-// 		);
-
-// 	}
-
-
-// 	private void drawSectorLabel(int b, int sectorNumber, int lineSize) {
-
-// 		// TODO do not render sectorTitle if screenspace becomes too narrow
-
-// 		int textSize       = 22;
-// 		int padding        = 6;
-// 		float glowSpread   = 1.3f;
-// 		String sectorTitle = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getTitle().toUpperCase();
-// 		String sectorType  = FTLAdventureVisualiser.sectorArray.get(sectorNumber).getType();
-
-// 		// shorten sector name
-// 		sectorTitle = sectorTitle.replaceAll("\\s*\\bSECTOR\\b\\s*","");
-// 		sectorTitle = sectorTitle.replaceAll("\\s*\\bCONTROLLED\\b\\s*","");
-// 		sectorTitle = sectorTitle.replaceAll("\\s*\\bUNCHARTED\\b\\s*","");
-// 		sectorTitle = sectorTitle.replaceAll("\\s*\\bTHE\\b\\s*","");
-// 		sectorTitle = sectorTitle.replaceAll("\\s*\\bHOMEWORLDS\\b\\s*"," HOME");
-
-// 		pg.pushMatrix();
-// 		pg.translate(margin + (canvasWidth / lineSize) * b, canvasHeight + margin + (margin / 3));
-
-// 		pg.noStroke();
-
-// 		pg.textAlign(LEFT, TOP);
-
-// 		// sector title label
-// 		pg.textFont(headerFont, textSize);
-
-// 		pg.fill(hudColor.get("BORDER"));
-// 		pg.beginShape();
-// 		pg.vertex(0, 0);																		// TL
-// 		pg.vertex(0, textSize + padding);														// BL
-// 		pg.vertex(textSize + padding + pg.textWidth(sectorTitle) + padding, textSize + padding);// BR
-// 		pg.vertex(textSize + padding + pg.textWidth(sectorTitle) + padding + textSize, 0);		// TR
-// 		pg.endShape(CLOSE);
-
-// 		// glow color
-// 		int[] gradient = null;
-// 		if (null != sectorType) switch (sectorType) {
-//                 case "CIVILIAN":
-//                     gradient = greenGlow;
-//                     break;
-//                 case "HOSTILE":
-//                     gradient = redGlow;
-//                     break;
-//                 case "NEBULA":
-//                     gradient = purpleGlow;
-//                     break;
-//                 default:
-//                     gradient = blueGlow;
-//                     break;
-//             }
-
-// 		// apply glow effect
-// 		noStroke();
-// 		fill(hudColor.get("BG_DARK")); // tape over existing glow
-// 		int glowSize = gradient.length - 1;
-// 		rect(0, -(glowSize * glowSpread), canvasWidth + margin, glowSize * glowSpread);
-// 		for (int s = glowSize; s >= 0; --s) {
-// 			fill(gradient[s]);
-// 			rect(0, -(s * glowSpread), canvasWidth + margin, padding);
-// 		}
-// 		pg.fill(gradient[0]);
-// 		pg.rect(0, 0, canvasWidth + margin, padding);
-
-// 		// sector title text
-// 		pg.fill(hudColor.get("HEADERTEXT_ALT"));
-// 		pg.text(sectorTitle, padding + textSize + padding, padding);
-
-// 		// sector number label
-// 		pg.fill(hudColor.get("BG_LIGHT"));
-// 		pg.rect(padding / 2, padding / 2, textSize + (padding / 2), textSize);
-
-// 		// sector number text
-// 		pg.fill(hudColor.get("MAINTEXT"));
-// 		pg.textFont(headerFontAlt, textSize);
-// 		pg.text(Integer.toString(sectorNumber + 1), textSize / 2, padding);
-
-// 		pg.popMatrix();
-
-// 	}
-
-
-// 	private void drawLineLabel(int a, String lineLabel, int lineSize, int lastestValue) {
-
-// 		if (lastestValue > -1) {
-
-// 			int textSize = 13;
-// 			int offset   = 8;
-// 			int padding  = 6;
-
-// 			pg.pushMatrix();
-// 			pg.translate(
-// 				margin + (canvasWidth / lineSize) * (lineSize - 1) + offset,
-// 				round(map(lastestValue, 0, ceiling, margin + canvasHeight, margin)) - offset
-// 			);
-
-// 			pg.textFont(mainFont13, textSize);
-// 			pg.textAlign(LEFT, BOTTOM);
-
-// 			float keyPos = padding + pg.textWidth(lineLabel) + padding;
-
-// 			// connecting line
-// 			pg.noFill();
-// 			pg.stroke(hudColor.get("BORDER"));
-// 			pg.beginShape();
-// 			pg.vertex(offset, -offset);
-// 			pg.vertex(-offset, offset);
-// 			pg.endShape();
-
-// 			// label
-// 			pg.noStroke();
-// 			pg.fill(hudColor.get("BORDER"));
-// 			pg.beginShape();
-// 			pg.vertex(0, 0);
-// 			pg.vertex(keyPos + pg.textWidth("0000"), 0);
-// 			pg.vertex(keyPos + pg.textWidth("0000") + padding, -padding);
-// 			pg.vertex(keyPos + pg.textWidth("0000") + padding, -(padding + textSize + padding));
-// 			pg.vertex(padding, -(padding + textSize + padding));
-// 			pg.vertex(0, -(padding + textSize));
-// 			pg.endShape(CLOSE);
-
-// 			// label key
-// 			pg.tint(hudColor.get("HEADERTEXT_ALT"));
-// 			pg.fill(hudColor.get("HEADERTEXT_ALT"));
-// 			pg.text(lineLabel, padding, -padding);
-
-// 			// label value
-// 			pg.beginShape();
-// 			pg.vertex(keyPos, -2);
-// 			pg.vertex(keyPos + pg.textWidth("0000") - 2, -2);
-// 			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, -(padding + 2));
-// 			pg.vertex(keyPos + pg.textWidth("0000") + padding - 2, -((padding + textSize + padding) - 2));
-// 			pg.vertex(keyPos, -((padding + textSize + padding) - 2));
-// 			pg.endShape(CLOSE);
-// 			pg.fill(hudColor.get("MAINTEXT"));
-// 			pg.textAlign(CENTER, BOTTOM);
-// 			pg.text(
-// 				lastestValue,
-// 				keyPos + (((keyPos + pg.textWidth("0000") + padding - 2) - keyPos) / 2),
-// 				-padding
-// 			);
-
-// 			pg.popMatrix();
-
-// 		}
-
-// 	}
-
-// }
