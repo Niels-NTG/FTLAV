@@ -11,8 +11,10 @@ int graphHeigth;
 
 PFont mainFont13;
 PFont mainFont39;
-PFont headerFont;
-PFont headerFontAlt;
+PFont headerFont11;
+PFont headerFontAlt11;
+PFont headerFont22;
+PFont headerFontAlt22;
 
 PImage crewCombat;
 PImage crewEngine;
@@ -89,9 +91,9 @@ final color[] GLOW_PURPLE = {
 // DONE TODO limit amount of jumps displayed depending on screen resultion
 // DONE TODO do not display sector title if screenspace becomes to narrow
 
+// TODO title header bar in the style of the ship info windows from the game
 // TODO use horizontal scrollbar when option above is disabled
 // TODO legend key list on the top row
-// TODO title header bar in the style of the ship info windows from the game
 // TODO arrow buttons to bottom left and right corner to shift graph 1 jump back into history/present
 // TODO mouseover keys highlights corrosponding line
 // TODO mouseover line hightlihgs corrosponding key
@@ -107,7 +109,7 @@ final color[] GLOW_PURPLE = {
 void setup() {
 
 	// window
-	size(1000, 600);
+	size(1000, 800);
 	surface.setResizable(true);
 
 	graphWidth = width - (margin + margin);
@@ -121,8 +123,10 @@ void setup() {
 	// graphics
 	mainFont13		= loadFont("C&CRedAlertINET-13.vlw");	// for small sized text and user defined strings
 	mainFont39		= loadFont("C&CRedAlertINET-39.vlw");
-	headerFont		= loadFont("Half-Life2-22.vlw");		// for labeling static things
-	headerFontAlt	= loadFont("Half-Life1-22.vlw");		// alternative for smaller text sizes
+	headerFont11	= loadFont("Half-Life2-11.vlw");
+	headerFontAlt11	= loadFont("Half-Life1-11.vlw");
+	headerFont22	= loadFont("Half-Life2-22.vlw");		// for labeling static things
+	headerFontAlt22	= loadFont("Half-Life1-22.vlw");		// alternative for smaller text sizes
 
 	crewCombat	= loadImage("combat.gif");
 	crewEngine	= loadImage("engine.gif");
@@ -228,9 +232,10 @@ PGraphics drawStandardAxisY() {
 			int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
 			int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
 			sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim();
-			graphics.textFont(headerFontAlt, 22);
-			int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i])) * 2;
-			graphics.textFont(headerFont, 22);
+			graphics.textFont(headerFontAlt11, 11);
+			int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i]));
+			sectorNumberTextWidth = sectorNumberTextWidth < 22 ? 22 : sectorNumberTextWidth * 2;
+			graphics.textFont(headerFont11, 11);
 			int sectorNameTextWidth = (int)graphics.textWidth(sectorName[i]);
 
 			// draw sectorName box
@@ -240,9 +245,9 @@ PGraphics drawStandardAxisY() {
 			graphics.vertex(jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, 18);
 			graphics.vertex(jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, 20);
 			graphics.vertex(sectorNumberTextWidth + sectorNameTextWidth + 28, 20);
-			graphics.vertex(sectorNumberTextWidth + sectorNameTextWidth + 6, 46);
-			graphics.vertex(6, 46);
-			graphics.vertex(0, 40);
+			graphics.vertex(sectorNumberTextWidth + sectorNameTextWidth + 6, 35);
+			graphics.vertex(6, 35);
+			graphics.vertex(0, 29);
 			graphics.endShape();
 
 			// draw sectorName text
@@ -254,16 +259,16 @@ PGraphics drawStandardAxisY() {
 			graphics.beginShape();
 			graphics.vertex(2, 20);
 			graphics.vertex(sectorNumberTextWidth, 20);
-			graphics.vertex(sectorNumberTextWidth, 44);
-			graphics.vertex(8, 44);
-			graphics.vertex(2, 38);
+			graphics.vertex(sectorNumberTextWidth, 33);
+			graphics.vertex(8, 33);
+			graphics.vertex(2, 27);
 			graphics.endShape();
 
 			// draw sectorNumber text
 			graphics.fill(MAINTEXT);
 			graphics.textAlign(CENTER, TOP);
-			graphics.textFont(headerFontAlt, 22);
-			graphics.text(sectorNumber[i], sectorNumberTextWidth / 2 + 2, 24);
+			graphics.textFont(headerFontAlt11, 11);
+			graphics.text(sectorNumber[i], sectorNumberTextWidth / 2 + 2, 22);
 
 			// draw glow accent
 			color[] gradient;
@@ -312,7 +317,7 @@ PGraphics drawHeader() {
 	graphics.beginDraw();
 
 	graphics.textFont(mainFont13, 13);
-	int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 16;
+	int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 8;
 	graphics.textFont(mainFont39, 39);
 	int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
 
@@ -322,40 +327,40 @@ PGraphics drawHeader() {
 	graphics.vertex(4, 0);
 	graphics.vertex(lastChangedTimestampTextWidth + 4, 0);
 	graphics.vertex(lastChangedTimestampTextWidth + 8, 4);
-	graphics.vertex(lastChangedTimestampTextWidth + 8, 34);
-	graphics.vertex(shipNameTextWidth + 4, 34);
-	graphics.vertex(shipNameTextWidth + 8, 38);
-	graphics.vertex(shipNameTextWidth + 8, 77);
-	graphics.vertex(shipNameTextWidth + 4, 81);
-	graphics.vertex(4, 81);
-	graphics.vertex(0, 77);
+	graphics.vertex(lastChangedTimestampTextWidth + 8, 21);
+	graphics.vertex(shipNameTextWidth + 4, 21);
+	graphics.vertex(shipNameTextWidth + 8, 25);
+	graphics.vertex(shipNameTextWidth + 8, 64);
+	graphics.vertex(shipNameTextWidth + 4, 68);
+	graphics.vertex(4, 68);
+	graphics.vertex(0, 64);
 	graphics.vertex(0, 4);
 	graphics.endShape();
 
 	// shipName box
 	graphics.fill(BG_NORMAL);
 	graphics.beginShape();
-	graphics.vertex(8, 38);
-	graphics.vertex(shipNameTextWidth, 38);
-	graphics.vertex(shipNameTextWidth + 4, 42);
-	graphics.vertex(shipNameTextWidth + 4, 73);
-	graphics.vertex(shipNameTextWidth, 77);
-	graphics.vertex(8, 77);
-	graphics.vertex(4, 73);
-	graphics.vertex(4, 42);
+	graphics.vertex(8, 25);
+	graphics.vertex(shipNameTextWidth, 25);
+	graphics.vertex(shipNameTextWidth + 4, 29);
+	graphics.vertex(shipNameTextWidth + 4, 60);
+	graphics.vertex(shipNameTextWidth, 64);
+	graphics.vertex(8, 64);
+	graphics.vertex(4, 60);
+	graphics.vertex(4, 29);
 	graphics.endShape();
 
 	// info text
 	graphics.fill(BG_DARK);
 	graphics.textAlign(LEFT, CENTER);
 	graphics.textFont(mainFont13, 13);
-	graphics.text("FTLAV 3\n" + lastChangedTimestamp, 8, 18);
+	graphics.text(lastChangedTimestamp, 8, 13);
 
 	// shipName text
 	graphics.fill(MAINTEXT);
 	graphics.textAlign(CENTER, CENTER);
 	graphics.textFont(mainFont39, 39);
-	graphics.text(shipName, 4 + shipNameTextWidth / 2, 57.5);
+	graphics.text(shipName, 4 + shipNameTextWidth / 2, 44.5);
 
 	graphics.endDraw();
 	return graphics;
