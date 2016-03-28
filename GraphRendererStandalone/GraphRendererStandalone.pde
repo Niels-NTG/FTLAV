@@ -8,6 +8,8 @@ int margin = 32; // px
 int jumpSize = 32; // px
 int graphWidth;
 int graphHeigth;
+int pWidth;
+int pHeight;
 
 PFont mainFont13;
 PFont mainFont39;
@@ -87,8 +89,8 @@ final color[] GLOW_PURPLE = {
 	color(70, 1, 90, 25)
 };
 
-// TODO redraw() on window resize event
 // TODO draw xAxis
+// TODO figure efficient way to get max value table
 // TODO title header bar in the style of the ship info windows from the game
 // TODO legend key list on the top row
 // TODO make legend key list items into a toggle to show/hide series (Standalone only)
@@ -108,15 +110,16 @@ final color[] GLOW_PURPLE = {
 void setup() {
 
 	// window
-	size(1000, 800);
+	size(1200, 700);
 	surface.setResizable(true);
-
 	graphWidth = width - (margin + margin);
 	graphHeigth = height - (margin + margin + margin);
+	pWidth = width;
+	pHeight = height;
 
 	// data
 	table = loadTable("data30 (FTL Adventure Visualiser 3) 20160317 161543.tsv", "header");
-	// maxTableValue = table.getMaxFloat(); // TODO figure efficient way to get max value table
+	// maxTableValue = table.getMaxFloat();
 	maxTableValue = 1000f;
 
 	// graphics
@@ -135,6 +138,10 @@ void setup() {
 	crewShield	= loadImage("shield.gif");
 	crewWeapon	= loadImage("weapon.gif");
 
+	thread("checkForResize");
+
+	noLoop();
+
 }
 
 
@@ -148,7 +155,6 @@ void draw() {
 
 	// overlay graphics (mouseover, etc)
 
-	noLoop();
 
 }
 
@@ -416,4 +422,21 @@ void keyPressed() {
 			redraw();
 		}
 	}
+}
+
+
+void checkForResize(){
+	try {
+		while (true) {
+			Thread.sleep(10); // 10ms
+			if (pWidth != width || pHeight != height) {
+				surface.setSize(constrain(width, 480, width), constrain(height, 480, height));
+				graphWidth = width - (margin + margin);
+				graphHeigth = height - (margin + margin + margin);
+				pWidth = width;
+				pHeight = height;
+				redraw();
+			}
+		}
+	} catch (Exception e) {};
 }
