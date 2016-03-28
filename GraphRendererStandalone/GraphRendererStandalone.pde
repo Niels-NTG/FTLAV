@@ -87,19 +87,18 @@ final color[] GLOW_PURPLE = {
 	color(70, 1, 90, 25)
 };
 
-// DONE TODO define minimal size of 1 jump increment in pixels
-// DONE TODO limit amount of jumps displayed depending on screen resultion
-// DONE TODO do not display sector title if screenspace becomes to narrow
-
+// TODO redraw() on window resize event
+// TODO draw xAxis
 // TODO title header bar in the style of the ship info windows from the game
-// TODO use horizontal scrollbar when option above is disabled
 // TODO legend key list on the top row
-// TODO arrow buttons to bottom left and right corner to shift graph 1 jump back into history/present
+// TODO make legend key list items into a toggle to show/hide series (Standalone only)
 // TODO mouseover keys highlights corrosponding line
 // TODO mouseover line hightlihgs corrosponding key
+// TODO fix kerning/horizontal spacing of headerFont11 & headerFontAlt11
+// TODO use horizontal scrollbar when option above is disabled
+// TODO arrow buttons to bottom left and right corner to shift graph 1 jump back into history/present
 // TODO mouseover sector displays tooltip with complete sector information (name, type)
 // TODO mouseover beacon number display tooltip with complete beacon information (store, event text, hazards, etc.)
-// TODO sector number labels flexible to house numbers for more than 1 digit
 // TODO display "TOTAL" values as difference compared to previous beacon instead of absolute value
 // TODO symbol beneath beacon number indicates if their was a enviourmental hazard at that beacon
 // TODO graph type: systems stacked line chart
