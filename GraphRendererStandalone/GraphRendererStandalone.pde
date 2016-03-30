@@ -2,6 +2,7 @@
 Table table;
 float maxTableValue;
 int startIndex = 0;
+int endIndex;
 
 // graphics
 int margin = 32; // px
@@ -378,14 +379,16 @@ int[] getDataRange(int[] dataPoints) {
 	int count = dataPoints.length;
 	jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 	while (graphWidth / count + 1 < jumpSize) count--;
-	dataPoints = subset(dataPoints, constrain(startIndex, 0, dataPoints.length - count), count);
+	endIndex = dataPoints.length - count;
+	dataPoints = subset(dataPoints, constrain(startIndex, 0, endIndex), count);
 	return dataPoints;
 }
 String[] getDataRange(String[] dataPoints) {
 	int count = dataPoints.length;
 	jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 	while (graphWidth / count + 1 < jumpSize) count--;
-	dataPoints = subset(dataPoints, constrain(startIndex, 0, dataPoints.length - count), count);
+	endIndex = dataPoints.length - count;
+	dataPoints = subset(dataPoints, constrain(startIndex, 0, endIndex), count);
 	return dataPoints;
 }
 
@@ -418,7 +421,7 @@ void keyPressed() {
 		if (keyCode == LEFT || keyCode == RIGHT) {
 			if (keyCode == LEFT) startIndex--;
 			if (keyCode == RIGHT) startIndex++;
-			startIndex = constrain(startIndex, 0, table.getRowCount()); // TODO fix max value
+			startIndex = constrain(startIndex, 0, endIndex);
 			redraw();
 		}
 	}
