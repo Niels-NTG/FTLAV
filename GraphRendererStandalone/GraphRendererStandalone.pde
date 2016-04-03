@@ -91,13 +91,14 @@ final color[] GLOW_PURPLE = {
 };
 
 // TODO draw xAxis
-// TODO figure efficient way to get max value table
 // TODO title header bar in the style of the ship info windows from the game
 // TODO legend key list on the top row
 // TODO make legend key list items into a toggle to show/hide series (Standalone only)
 // TODO mouseover keys highlights corrosponding line
 // TODO mouseover line hightlihgs corrosponding key
 // TODO fix kerning/horizontal spacing of headerFont11 & headerFontAlt11
+// TODO add flexible textbox PGraphics method
+// TODO add README.md to this sketch folder
 // TODO use horizontal scrollbar when option above is disabled
 // TODO arrow buttons to bottom left and right corner to shift graph 1 jump back into history/present
 // TODO mouseover sector displays tooltip with complete sector information (name, type)
@@ -120,8 +121,11 @@ void setup() {
 
 	// data
 	table = loadTable("data30 (FTL Adventure Visualiser 3) 20160317 161543.tsv", "header");
-	// maxTableValue = table.getMaxFloat();
-	maxTableValue = 1000f;
+	int[] columnMax = new int[table.getColumnCount()];
+	for (int i = 0; i < table.getColumnCount(); ++i) {
+		columnMax[i] = max(table.getIntColumn(i));
+	}
+	maxTableValue = max(columnMax);
 
 	// graphics
 	mainFont13		= loadFont("C&CRedAlertINET-13.vlw");	// for small sized text and user defined strings
