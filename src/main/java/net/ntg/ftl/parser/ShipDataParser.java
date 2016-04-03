@@ -106,7 +106,7 @@ public class ShipDataParser {
 		for (int i = 0; i < FTLAdventureVisualiser.gameState.getCargoIdList().size(); i++) {
 			cargo += FTLAdventureVisualiser.gameState.getCargoIdList().get(i) + ", ";
 		}
-		return cargo.replaceAll("_"," ").replaceAll(",\\s$","");
+		return cargo.replaceAll("_"," ").replaceAll(",\\s*$","");
 	}
 
 
@@ -115,7 +115,7 @@ public class ShipDataParser {
 		for (int i = 0; i < FTLAdventureVisualiser.shipState.getAugmentIdList().size(); i++) {
 			aug += FTLAdventureVisualiser.shipState.getAugmentIdList().get(i) + ", ";
 		}
-		return aug.replaceAll("_"," ").replaceAll(",\\s$","");
+		return aug.replaceAll("_"," ").replaceAll(",\\s*$","");
 	}
 
 
@@ -150,7 +150,7 @@ public class ShipDataParser {
 			}
 		}
 
-		return storeItems.replaceAll("_"," ");
+		return storeItems.replaceAll("_"," ").replaceAll(",\\s*$","");
 
 	}
 

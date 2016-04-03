@@ -21,9 +21,7 @@ public class ParseCSV {
 
 	private static final Logger log = LogManager.getLogger(ParseCSV.class);
 
-	private static final CsvPreference FTLCSV = (
-		new CsvPreference.Builder('"', ';', "\n").surroundingSpacesNeedQuotes(true).build()
-	);
+	private static final CsvPreference FTLCSV = new CsvPreference.Builder('"', ';', "\n").surroundingSpacesNeedQuotes(true).build();
 
 	public void readCSV(String fileName) {
 
@@ -104,7 +102,7 @@ public class ParseCSV {
 		newRow.put("SCORE", Integer.toString(ShipDataParser.getCurrentScore()));
 		// Encounter
 		newRow.put("HAZARDS", ShipDataParser.getBeaconHazards());
-		newRow.put("EVENT TEXT", FTLAdventureVisualiser.gameState.getEncounter().getText().replaceAll("(\")|(\\n+)", ""));
+		newRow.put("EVENT TEXT", FTLAdventureVisualiser.gameState.getEncounter().getText());
 		newRow.put("STORE", ShipDataParser.getStoreListing());
 		// Supplies
 		newRow.put("SCRAP", Integer.toString(FTLAdventureVisualiser.shipState.getScrapAmt()));
@@ -130,17 +128,17 @@ public class ParseCSV {
 		newRow.put("WEAPONS SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getCapacity()));
 		newRow.put("WEAPONS SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getPower()));
 		newRow.put("WEAPONS SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.WEAPONS).getDamagedBars()));
-		for (int w = 0; w < ShipDataParser.getWeaponSlotCount(); w++) {
+		for (int i = 0; i < ShipDataParser.getWeaponSlotCount(); i++) {
 			try {
-				newRow.put("WEAPON SLOT " + (w+1), FTLAdventureVisualiser.shipState.getWeaponList().get(w).getWeaponId().replaceAll("_"," "));
+				newRow.put("WEAPON SLOT " + (i+1), FTLAdventureVisualiser.shipState.getWeaponList().get(i).getWeaponId().replaceAll("_"," "));
 			} catch (IndexOutOfBoundsException e) {}
 		}
 		newRow.put("DRONE CONTROL SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getCapacity()));
 		newRow.put("DRONE CONTROL SYSTEM POWER", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getPower()));
 		newRow.put("DRONE CONTROL SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.DRONE_CTRL).getDamagedBars()));
-		for (int d = 0; d < ShipDataParser.getDroneSlotCount(); d++) {
+		for (int i = 0; i < ShipDataParser.getDroneSlotCount(); i++) {
 			try {
-				newRow.put("DRONE SLOT " + (d+1), FTLAdventureVisualiser.shipState.getDroneList().get(d).getDroneId().replaceAll("_"," "));
+				newRow.put("DRONE SLOT " + (i+1), FTLAdventureVisualiser.shipState.getDroneList().get(i).getDroneId().replaceAll("_"," "));
 			} catch (IndexOutOfBoundsException e) {}
 		}
 		newRow.put("MEDBAY SYSTEM CAPACITY", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.MEDBAY).getCapacity()));
@@ -174,22 +172,22 @@ public class ParseCSV {
 		newRow.put("BATTERY SYSTEM DAMAGE", Integer.toString(FTLAdventureVisualiser.shipState.getSystem(SavedGameParser.SystemType.BATTERY).getDamagedBars()));
 		// crew
 		// TODO keep track of which crewmember is which to prevent them shifting collumns
-		for (int c = 0; c < FTLAdventureVisualiser.gameState.getTotalCrewHired(); c++) {
+		for (int i = 0; i < FTLAdventureVisualiser.gameState.getTotalCrewHired(); i++) {
 			try {
-				newRow.put("CREW MEMBER " + (c+1) + " NAME", FTLAdventureVisualiser.playerCrewState.get(c).getName());
-				newRow.put("CREW MEMBER " + (c+1) + " SPECIES", ShipDataParser.getFullCrewType(c));
-				newRow.put("CREW MEMBER " + (c+1) + " HEALTH", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getHealth()));
-				newRow.put("CREW MEMBER " + (c+1) + " PILOT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " ENGINE SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getEngineSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " SHIELD SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getShieldSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " WEAPON SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getWeaponSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " REPAIR SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " COMBAT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatSkill()));
-				newRow.put("CREW MEMBER " + (c+1) + " REPAIRS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getRepairs()));
-				newRow.put("CREW MEMBER " + (c+1) + " COMBAT KILLS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getCombatKills()));
-				newRow.put("CREW MEMBER " + (c+1) + " PILOTED EVASIONS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getPilotedEvasions()));
-				newRow.put("CREW MEMBER " + (c+1) + " JUMPS SURVIVED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getJumpsSurvived()));
-				newRow.put("CREW MEMBER " + (c+1) + " SKILLS MASTERED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(c).getSkillMasteries()));
+				newRow.put("CREW MEMBER " + (i+1) + " NAME", FTLAdventureVisualiser.playerCrewState.get(i).getName());
+				newRow.put("CREW MEMBER " + (i+1) + " SPECIES", ShipDataParser.getFullCrewType(i));
+				newRow.put("CREW MEMBER " + (i+1) + " HEALTH", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getHealth()));
+				newRow.put("CREW MEMBER " + (i+1) + " PILOT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getPilotSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " ENGINE SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getEngineSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " SHIELD SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getShieldSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " WEAPON SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getWeaponSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " REPAIR SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getRepairSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " COMBAT SKILL", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getCombatSkill()));
+				newRow.put("CREW MEMBER " + (i+1) + " REPAIRS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getRepairs()));
+				newRow.put("CREW MEMBER " + (i+1) + " COMBAT KILLS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getCombatKills()));
+				newRow.put("CREW MEMBER " + (i+1) + " PILOTED EVASIONS", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getPilotedEvasions()));
+				newRow.put("CREW MEMBER " + (i+1) + " JUMPS SURVIVED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getJumpsSurvived()));
+				newRow.put("CREW MEMBER " + (i+1) + " SKILLS MASTERED", Integer.toString(FTLAdventureVisualiser.playerCrewState.get(i).getSkillMasteries()));
 			} catch (IndexOutOfBoundsException e) {}
 		}
 
