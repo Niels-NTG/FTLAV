@@ -1,6 +1,6 @@
 // data
 Table table;
-float maxTableValue;
+int maxTableValue;
 int startIndex = 0;
 int endIndex;
 

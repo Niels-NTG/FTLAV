@@ -22,7 +22,7 @@ public class GraphRenderer extends PApplet {
 	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(collumName iterator)
 
 	Table table;
-	float maxTableValue;
+	int maxTableValue;
 	int startIndex = 0;
 	int endIndex;
 
@@ -138,7 +138,11 @@ public class GraphRenderer extends PApplet {
 			}
 		}
 
-		maxTableValue = 1000f; // TODO figure efficient way to get max value table
+		int[] columnMax = new int[table.getColumnCount()];
+		for (int i = 0; i < table.getColumnCount(); ++i) {
+			columnMax[i] = max(table.getIntColumn(i));
+		}
+		maxTableValue = max(columnMax);
 
 		// graphics
 		mainFont13		= loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
