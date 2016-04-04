@@ -7,6 +7,7 @@ int endIndex;
 // graphics
 int margin = 32; // px
 int jumpSize = 32; // px
+int glowSpread = 9; // px
 int graphWidth;
 int graphHeigth;
 int pWidth;
@@ -90,7 +91,6 @@ final color[] GLOW_PURPLE = {
 	color(70, 1, 90, 25)
 };
 
-// TODO draw xAxis
 // TODO title header bar in the style of the ship info windows from the game
 // TODO legend key list on the top row
 // TODO make legend key list items into a toggle to show/hide series (Standalone only)
@@ -169,6 +169,7 @@ PGraphics generateGraphics() {
 	PGraphics pg = createGraphics(width, height);
 	pg.beginDraw();
 
+	pg.image(drawStandardAxisX(), margin, margin);
 	try {
 		pg.image(drawGraphLine(getDataRange(table.getIntColumn("SCORE")), GLOW_BLUE), margin, margin);
 		pg.image(drawGraphLine(getDataRange(table.getIntColumn("TOTAL SCRAP COLLECTED")), GLOW_PURPLE), margin, margin);
@@ -204,7 +205,7 @@ PGraphics drawGraphLine(int[] dataPoints, color[] gradient) {
 		for (int i = 0; i < dataPoints.length; ++i) {
 			glowLine.vertex(
 				jumpSize * i,
-				map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - gradient.length
+				map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - glowSpread
 			);
 		}
 		glowLine.endShape();
@@ -212,6 +213,33 @@ PGraphics drawGraphLine(int[] dataPoints, color[] gradient) {
 
 	glowLine.endDraw();
 	return glowLine;
+
+}
+
+
+PGraphics drawStandardAxisX() {
+
+	PGraphics graphics = createGraphics(graphWidth, graphHeigth);
+	graphics.beginDraw();
+	graphics.strokeWeight(0.8f);
+	graphics.textFont(mainFont13, 13);
+	graphics.textAlign(LEFT, BOTTOM);
+	graphics.fill(MAINTEXT);
+
+	int lastY = 0;
+	for (int i = 0; i < maxTableValue; i++) {
+		int y = (int)map(i, 0, maxTableValue, graphHeigth, 0) - glowSpread;
+		if (y != lastY && y % jumpSize == 0) {
+			graphics.stroke(BORDER);
+			graphics.line(0, y, graphWidth - jumpSize, y);
+			graphics.noStroke();
+			graphics.text(i, 0, y);
+		}
+		lastY = y;
+	}
+
+	graphics.endDraw();
+	return graphics;
 
 }
 

@@ -29,6 +29,7 @@ public class GraphRenderer extends PApplet {
 	// graphics
 	int margin = 32; // px
 	int jumpSize = 32; // px
+	int glowSpread = 9; // px
 	int graphWidth;
 	int graphHeigth;
 
@@ -183,6 +184,7 @@ public class GraphRenderer extends PApplet {
 		PGraphics pg = createGraphics(width, height);
 		pg.beginDraw();
 
+		pg.image(drawStandardAxisX(), margin, margin);
 		try {
 			pg.image(drawGraphLine(getDataRange(table.getIntColumn("SCORE")), GLOW_BLUE), margin, margin);
 			pg.image(drawGraphLine(getDataRange(table.getIntColumn("TOTAL SCRAP COLLECTED")), GLOW_PURPLE), margin, margin);
@@ -218,7 +220,7 @@ public class GraphRenderer extends PApplet {
 			for (int i = 0; i < dataPoints.length; ++i) {
 				glowLine.vertex(
 					jumpSize * i,
-					map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - gradient.length
+					map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - glowSpread
 				);
 			}
 			glowLine.endShape();
@@ -226,6 +228,33 @@ public class GraphRenderer extends PApplet {
 
 		glowLine.endDraw();
 		return glowLine;
+
+	}
+
+
+	private PGraphics drawStandardAxisX() {
+
+		PGraphics graphics = createGraphics(graphWidth, graphHeigth);
+		graphics.beginDraw();
+		graphics.strokeWeight(0.8f);
+		graphics.textFont(mainFont13, 13);
+		graphics.textAlign(LEFT, BOTTOM);
+		graphics.fill(MAINTEXT);
+
+		int lastY = 0;
+		for (int i = 0; i < maxTableValue; i++) {
+			int y = (int)map(i, 0, maxTableValue, graphHeigth, 0) - glowSpread;
+			if (y != lastY && y % jumpSize == 0) {
+				graphics.stroke(BORDER);
+				graphics.line(0, y, graphWidth - jumpSize, y);
+				graphics.noStroke();
+				graphics.text(i, 0, y);
+			}
+			lastY = y;
+		}
+
+		graphics.endDraw();
+		return graphics;
 
 	}
 
