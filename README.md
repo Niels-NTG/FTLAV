@@ -1,7 +1,7 @@
 # FTLAV
 *FTL: Faster Than Light Adventure Visualiser*
 
-With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](http://www.ftlgame.com/). This could be used as a method to archive a particular spectacular FTL session to save it for posterity. Alternatively, this tool can be used for optimising your play style.
+With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](http://www.ftlgame.com/). It’s a nice way to archive spectacular FTL sessions for posterity. It can also be a powerful tool for analysing and optimising your play style.
 
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"/></a>
 
@@ -26,86 +26,52 @@ It’s possible to track data from games that are already ongoing. It’s howeve
 
 
 ## Roadmap
-### Version 1 (13 September 2015)
-**Data types**
 
-- Scrap count
-- Hull level
-- Fuel count
-- Drone Parts count
-- Missiles count
-- Crew size
-- Ship Oxygen level
-- Crew member health
-- Crew skills (pilot, engine, shields, weapons, repairing, combat)
-- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points)
-- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired)
-
-**Graph features**
-
-- Labeled sectors (name, type, number)
-- Beacon labels (as N explored beacons)
-- Labeled graph lines
-- Coloured graph lines (purple for crew, blue for the rest)
-- Graph title (ship name, current score, difficulty, Advanced Edition on/off)
-- FTL colour scheme
-- FTL blue glowing lines
-- FTL typography
-- Export to PNG
-- Export to PNG with transparant background
-
-**UI**
-
-- Help menu
+### Version 3 (summer 2016)
+- The method for storing the game state history has been completely redone. Instead of storing the complete history in RAM, each new game state is written directly to a CSV file. This change makes FTLAV a much more flexible and powerful tool. This means you can stop and resume tracking FTL data at any time. This also opens up the possibility for creating your own visualisations on top of FTLAV.
+- The graph renderer code has been completely rewritten. This not only improves overal performance, but also makes it easier to write alternative visualisations.
+- The graph renderer is now available as a stand-alone Processing sketch.
+- More compact UI.
+- Added graph legend.
+- New and improved graph types!
+	- Improved per-beacon line graph. Graph lines now can show ∆ between beacons instead of absoluut values.
+	- New per sector bar graph, showing totals and averages per sector.
+	- New timed scatter plot, showing changes on two axis over time.
+	- New systems upgrade diagram.
+- Graph scales in such a way that it never becomes to dense to display on a single screen.
+- Mouseover tooltips for more in-depth information about a particular beacon or point in the graph.
 
 ### Version 2 (27 september 2015)
-**Data types**
+- New data types
+	- Enemy fleet advancement
+	- Info on any system (capacity, current energy, damage) on the players ship and nearby ships (CSV exports only)
+	- Export the full dataset as a CSV-file
 
-- Enemy fleet advancement
-- Info on any system (capacity, current energy, damage) on the players ship and nearby ships (CSV exports only)
-- Export the full dataset as a CSV-file
-
-
-### Version 3 (TBA)
-**Data types**
-
-- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired) as difference per beacon
-- System upgrades
-- Reactor capacity
-
-**Graph features**
-
-- Bugfix for displaying large numbers ([issue #5](https://github.com/Niels-NTG/FTLAV/issues/5))
-- Graph canvas gets horizontal scrollbar when information gets too dense to display it properly
-- Second axis using a different scale
-
-**UI**
-
-- Quick-refresh button
-
-### Future versions
-**Data types**
-
-- Crew skills (pilot, engine, shields, weapons, repairing, combat) as difference per sector
-- Fixed bugs involving shrinking and growing crews
-- Generate sequentially numbered backups of `continue.sav` in order to preserve current game history for tracking the same game over multiple sessions.
-
-**Graph features**
-
-- Bar graphs to indicate totals or averages for each sector
-- Systems and system upgrades in graph as icons/sprites
-- Add more interactivity by adding a mouse-over feature that reveals extra information at any beacon
-- Add more interactivity by enabling users to add annotations at any beacon
-- Scatter plots?
-- Separate graphs that show overall player performance
-- New graph title style
-- Crew member key next to graph title with a fitting sprite and colour
-- PDF export
-
-**UI**
-
-- More compact UI (less scrolling, more iconography, less typography)
-
+### Version 1 (13 September 2015)
+- New data types
+	- Scrap count
+	- Hull level
+	- Fuel count
+	- Drone Parts count
+	- Missiles count
+	- Crew size
+	- Ship Oxygen level
+	- Crew member health
+	- Crew skills (pilot, engine, shields, weapons, repairing, combat)
+	- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points)
+	- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired)
+- Graph features
+	- Labeled sectors (name, type, number)
+	- Beacon labels (as N explored beacons)
+	- Labeled graph lines
+	- Coloured graph lines (purple for crew, blue for the rest)
+	- Graph title (ship name, current score, difficulty, Advanced Edition on/off)
+	- FTL style colour scheme
+	- FTL style blue glowing lines
+	- FTL style typography
+- Export to PNG
+- Export to PNG with transparant background
+- Help menu
 
 ## Contribute
 If you have ideas, suggestions, problems or encountered a bug, please let me know, preferably by filing an [issue](https://github.com/Niels-NTG/FTLAV/issues) at this GitHub repository.
