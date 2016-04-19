@@ -41,7 +41,9 @@ It’s possible to track data from games that are already ongoing. It’s howeve
 - Graph scales in such a way that it never becomes to dense to display on a single screen.
 - Mouseover tooltips for more in-depth information about a particular beacon or point in the graph.
 
-### Version 2 (27 september 2015)
+### Version 2 (27 september 2015) [latest release]
+**[download](https://github.com/Niels-NTG/FTLAV/releases/tag/v2-alpha)**
+
 - New data types
 	- Enemy fleet advancement
 	- Info on any system (capacity, current energy, damage) on the players ship and nearby ships (CSV exports only)
