@@ -48,7 +48,7 @@ public class FTLFrame extends JFrame {
 	private SavedGameParser.SavedGameState lastGameState = null;
 
 	private final ImageIcon openIcon		= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
-	private final ImageIcon watchIcon		= new ImageIcon(ClassLoader.getSystemResource("watch.gif"));
+	private final ImageIcon recordingIcon	= new ImageIcon(ClassLoader.getSystemResource("recording.gif"));
 	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
 	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
@@ -116,12 +116,12 @@ public class FTLFrame extends JFrame {
 
 
 		final JButton gameStateLoadBtn = new JButton("Load save game", openIcon); // TODO new icon load savegame load (tiny spaceship?)
-		final JToggleButton gameStateRecordBtn = new JToggleButton("Record save game", watchIcon, false); // TODO new "record" icon (red dot)
+		final JToggleButton gameStateRecordBtn = new JToggleButton("Record", recordingIcon, false);
 		final JButton recordingNewBtn = new JButton("New recording"); // TODO icon for new recording (piece of paper with plus sign)
 		final JButton recordingImportBtn = new JButton("Import recording"); // TODO icon for import recording (opened folder)
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
-		final JButton helpBtn = new JButton("Help", helpIcon);
+		final JButton helpBtn = new JButton(helpIcon);
 
 
 		gameStateRecordBtn.setEnabled(false);
@@ -482,7 +482,7 @@ public class FTLFrame extends JFrame {
 			byte[] buf = new byte[4096];
 			int len = 0;
 			while ((len = in.read(buf)) >= 0) {
-				for (int j=0; j < len; j++) {
+				for (int j = 0; j < len; j++) {
 					hexBuf.append(String.format("%02x", buf[j]));
 					if ((j+1) % 32 == 0) hexBuf.append("\n");
 				}
