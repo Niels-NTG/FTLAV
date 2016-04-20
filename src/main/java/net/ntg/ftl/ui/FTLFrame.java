@@ -191,14 +191,13 @@ public class FTLFrame extends JFrame {
 					recordingNewBtn.setEnabled(true);
 					recordingOpenBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
-					toggleGraphBtn.setEnabled(true);
-					toggleGraphBtn.setSelected(true);
-					graphFrame.setVisible(true);
 					exportImageBtn.setEnabled(true);
 
 					// TODO write into configFile from here to remember chosenGameStateFile for later sessions
 					// config.setProperty("ftlContinuePath", chosenGameStateFile.getAbsolutePath());
 				} else if (sillyMistake || lastGameState == null) {
+					recordingNewBtn.setEnabled(false);
+					recordingOpenBtn.setEnabled(false);
 					gameStateRecordBtn.setEnabled(false);
 					recordingNewBtn.setEnabled(false);
 					recordingOpenBtn.setEnabled(false);
@@ -239,6 +238,8 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				// TODO fix not wanting to write to a new file when their is already a record opened
+
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(null);
 				fc.setFileHidingEnabled(true);
@@ -253,8 +254,13 @@ public class FTLFrame extends JFrame {
 				);
 
 				loadGameStateFile(chosenGameStateFile);
+
 				gameStateRecordBtn.setEnabled(true);
 				gameStateRecordBtn.doClick();
+
+				toggleGraphBtn.setEnabled(true);
+				toggleGraphBtn.setSelected(true);
+				graphFrame.setVisible(true);
 
 				log.info("Created new record at " + FTLAdventureVisualiser.recordFilePath);
 
@@ -266,6 +272,7 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				// TODO fix not wanting to write to another file when their is already a record opened
 				// TODO file filter
 
 				JFileChooser fc = new JFileChooser();
@@ -306,9 +313,16 @@ public class FTLFrame extends JFrame {
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					FTLAdventureVisualiser.recordFilePath = fc.getSelectedFile().getAbsolutePath();
+
+					loadGameStateFile(chosenGameStateFile);
+
 					gameStateRecordBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
-					loadGameStateFile(chosenGameStateFile);
+
+					toggleGraphBtn.setEnabled(true);
+					toggleGraphBtn.setSelected(true);
+					graphFrame.setVisible(true);
+
 				}
 
 				log.info("Imported record from " + FTLAdventureVisualiser.recordFilePath);
@@ -390,9 +404,11 @@ public class FTLFrame extends JFrame {
 
 
 		toolbar.add(gameStateLoadBtn);
-		toolbar.add(gameStateRecordBtn);
+		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(recordingNewBtn);
 		toolbar.add(recordingOpenBtn);
+		toolbar.add(gameStateRecordBtn);
+		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(toggleGraphBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
