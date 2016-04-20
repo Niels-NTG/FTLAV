@@ -47,8 +47,10 @@ public class FTLFrame extends JFrame {
 	private File chosenGameStateFile;
 	private SavedGameParser.SavedGameState lastGameState = null;
 
-	private final ImageIcon openIcon		= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
-	private final ImageIcon recordingIcon	= new ImageIcon(ClassLoader.getSystemResource("recording.gif"));
+	private final ImageIcon loadGameIcon	= new ImageIcon(ClassLoader.getSystemResource("loadgame.gif"));
+	private final ImageIcon isRecordingIcon	= new ImageIcon(ClassLoader.getSystemResource("recording.gif"));
+	private final ImageIcon newRecordIcon	= new ImageIcon(ClassLoader.getSystemResource("new.gif"));
+	private final ImageIcon openRecordIcon	= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
 	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
@@ -115,10 +117,10 @@ public class FTLFrame extends JFrame {
 		toolbar.setFloatable(false);
 
 
-		final JButton gameStateLoadBtn = new JButton("Load save game", openIcon); // TODO new icon load savegame load (tiny spaceship?)
-		final JToggleButton gameStateRecordBtn = new JToggleButton("Record", recordingIcon, false);
-		final JButton recordingNewBtn = new JButton("New recording"); // TODO icon for new recording (piece of paper with plus sign)
-		final JButton recordingImportBtn = new JButton("Import recording"); // TODO icon for import recording (opened folder)
+		final JButton gameStateLoadBtn = new JButton("Load save game", loadGameIcon);
+		final JToggleButton gameStateRecordBtn = new JToggleButton("Record", isRecordingIcon, false);
+		final JButton recordingNewBtn = new JButton("New recording", newRecordIcon);
+		final JButton recordingOpenBtn = new JButton("Open recording", openRecordIcon);
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
 		final JButton helpBtn = new JButton(helpIcon);
@@ -126,7 +128,7 @@ public class FTLFrame extends JFrame {
 
 		gameStateRecordBtn.setEnabled(false);
 		recordingNewBtn.setEnabled(false);
-		recordingImportBtn.setEnabled(false);
+		recordingOpenBtn.setEnabled(false);
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
 
@@ -187,7 +189,7 @@ public class FTLFrame extends JFrame {
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					loadGameStateFile(chosenGameStateFile);
 					recordingNewBtn.setEnabled(true);
-					recordingImportBtn.setEnabled(true);
+					recordingOpenBtn.setEnabled(true);
 					gameStateRecordBtn.doClick();
 					toggleGraphBtn.setEnabled(true);
 					toggleGraphBtn.setSelected(true);
@@ -199,7 +201,7 @@ public class FTLFrame extends JFrame {
 				} else if (sillyMistake || lastGameState == null) {
 					gameStateRecordBtn.setEnabled(false);
 					recordingNewBtn.setEnabled(false);
-					recordingImportBtn.setEnabled(false);
+					recordingOpenBtn.setEnabled(false);
 					toggleGraphBtn.setEnabled(false);
 					exportImageBtn.setEnabled(false);
 				}
@@ -260,7 +262,7 @@ public class FTLFrame extends JFrame {
 		});
 
 
-		recordingImportBtn.addActionListener(new ActionListener() {
+		recordingOpenBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -390,7 +392,7 @@ public class FTLFrame extends JFrame {
 		toolbar.add(gameStateLoadBtn);
 		toolbar.add(gameStateRecordBtn);
 		toolbar.add(recordingNewBtn);
-		toolbar.add(recordingImportBtn);
+		toolbar.add(recordingOpenBtn);
 		toolbar.add(toggleGraphBtn);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
