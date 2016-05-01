@@ -52,7 +52,7 @@ public class FTLFrame extends JFrame {
 	private final ImageIcon newRecordIcon	= new ImageIcon(ClassLoader.getSystemResource("new.gif"));
 	private final ImageIcon openRecordIcon	= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
-	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("save.gif"));
+	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("savegraph.gif"));
 	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private final URL helpPage = ClassLoader.getSystemResource("help.html");
@@ -132,7 +132,7 @@ public class FTLFrame extends JFrame {
 		toggleGraphBtn.setEnabled(false);
 		exportImageBtn.setEnabled(false);
 
-		
+
 		final JFileChooser fc = new JFileChooser();
 		fc.setFileHidingEnabled(false);
 		fc.addChoosableFileFilter(new FileFilter() {
