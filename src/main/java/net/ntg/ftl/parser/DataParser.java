@@ -6,7 +6,7 @@ import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 
 
-public class ShipDataParser {
+public class DataParser {
 
 	public static int getShipOxygenLevel() {
 
