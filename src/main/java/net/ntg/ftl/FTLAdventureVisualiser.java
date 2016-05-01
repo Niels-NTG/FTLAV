@@ -15,8 +15,8 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
+
 import org.jdom2.JDOMException;
 
 import net.vhati.modmanager.core.FTLUtilities;
@@ -39,6 +39,9 @@ public class FTLAdventureVisualiser {
 	public static String APP_NAME = "FTL Adventure Visualiser";
 	public static int APP_VERSION = 3;
 
+	private static File configFile = new File("FTLAVconfig.cfg");
+	public static File gameStateFile;
+
 	public static SavedGameParser.SavedGameState gameState = null;
 	public static SavedGameParser.ShipState shipState = null;
 	// public static SavedGameParser.ShipState nearbyShipState = null;
@@ -51,7 +54,6 @@ public class FTLAdventureVisualiser {
 	public static String recordFilePath;
 	public static ArrayList<Map<String, String>> recording = new ArrayList<>();
 	public static String[] recordingHeaders;
-	public static Map<String, Boolean> enabledRecordingHeaders;
 
 
 	public static void main(String[] args) {
@@ -72,57 +74,38 @@ public class FTLAdventureVisualiser {
 		log.debug(String.format("%s %s", System.getProperty("os.name"), System.getProperty("os.version")));
 		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
 
-		// TODO make ftlav-config.cfg in a seperate class to make it acessible from other places than just here
-		File configFile = new File("ftlav-config.cfg");
 		File datsDir = null;
 
-		boolean writeConfig = false;
-		Properties config = new Properties();
-		config.setProperty("useDefaultUI", "false");
-
-		// Read the config file.
-		InputStream in = null;
-		try {
-			if (configFile.exists()) {
-				log.trace("Loading properties from config file.");
-				in = new FileInputStream(configFile);
-				config.load(new InputStreamReader(in, "UTF-8"));
-			} else {
-				writeConfig = true; // Create a new cfg, but only if necessary.
-			}
-		} catch (IOException e) {
-			log.error("Error loading config.", e);
-			showErrorDialog("Error loading config from " + configFile.getPath());
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (IOException e) {}
-		}
-
-		// Look-and-Feel.
-		String useDefaultUI = config.getProperty("useDefaultUI");
-
-		if (useDefaultUI == null || !useDefaultUI.equals("true")) {
-			try {
-				log.trace("Using system Look and Feel");
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e) {
-				log.error("Error setting system Look and Feel.", e);
-				log.info("Setting 'useDefaultUI=true' in the config file will prevent this error.");
-			}
-		} else {
-			log.debug("Using default Look and Feel.");
-		}
+		Properties config = readConfig();
 
 		// FTL Resources Path.
 		String datsPath = config.getProperty("ftlDatsPath");
+		String continuePath = config.getProperty("ftlContinuePath");
 
 		if (datsPath != null && datsPath.length() > 0) {
 			log.info("Using FTL dats path from config: " + datsPath);
 			datsDir = new File(datsPath);
-			if (FTLUtilities.isDatsDirValid(datsDir) == false) {
+			if (!FTLUtilities.isDatsDirValid(datsDir)) {
 				log.error("The config's ftlDatsPath does not exist, or it lacks data.dat.");
 				datsDir = null;
+			} else {
+
+				File candidateSaveFile;
+				if (continuePath != null) {
+					log.info("The config's ftlContinuePath exists");
+					candidateSaveFile = new File(continuePath);
+				} else {
+					log.info("No path to continue.sav found in config. Guessing possible location...");
+					candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
+				}
+				if (candidateSaveFile.exists()) {
+					gameStateFile = candidateSaveFile;
+					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
+					writeConfig(config);
+				} else {
+					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
+				}
+
 			}
 		} else {
 			log.trace("No FTL dats path previously set.");
@@ -150,8 +133,14 @@ public class FTLAdventureVisualiser {
 
 			if (datsDir != null) {
 				config.setProperty("ftlDatsPath", datsDir.getAbsolutePath());
-				writeConfig = true;
-				log.info("FTL dats located at: "+ datsDir.getAbsolutePath());
+
+				File candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
+				if (candidateSaveFile.exists()) {
+					gameStateFile = candidateSaveFile;
+					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
+				}
+				writeConfig(config);
+				log.info("FTL dats located at: " + datsDir.getAbsolutePath());
 			}
 		}
 
@@ -160,40 +149,6 @@ public class FTLAdventureVisualiser {
 			log.debug("No FTL dats path found, exiting.");
 			System.exit(1);
 		}
-
-		if (writeConfig) {
-			OutputStream out = null;
-			try {
-				out = new FileOutputStream(configFile);
-				String configComments = "FTL Adventure Visualiser - Config File";
-
-				OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
-				config.store(writer, configComments);
-				writer.flush();
-			} catch (IOException e) {
-				log.error("Error saving config to "+ configFile.getPath(), e);
-				showErrorDialog("Error saving config to " + configFile.getPath());
-			} finally {
-				try {
-					if (out != null) out.close();
-				} catch (IOException e) {}
-			}
-		}
-
-		// if (writeConfig) {
-		// 	String wipMsg = "";
-		// 	wipMsg += "FTL: Faster Than Light Adventure Visualiser (FTLAV) is a tool to visualize your FTL playsessions\n";
-		// 	wipMsg += "\n";
-		// 	wipMsg += "This program is build on top of the FTL Profile Editor by Vhati\n";
-		// 	wipMsg += "\n";
-		// 	wipMsg += "This application requires the \"continue.sav\" from the FTL game directory.\n";
-		// 	wipMsg += "This is where your current game progress is stored.\n";
-		// 	wipMsg += "This application can and will not modify this or any other files.\n";
-		// 	wipMsg += "\n";
-		// 	wipMsg += "If you encounter a read error opening a file, that means the editor saw something \n";
-		// 	wipMsg += "new that it doesn't recognize. Submitting a bug report would be helpful.";
-		// 	JOptionPane.showMessageDialog(null, wipMsg, "Work in Progress", JOptionPane.PLAIN_MESSAGE);
-		// }
 
 		// Parse the dats.
 		try {
@@ -214,6 +169,52 @@ public class FTLAdventureVisualiser {
 			System.exit(1);
 		}
 
+	}
+
+
+	public static Properties readConfig() {
+		Properties config = new Properties();
+		// Read the config file.
+		InputStream in = null;
+		try {
+			if (configFile.exists()) {
+				log.trace("Loading properties from config file.");
+				in = new FileInputStream(configFile);
+				config.load(new InputStreamReader(in, "UTF-8"));
+			} else {
+				writeConfig(config);
+			}
+		} catch (IOException e) {
+			log.error("Error loading config.", e);
+			showErrorDialog("Error loading config from " + configFile.getPath());
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException e) {}
+		}
+		return config;
+	}
+
+	public static void writeConfig(String key, String value) {
+		writeConfig((Properties) readConfig().setProperty(key, value));
+	}
+
+	public static void writeConfig(Properties config) {
+		OutputStream out = null;
+		try {
+			out = new FileOutputStream(configFile);
+			String configComments = APP_NAME + " " + APP_VERSION + " - Config File";
+			OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+			config.store(writer, configComments);
+			writer.flush();
+		} catch (IOException e) {
+			log.error("Error saving config to "+ configFile.getPath(), e);
+			showErrorDialog("Error saving config to " + configFile.getPath());
+		} finally {
+			try {
+				if (out != null) out.close();
+			} catch (IOException e) {}
+		}
 	}
 
 
