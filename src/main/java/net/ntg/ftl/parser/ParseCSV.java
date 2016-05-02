@@ -62,13 +62,13 @@ public class ParseCSV {
 	}
 
 
-//	public boolean isValidCSV(String fileName) {
+	public boolean isValidCSV(String fileName) {
 
 		// TODO check if CSV file is valid
 
-//		return true; // EVERYTHING IS FINE!
+		return true; // EVERYTHING IS FINE!
 
-//	}
+	}
 
 
 	public void writeCSV(String fileName) {
