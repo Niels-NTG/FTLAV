@@ -62,24 +62,16 @@ public class ParseCSV {
 	}
 
 
-	public boolean isValidCSV(String fileName) {
+//	public boolean isValidCSV(String fileName) {
 
 		// TODO check if CSV file is valid
 
-		return true; // EVERYTHING IS FINE!
+//		return true; // EVERYTHING IS FINE!
 
-	}
-
-
-	public void createCSV(String fileName) {
-		writeCSV(fileName, true);
-	}
+//	}
 
 
 	public void writeCSV(String fileName) {
-		writeCSV(fileName, false);
-	}
-	private void writeCSV(String fileName, boolean isNewFile) {
 
 		int sectorNumber = FTLAdventureVisualiser.gameState.getSectorNumber();
 
@@ -194,7 +186,7 @@ public class ParseCSV {
 		if (!FTLAdventureVisualiser.recording.contains(newRow)) {
 			FTLAdventureVisualiser.recording.add(newRow);
 		}
-		String[] header = (String[]) newRow.keySet().toArray(new String[newRow.size()]);
+		String[] header = newRow.keySet().toArray(new String[newRow.size()]);
 
 		// TODO prevent duplicate rows by casting FTLAdventureVisualiser.recording to a Hashset and back again
 
@@ -213,6 +205,7 @@ public class ParseCSV {
 			log.error("Something went wrong while writing " + fileName, e);
 		} finally {
 			try {
+				assert mapWriter != null;
 				mapWriter.close();
 			} catch (IOException ex) {
 				log.error("Something went wrong closing fileWriter", ex);

@@ -41,8 +41,8 @@ public class FTLFrame extends JFrame {
 
 	private static final Logger log = LogManager.getLogger(FTLFrame.class);
 
-	JFrame graphFrame;
-	JFrame helpFrame;
+	private JFrame graphFrame;
+	private JFrame helpFrame;
 
 	private SavedGameParser.SavedGameState lastGameState = null;
 
@@ -398,7 +398,7 @@ public class FTLFrame extends JFrame {
 					JOptionPane.YES_NO_CANCEL_OPTION
 				);
 				if (exitWarning == JOptionPane.YES_OPTION) exportImageBtn.doClick();
-				if (exitWarning == JOptionPane.NO_OPTION) setDefaultCloseOperation(EXIT_ON_CLOSE);
+				if (exitWarning == JOptionPane.NO_OPTION) setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			}
 		});
 
@@ -594,16 +594,16 @@ public class FTLFrame extends JFrame {
 				currentGameState.isDLCEnabled()
 			);
 			int columnsOffset = 0;
-			for (int i = 0; i < myColumns.size(); i++) {
-				for (int k = 0; k < myColumns.get(i).size(); k++) {
+			for (List<SectorDot> myColumn : myColumns) {
+				for (int k = 0; k < myColumn.size(); k++) {
 					if (currentGameState.getSectorVisitation().subList(
-							columnsOffset, columnsOffset + myColumns.get(i).size()
-						).get(k)
-					) {
-						FTLAdventureVisualiser.sectorArray.add(myColumns.get(i).get(k));
+						columnsOffset, columnsOffset + myColumn.size()
+					).get(k)
+						) {
+						FTLAdventureVisualiser.sectorArray.add(myColumn.get(k));
 					}
 				}
-				columnsOffset += myColumns.get(i).size();
+				columnsOffset += myColumn.size();
 			}
 
 			if (currentGameState.getEncounter().getText().toLowerCase().contains("giant alien spiders")) {
@@ -623,7 +623,7 @@ public class FTLFrame extends JFrame {
 				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
 			} else {
 				log.info("CSV doesn't exist yet. Creating new CSV...");
-				new ParseCSV().createCSV(FTLAdventureVisualiser.recordFilePath);
+				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
 			}
 			// TODO read/write/read first, then inspector.setGameState()
 //			inspector.setGraphSettings();

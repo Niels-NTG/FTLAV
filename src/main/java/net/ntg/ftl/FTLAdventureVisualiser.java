@@ -36,10 +36,10 @@ public class FTLAdventureVisualiser {
 
 	private static final Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
 
-	public static String APP_NAME = "FTL Adventure Visualiser";
-	public static int APP_VERSION = 3;
+	private static final String APP_NAME = "FTL Adventure Visualiser";
+	private static final int APP_VERSION = 3;
 
-	private static File configFile = new File("FTLAVconfig.cfg");
+	private static final File configFile = new File("FTLAVconfig.cfg");
 	public static File gameStateFile;
 
 	public static SavedGameParser.SavedGameState gameState = null;
@@ -199,7 +199,7 @@ public class FTLAdventureVisualiser {
 		writeConfig((Properties) readConfig().setProperty(key, value));
 	}
 
-	public static void writeConfig(Properties config) {
+	private static void writeConfig(Properties config) {
 		OutputStream out = null;
 		try {
 			out = new FileOutputStream(configFile);

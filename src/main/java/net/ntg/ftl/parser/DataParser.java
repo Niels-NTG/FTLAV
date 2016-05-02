@@ -17,7 +17,7 @@ public class DataParser {
 			sum += FTLAdventureVisualiser.shipState.getRoomList().get(i).getOxygen();
 		}
 
-		return (int)sum / roomCount;
+		return sum / roomCount;
 
 	}
 
@@ -146,7 +146,7 @@ public class DataParser {
 						storeItems += beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId() + ", ";
 					}
 				}
-				storeItems.replaceAll(",\\s*$","");
+				storeItems = storeItems.replaceAll(",\\s*$","");
 			}
 		}
 
@@ -161,7 +161,7 @@ public class DataParser {
 	public static String getFullCrewType(int crewIndex) {
 		return getFullCrewType(crewIndex, false);
 	}
-	public static String getFullCrewType(int crewIndex, boolean isEnemyCrew) {
+	private static String getFullCrewType(int crewIndex, boolean isEnemyCrew) {
 		String rawCrewType = isEnemyCrew ?
 			FTLAdventureVisualiser.enemyCrewState.get(crewIndex).getRace() :
 			FTLAdventureVisualiser.playerCrewState.get(crewIndex).getRace();
