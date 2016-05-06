@@ -1,9 +1,8 @@
 package net.ntg.ftl.parser;
 
-import net.ntg.ftl.FTLAdventureVisualiser;
-
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.SavedGameParser;
+import net.ntg.ftl.FTLAdventureVisualiser;
 
 
 public class DataParser {
@@ -42,7 +41,7 @@ public class DataParser {
 
 	public static String getFullShipType() {
 
-		String shipType = "";
+		String shipType;
 
 		switch (FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId()) {
 			case "PLAYER_SHIP_HARD"   : shipType = "Kestrel Cruiser A"; break;

@@ -5,13 +5,10 @@ import net.blerf.ftl.parser.MysteryBytes;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.NativeRandom;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
-
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.ParseCSV;
 import net.ntg.ftl.util.FileWatcher;
-
 import net.vhati.modmanager.core.FTLUtilities;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,12 +26,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class FTLFrame extends JFrame {

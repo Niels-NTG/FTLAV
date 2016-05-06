@@ -1,33 +1,21 @@
 package net.blerf.ftl.parser;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
+import net.blerf.ftl.model.ShipLayout;
+import net.blerf.ftl.xml.*;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.output.DOMOutputter;
 
-import net.blerf.ftl.model.ShipLayout;
-import net.blerf.ftl.xml.Achievement;
-import net.blerf.ftl.xml.Achievements;
-import net.blerf.ftl.xml.BackgroundImageList;
-import net.blerf.ftl.xml.BackgroundImageLists;
-import net.blerf.ftl.xml.Blueprints;
-import net.blerf.ftl.xml.CrewNameList;
-import net.blerf.ftl.xml.CrewNameLists;
-import net.blerf.ftl.xml.Encounters;
-import net.blerf.ftl.xml.SectorData;
-import net.blerf.ftl.xml.ShipChassis;
-import net.blerf.ftl.xml.ShipEvent;
-import net.blerf.ftl.xml.ShipEvents;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class DatParser {

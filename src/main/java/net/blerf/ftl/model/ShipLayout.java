@@ -1,10 +1,10 @@
 package net.blerf.ftl.model;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 import java.util.NoSuchElementException;
+import java.util.TreeMap;
 
 
 public class ShipLayout {

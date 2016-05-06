@@ -1,35 +1,23 @@
 package net.ntg.ftl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.xml.bind.JAXBException;
-
-import org.jdom2.JDOMException;
-
-import net.vhati.modmanager.core.FTLUtilities;
-
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
-
 import net.ntg.ftl.ui.FTLFrame;
-
-import org.apache.logging.log4j.Logger;
+import net.vhati.modmanager.core.FTLUtilities;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.JDOMException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.xml.bind.JAXBException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 
 public class FTLAdventureVisualiser {

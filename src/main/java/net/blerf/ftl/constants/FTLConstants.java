@@ -1,8 +1,8 @@
 package net.blerf.ftl.constants;
 
-import java.util.List;
-
 import net.blerf.ftl.parser.SavedGameParser.CrewType;
+
+import java.util.List;
 
 
 public interface FTLConstants {

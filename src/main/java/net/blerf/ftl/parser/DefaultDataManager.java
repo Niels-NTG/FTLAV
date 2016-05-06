@@ -1,44 +1,20 @@
 package net.blerf.ftl.parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.xml.bind.JAXBException;
-
-import org.jdom2.JDOMException;
-
-import net.vhati.ftldat.FTLDat;
-
 import net.blerf.ftl.model.ShipLayout;
-import net.blerf.ftl.xml.Achievement;
-import net.blerf.ftl.xml.AugBlueprint;
-import net.blerf.ftl.xml.BackgroundImageList;
-import net.blerf.ftl.xml.Blueprints;
-import net.blerf.ftl.xml.CrewBlueprint;
-import net.blerf.ftl.xml.CrewNameList;
-import net.blerf.ftl.xml.DroneBlueprint;
-import net.blerf.ftl.xml.Encounters;
-import net.blerf.ftl.xml.FTLEvent;
-import net.blerf.ftl.xml.FTLEventList;
-import net.blerf.ftl.xml.SectorData;
-import net.blerf.ftl.xml.SectorDescription;
-import net.blerf.ftl.xml.SectorType;
-import net.blerf.ftl.xml.ShipBlueprint;
-import net.blerf.ftl.xml.ShipEvent;
-import net.blerf.ftl.xml.ShipChassis;
-import net.blerf.ftl.xml.SystemBlueprint;
-import net.blerf.ftl.xml.WeaponBlueprint;
-
+import net.blerf.ftl.xml.*;
+import net.vhati.ftldat.FTLDat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.JDOMException;
+
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class DefaultDataManager extends DataManager {

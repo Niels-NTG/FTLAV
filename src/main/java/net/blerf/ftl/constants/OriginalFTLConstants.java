@@ -1,10 +1,10 @@
 package net.blerf.ftl.constants;
 
+import net.blerf.ftl.parser.SavedGameParser.CrewType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.blerf.ftl.parser.SavedGameParser.CrewType;
 
 
 /**

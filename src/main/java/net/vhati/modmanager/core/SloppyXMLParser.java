@@ -2,26 +2,16 @@
 
 package net.vhati.modmanager.core;
 
+import org.jdom2.*;
+import org.jdom2.input.JDOMParseException;
+import org.xml.sax.SAXParseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.xml.sax.SAXParseException;
-
-import org.jdom2.Attribute;
-import org.jdom2.AttributeType;
-import org.jdom2.CDATA;
-import org.jdom2.Comment;
-import org.jdom2.DefaultJDOMFactory;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.IllegalAddException;
-import org.jdom2.JDOMFactory;
-import org.jdom2.Namespace;
-import org.jdom2.Parent;
-import org.jdom2.input.JDOMParseException;
 
 
 /**

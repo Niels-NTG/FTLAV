@@ -1,8 +1,8 @@
 package net.blerf.ftl.model;
 
-import java.util.List;
-
 import net.blerf.ftl.constants.Difficulty;
+
+import java.util.List;
 
 
 public class AchievementRecord {

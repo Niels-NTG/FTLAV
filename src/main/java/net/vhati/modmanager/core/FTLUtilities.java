@@ -3,12 +3,11 @@
 
 package net.vhati.modmanager.core;
 
-import java.awt.Component;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 
 public class FTLUtilities {
