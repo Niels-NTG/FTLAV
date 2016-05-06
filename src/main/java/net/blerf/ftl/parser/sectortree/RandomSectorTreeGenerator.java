@@ -1,9 +1,6 @@
 package net.blerf.ftl.parser.sectortree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
@@ -36,13 +33,6 @@ public class RandomSectorTreeGenerator {
 	}
 
 
-	/**
-	 * Sets a new provider for random ints.
-	 */
-	public void setRNG(RandRNG newRNG) {
-		rng = newRNG;
-	}
-
 	public RandRNG getRNG() {
 		return rng;
 	}
@@ -74,11 +64,11 @@ public class RandomSectorTreeGenerator {
 
 		int n;
 		int colSize = 0;
-		List<String> existingUniqueIds = new ArrayList<String>();
-		List<List<SectorDot>> dotColumns = new ArrayList<List<SectorDot>>(8);
+		List<String> existingUniqueIds = new ArrayList<>();
+		List<List<SectorDot>> dotColumns = new ArrayList<>(8);
 
 		for (int c=0; c < 8; c++) {
-			List<SectorDot> columnDots = new ArrayList<SectorDot>(4);
+			List<SectorDot> columnDots = new ArrayList<>(4);
 
 			if (c == 0) {
 				String type = getRandomSectorType();  // Eat a rand() call and disregard the result.
@@ -99,7 +89,7 @@ public class RandomSectorTreeGenerator {
 			else {
 				colSize = getRandomSectorColumnSize(c, colSize);
 
-				List<String> sectorTypesInColumn = new ArrayList<String>(4);
+				List<String> sectorTypesInColumn = new ArrayList<>(4);
 
 				for (int d=0; d < colSize; d++) {
 					String sectorTypeId = getRandomSectorType();
@@ -118,7 +108,7 @@ public class RandomSectorTreeGenerator {
 						sectorPool = nebulaSectors;
 					}
 
-					List<Sector> candidates = new ArrayList<Sector>();
+					List<Sector> candidates = new ArrayList<>();
 					for (Sector s : sectorPool) {
 						if (s.min <= c && !existingUniqueIds.contains(s.getId())) {
 							candidates.add(s);
@@ -152,7 +142,7 @@ public class RandomSectorTreeGenerator {
 	 * Otherwise, the result will be different from prevSize.
 	 */
 	protected int getRandomSectorColumnSize(int column, int prevSize) {
-		int result = 0;
+		int result;
 		do {
 			int n = rng.rand();
 			result = n % 3 + 2;
@@ -168,7 +158,7 @@ public class RandomSectorTreeGenerator {
 	 * Returns a random SectorType id: NEBULA, HOSTILE, CIVILIAN.
 	 */
 	protected String getRandomSectorType() {
-		String result = null;
+		String result;
 		int n = rng.rand();
 
 		if (n % 10 <= 1) {
@@ -186,13 +176,13 @@ public class RandomSectorTreeGenerator {
 
 
 	protected List<Sector> getDatSectors(String sectorTypeId, boolean dlcEnabled) {
-		List<Sector> result = new ArrayList<Sector>();
+		List<Sector> result = new ArrayList<>();
 		SectorType tmpType = DataManager.getInstance().getSectorTypeById(sectorTypeId, dlcEnabled);
 
 		for (String sectorId : tmpType.getSectorIds()) {
 			SectorDescription tmpDesc = DataManager.getInstance().getSectorDescriptionById(sectorId);
 
-			Sector tmpSector = new Sector(tmpDesc.isUnique(), tmpDesc.getMinSector(), tmpDesc.getId(), new ArrayList<String>(tmpDesc.getNameList().names));
+			Sector tmpSector = new Sector(tmpDesc.isUnique(), tmpDesc.getMinSector(), tmpDesc.getId(), new ArrayList<>(tmpDesc.getNameList().names));
 			result.add(tmpSector);
 		}
 
@@ -200,12 +190,12 @@ public class RandomSectorTreeGenerator {
 	}
 
 	private List<Sector> getTestCivilianSectors(boolean preAE, boolean dlcEnabled) {
-		List<Sector> civilianSectors = new ArrayList<Sector>();
-		civilianSectors.add(new Sector(false, 0, "CIVILIAN_SECTOR", Arrays.asList("Civilian Sector")));
-		civilianSectors.add(new Sector(false, 0, "ENGI_SECTOR", Arrays.asList("Engi Controlled Sector")));
-		civilianSectors.add(new Sector(true, 2, "ENGI_HOME", Arrays.asList("Engi Homeworlds")));
-		civilianSectors.add(new Sector(false, 0, "ZOLTAN_SECTOR", Arrays.asList("Zoltan Controlled Sector")));
-		civilianSectors.add(new Sector(true, 1, "ZOLTAN_HOME", Arrays.asList("Zoltan Homeworlds")));
+		List<Sector> civilianSectors = new ArrayList<>();
+		civilianSectors.add(new Sector(false, 0, "CIVILIAN_SECTOR", Collections.singletonList("Civilian Sector")));
+		civilianSectors.add(new Sector(false, 0, "ENGI_SECTOR", Collections.singletonList("Engi Controlled Sector")));
+		civilianSectors.add(new Sector(true, 2, "ENGI_HOME", Collections.singletonList("Engi Homeworlds")));
+		civilianSectors.add(new Sector(false, 0, "ZOLTAN_SECTOR", Collections.singletonList("Zoltan Controlled Sector")));
+		civilianSectors.add(new Sector(true, 1, "ZOLTAN_HOME", Collections.singletonList("Zoltan Homeworlds")));
 
 		if (preAE) {  // 1.03.3.
 			for (Iterator<Sector> it=civilianSectors.iterator(); it.hasNext();) {
@@ -223,24 +213,24 @@ public class RandomSectorTreeGenerator {
 	}
 
 	private List<Sector> getTestNebulaSectors(boolean preAE, boolean dlcEnabled) {
-		List<Sector> nebulaSectors = new ArrayList<Sector>();
-		nebulaSectors.add(new Sector(false, 0, "NEBULA_SECTOR", Arrays.asList("Uncharted Nebula")));
-		nebulaSectors.add(new Sector(true, 3, "SLUG_HOME", Arrays.asList("Slug Home Nebula")));
-		nebulaSectors.add(new Sector(false, 3, "SLUG_SECTOR", Arrays.asList("Slug Controlled Nebula")));
+		List<Sector> nebulaSectors = new ArrayList<>();
+		nebulaSectors.add(new Sector(false, 0, "NEBULA_SECTOR", Collections.singletonList("Uncharted Nebula")));
+		nebulaSectors.add(new Sector(true, 3, "SLUG_HOME", Collections.singletonList("Slug Home Nebula")));
+		nebulaSectors.add(new Sector(false, 3, "SLUG_SECTOR", Collections.singletonList("Slug Controlled Nebula")));
 
 		return nebulaSectors;
 	}
 
 	private List<Sector> getTestHostileSectors(boolean preAE, boolean dlcEnabled) {
-		List<Sector> hostileSectors = new ArrayList<Sector>();
-		hostileSectors.add(new Sector(false, 0, "REBEL_SECTOR", Arrays.asList("Rebel Controlled Sector")));
-		hostileSectors.add(new Sector(true, 4, "REBEL_SECTOR_MINIBOSS", Arrays.asList("Rebel Stronghold")));
-		hostileSectors.add(new Sector(false, 0, "PIRATE_SECTOR", Arrays.asList("Pirate Controlled Sector")));
-		hostileSectors.add(new Sector(false, 0, "MANTIS_SECTOR", Arrays.asList("Mantis Controlled Sector")));
-		hostileSectors.add(new Sector(true, 2, "MANTIS_HOME", Arrays.asList("Mantis Homeworlds")));
-		hostileSectors.add(new Sector(false, 1, "ROCK_SECTOR", Arrays.asList("Rock Controlled Sector")));
-		hostileSectors.add(new Sector(true, 4, "ROCK_HOME", Arrays.asList("Rock Homeworlds")));
-		hostileSectors.add(new Sector(false, 1, "LANIUS_SECTOR", Arrays.asList("Abandoned Sector")));
+		List<Sector> hostileSectors = new ArrayList<>();
+		hostileSectors.add(new Sector(false, 0, "REBEL_SECTOR", Collections.singletonList("Rebel Controlled Sector")));
+		hostileSectors.add(new Sector(true, 4, "REBEL_SECTOR_MINIBOSS", Collections.singletonList("Rebel Stronghold")));
+		hostileSectors.add(new Sector(false, 0, "PIRATE_SECTOR", Collections.singletonList("Pirate Controlled Sector")));
+		hostileSectors.add(new Sector(false, 0, "MANTIS_SECTOR", Collections.singletonList("Mantis Controlled Sector")));
+		hostileSectors.add(new Sector(true, 2, "MANTIS_HOME", Collections.singletonList("Mantis Homeworlds")));
+		hostileSectors.add(new Sector(false, 1, "ROCK_SECTOR", Collections.singletonList("Rock Controlled Sector")));
+		hostileSectors.add(new Sector(true, 4, "ROCK_HOME", Collections.singletonList("Rock Homeworlds")));
+		hostileSectors.add(new Sector(false, 1, "LANIUS_SECTOR", Collections.singletonList("Abandoned Sector")));
 
 		if (preAE) {  // 1.03.3.
 			for (Iterator<Sector> it=hostileSectors.iterator(); it.hasNext();) {

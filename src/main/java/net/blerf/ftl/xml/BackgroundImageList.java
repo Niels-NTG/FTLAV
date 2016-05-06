@@ -22,16 +22,8 @@ public class BackgroundImageList {
 		return images;
 	}
 
-	public void setImages(List<BackgroundImage> images) {
-		this.images = images;
-	}
-
 	public String getId() {
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	@Override

@@ -9,11 +9,9 @@
 package net.blerf.ftl.parser;
 
 import java.awt.Point;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -29,35 +27,13 @@ import net.blerf.ftl.model.ShipLayout;
 import net.blerf.ftl.xml.CrewBlueprint;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.ShipBlueprint;
-import net.blerf.ftl.xml.SystemBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 public class SavedGameParser extends Parser {
 
-	private static final Logger log = LogManager.getLogger(SavedGameParser.class);
-
 
 	public SavedGameParser() {}
-
-	public SavedGameState readSavedGame(File savFile) throws IOException {
-		SavedGameState gameState = null;
-
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(savFile);
-			gameState = readSavedGame(in);
-		}
-		finally {
-			try {if (in != null) in.close();}
-			catch (IOException e) {}
-		}
-
-		return gameState;
-	}
 
 	public SavedGameState readSavedGame(FileInputStream in) throws IOException {
 		InputStream layoutStream = null;
@@ -114,7 +90,7 @@ public class SavedGameParser extends Parser {
 			int stateVarCount = readInt(in);
 			for (int i=0; i < stateVarCount; i++) {
 				String stateVarId = readString(in);
-				Integer stateVarValue = new Integer(readInt(in));
+				Integer stateVarValue = readInt(in);
 				gameState.setStateVar(stateVarId, stateVarValue);
 			}
 
@@ -251,156 +227,6 @@ public class SavedGameParser extends Parser {
 		}
 	}
 
-	/**
-	 * Writes a gameState to a stream.
-	 *
-	 * Any MysteryBytes will be omitted.
-	 */
-	public void writeSavedGame(OutputStream out, SavedGameState gameState) throws IOException {
-
-		int headerAlpha = gameState.getHeaderAlpha();
-
-		if (headerAlpha == 2) {
-			// FTL 1.03.3 and earlier.
-			writeInt(out, headerAlpha);
-		}
-		else if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			// FTL 1.5.4+.
-			writeInt(out, headerAlpha);
-			writeBool(out, gameState.isDLCEnabled());
-		}
-		else {
-			throw new IOException("Unsupported headerAlpha: "+ headerAlpha);
-		}
-
-		int diffFlag = 0;
-		if (gameState.getDifficulty() == Difficulty.EASY) {
-			diffFlag = 0;
-		}
-		else if (gameState.getDifficulty() == Difficulty.NORMAL) {
-			diffFlag = 1;
-		}
-		else if (gameState.getDifficulty() == Difficulty.HARD && (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9)) {
-			diffFlag = 2;
-		}
-		else {
-			//throw new IOException(String.format("Unsupported difficulty for achievement (\"%s\"): %s", rec.getAchievementId(), rec.getDifficulty().toString()));
-			log.warn(String.format("Substituting EASY for unsupported difficulty for saved game: %s", gameState.getDifficulty().toString()));
-			diffFlag = 0;
-		}
-		writeInt(out, diffFlag);
-		writeInt(out, gameState.getTotalShipsDefeated());
-		writeInt(out, gameState.getTotalBeaconsExplored());
-		writeInt(out, gameState.getTotalScrapCollected());
-		writeInt(out, gameState.getTotalCrewHired());
-
-		writeString(out, gameState.getPlayerShipName());
-		writeString(out, gameState.getPlayerShipBlueprintId());
-
-		// Redundant 1-based sector number.
-		writeInt(out, gameState.getSectorNumber()+1);
-
-		writeInt(out, gameState.getUnknownBeta());
-
-		writeInt(out, gameState.getStateVars().size());
-		for (Map.Entry<String, Integer> entry : gameState.getStateVars().entrySet()) {
-			writeString(out, entry.getKey());
-			writeInt(out, entry.getValue().intValue());
-		}
-
-		writeShip(out, gameState.getPlayerShipState(), headerAlpha);
-
-		writeInt(out, gameState.getCargoIdList().size());
-		for (String cargoItemId : gameState.getCargoIdList()) {
-			writeString(out, cargoItemId);
-		}
-
-		writeInt(out, gameState.getSectorTreeSeed());
-		writeInt(out, gameState.getSectorLayoutSeed());
-		writeInt(out, gameState.getRebelFleetOffset());
-		writeInt(out, gameState.getRebelFleetFudge());
-		writeInt(out, gameState.getRebelPursuitMod());
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, gameState.getCurrentBeaconId());
-
-			writeBool(out, gameState.isWaiting());
-			writeInt(out, gameState.getWaitEventSeed());
-			writeString(out, gameState.getUnknownEpsilon());
-			writeBool(out, gameState.areSectorHazardsVisible());
-			writeBool(out, gameState.isRebelFlagshipVisible());
-			writeInt(out, gameState.getRebelFlagshipHop());
-			writeBool(out, gameState.isRebelFlagshipMoving());
-			writeInt(out, gameState.getUnknownKappa());
-			writeInt(out, gameState.getRebelFlagshipBaseTurns());
-		}
-		else if (headerAlpha == 2) {
-			writeBool(out, gameState.areSectorHazardsVisible());
-			writeBool(out, gameState.isRebelFlagshipVisible());
-			writeInt(out, gameState.getRebelFlagshipHop());
-			writeBool(out, gameState.isRebelFlagshipMoving());
-		}
-
-		writeInt(out, gameState.getSectorVisitation().size());
-		for (Boolean visited : gameState.getSectorVisitation()) {
-			writeBool(out, visited.booleanValue());
-		}
-
-		writeInt(out, gameState.getSectorNumber());
-		writeBool(out, gameState.isSectorHiddenCrystalWorlds());
-
-		writeInt(out, gameState.getBeaconList().size());
-		for (BeaconState beacon : gameState.getBeaconList()) {
-			writeBeacon(out, beacon, headerAlpha);
-		}
-
-		writeInt(out, gameState.getQuestEventMap().size());
-		for (Map.Entry<String, Integer> entry : gameState.getQuestEventMap().entrySet()) {
-			writeString(out, entry.getKey());
-			writeInt(out, entry.getValue().intValue());
-		}
-
-		writeInt(out, gameState.getDistantQuestEventList().size());
-		for (String questEventId : gameState.getDistantQuestEventList()) {
-			writeString(out, questEventId);
-		}
-
-		if (headerAlpha == 2) {
-			writeInt(out, gameState.getCurrentBeaconId());
-
-			ShipState nearbyShip = gameState.getNearbyShipState();
-			writeBool(out, (nearbyShip != null));
-			if (nearbyShip != null) {
-				writeShip(out, nearbyShip, headerAlpha);
-			}
-
-			writeRebelFlagship(out, gameState.getRebelFlagshipState());
-		}
-		else if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			// Current beaconId was set earlier.
-
-			writeInt(out, gameState.getUnknownMu());
-
-			writeEncounter(out, gameState.getEncounter());
-
-			ShipState nearbyShip = gameState.getNearbyShipState();
-			writeBool(out, (nearbyShip != null));
-			if (nearbyShip != null) {
-				writeBool(out, gameState.isRebelFlagshipNearby());
-
-				writeShip(out, nearbyShip, headerAlpha);
-
-				writeNearbyShipAI(out, gameState.getNearbyShipAI());
-			}
-
-			writeEnvironment(out, gameState.getEnvironment());
-
-			// Flagship state is set much later.
-
-			writeZeus(out, gameState, headerAlpha);
-		}
-	}
-
 	private ShipState readShip(InputStream in, boolean auto, int headerAlpha, boolean dlcEnabled) throws IOException {
 
 		String shipBlueprintId = readString(in);  // blueprints.xml / autoBlueprints.xml.
@@ -487,7 +313,7 @@ public class SavedGameParser extends Parser {
 
 		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
 
-			SystemState tmpSystem = null;
+			SystemState tmpSystem;
 
 			tmpSystem = shipState.getSystem(SystemType.CLONEBAY);
 			if (tmpSystem != null && tmpSystem.getCapacity() > 0) {
@@ -511,29 +337,27 @@ public class SavedGameParser extends Parser {
 			}
 
 			// The shields info always exists, even if the shields system doesn't.
-			if (true) {
-				ShieldsInfo shieldsInfo = new ShieldsInfo();
+			ShieldsInfo shieldsInfo = new ShieldsInfo();
 
-				shieldsInfo.setShieldLayers(readInt(in));
-				shieldsInfo.setEnergyShieldLayers(readInt(in));
-				shieldsInfo.setEnergyShieldMax(readInt(in));
-				shieldsInfo.setShieldRechargeTicks(readInt(in));
+			shieldsInfo.setShieldLayers(readInt(in));
+			shieldsInfo.setEnergyShieldLayers(readInt(in));
+			shieldsInfo.setEnergyShieldMax(readInt(in));
+			shieldsInfo.setShieldRechargeTicks(readInt(in));
 
-				shieldsInfo.setShieldDropAnimOn(readBool(in));
-				shieldsInfo.setShieldDropAnimTicks(readInt(in));    // TODO: Confirm.
+			shieldsInfo.setShieldDropAnimOn(readBool(in));
+			shieldsInfo.setShieldDropAnimTicks(readInt(in));    // TODO: Confirm.
 
-				shieldsInfo.setShieldRaiseAnimOn(readBool(in));
-				shieldsInfo.setShieldRaiseAnimTicks(readInt(in));   // TODO: Confirm.
+			shieldsInfo.setShieldRaiseAnimOn(readBool(in));
+			shieldsInfo.setShieldRaiseAnimTicks(readInt(in));   // TODO: Confirm.
 
-				shieldsInfo.setEnergyShieldAnimOn(readBool(in));
-				shieldsInfo.setEnergyShieldAnimTicks(readInt(in));  // TODO: Confirm.
+			shieldsInfo.setEnergyShieldAnimOn(readBool(in));
+			shieldsInfo.setEnergyShieldAnimTicks(readInt(in));  // TODO: Confirm.
 
-				// A pair. Usually noise. Sometimes 0.
-				shieldsInfo.setUnknownLambda(readInt(in));   // TODO: Confirm: Shield down point X.
-				shieldsInfo.setUnknownMu(readInt(in));       // TODO: Confirm: Shield down point Y.
+			// A pair. Usually noise. Sometimes 0.
+			shieldsInfo.setUnknownLambda(readInt(in));   // TODO: Confirm: Shield down point X.
+			shieldsInfo.setUnknownMu(readInt(in));       // TODO: Confirm: Shield down point Y.
 
-				shipState.addExtendedSystemInfo(shieldsInfo);
-			}
+			shipState.addExtendedSystemInfo(shieldsInfo);
 
 			tmpSystem = shipState.getSystem(SystemType.CLOAKING);
 			if (tmpSystem != null && tmpSystem.getCapacity() > 0) {
@@ -553,8 +377,8 @@ public class SavedGameParser extends Parser {
 		int roomCount = shipLayout.getRoomCount();
 		for (int r=0; r < roomCount; r++) {
 			EnumMap<ShipLayout.RoomInfo, Integer> roomInfo = shipLayout.getRoomInfo(r);
-			int squaresH = roomInfo.get(ShipLayout.RoomInfo.SQUARES_H).intValue();
-			int squaresV = roomInfo.get(ShipLayout.RoomInfo.SQUARES_V).intValue();
+			int squaresH = roomInfo.get(ShipLayout.RoomInfo.SQUARES_H);
+			int squaresV = roomInfo.get(ShipLayout.RoomInfo.SQUARES_V);
 
 			// Room states are stored in roomId order.
 			shipState.addRoom(readRoom(in, squaresH, squaresV, headerAlpha));
@@ -575,8 +399,8 @@ public class SavedGameParser extends Parser {
 			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
 			EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
 
-			if (doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_A).intValue() == -1 ||
-				 doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
+			if (doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_A) == -1 ||
+				doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B) == -1) {
 				vacuumDoorMap.put(doorCoord, doorInfo);
 				continue;
 			}
@@ -632,218 +456,11 @@ public class SavedGameParser extends Parser {
 		return shipState;
 	}
 
-	public void writeShip(OutputStream out, ShipState shipState, int headerAlpha) throws IOException {
-		String shipBlueprintId = shipState.getShipBlueprintId();
-
-		ShipBlueprint shipBlueprint = DataManager.get().getShip(shipBlueprintId);
-		if (shipBlueprint == null)
-			throw new RuntimeException(String.format("Could not find blueprint for%s ship: %s", (shipState.isAuto() ? " auto" : ""), shipState.getShipName()));
-
-		String shipLayoutId = shipBlueprint.getLayout();
-
-		ShipLayout shipLayout = DataManager.get().getShipLayout(shipLayoutId);
-		if (shipLayout == null)
-			throw new RuntimeException(String.format("Could not find layout for%s ship: %s", (shipState.isAuto() ? " auto" : ""), shipState.getShipName()));
-
-
-		writeString(out, shipBlueprintId);
-		writeString(out, shipState.getShipName());
-		writeString(out, shipState.getShipGraphicsBaseName());
-
-		writeInt(out, shipState.getStartingCrewList().size());
-		for (StartingCrewState startingCrew : shipState.getStartingCrewList()) {
-			writeStartingCrewMember(out, startingCrew);
-		}
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, shipState.getUnknownAlpha());
-			writeInt(out, shipState.getJumpTicks());
-			writeInt(out, shipState.getUnknownGamma());
-			writeInt(out, shipState.getUnknownDelta());
-		}
-
-		writeInt(out, shipState.getHullAmt());
-		writeInt(out, shipState.getFuelAmt());
-		writeInt(out, shipState.getDronePartsAmt());
-		writeInt(out, shipState.getMissilesAmt());
-		writeInt(out, shipState.getScrapAmt());
-
-		writeInt(out, shipState.getCrewList().size());
-		for (CrewState crew : shipState.getCrewList()) {
-			writeCrewMember(out, crew, headerAlpha);
-		}
-
-		// System info is stored in this order.
-		List<SystemType> systemTypes = new ArrayList<>();
-		systemTypes.add(SystemType.SHIELDS);
-		systemTypes.add(SystemType.ENGINES);
-		systemTypes.add(SystemType.OXYGEN);
-		systemTypes.add(SystemType.WEAPONS);
-		systemTypes.add(SystemType.DRONE_CTRL);
-		systemTypes.add(SystemType.MEDBAY);
-		systemTypes.add(SystemType.PILOT);
-		systemTypes.add(SystemType.SENSORS);
-		systemTypes.add(SystemType.DOORS);
-		systemTypes.add(SystemType.TELEPORTER);
-		systemTypes.add(SystemType.CLOAKING);
-		systemTypes.add(SystemType.ARTILLERY);
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			systemTypes.add(SystemType.BATTERY);
-			systemTypes.add(SystemType.CLONEBAY);
-			systemTypes.add(SystemType.MIND);
-			systemTypes.add(SystemType.HACKING);
-		}
-
-		writeInt(out, shipState.getReservePowerCapacity());
-
-		for (SystemType systemType : systemTypes) {
-			List<SystemState> systemList = shipState.getSystems(systemType);
-			if (systemList.size() > 0) {
-				for (SystemState systemState : systemList) {
-					writeSystem(out, systemState, headerAlpha);
-				}
-			}
-			else {
-				writeInt(out, 0);  // Equivalent to constructing and writing a 0-capacity system.
-			}
-		}
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-
-			SystemState clonebayState = shipState.getSystem(SystemType.CLONEBAY);
-			if (clonebayState != null && clonebayState.getCapacity() > 0) {
-				ClonebayInfo clonebayInfo = shipState.getExtendedSystemInfo(ClonebayInfo.class);
-				// This should not be null.
-				writeInt(out, clonebayInfo.getBuildTicks());
-				writeInt(out, clonebayInfo.getBuildTicksGoal());
-				writeInt(out, clonebayInfo.getDoomTicks());
-			}
-
-			SystemState batteryState = shipState.getSystem(SystemType.BATTERY);
-			if (batteryState != null && batteryState.getCapacity() > 0) {
-				BatteryInfo batteryInfo = shipState.getExtendedSystemInfo(BatteryInfo.class);
-				// This should not be null.
-				writeBool(out, batteryInfo.isActive());
-				writeInt(out, batteryInfo.getUsedBattery());
-				writeInt(out, batteryInfo.getDischargeTicks());
-			}
-
-			if (true) {
-				ShieldsInfo shieldsInfo = shipState.getExtendedSystemInfo(ShieldsInfo.class);
-				// This should not be null.
-				writeInt(out, shieldsInfo.getShieldLayers());
-				writeInt(out, shieldsInfo.getEnergyShieldLayers());
-				writeInt(out, shieldsInfo.getEnergyShieldMax());
-				writeInt(out, shieldsInfo.getShieldRechargeTicks());
-
-				writeBool(out, shieldsInfo.isShieldDropAnimOn());
-				writeInt(out, shieldsInfo.getShieldDropAnimTicks());
-
-				writeBool(out, shieldsInfo.isShieldRaiseAnimOn());
-				writeInt(out, shieldsInfo.getShieldRaiseAnimTicks());
-
-				writeBool(out, shieldsInfo.isEnergyShieldAnimOn());
-				writeInt(out, shieldsInfo.getEnergyShieldAnimTicks());
-
-				writeInt(out, shieldsInfo.getUnknownLambda());
-				writeInt(out, shieldsInfo.getUnknownMu());
-			}
-
-			SystemState cloakingState = shipState.getSystem(SystemType.CLOAKING);
-			if (cloakingState != null && cloakingState.getCapacity() > 0) {
-				CloakingInfo cloakingInfo = shipState.getExtendedSystemInfo(CloakingInfo.class);
-				// This should not be null.
-				writeInt(out, cloakingInfo.getUnknownAlpha());
-				writeInt(out, cloakingInfo.getUnknownBeta());
-				writeInt(out, cloakingInfo.getCloakTicksGoal());
-
-				writeMinMaxedInt(out, cloakingInfo.getCloakTicks());
-			}
-	}
-
-		int roomCount = shipLayout.getRoomCount();
-		for (int r=0; r < roomCount; r++) {
-			EnumMap<ShipLayout.RoomInfo, Integer> roomInfo = shipLayout.getRoomInfo(r);
-			int squaresH = roomInfo.get(ShipLayout.RoomInfo.SQUARES_H).intValue();
-			int squaresV = roomInfo.get(ShipLayout.RoomInfo.SQUARES_V).intValue();
-
-			RoomState room = shipState.getRoom(r);
-			writeRoom(out, room, squaresH, squaresV, headerAlpha);
-		}
-
-		writeInt(out, shipState.getBreachMap().size());
-		for (Map.Entry<Point, Integer> entry : shipState.getBreachMap().entrySet()) {
-			writeInt(out, entry.getKey().x);
-			writeInt(out, entry.getKey().y);
-			writeInt(out, entry.getValue().intValue());
-		}
-
-		// Doors are defined in the layout text file, but their
-		// order is different at runtime. Vacuum-adjacent doors
-		// are plucked out and moved to the end... for some
-		// reason.
-		Map<ShipLayout.DoorCoordinate, DoorState> shipDoorMap = shipState.getDoorMap();
-		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> vacuumDoorMap = new LinkedHashMap<>();
-		Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> layoutDoorMap = shipLayout.getDoorMap();
-		for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : layoutDoorMap.entrySet()) {
-			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
-			EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
-
-			if (doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_A).intValue() == -1 ||
-				 doorInfo.get(ShipLayout.DoorInfo.ROOM_ID_B).intValue() == -1) {
-				vacuumDoorMap.put(doorCoord, doorInfo);
-				continue;
-			}
-			writeDoor(out, shipDoorMap.get(doorCoord), headerAlpha);
-		}
-		for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : vacuumDoorMap.entrySet()) {
-			ShipLayout.DoorCoordinate doorCoord = entry.getKey();
-
-			writeDoor(out, shipDoorMap.get(doorCoord), headerAlpha);
-		}
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, shipState.getCloakAnimTicks());
-
-			if (headerAlpha == 8 || headerAlpha == 9) {
-				writeInt(out, shipState.getLockdownCrystalList().size());
-				for (LockdownCrystal crystal : shipState.getLockdownCrystalList()) {
-					writeLockdownCrystal(out, crystal);
-				}
-			}
-		}
-
-		writeInt(out, shipState.getWeaponList().size());
-		for (WeaponState weapon : shipState.getWeaponList()) {
-			writeString(out, weapon.getWeaponId());
-			writeBool(out, weapon.isArmed());
-
-			if (headerAlpha == 2) {  // No longer used as of FTL 1.5.4.
-				writeInt(out, weapon.getCooldownTicks());
-			}
-		}
-
-		writeInt(out, shipState.getDroneList().size());
-		for (DroneState drone : shipState.getDroneList()) {
-			writeDrone(out, drone);
-		}
-
-		writeInt(out, shipState.getAugmentIdList().size());
-		for (String augmentId : shipState.getAugmentIdList()) {
-			writeString(out, augmentId);
-		}
-	}
-
 	private StartingCrewState readStartingCrewMember(InputStream in) throws IOException {
 		String crewRace = readString(in);
 		String crewName = readString(in);
 		StartingCrewState startingCrew = new StartingCrewState(crewName, crewRace);
 		return startingCrew;
-	}
-
-	public void writeStartingCrewMember(OutputStream out, StartingCrewState startingCrew) throws IOException {
-		writeString(out, startingCrew.getRace());
-		writeString(out, startingCrew.getName());
 	}
 
 	private CrewState readCrewMember(InputStream in, int headerAlpha) throws IOException {
@@ -927,83 +544,6 @@ public class SavedGameParser extends Parser {
 		return crew;
 	}
 
-	public void writeCrewMember(OutputStream out, CrewState crew, int headerAlpha) throws IOException {
-		writeString(out, crew.getName());
-		writeString(out, crew.getRace());
-		writeBool(out, crew.isEnemyBoardingDrone());
-		writeInt(out, crew.getHealth());
-		writeInt(out, crew.getSpriteX());
-		writeInt(out, crew.getSpriteY());
-		writeInt(out, crew.getRoomId());
-		writeInt(out, crew.getRoomSquare());
-		writeBool(out, crew.isPlayerControlled());
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, crew.getCloneReady());
-
-			int deathOrder = crew.getClonebayPriority();  // Redundant.
-			writeInt(out, deathOrder);
-
-			writeInt(out, crew.getSpriteTintIndeces().size());
-			for (Integer tintInt : crew.getSpriteTintIndeces()) {
-				writeInt(out, tintInt.intValue());
-			}
-
-			writeBool(out, crew.isMindControlled());
-			writeInt(out, crew.getSavedRoomSquare());
-			writeInt(out, crew.getSavedRoomId());
-		}
-
-		writeInt(out, crew.getPilotSkill());
-		writeInt(out, crew.getEngineSkill());
-		writeInt(out, crew.getShieldSkill());
-		writeInt(out, crew.getWeaponSkill());
-		writeInt(out, crew.getRepairSkill());
-		writeInt(out, crew.getCombatSkill());
-		writeBool(out, crew.isMale());
-		writeInt(out, crew.getRepairs());
-		writeInt(out, crew.getCombatKills());
-		writeInt(out, crew.getPilotedEvasions());
-		writeInt(out, crew.getJumpsSurvived());
-		writeInt(out, crew.getSkillMasteries());
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, crew.getStunTicks());
-			writeInt(out, crew.getHealthBoost());
-			writeInt(out, crew.getClonebayPriority());
-			writeInt(out, crew.getDamageBoost());
-			writeInt(out, crew.getUnknownLambda());
-			writeInt(out, crew.getUniversalDeathCount());
-
-			if (headerAlpha == 8 || headerAlpha == 9) {
-				writeInt(out, crew.getPilotMasteryOne());
-				writeInt(out, crew.getPilotMasteryTwo());
-				writeInt(out, crew.getEngineMasteryOne());
-				writeInt(out, crew.getEngineMasteryTwo());
-				writeInt(out, crew.getShieldMasteryOne());
-				writeInt(out, crew.getShieldMasteryTwo());
-				writeInt(out, crew.getWeaponMasteryOne());
-				writeInt(out, crew.getWeaponMasteryTwo());
-				writeInt(out, crew.getRepairMasteryOne());
-				writeInt(out, crew.getRepairMasteryTwo());
-				writeInt(out, crew.getCombatMasteryOne());
-				writeInt(out, crew.getCombatMasteryTwo());
-			}
-
-			writeBool(out, crew.getUnknownNu());
-
-			writeAnim(out, crew.getTeleportAnim());
-
-			writeBool(out, crew.getUnknownPhi());
-
-			if ("crystal".equals(crew.getRace())) {
-				writeInt(out, crew.getLockdownRechargeTicks());
-				writeInt(out, crew.getLockdownRechargeTicksGoal());
-				writeInt(out, crew.getUnknownOmega());
-			}
-		}
-	}
-
 	private SystemState readSystem(InputStream in, SystemType systemType, int headerAlpha) throws IOException {
 		SystemState system = new SystemState(systemType);
 		int capacity = readInt(in);
@@ -1033,29 +573,6 @@ public class SavedGameParser extends Parser {
 			}
 		}
 		return system;
-	}
-
-	public void writeSystem(OutputStream out, SystemState system, int headerAlpha) throws IOException {
-		writeInt(out, system.getCapacity());
-		if (system.getCapacity() > 0) {
-			writeInt(out, system.getPower());
-			writeInt(out, system.getDamagedBars());
-			writeInt(out, system.getIonizedBars());
-
-			writeMinMaxedInt(out, system.getDeionizationTicks());  // May be MIN_VALUE.
-
-			writeInt(out, system.getRepairProgress());
-			writeInt(out, system.getDamageProgress());
-
-			if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-				writeInt(out, system.getBatteryPower());
-				writeInt(out, system.getHackLevel());
-				writeBool(out, system.isHacked());
-				writeInt(out, system.getTemporaryCapacityCap());
-				writeInt(out, system.getTemporaryCapacityLoss());
-				writeInt(out, system.getTemporaryCapacityDivisor());
-			}
-		}
 	}
 
 	private RoomState readRoom(InputStream in, int squaresH, int squaresV, int headerAlpha) throws IOException {
@@ -1106,54 +623,6 @@ public class SavedGameParser extends Parser {
 		return room;
 	}
 
-	public void writeRoom(OutputStream out, RoomState room, int squaresH, int squaresV, int headerAlpha) throws IOException {
-		writeInt(out, room.getOxygen());
-
-		// Squares referenced by IDs left-to-right, top-to-bottom. (Index == ID)
-		List<SquareState> squareList = room.getSquareList();
-		int squareIndex = 0;
-		SquareState[][] tmpSquares = new SquareState[squaresH][squaresV];
-		for (int v=0; v < squaresV; v++) {
-			for (int h=0; h < squaresH; h++) {
-				tmpSquares[h][v] = squareList.get(squareIndex++);
-			}
-		}
-		// Squares are written to disk top-to-bottom, left-to-right. (Index != ID!)
-		for (int h=0; h < squaresH; h++) {
-			for (int v=0; v < squaresV; v++) {
-				SquareState square = tmpSquares[h][v];
-				writeInt(out, square.getFireHealth());
-				writeInt(out, square.getIgnitionProgress());
-				writeInt(out, square.getExtinguishmentProgress());
-			}
-		}
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, room.getStationSquare());
-
-			int stationDirectionFlag = 0;
-			if (room.getStationDirection() == StationDirection.DOWN) {
-				stationDirectionFlag = 0;
-			}
-			else if (room.getStationDirection() == StationDirection.RIGHT) {
-				stationDirectionFlag = 1;
-			}
-			else if (room.getStationDirection() == StationDirection.UP) {
-				stationDirectionFlag = 2;
-			}
-			else if (room.getStationDirection() == StationDirection.LEFT) {
-				stationDirectionFlag = 3;
-			}
-			else if (room.getStationDirection() == StationDirection.NONE) {
-				stationDirectionFlag = 4;
-			}
-			else {
-				throw new IOException("Unsupported room station direction: "+ room.getStationDirection().toString());
-			}
-			writeInt(out, stationDirectionFlag);
-		}
-	}
-
 	private DoorState readDoor(InputStream in, int headerAlpha) throws IOException {
 		DoorState door = new DoorState();
 
@@ -1172,22 +641,6 @@ public class SavedGameParser extends Parser {
 		}
 
 		return door;
-	}
-
-	public void writeDoor(OutputStream out, DoorState door, int headerAlpha) throws IOException {
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, door.getCurrentMaxHealth());
-			writeInt(out, door.getHealth());
-			writeInt(out, door.getNominalHealth());
-		}
-
-		writeBool(out, door.isOpen());
-		writeBool(out, door.isWalkingThrough());
-
-		if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-			writeInt(out, door.getUnknownDelta());
-			writeInt(out, door.getUnknownEpsilon());
-		}
 	}
 
 	private LockdownCrystal readLockdownCrystal(InputStream in) throws IOException {
@@ -1209,21 +662,6 @@ public class SavedGameParser extends Parser {
 		return crystal;
 	}
 
-	public void writeLockdownCrystal(OutputStream out, LockdownCrystal crystal) throws IOException {
-		writeInt(out, crystal.getCurrentPositionX());
-		writeInt(out, crystal.getCurrentPositionY());
-		writeInt(out, crystal.getSpeed());
-		writeInt(out, crystal.getGoalPositionX());
-		writeInt(out, crystal.getGoalPositionY());
-		writeBool(out, crystal.hasArrived());
-		writeBool(out, crystal.isDone());
-		writeInt(out, crystal.getLifetime());
-		writeBool(out, crystal.isSuperFreeze());
-		writeInt(out, crystal.getLockingRoom());
-		writeInt(out, crystal.getAnimDirection());
-		writeInt(out, crystal.getShardProgress());
-	}
-
 	private DroneState readDrone(InputStream in) throws IOException {
 		DroneState drone = new DroneState(readString(in));
 		drone.setArmed(readBool(in));
@@ -1234,17 +672,6 @@ public class SavedGameParser extends Parser {
 		drone.setBodyRoomSquare(readInt(in));
 		drone.setHealth(readInt(in));
 		return drone;
-	}
-
-	public void writeDrone(OutputStream out, DroneState drone) throws IOException {
-		writeString(out, drone.getDroneId());
-		writeBool(out, drone.isArmed());
-		writeBool(out, drone.isPlayerControlled());
-		writeInt(out, drone.getBodyX());
-		writeInt(out, drone.getBodyY());
-		writeInt(out, drone.getBodyRoomId());
-		writeInt(out, drone.getBodyRoomSquare());
-		writeInt(out, drone.getHealth());
 	}
 
 	private BeaconState readBeacon(InputStream in, int headerAlpha) throws IOException {
@@ -1305,78 +732,6 @@ public class SavedGameParser extends Parser {
 
 	}
 
-	public void writeBeacon(OutputStream out, BeaconState beacon, int headerAlpha) throws IOException {
-		writeInt(out, beacon.getVisitCount());
-		if (beacon.getVisitCount() > 0) {
-			writeString(out, beacon.getBgStarscapeImageInnerPath());
-			writeString(out, beacon.getBgSpriteImageInnerPath());
-			writeInt(out, beacon.getBgSpritePosX());
-			writeInt(out, beacon.getBgSpritePosY());
-			writeInt(out, beacon.getBgSpriteRotation());
-		}
-
-		writeBool(out, beacon.isSeen());
-
-		writeBool(out, beacon.isEnemyPresent());
-		if (beacon.isEnemyPresent()) {
-			writeString(out, beacon.getShipEventId());
-			writeString(out, beacon.getAutoBlueprintId());
-			writeInt(out, beacon.getShipEventSeed());
-		}
-
-		FleetPresence fleetPresence = beacon.getFleetPresence();
-		if (fleetPresence == FleetPresence.NONE) writeInt(out, 0);
-		else if (fleetPresence == FleetPresence.REBEL) writeInt(out, 1);
-		else if (fleetPresence == FleetPresence.FEDERATION) writeInt(out, 2);
-		else if (fleetPresence == FleetPresence.BOTH) writeInt(out, 3);
-		else throw new RuntimeException("Unknown fleet presence: "+ fleetPresence);
-
-		writeBool(out, beacon.isUnderAttack());
-
-		boolean storePresent = (beacon.getStore() != null);
-		writeBool(out, storePresent);
-
-		if (storePresent) {
-			StoreState store = beacon.getStore();
-
-			if (headerAlpha == 2) {
-				// FTL 1.01-1.03.3 always had two shelves.
-
-				int shelfLimit = 2;
-				int shelfCount = Math.min(store.getShelfList().size(), shelfLimit);
-				for (int i=0; i < shelfCount; i++) {
-					writeStoreShelf(out, store.getShelfList().get(i), headerAlpha);
-				}
-				for (int i=0; i < shelfLimit - shelfCount; i++) {
-					StoreShelf dummyShelf = new StoreShelf();
-					writeStoreShelf(out, dummyShelf, headerAlpha);
-				}
-			}
-			else if (headerAlpha == 7 || headerAlpha == 8 || headerAlpha == 9) {
-				// FTL 1.5.4 requires at least one shelf.
-				int shelfReq = 1;
-
-				List<StoreShelf> pendingShelves = new ArrayList<>();
-				pendingShelves.addAll(store.getShelfList());
-
-				while (pendingShelves.size() < shelfReq) {
-					StoreShelf dummyShelf = new StoreShelf();
-					pendingShelves.add(dummyShelf);
-				}
-
-				writeInt(out, pendingShelves.size());
-
-				for (StoreShelf shelf : pendingShelves) {
-					writeStoreShelf(out, shelf, headerAlpha);
-				}
-			}
-
-			writeInt(out, store.getFuel());
-			writeInt(out, store.getMissiles());
-			writeInt(out, store.getDroneParts());
-		}
-	}
-
 	private StoreShelf readStoreShelf(InputStream in, int headerAlpha) throws IOException {
 		StoreShelf shelf = new StoreShelf();
 
@@ -1408,32 +763,6 @@ public class SavedGameParser extends Parser {
 		return shelf;
 	}
 
-	public void writeStoreShelf(OutputStream out, StoreShelf shelf, int headerAlpha) throws IOException {
-		StoreItemType itemType = shelf.getItemType();
-		if (itemType == StoreItemType.WEAPON) writeInt(out, 0);
-		else if (itemType == StoreItemType.DRONE) writeInt(out, 1);
-		else if (itemType == StoreItemType.AUGMENT) writeInt(out, 2);
-		else if (itemType == StoreItemType.CREW) writeInt(out, 3);
-		else if (itemType == StoreItemType.SYSTEM) writeInt(out, 4);
-		else throw new RuntimeException("Unknown store item type: "+ itemType);
-
-		List<StoreItem> items = shelf.getItems();
-		for (int i=0; i < 3; i++) {
-			if (items.size() > i) {
-				int available = (items.get(i).isAvailable() ? 1 : 0);
-				writeInt(out, available);
-				writeString(out, items.get(i).getItemId());
-
-				if (headerAlpha == 8 || headerAlpha == 9) {
-					writeInt(out, items.get(i).getExtraData());
-				}
-			}
-			else {
-				writeInt(out, -1);  // No item.
-			}
-		}
-	}
-
 	public EncounterState readEncounter(InputStream in) throws IOException {
 		EncounterState encounter = new EncounterState();
 
@@ -1451,29 +780,11 @@ public class SavedGameParser extends Parser {
 		int choiceCount = readInt(in);
 		List<Integer> choiceList = new ArrayList<>();
 		for (int i=0; i < choiceCount; i++) {
-			choiceList.add(new Integer(readInt(in)));
+			choiceList.add(readInt(in));
 		}
 		encounter.setChoiceList(choiceList);
 
 		return encounter;
-	}
-
-	public void writeEncounter(OutputStream out, EncounterState encounter) throws IOException {
-		writeInt(out, encounter.getShipEventSeed());
-		writeString(out, encounter.getSurrenderEventId());
-		writeString(out, encounter.getEscapeEventId());
-		writeString(out, encounter.getDestroyedEventId());
-		writeString(out, encounter.getDeadCrewEventId());
-		writeString(out, encounter.getGotAwayEventId());
-
-		writeString(out, encounter.getLastEventId());
-		writeString(out, encounter.getText());
-		writeInt(out, encounter.getAffectedCrewSeed());
-
-		writeInt(out, encounter.getChoiceList().size());
-		for (Integer choiceInt : encounter.getChoiceList()) {
-			writeInt(out, choiceInt.intValue());
-		}
 	}
 
 	private NearbyShipAIState readNearbyShipAI(FileInputStream in) throws IOException {
@@ -1494,19 +805,6 @@ System.err.println(String.format("Ship AI: @%d", in.getChannel().position()));
 		return ai;
 	}
 
-	public void writeNearbyShipAI(OutputStream out, NearbyShipAIState ai) throws IOException {
-		writeBool(out, ai.hasSurrendered());
-		writeBool(out, ai.isEscaping());
-		writeBool(out, ai.isDestroyed());
-		writeInt(out, ai.getSurrenderThreshold());
-		writeInt(out, ai.getEscapeThreshold());
-		writeInt(out, ai.getEscapeTicks());
-		writeBool(out, ai.isStalemateTriggered());
-		writeInt(out, ai.getStalemateTicks());
-		writeInt(out, ai.getBoardingAttempts());
-		writeInt(out, ai.getBoardersNeeded());
-	}
-
 	private EnvironmentState readEnvironment(FileInputStream in) throws IOException {
 System.err.println(String.format("Environment: @%d", in.getChannel().position()));
 		EnvironmentState env = new EnvironmentState();
@@ -1516,7 +814,7 @@ System.err.println(String.format("Environment: @%d", in.getChannel().position())
 		env.setPDSPresent(readBool(in));
 
 		int vulnFlag = readInt(in);
-		HazardVulnerability vuln = null;
+		HazardVulnerability vuln;
 		if (vulnFlag == 0) {
 			vuln = HazardVulnerability.PLAYER_SHIP;
 		}
@@ -1548,42 +846,6 @@ System.err.println(String.format("Environment: @%d", in.getChannel().position())
 		return env;
 	}
 
-	public void writeEnvironment(OutputStream out, EnvironmentState env) throws IOException {
-		writeBool(out, env.isRedGiantPresent());
-		writeBool(out, env.isPulsarPresent());
-		writeBool(out, env.isPDSPresent());
-
-		int vulnFlag = 0;
-		if (env.getVulnerableShips() == HazardVulnerability.PLAYER_SHIP) {
-			vulnFlag = 0;
-		}
-		else if (env.getVulnerableShips() == HazardVulnerability.NEARBY_SHIP) {
-			vulnFlag = 1;
-		}
-		else if (env.getVulnerableShips() == HazardVulnerability.BOTH_SHIPS) {
-			vulnFlag = 2;
-		}
-		else {
-			throw new IOException(String.format("Unsupported environment vulnerability: %s", env.getVulnerableShips().toString()));
-		}
-		writeInt(out, vulnFlag);
-
-		boolean asteroidsPresent = (env.getAsteroidField() != null);
-		writeBool(out, asteroidsPresent);
-		if (asteroidsPresent) {
-			AsteroidFieldState asteroidField = env.getAsteroidField();
-			writeInt(out, asteroidField.getUnknownAlpha());
-			writeInt(out, asteroidField.getStrayRockTicks());
-			writeInt(out, asteroidField.getUnknownGamma());
-			writeInt(out, asteroidField.getBgDriftTicks());
-			writeInt(out, asteroidField.getCurrentTarget());
-		}
-
-		writeInt(out, env.getSolarFlareFadeTicks());
-		writeInt(out, env.getHavocTicks());
-		writeInt(out, env.getPDSTicks());
-	}
-
 	public RebelFlagshipState readRebelFlagship(InputStream in) throws IOException {
 		RebelFlagshipState flagship = new RebelFlagshipState();
 
@@ -1595,16 +857,6 @@ System.err.println(String.format("Environment: @%d", in.getChannel().position())
 		}
 
 		return flagship;
-	}
-
-	public void writeRebelFlagship(OutputStream out, RebelFlagshipState flagship) throws IOException {
-		writeInt(out, flagship.getPendingStage());
-
-		writeInt(out, flagship.getOccupancyMap().size());
-		for (Map.Entry<Integer, Integer> entry : flagship.getOccupancyMap().entrySet()) {
-			int occupantCount = entry.getValue().intValue();
-			writeInt(out, occupantCount);
-		}
 	}
 
 	public AnimState readAnim(InputStream in) throws IOException {
@@ -1619,16 +871,6 @@ System.err.println(String.format("Environment: @%d", in.getChannel().position())
 		anim.setY(readInt(in));
 
 		return anim;
-	}
-
-	public void writeAnim(OutputStream out, AnimState anim) throws IOException {
-		writeBool(out, anim.isPlaying());
-		writeBool(out, anim.isLooping());
-		writeInt(out, anim.getCurrentFrame());
-		writeInt(out, anim.getProgressTicks());
-		writeInt(out, anim.getScale());
-		writeInt(out, anim.getX());
-		writeInt(out, anim.getY());
 	}
 
 	private ProjectileState readProjectile(FileInputStream in) throws IOException {
@@ -1728,95 +970,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		return projectile;
 	}
 
-	public void writeProjectile(OutputStream out, ProjectileState projectile) throws IOException {
-
-		int projectileTypeFlag = 0;
-		if (ProjectileType.INVALID.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 0;
-		}
-		else if (ProjectileType.LASER_OR_BURST.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 1;
-		}
-		else if (ProjectileType.ROCK_OR_EXPLOSION.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 2;
-		}
-		else if (ProjectileType.MISSILE.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 3;
-		}
-		else if (ProjectileType.BOMB.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 4;
-		}
-		else if (ProjectileType.BEAM.equals(projectile.getProjectileType())) {
-			projectileTypeFlag = 5;
-		}
-		else {
-			throw new IOException(String.format("Unsupported projectileType: %s", projectile.getProjectileType().toString()));
-		}
-		writeInt(out, projectileTypeFlag);
-
-		if (ProjectileType.INVALID.equals(projectile.getProjectileType())) {
-			return;  // No other fields are set for invalid projectiles.
-		}
-
-		writeInt(out, projectile.getCurrentPositionX());
-		writeInt(out, projectile.getCurrentPositionY());
-		writeInt(out, projectile.getPreviousPositionX());
-		writeInt(out, projectile.getPreviousPositionY());
-		writeInt(out, projectile.getSpeed());
-		writeInt(out, projectile.getGoalPositionX());
-		writeInt(out, projectile.getGoalPositionY());
-		writeInt(out, projectile.getHeading());
-		writeInt(out, projectile.getOwnerId());
-		writeInt(out, projectile.getSelfId());
-
-		writeDamage(out, projectile.getDamage());
-
-		writeInt(out, projectile.getLifespan());
-		writeInt(out, projectile.getDestinationSpace());
-		writeInt(out, projectile.getCurrentSpace());
-		writeInt(out, projectile.getTargetId());
-		writeBool(out, projectile.isDead());
-		writeString(out, projectile.getDeathAnimId());
-		writeString(out, projectile.getFlightAnimId());
-
-		writeAnim(out, projectile.getDeathAnim());
-		writeAnim(out, projectile.getFlightAnim());
-
-		writeInt(out, projectile.getVelocityX());
-		writeInt(out, projectile.getVelocityY());
-		writeBool(out, projectile.hasMissed());
-		writeBool(out, projectile.hasHitTarget());
-		writeString(out, projectile.getHitSolidSound());
-		writeString(out, projectile.getHitShieldSound());
-		writeString(out, projectile.getMissSound());
-		writeMinMaxedInt(out, projectile.getEntryAngle());
-		writeBool(out, projectile.hasStartedDying());
-		writeBool(out, projectile.hasPassedTarget());
-
-		writeInt(out, projectile.getType());
-		writeBool(out, projectile.getBroadcastTarget());
-
-		ExtendedProjectileInfo extendedInfo = projectile.getExtendedInfo(ExtendedProjectileInfo.class);
-		if (extendedInfo instanceof IntegerProjectileInfo) {
-			IntegerProjectileInfo intInfo = projectile.getExtendedInfo(IntegerProjectileInfo.class);
-			for (int i=0; i < intInfo.getSize(); i++) {
-				writeMinMaxedInt(out, intInfo.get(i));
-			}
-		}
-		else if (extendedInfo instanceof BeamProjectileInfo) {
-			writeBeamProjectileInfo(out, projectile.getExtendedInfo(BeamProjectileInfo.class));
-		}
-		else if (extendedInfo instanceof BombProjectileInfo) {
-			writeBombProjectileInfo(out, projectile.getExtendedInfo(BombProjectileInfo.class));
-		}
-		else if (extendedInfo instanceof LaserProjectileInfo) {
-			writeLaserProjectileInfo(out, projectile.getExtendedInfo(LaserProjectileInfo.class));
-		}
-		else {
-			throw new IOException("Unsupported extended projectile info: "+ extendedInfo.getClass().getSimpleName());
-		}
-	}
-
 	public DamageState readDamage(InputStream in) throws IOException {
 		DamageState damage = new DamageState();
 
@@ -1836,23 +989,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		damage.setStunAmount(readInt(in));
 
 		return damage;
-	}
-
-	public void writeDamage(OutputStream out, DamageState damage) throws IOException {
-		writeInt(out, damage.getHullDamage());
-		writeInt(out, damage.getShieldPiercing());
-		writeInt(out, damage.getFireChance());
-		writeInt(out, damage.getBreachChance());
-		writeInt(out, damage.getIonDamage());
-		writeInt(out, damage.getSystemDamage());
-		writeInt(out, damage.getPersonnelDamage());
-		writeBool(out, damage.isHullBuster());
-		writeInt(out, damage.getOwnerId());
-		writeInt(out, damage.getSelfId());
-		writeBool(out, damage.isLockdown());
-		writeBool(out, damage.isCrystalShard());
-		writeInt(out, damage.getStunChance());
-		writeInt(out, damage.getStunAmount());
 	}
 
 	private BeamProjectileInfo readBeamProjectileInfo(FileInputStream in) throws IOException {
@@ -1893,40 +1029,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		return beamInfo;
 	}
 
-	public void writeBeamProjectileInfo(OutputStream out, BeamProjectileInfo beamInfo) throws IOException {
-		writeInt(out, beamInfo.getFiringShipEndX());
-		writeInt(out, beamInfo.getFiringShipEndY());
-		writeInt(out, beamInfo.getTargetShipSourceX());
-		writeInt(out, beamInfo.getTargetShipSourceY());
-
-		writeInt(out, beamInfo.getTargetShipEndX());
-		writeInt(out, beamInfo.getTargetShipEndY());
-		writeInt(out, beamInfo.getUnknownBetaX());
-		writeInt(out, beamInfo.getUnknownBetaY());
-
-		writeInt(out, beamInfo.getSwathEndX());
-		writeInt(out, beamInfo.getSwathEndY());
-		writeInt(out, beamInfo.getSwathStartX());
-		writeInt(out, beamInfo.getSwathStartY());
-
-		writeInt(out, beamInfo.getUnknownGamma());
-		writeInt(out, beamInfo.getSwathLength());
-		writeInt(out, beamInfo.getUnknownDelta());
-
-		writeInt(out, beamInfo.getUnknownEpsilonX());
-		writeInt(out, beamInfo.getUnknownEpsilonY());
-
-		writeInt(out, beamInfo.getUnknownZeta());
-		writeInt(out, beamInfo.getUnknownEta());
-		writeInt(out, beamInfo.getUnknownTheta());
-
-		writeBool(out, beamInfo.getUnknownIota());
-		writeBool(out, beamInfo.getUnknownKappa());
-		writeBool(out, beamInfo.getUnknownLambda());
-		writeBool(out, beamInfo.getUnknownMu());
-		writeBool(out, beamInfo.getUnknownNu());
-	}
-
 	private BombProjectileInfo readBombProjectileInfo(FileInputStream in) throws IOException {
 		BombProjectileInfo bombInfo = new BombProjectileInfo();
 
@@ -1939,14 +1041,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		return bombInfo;
 	}
 
-	public void writeBombProjectileInfo(OutputStream out, BombProjectileInfo bombInfo) throws IOException {
-		writeInt(out, bombInfo.getUnknownAlpha());
-		writeInt(out, bombInfo.getUnknownBeta());
-		writeInt(out, bombInfo.getUnknownGamma());
-		writeInt(out, bombInfo.getUnknownDelta());
-		writeBool(out, bombInfo.getUnknownEpsilon());
-	}
-
 	private LaserProjectileInfo readLaserProjectileInfo(FileInputStream in) throws IOException {
 		LaserProjectileInfo laserInfo = new LaserProjectileInfo();
 
@@ -1956,14 +1050,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		return laserInfo;
 	}
 
-	public void writeLaserProjectileInfo(OutputStream out, LaserProjectileInfo laserInfo) throws IOException {
-		writeInt(out, laserInfo.getUnknownAlpha());
-		writeInt(out, laserInfo.getSpin());
-	}
 
-
-
-	public static enum StateVar {
+	public enum StateVar {
 		// TODO: Magic strings.
 		BLUE_ALIEN     ("blue_alien",      "Blue event choices clicked. (Only ones that require a race.)"),
 		DEAD_CREW      ("dead_crew",       "Ships defeated by killing all enemy crew."),
@@ -1990,7 +1078,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		private String id;
 		private String description;
-		private StateVar(String id, String description) {
+		StateVar(String id, String description) {
 			this.id = id;
 			this.description = description;
 		}
@@ -2101,9 +1189,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			cargoIdList.add(cargoItemId);
 		}
 
-		public void setCargoList(ArrayList<String> cargoIdList) {
-			this.cargoIdList = cargoIdList;
-		}
 		public List<String> getCargoIdList() { return cargoIdList; }
 
 		/**
@@ -2168,7 +1253,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		 * See StateVar enums for known vars and descriptions.
 		 */
 		public void setStateVar(String stateVarId, int stateVarValue) {
-			stateVars.put(stateVarId, new Integer(stateVarValue));
+			stateVars.put(stateVarId, stateVarValue);
 		}
 
 		public boolean hasStateVar(String stateVarId) {
@@ -2179,7 +1264,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			// Don't ask for vars that aren't present!
 
 			Integer result = stateVars.get(stateVarId);
-			return result.intValue();
+			return result;
 		}
 
 		public Map<String, Integer> getStateVars() { return stateVars; }
@@ -2376,16 +1461,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public int getRebelFlagshipBaseTurns() { return rebelFlagshipBaseTurns; }
 
 		/**
-		 * Toggles whether a dot on the sector tree has been visited.
-		 *
-		 * @param sector an index of the sector list (0-based)
-		 * @param visited true if visited, false otherwise
-		 */
-		public void setSectorVisited(int sector, boolean visited) {
-			sectorVisitationList.set(sector, visited);
-		}
-
-		/**
 		 * Sets a list of sector tree breadcrumbs.
 		 *
 		 * Saved games only contain a linear set of boolean flags to
@@ -2427,7 +1502,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public List<BeaconState> getBeaconList() { return beaconList; }
 
 		public void addQuestEvent(String questEventId, int questBeaconId) {
-			questEventMap.put(questEventId, new Integer(questBeaconId));
+			questEventMap.put(questEventId, questBeaconId);
 		}
 
 		public Map<String, Integer> getQuestEventMap() {
@@ -2578,7 +1653,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public String toString() {
 			StringBuilder result = new StringBuilder();
 
-			String formatDesc = null;
+			String formatDesc;
 			switch (unknownHeaderAlpha) {
 				case(2): formatDesc = "Saved Game, FTL 1.01-1.03.3"; break;
 				case(7): formatDesc = "Saved Game, FTL 1.5.4-1.5.10"; break;
@@ -2587,7 +1662,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 				default: formatDesc = "???"; break;
 			}
 
-			boolean first = true;
+			boolean first;
 			result.append(String.format("File Format:            %5d (%s)\n", unknownHeaderAlpha, formatDesc));
 			result.append(String.format("AE Content:             %5b\n", (dlcEnabled ? "Enabled" : "Disabled")));
 			result.append(String.format("Ship Name:              %s\n", playerShipName));
@@ -2602,7 +1677,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 			result.append("\nState Vars...\n");
 			for (Map.Entry<String, Integer> entry : stateVars.entrySet()) {
-				result.append(String.format("%-16s %4d\n", entry.getKey() +":", entry.getValue().intValue()));
+				result.append(String.format("%-16s %4d\n", entry.getKey() +":", entry.getValue()));
 			}
 
 			result.append("\nPlayer Ship...\n");
@@ -2655,7 +1730,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append("\nQuests...\n");
 			for (Map.Entry<String, Integer> entry : questEventMap.entrySet()) {
 				String questEventId = entry.getKey();
-				int questBeaconId = entry.getValue().intValue();
+				int questBeaconId = entry.getValue();
 				result.append(String.format("QuestEventId: %s, BeaconId: %d\n", questEventId, questBeaconId));
 			}
 
@@ -2770,97 +1845,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			this.shipLayoutId = shipLayoutId;
 			this.shipGfxBaseName = shipGfxBaseName;
 			this.auto = auto;
-		}
-
-		/**
-		 * Assigns the missing defaults of an incomplete ship.
-		 *
-		 * Based on its ShipBlueprint, the following will be set:
-		 *   Systems, reserve power, rooms, doors, augments, and supplies.
-		 *
-		 * Reserve power will be the total of all system rooms' initial 'power'
-		 * (aka minimum random capacity), capped by the shipBlueprint's
-		 * maxPower.
-		 */
-		public void refit() {
-			ShipBlueprint shipBlueprint = DataManager.get().getShip(shipBlueprintId);
-			ShipLayout shipLayout = DataManager.get().getShipLayout(shipBlueprint.getLayout());
-
-			// Systems.
-			systemsMap.clear();
-			int powerRequired = 0;
-			for (SystemType systemType : SystemType.values()) {
-				SystemState systemState = new SystemState(systemType);
-
-				// Set capacity for systems that're initially present.
-				ShipBlueprint.SystemList.SystemRoom[] systemRoom = shipBlueprint.getSystemList().getSystemRoom(systemType);
-				if (systemRoom != null) {
-					Boolean start = systemRoom[0].getStart();
-					if (start == null || start.booleanValue() == true) {
-						SystemBlueprint systemBlueprint = DataManager.get().getSystem(systemType.getId());
-						systemState.setCapacity(systemBlueprint.getStartPower());
-
-						// The optional room max attribute caps randomly generated ships' system capacity.
-						if (systemRoom[0].getMaxPower() != null) {
-							systemState.setCapacity(systemRoom[0].getMaxPower().intValue());
-						}
-
-						if (systemType.isSubsystem()) {
-							// Give subsystems all the power they want.
-							systemState.setPower(systemState.getCapacity());
-						} else {
-							// The room power attribute is for initial system power usage (or minimum if for randomly generated ships).
-							powerRequired += systemRoom[0].getPower();
-						}
-					}
-				}
-				addSystem(systemState);
-			}
-			if (powerRequired > shipBlueprint.getMaxPower().amount) {
-				powerRequired = shipBlueprint.getMaxPower().amount;
-			}
-			setReservePowerCapacity(powerRequired);
-
-			// Rooms.
-			getRoomList().clear();
-			for (int r=0; r < shipLayout.getRoomCount(); r++) {
-				EnumMap<ShipLayout.RoomInfo, Integer> roomInfoMap = shipLayout.getRoomInfo(r);
-				int squaresH = roomInfoMap.get(ShipLayout.RoomInfo.SQUARES_H).intValue();
-				int squaresV = roomInfoMap.get(ShipLayout.RoomInfo.SQUARES_V).intValue();
-
-				RoomState roomState = new RoomState();
-				for (int s=0; s < squaresH*squaresV; s++) {
-					roomState.addSquare(new SquareState(0, 0, -1));
-				}
-				addRoom(roomState);
-			}
-
-			// Doors.
-			getDoorMap().clear();
-			Map<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> layoutDoorMap = shipLayout.getDoorMap();
-			for (Map.Entry<ShipLayout.DoorCoordinate, EnumMap<ShipLayout.DoorInfo,Integer>> entry : layoutDoorMap.entrySet()) {
-				ShipLayout.DoorCoordinate doorCoord = entry.getKey();
-				EnumMap<ShipLayout.DoorInfo,Integer> doorInfo = entry.getValue();
-
-				setDoor(doorCoord.x, doorCoord.y, doorCoord.v, new DoorState());
-			}
-
-			// Augments.
-			getAugmentIdList().clear();
-			if (shipBlueprint.getAugments() != null) {
-				for (ShipBlueprint.AugmentId augId : shipBlueprint.getAugments())
-					addAugmentId(augId.name);
-			}
-
-			// Supplies.
-			setHullAmt(shipBlueprint.getHealth().amount);
-			setFuelAmt(20);
-			setDronePartsAmt(0);
-			setMissilesAmt(0);
-			if (shipBlueprint.getDroneList() != null)
-				setDronePartsAmt(shipBlueprint.getDroneList().drones);
-			if (shipBlueprint.getWeaponList() != null)
-				setMissilesAmt(shipBlueprint.getWeaponList().missiles);
 		}
 
 
@@ -2988,26 +1972,11 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		}
 
 
-		public void setShipName(String s) { shipName = s; }
-
 		public String getShipName() { return shipName; }
 		public String getShipBlueprintId() { return shipBlueprintId; }
 		public String getShipLayoutId() { return shipLayoutId; }
 		public boolean isAuto() { return auto; }
 
-		/**
-		 * Sets the basename to use when loading ship images.
-		 * See 'img/ship/basename_*.png'.
-		 *
-		 * Values in the wild:
-		 *   jelly_croissant_pirate, rebel_long_pirate...
-		 *
-		 * It often resembles the layout id, but they're not interchangeable.
-		 * The proper shipLayoutId comes from the ShipBlueprint.
-		 */
-		public void setShipGraphicsBaseName(String shipGfxBaseName) {
-			this.shipGfxBaseName = shipGfxBaseName;
-		}
 		public String getShipGraphicsBaseName() { return shipGfxBaseName; }
 
 
@@ -3102,7 +2071,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public void addSystem(SystemState s) {
 			List<SystemState> systemList = systemsMap.get(s.getSystemType());
 			if (systemList == null) {
-				systemList = new ArrayList<SystemState>(0);
+				systemList = new ArrayList<>(0);
 				systemsMap.put(s.getSystemType(), systemList);
 			}
 			systemList.add(s);
@@ -3130,7 +2099,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public List<SystemState> getSystems(SystemType systemType) {
 			List<SystemState> systemList = systemsMap.get(systemType);
 			if (systemList == null) {
-				systemList = new ArrayList<SystemState>(0);
+				systemList = new ArrayList<>(0);
 				systemsMap.put(systemType, systemList);
 			}
 
@@ -3144,11 +2113,10 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			extendedSystemInfoList.add(info);
 		}
 
-		public void setExtendedSystemInfoList(List<ExtendedSystemInfo> extendedSystemInfoList) { this.extendedSystemInfoList = extendedSystemInfoList; }
 		public List<ExtendedSystemInfo> getExtendedSystemInfoList() { return extendedSystemInfoList; }
 
 		public <T extends ExtendedSystemInfo> List<T> getExtendedSystemInfoList(Class<T> infoClass) {
-			List<T> result = new ArrayList<T>(1);
+			List<T> result = new ArrayList<>(1);
 			for (ExtendedSystemInfo info : extendedSystemInfoList) {
 				if (infoClass.isInstance(info)) {
 					result.add(infoClass.cast(info));
@@ -3190,7 +2158,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		 * @param breachHealth 0 to 100.
 		 */
 		public void setBreach(int x, int y, int breachHealth) {
-			breachMap.put(new Point(x, y), new Integer(breachHealth));
+			breachMap.put(new Point(x, y), breachHealth);
 		}
 
 		public Map<Point, Integer> getBreachMap() { return breachMap; }
@@ -3297,7 +2265,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 				throw new RuntimeException(String.format("Could not find layout for%s ship: %s", (auto ? " auto" : ""), shipName));
 
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
+			boolean first;
 			result.append(String.format("Ship Name:    %s\n", shipName));
 			result.append(String.format("Ship Type:    %s\n", shipBlueprintId));
 			result.append(String.format("Ship Layout:  %s\n", shipLayoutId));
@@ -3373,7 +2341,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 				else { result.append(",\n"); }
 
 				Point breachCoord = entry.getKey();
-				int breachHealth = entry.getValue().intValue();
+				int breachHealth = entry.getValue();
 
 				result.append(String.format("BreachId: %2d, Raw Coords: %2d,%2d (-Layout Offset: %2d,%2d)\n", ++breachId, breachCoord.x, breachCoord.y, breachCoord.x-shipLayout.getOffsetX(), breachCoord.y-shipLayout.getOffsetY()));
 				result.append(String.format("  Breach HP: %3d\n", breachHealth));
@@ -3460,16 +2428,15 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
-			result.append(String.format("Name: %s\n", name));
-			result.append(String.format("Race: %s\n", race));
-			return result.toString();
+			String result = String.format("Name: %s\n", name) +
+				String.format("Race: %s\n", race);
+			return result;
 		}
 	}
 
 
 
-	public static enum CrewType {
+	public enum CrewType {
 		// TODO: Magic numbers.
 		ANAEROBIC("anaerobic", 100),
 		BATTLE   ("battle",    150),
@@ -3487,7 +2454,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		private String id;
 		private int maxHealth;
-		private CrewType(String id, int maxHealth) {
+		CrewType(String id, int maxHealth) {
 			this.id = id;
 			this.maxHealth = maxHealth;
 		}
@@ -3727,8 +2694,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		 * For preserved dead crew, which have no body, this lingers, or may be
 		 * (0,0).
 		 */
-		public void setSpriteX(int n) { spriteX = n; };
-		public void setSpriteY(int n) { spriteY = n; };
+		public void setSpriteX(int n) { spriteX = n; }
+		public void setSpriteY(int n) { spriteY = n; }
 		public int getSpriteX() { return spriteX; }
 		public int getSpriteY() { return spriteY; }
 
@@ -4099,7 +3066,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			for (int i=0; i < spriteTintIndeces.size(); i++) {
 				Integer colorIndex = spriteTintIndeces.get(i);
 
-				String colorHint = null;
+				String colorHint;
 				if (tintLayerList != null && i < tintLayerList.size()) {
 					CrewBlueprint.SpriteTintLayer tintLayer = tintLayerList.get(i);
 					if (tintLayer.tintList != null && colorIndex < tintLayer.tintList.size() && colorIndex >= 0) {
@@ -4163,7 +3130,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 
 
-	public static enum SystemType {
+	public enum SystemType {
 		// SystemType ids are tied to "img/icons/s_*_overlay.png" and store item ids.
 		// TODO: Magic booleans.
 		PILOT     ("pilot",      true),
@@ -4185,7 +3152,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		private String id;
 		private boolean subsystem;
-		private SystemType(String id, boolean subsystem) {
+		SystemType(String id, boolean subsystem) {
 			this.id = id;
 			this.subsystem = subsystem;
 		}
@@ -4505,8 +3472,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			int lossLimit = capacity - temporaryCapacityLoss;
 			int divLimit = (capacity + temporaryCapacityDivisor-1) / temporaryCapacityDivisor;
 
-			int limit = Math.max(0, Math.min(capLimit, Math.min(lossLimit, divLimit)));
-			return limit;
+			return Math.max(0, Math.min(capLimit, Math.min(lossLimit, divLimit)));
 		}
 
 		/**
@@ -4545,7 +3511,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 				result.append(String.format("Temp Capacity Divisor:   %3d\n", temporaryCapacityDivisor));
 			}
 			else {
-				result.append(String.format("(Not installed)\n"));
+				result.append("(Not installed)\n");
 			}
 
 			return result.toString();
@@ -4554,7 +3520,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 
 
-	public static enum StationDirection { DOWN, RIGHT, UP, LEFT, NONE }
+	public enum StationDirection { DOWN, RIGHT, UP, LEFT, NONE }
 
 	public static class RoomState {
 		private int oxygen = 100;
@@ -4672,7 +3638,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public SquareState(int fireHealth, int ignitionProgress, int gamma) {
 			this.fireHealth = fireHealth;
 			this.ignitionProgress = ignitionProgress;
-			this.extinguishmentProgress = extinguishmentProgress;
 		}
 
 		/**
@@ -4684,48 +3649,16 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			this.extinguishmentProgress = srcSquare.getExtinguishmentProgress();
 		}
 
-		/**
-		 * Sets the health of a fire in this square, or 0.
-		 *
-		 * @param n 0-100
-		 */
-		public void setFireHealth(int n) { fireHealth = n; }
 		public int getFireHealth() { return fireHealth; }
 
-		/**
-		 * Sets the square's ignition progress.
-		 *
-		 * Squares adjacent to a fire grow closer to igniting as
-		 * time passes. Then a new fire spawns in them at full health.
-		 *
-		 * @param n 0 to 100.
-		 */
-		public void setIgnitionProgress(int n) { ignitionProgress = n; }
 		public int getIgnitionProgress() { return ignitionProgress; }
 
-		/**
-		 * Unknown.
-		 *
-		 * This is a rapidly decrementing number, as a fire disappears in a puff
-		 * of smoke. When not set, this is -1.
-		 *
-		 * Starving a fire of oxygen does not affect its health.
-		 *
-		 * In FTL 1.01-1.5.10 this always seemed to be -1. In FTL 1.5.13, other
-		 * values were finally observed.
-		 *
-		 * Observed values: -1 (almost always), 9,8,7,6,5,2,1,0.
-		 */
-		public void setExtinguishmentProgress(int n) { extinguishmentProgress = n; }
 		public int getExtinguishmentProgress() { return extinguishmentProgress; }
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
 
-			result.append(String.format("Fire HP: %3d, Ignition: %3d%%, Extinguishment: %2d\n", fireHealth, ignitionProgress, extinguishmentProgress));
-
-			return result.toString();
+			return String.format("Fire HP: %3d, Ignition: %3d%%, Extinguishment: %2d\n", fireHealth, ignitionProgress, extinguishmentProgress);
 		}
 	}
 
@@ -4857,12 +3790,10 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Open: %-5b, Walking Through: %-5b\n", open, walkingThrough) +
+				String.format("Full HP: %3d, Current HP: %3d, Nominal HP: %3d, Delta?: %3d, Epsilon?: %3d\n", currentMaxHealth, health, nominalHealth, unknownDelta, unknownEpsilon);
 
-			result.append(String.format("Open: %-5b, Walking Through: %-5b\n", open, walkingThrough));
-			result.append(String.format("Full HP: %3d, Current HP: %3d, Nominal HP: %3d, Delta?: %3d, Epsilon?: %3d\n", currentMaxHealth, health, nominalHealth, unknownDelta, unknownEpsilon));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -4912,20 +3843,18 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Current Position:  %8d,%8d (%9.03f,%9.03f)\n", currentPosX, currentPosY, currentPosX / 1000f, currentPosY / 1000f) +
+				String.format("Speed?:            %8d\n", speed) +
+				String.format("Goal Position:     %8d,%8d (%9.03f,%9.03f)\n", goalPosX, goalPosY, goalPosX / 1000f, goalPosY / 1000f) +
+				String.format("Arrived?:          %8b\n", arrived) +
+				String.format("Done?:             %8b\n", done) +
+				String.format("Lifetime?:         %8d\n", lifetime) +
+				String.format("SuperFreeze?:      %8b\n", superFreeze) +
+				String.format("Locking Room?:     %8d\n", lockingRoom) +
+				String.format("Anim Direction?:   %8d\n", animDirection) +
+				String.format("Shard Progress?:   %8d\n", shardProgress);
 
-			result.append(String.format("Current Position:  %8d,%8d (%9.03f,%9.03f)\n", currentPosX, currentPosY, currentPosX/1000f, currentPosY/1000f));
-			result.append(String.format("Speed?:            %8d\n", speed));
-			result.append(String.format("Goal Position:     %8d,%8d (%9.03f,%9.03f)\n", goalPosX, goalPosY, goalPosX/1000f, goalPosY/1000f));
-			result.append(String.format("Arrived?:          %8b\n", arrived));
-			result.append(String.format("Done?:             %8b\n", done));
-			result.append(String.format("Lifetime?:         %8d\n", lifetime));
-			result.append(String.format("SuperFreeze?:      %8b\n", superFreeze));
-			result.append(String.format("Locking Room?:     %8d\n", lockingRoom));
-			result.append(String.format("Anim Direction?:   %8d\n", animDirection));
-			result.append(String.format("Shard Progress?:   %8d\n", shardProgress));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -4986,7 +3915,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		public void setArmed(boolean b) {
 			armed = b;
-			if (b == false) cooldownTicks = 0;
+			if (!b) cooldownTicks = 0;
 		}
 		public boolean isArmed() { return armed; }
 
@@ -5036,7 +3965,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 
 
-	public static enum DroneType {
+	public enum DroneType {
 		// TODO: Magic numbers.
 		BATTLE     ("BATTLE",      150),
 		REPAIR     ("REPAIR",       25),
@@ -5053,7 +3982,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		private String id;
 		private int maxHealth;
-		private DroneType(String id, int maxHealth) {
+		DroneType(String id, int maxHealth) {
 			this.id = id;
 			this.maxHealth = maxHealth;
 		}
@@ -5143,7 +4072,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		}
 
 
-		public void setDroneId(String s) { droneId = s; }
 		public String getDroneId() { return droneId; }
 
 		public void setArmed(boolean b) { armed = b; }
@@ -5227,11 +4155,11 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 
 
-	public static enum FleetPresence {
+	public enum FleetPresence {
 		NONE("None"), REBEL("Rebel"), FEDERATION("Federation"), BOTH("Both");
 
 		private String title;
-		private FleetPresence(String title) { this.title = title; }
+		FleetPresence(String title) { this.title = title; }
 		public String toString() { return title; }
 	}
 
@@ -5497,7 +4425,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public int getMissiles() { return missiles; }
 		public int getDroneParts() { return droneParts; }
 
-		public void setShelfList(List<StoreShelf> shelfList) { this.shelfList = shelfList; }
 		public List<StoreShelf> getShelfList() { return shelfList; }
 
 		public void addShelf(StoreShelf shelf) { shelfList.add(shelf); }
@@ -5519,12 +4446,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		}
 	}
 
-	public static enum StoreItemType {
+	public enum StoreItemType {
 		WEAPON("Weapon"), DRONE("Drone"), AUGMENT("Augment"),
 		CREW("Crew"), SYSTEM("System");
 
 		private String title;
-		private StoreItemType(String title) { this.title = title; }
+		StoreItemType(String title) { this.title = title; }
 		public String toString() { return title; }
 	}
 
@@ -5741,7 +4668,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
+			boolean first;
 			result.append(String.format("Ship Event Seed:    %3d\n", shipEventSeed));
 			result.append(String.format("Surrender Event:    %s\n", surrenderEventId));
 			result.append(String.format("Escape Event:       %s\n", escapeEventId));
@@ -5874,27 +4801,25 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Surrender Offered:   %7b\n", surrendered) +
+				String.format("Escaping:            %7b\n", escaping) +
+				String.format("Destroyed?:          %7b\n", destroyed) +
+				String.format("Surrender Threshold: %7d (Hull amount when surrender is offered)\n", surrenderThreshold) +
+				String.format("Escape Threshold:    %7d (Hull amount when escape begins)\n", escapeThreshold) +
+				String.format("Escape Ticks:        %7d (Decrements to 0)\n", escapeTicks) +
+				String.format("Stalemate Triggered?:%7b\n", stalemateTriggered) +
+				String.format("Stalemate Ticks?:    %7d\n", stalemateTicks) +
+				String.format("Boarding Attempts?:  %7d\n", boardingAttempts) +
+				String.format("Boarders Needed?:    %7d\n", boardersNeeded);
 
-			result.append(String.format("Surrender Offered:   %7b\n", surrendered));
-			result.append(String.format("Escaping:            %7b\n", escaping));
-			result.append(String.format("Destroyed?:          %7b\n", destroyed));
-			result.append(String.format("Surrender Threshold: %7d (Hull amount when surrender is offered)\n", surrenderThreshold));
-			result.append(String.format("Escape Threshold:    %7d (Hull amount when escape begins)\n", escapeThreshold));
-			result.append(String.format("Escape Ticks:        %7d (Decrements to 0)\n", escapeTicks));
-			result.append(String.format("Stalemate Triggered?:%7b\n", stalemateTriggered));
-			result.append(String.format("Stalemate Ticks?:    %7d\n", stalemateTicks));
-			result.append(String.format("Boarding Attempts?:  %7d\n", boardingAttempts));
-			result.append(String.format("Boarders Needed?:    %7d\n", boardersNeeded));
-
-			return result.toString();
+			return result;
 		}
 	}
 
 
 
-	public static enum HazardVulnerability {
-		PLAYER_SHIP, NEARBY_SHIP, BOTH_SHIPS;
+	public enum HazardVulnerability {
+		PLAYER_SHIP, NEARBY_SHIP, BOTH_SHIPS
 	}
 
 	public static class EnvironmentState {
@@ -6033,15 +4958,13 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Alpha?:            %7d\n", unknownAlpha) +
+				String.format("Stray Rock Ticks?: %7d\n", strayRockTicks) +
+				String.format("Gamma?:            %7d\n", unknownGamma) +
+				String.format("Bkg Drift Ticks:   %7d\n", bgDriftTicks) +
+				String.format("Current Target?:   %7d\n", currentTarget);
 
-			result.append(String.format("Alpha?:            %7d\n", unknownAlpha));
-			result.append(String.format("Stray Rock Ticks?: %7d\n", strayRockTicks));
-			result.append(String.format("Gamma?:            %7d\n", unknownGamma));
-			result.append(String.format("Bkg Drift Ticks:   %7d\n", bgDriftTicks));
-			result.append(String.format("Current Target?:   %7d\n", currentTarget));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6143,7 +5066,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		 * @param n the number of crew in that room
 		 */
 		public void setPreviousOccupancy(int roomId, int n) {
-			occupancyMap.put(new Integer(roomId), new Integer(n));
+			occupancyMap.put(roomId, n);
 		}
 
 		public Map<Integer, Integer> getOccupancyMap() {
@@ -6161,8 +5084,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 			result.append("\nOccupancy of Last Seen Flagship...\n");
 			for (Map.Entry<Integer, Integer> entry : occupancyMap.entrySet()) {
-				int roomId = entry.getKey().intValue();
-				int occupantCount = entry.getValue().intValue();
+				int roomId = entry.getKey();
+				int occupantCount = entry.getValue();
 
 				result.append(String.format("Room Id: %2d, Crew: %d\n", roomId, occupantCount));
 			}
@@ -6261,16 +5184,14 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Playing:           %7b\n", playing) +
+				String.format("Looping?:          %7b\n", looping) +
+				String.format("Current Frame:     %7d\n", currentFrame) +
+				String.format("Progress Ticks:    %7d\n", progressTicks) +
+				String.format("Scale:             %7d (%5.03f)\n", scale, scale / 1000f) +
+				String.format("X,Y?:                %5d,%5d\n", x, y);
 
-			result.append(String.format("Playing:           %7b\n", playing));
-			result.append(String.format("Looping?:          %7b\n", looping));
-			result.append(String.format("Current Frame:     %7d\n", currentFrame));
-			result.append(String.format("Progress Ticks:    %7d\n", progressTicks));
-			result.append(String.format("Scale:             %7d (%5.03f)\n", scale, scale/1000f));
-			result.append(String.format("X,Y?:                %5d,%5d\n", x, y));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6349,14 +5270,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("SystemId:                 %s\n", SystemType.CLONEBAY.toString()) +
+				String.format("Build Ticks:            %7d (For the current dead crew being cloned)\n", buildTicks) +
+				String.format("Build Ticks Goal:       %7d\n", buildTicksGoal) +
+				String.format("DoomTicks:              %7d (If unpowered, dead crew are lost at 3000)\n", doomTicks);
 
-			result.append(String.format("SystemId:                 %s\n", SystemType.CLONEBAY.toString()));
-			result.append(String.format("Build Ticks:            %7d (For the current dead crew being cloned)\n", buildTicks));
-			result.append(String.format("Build Ticks Goal:       %7d\n", buildTicksGoal));
-			result.append(String.format("DoomTicks:              %7d (If unpowered, dead crew are lost at 3000)\n", doomTicks));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6419,14 +5338,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("SystemId:                 %s\n", SystemType.BATTERY.toString()) +
+				String.format("Active:                   %5b\n", active) +
+				String.format("Battery Power in Use:     %5d\n", usedBattery) +
+				String.format("Discharge Ticks:          %5d\n", dischargeTicks);
 
-			result.append(String.format("SystemId:                 %s\n", SystemType.BATTERY.toString()));
-			result.append(String.format("Active:                   %5b\n", active));
-			result.append(String.format("Battery Power in Use:     %5d\n", usedBattery));
-			result.append(String.format("Discharge Ticks:          %5d\n", dischargeTicks));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6571,20 +5488,18 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("SystemId:                 %s\n", SystemType.SHIELDS.toString()) +
+				String.format("Shield Layers:            %5d (Currently filled bubbles)\n", shieldLayers) +
+				String.format("Energy Shield Layers:     %5d\n", energyShieldLayers) +
+				String.format("Energy Shield Max:        %5d (Layers when fully charged)\n", energyShieldLayers) +
+				String.format("Shield Recharge Ticks:    %5d\n", shieldRechargeTicks) +
+				"\n" +
+				String.format("Shield Drop Anim:   Play: %-5b, Ticks: %4d\n", shieldDropAnimOn, shieldDropAnimTicks) +
+				String.format("Shield Raise Anim:  Play: %-5b, Ticks: %4d\n", shieldRaiseAnimOn, shieldRaiseAnimTicks) +
+				String.format("Energy Shield Anim: Play: %-5b, Ticks: %4d\n", energyShieldAnimOn, energyShieldAnimTicks) +
+				String.format("Lambda?, Mu?:           %7d,%7d (Some kind of coord?)\n", unknownLambda, unknownMu);
 
-			result.append(String.format("SystemId:                 %s\n", SystemType.SHIELDS.toString()));
-			result.append(String.format("Shield Layers:            %5d (Currently filled bubbles)\n", shieldLayers));
-			result.append(String.format("Energy Shield Layers:     %5d\n", energyShieldLayers));
-			result.append(String.format("Energy Shield Max:        %5d (Layers when fully charged)\n", energyShieldLayers));
-			result.append(String.format("Shield Recharge Ticks:    %5d\n", shieldRechargeTicks));
-			result.append("\n");
-			result.append(String.format("Shield Drop Anim:   Play: %-5b, Ticks: %4d\n", shieldDropAnimOn, shieldDropAnimTicks));
-			result.append(String.format("Shield Raise Anim:  Play: %-5b, Ticks: %4d\n", shieldRaiseAnimOn, shieldRaiseAnimTicks));
-			result.append(String.format("Energy Shield Anim: Play: %-5b, Ticks: %4d\n", energyShieldAnimOn, energyShieldAnimTicks));
-			result.append(String.format("Lambda?, Mu?:           %7d,%7d (Some kind of coord?)\n", unknownLambda, unknownMu));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6645,15 +5560,13 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("SystemId:                 %s\n", SystemType.CLOAKING.toString()) +
+				String.format("Alpha?:                 %7d\n", unknownAlpha) +
+				String.format("Beta?:                  %7d\n", unknownBeta) +
+				String.format("Cloak Ticks Goal:       %7d\n", cloakTicksGoal) +
+				String.format("Cloak Ticks:            %7s\n", (cloakTicks == Integer.MIN_VALUE ? "MIN_INT" : cloakTicks));
 
-			result.append(String.format("SystemId:                 %s\n", SystemType.CLOAKING.toString()));
-			result.append(String.format("Alpha?:                 %7d\n", unknownAlpha));
-			result.append(String.format("Beta?:                  %7d\n", unknownBeta));
-			result.append(String.format("Cloak Ticks Goal:       %7d\n", cloakTicksGoal));
-			result.append(String.format("Cloak Ticks:            %7s\n", (cloakTicks==Integer.MIN_VALUE ? "MIN_INT" : cloakTicks)));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6875,13 +5788,11 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("SystemId:                 %s\n", SystemType.MIND.toString()) +
+				String.format("Mind Ctrl Ticks:        %7d\n", mindControlTicks) +
+				String.format("Mind Ctrl Ticks Goal:   %7d\n", mindControlTicksGoal);
 
-			result.append(String.format("SystemId:                 %s\n", SystemType.MIND.toString()));
-			result.append(String.format("Mind Ctrl Ticks:        %7d\n", mindControlTicks));
-			result.append(String.format("Mind Ctrl Ticks Goal:   %7d\n", mindControlTicksGoal));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -6929,8 +5840,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 
 
-	public static enum ProjectileType {
-		BEAM, BOMB, LASER_OR_BURST, MISSILE, ROCK_OR_EXPLOSION, INVALID;
+	public enum ProjectileType {
+		BEAM, BOMB, LASER_OR_BURST, MISSILE, ROCK_OR_EXPLOSION, INVALID
 	}
 
 
@@ -6940,8 +5851,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 	 *
 	 * OwnerId (-1, 0, 1)
 	 */
-	public static enum Affiliation {
-		OTHER, PLAYER_SHIP, NEARBY_SHIP;
+	public enum Affiliation {
+		OTHER, PLAYER_SHIP, NEARBY_SHIP
 	}
 
 
@@ -7268,7 +6179,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append(String.format("Owner Id?:         %8d\n", ownerId));
 			result.append(String.format("Self Id?:          %8d\n", selfId));
 
-			result.append(String.format("\nDamage...\n"));
+			result.append("\nDamage...\n");
 			if (damage != null) {
 				result.append(damage.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
@@ -7283,12 +6194,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append(String.format("Death AnimId:      %s\n", deathAnimId));
 			result.append(String.format("Flight AnimId:     %s\n", flightAnimId));
 
-			result.append(String.format("\nDeath Anim?...\n"));
+			result.append("\nDeath Anim?...\n");
 			if (deathAnim != null) {
 				result.append(deathAnim.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
 
-			result.append(String.format("\nFlight Anim?...\n"));
+			result.append("\nFlight Anim?...\n");
 			if (flightAnim != null) {
 				result.append(flightAnim.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
@@ -7310,7 +6221,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append(String.format("Type?:             %8d\n", type));
 			result.append(String.format("Broadcast Target:  %8b (Red dot at targeted location)\n", broadcastTarget));
 
-			result.append(String.format("\nExtended Projectile Info...\n"));
+			result.append("\nExtended Projectile Info...\n");
 			if (extendedInfo != null) {
 				result.append(extendedInfo.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
@@ -7425,24 +6336,22 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Hull Damage:       %7d\n", hullDamage) +
+				String.format("ShieldPiercing:    %7d\n", shieldPiercing) +
+				String.format("Fire Chance:       %7d\n", fireChance) +
+				String.format("Breach Chance:     %7d\n", breachChance) +
+				String.format("Ion Damage:        %7d\n", ionDamage) +
+				String.format("System Damage:     %7d\n", systemDamage) +
+				String.format("Personnel Damage:  %7d\n", personnelDamage) +
+				String.format("Hull Buster:       %7b (2x Hull damage vs systemless rooms)\n", hullBuster) +
+				String.format("Owner Id?:         %7d\n", ownerId) +
+				String.format("Self Id?:          %7d\n", selfId) +
+				String.format("Lockdown:          %7b\n", lockdown) +
+				String.format("Crystal Shard:     %7b\n", crystalShard) +
+				String.format("Stun Chance:       %7d\n", stunChance) +
+				String.format("Stun Amount:       %7d\n", stunAmount);
 
-			result.append(String.format("Hull Damage:       %7d\n", hullDamage));
-			result.append(String.format("ShieldPiercing:    %7d\n", shieldPiercing));
-			result.append(String.format("Fire Chance:       %7d\n", fireChance));
-			result.append(String.format("Breach Chance:     %7d\n", breachChance));
-			result.append(String.format("Ion Damage:        %7d\n", ionDamage));
-			result.append(String.format("System Damage:     %7d\n", systemDamage));
-			result.append(String.format("Personnel Damage:  %7d\n", personnelDamage));
-			result.append(String.format("Hull Buster:       %7b (2x Hull damage vs systemless rooms)\n", hullBuster));
-			result.append(String.format("Owner Id?:         %7d\n", ownerId));
-			result.append(String.format("Self Id?:          %7d\n", selfId));
-			result.append(String.format("Lockdown:          %7b\n", lockdown));
-			result.append(String.format("Crystal Shard:     %7b\n", crystalShard));
-			result.append(String.format("Stun Chance:       %7d\n", stunChance));
-			result.append(String.format("Stun Amount:       %7d\n", stunAmount));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -7532,9 +6441,9 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public String toString() {
 			StringBuilder result = new StringBuilder();
 
-			result.append(String.format("Type:               Unknown Info\n"));
+			result.append("Type:               Unknown Info\n");
 
-			result.append(String.format("\nAlpha?...\n"));
+			result.append("\nAlpha?...\n");
 			for (int i=0; i < unknownAlpha.length; i++) {
 				result.append(String.format("%7s", prettyInt(unknownAlpha[i])));
 
@@ -7793,29 +6702,27 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = "Type:               Beam Info\n" +
+				String.format("Firing Ship End:    %8d,%8d (%9.03f,%9.03f) (Off-screen endpoint of line from weapon)\n", firingShipEndX, firingShipEndY, firingShipEndX / 1000f, firingShipEndY / 1000f) +
+				String.format("Target Ship Source: %8d,%8d (%9.03f,%9.03f) (Off-screen endpoint of line drawn toward swath)\n", targetShipSourceX, targetShipSourceY, targetShipSourceX / 1000f, targetShipSourceY / 1000f) +
+				String.format("Target Ship End:    %8d,%8d (%9.03f,%9.03f) (On-screen endpoint of line drawn toward swath)\n", targetShipEndX, targetShipEndY, targetShipEndX / 1000f, targetShipEndY / 1000f) +
+				String.format("Beta?:              %8d,%8d (%9.03f,%9.03f)\n", unknownBetaX, unknownBetaY, unknownBetaX / 1000f, unknownBetaY / 1000f) +
+				String.format("Swath End:          %8d,%8d (%9.03f,%9.03f)\n", swathEndX, swathEndY, swathEndX / 1000f, swathEndY / 1000f) +
+				String.format("Swath Start:        %8d,%8d (%9.03f,%9.03f)\n", swathStartX, swathStartY, swathStartX / 1000f, swathStartY / 1000f) +
+				String.format("Gamma?:             %8d\n", unknownGamma) +
+				String.format("Swath Length:       %8d (%9.03f)\n", swathLength, swathLength / 1000f) +
+				String.format("Delta?:             %8d\n", unknownDelta) +
+				String.format("Epsilon?:           %8d,%8d (%9.03f,%9.03f)\n", unknownEpsilonX, unknownEpsilonY, unknownEpsilonX / 1000f, unknownEpsilonY / 1000f) +
+				String.format("Zeta?:              %8d\n", unknownZeta) +
+				String.format("Eta?:               %8d\n", unknownEta) +
+				String.format("Theta?:             %8d\n", unknownTheta) +
+				String.format("Iota?:              %8b\n", unknownIota) +
+				String.format("Kappa?:             %8b\n", unknownKappa) +
+				String.format("Lambda?:            %8b\n", unknownLambda) +
+				String.format("Mu?:                %8b\n", unknownMu) +
+				String.format("Nu?:                %8b\n", unknownNu);
 
-			result.append(String.format("Type:               Beam Info\n"));
-			result.append(String.format("Firing Ship End:    %8d,%8d (%9.03f,%9.03f) (Off-screen endpoint of line from weapon)\n", firingShipEndX, firingShipEndY, firingShipEndX/1000f, firingShipEndY/1000f));
-			result.append(String.format("Target Ship Source: %8d,%8d (%9.03f,%9.03f) (Off-screen endpoint of line drawn toward swath)\n", targetShipSourceX, targetShipSourceY, targetShipSourceX/1000f, targetShipSourceY/1000f));
-			result.append(String.format("Target Ship End:    %8d,%8d (%9.03f,%9.03f) (On-screen endpoint of line drawn toward swath)\n", targetShipEndX, targetShipEndY, targetShipEndX/1000f, targetShipEndY/1000f));
-			result.append(String.format("Beta?:              %8d,%8d (%9.03f,%9.03f)\n", unknownBetaX, unknownBetaY, unknownBetaX/1000f, unknownBetaY/1000f));
-			result.append(String.format("Swath End:          %8d,%8d (%9.03f,%9.03f)\n", swathEndX, swathEndY, swathEndX/1000f, swathEndY/1000f));
-			result.append(String.format("Swath Start:        %8d,%8d (%9.03f,%9.03f)\n", swathStartX, swathStartY, swathStartX/1000f, swathStartY/1000f));
-			result.append(String.format("Gamma?:             %8d\n", unknownGamma));
-			result.append(String.format("Swath Length:       %8d (%9.03f)\n", swathLength, swathLength/1000f));
-			result.append(String.format("Delta?:             %8d\n", unknownDelta));
-			result.append(String.format("Epsilon?:           %8d,%8d (%9.03f,%9.03f)\n", unknownEpsilonX, unknownEpsilonY, unknownEpsilonX/1000f, unknownEpsilonY/1000f));
-			result.append(String.format("Zeta?:              %8d\n", unknownZeta));
-			result.append(String.format("Eta?:               %8d\n", unknownEta));
-			result.append(String.format("Theta?:             %8d\n", unknownTheta));
-			result.append(String.format("Iota?:              %8b\n", unknownIota));
-			result.append(String.format("Kappa?:             %8b\n", unknownKappa));
-			result.append(String.format("Lambda?:            %8b\n", unknownLambda));
-			result.append(String.format("Mu?:                %8b\n", unknownMu));
-			result.append(String.format("Nu?:                %8b\n", unknownNu));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -7892,16 +6799,14 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = "Type:               Bomb Info\n" +
+				String.format("Alpha?:             %7d\n", unknownAlpha) +
+				String.format("Beta?:              %7d\n", unknownBeta) +
+				String.format("Gamma?:             %7d\n", unknownGamma) +
+				String.format("Delta?:             %7d\n", unknownDelta) +
+				String.format("Epsilon?:           %7b\n", unknownEpsilon);
 
-			result.append(String.format("Type:               Bomb Info\n"));
-			result.append(String.format("Alpha?:             %7d\n", unknownAlpha));
-			result.append(String.format("Beta?:              %7d\n", unknownBeta));
-			result.append(String.format("Gamma?:             %7d\n", unknownGamma));
-			result.append(String.format("Delta?:             %7d\n", unknownDelta));
-			result.append(String.format("Epsilon?:           %7b\n", unknownEpsilon));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -7950,13 +6855,11 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = "Type:               Laser/Burst Info\n" +
+				String.format("Alpha?:             %7d\n", unknownAlpha) +
+				String.format("Spin:               %7d\n", spin);
 
-			result.append(String.format("Type:               Laser/Burst Info\n"));
-			result.append(String.format("Alpha?:             %7d\n", unknownAlpha));
-			result.append(String.format("Spin:               %7d\n", spin));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -8168,12 +7071,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append(String.format("Previous Position: %7s,%7s\n", prettyInt(prevPosX), prettyInt(prevPosY)));
 			result.append(String.format("Goal Position:     %7s,%7s\n", prettyInt(goalPosX), prettyInt(goalPosY)));
 
-			result.append(String.format("\nBeta?...\n"));
+			result.append("\nBeta?...\n");
 			result.append(String.format("%7s, %7s,\n", prettyInt(unknownBeta[0]), prettyInt(unknownBeta[1])));
 			result.append(String.format("%7s, %7s,\n", prettyInt(unknownBeta[2]), prettyInt(unknownBeta[3])));
 			result.append(String.format("%7s, %7s\n", prettyInt(unknownBeta[4]), prettyInt(unknownBeta[5])));
 
-			result.append(String.format("\nGamma?...\n"));
+			result.append("\nGamma?...\n");
 			result.append(String.format("%7s, %7s,\n", prettyInt(unknownGamma[0]), prettyInt(unknownGamma[1])));
 			result.append(String.format("%7s, %7s,\n", prettyInt(unknownGamma[2]), prettyInt(unknownGamma[3])));
 			result.append(String.format("%7s,\n", prettyInt(unknownGamma[4])));
@@ -8306,7 +7209,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		public String toString() {
 			StringBuilder result = new StringBuilder();
 
-			result.append(String.format("Alpha?...\n"));
+			result.append("Alpha?...\n");
 			for (int i=0; i < unknownAlpha.length; i++) {
 				result.append(String.format("%7s", prettyInt(unknownAlpha[i])));
 
@@ -8420,18 +7323,16 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("Alpha?:             %7d\n", unknownAlpha) +
+				String.format("Beta?:              %7d\n", unknownBeta) +
+				String.format("Gamma?:             %7d\n", unknownGamma) +
+				String.format("Delta?:             %7d\n", unknownDelta) +
+				String.format("Body Health:        %7d\n", bodyHealth) +
+				String.format("Body Position:      %7d,%7d\n", bodyX, bodyY) +
+				String.format("Body Room Id:       %7d\n", bodyRoomId) +
+				String.format("Body Room Square:   %7d\n", bodyRoomSquare);
 
-			result.append(String.format("Alpha?:             %7d\n", unknownAlpha));
-			result.append(String.format("Beta?:              %7d\n", unknownBeta));
-			result.append(String.format("Gamma?:             %7d\n", unknownGamma));
-			result.append(String.format("Delta?:             %7d\n", unknownDelta));
-			result.append(String.format("Body Health:        %7d\n", bodyHealth));
-			result.append(String.format("Body Position:      %7d,%7d\n", bodyX, bodyY));
-			result.append(String.format("Body Room Id:       %7d\n", bodyRoomId));
-			result.append(String.format("Body Room Square:   %7d\n", bodyRoomSquare));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -8482,11 +7383,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
 
-			result.append(String.format("Alpha?:             %7d\n", unknownAlpha));
-
-			return result.toString();
+			return String.format("Alpha?:             %7d\n", unknownAlpha);
 		}
 	}
 
@@ -8606,12 +7504,12 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 			result.append(String.format("Gamma?:             %7d\n", unknownGamma));
 			result.append(String.format("Delta?:             %7d\n", unknownDelta));
 
-			result.append(String.format("\nLanding Anim?...\n"));
+			result.append("\nLanding Anim?...\n");
 			if (landingAnim != null) {
 				result.append(landingAnim.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
 
-			result.append(String.format("\nExtension Anim?...\n"));
+			result.append("\nExtension Anim?...\n");
 			if (extensionAnim != null) {
 				result.append(extensionAnim.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
 			}
@@ -8732,20 +7630,15 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
+			String result = String.format("DroneId:           %s\n", droneId) +
+				"\nDrone Pod...\n" +
+				dronePod.toString().replaceAll("(^|\n)(.+)", "$1  $2") +
+				"\n" +
+				String.format("Alpha?:            %3d\n", unknownAlpha) +
+				String.format("Beta?:             %3d\n", unknownBeta) +
+				String.format("Gamma?:            %3d\n", unknownGamma);
 
-			result.append(String.format("DroneId:           %s\n", droneId));
-
-			result.append("\nDrone Pod...\n");
-			result.append(dronePod.toString().replaceAll("(^|\n)(.+)", "$1  $2"));
-
-			result.append("\n");
-
-			result.append(String.format("Alpha?:            %3d\n", unknownAlpha));
-			result.append(String.format("Beta?:             %3d\n", unknownBeta));
-			result.append(String.format("Gamma?:            %3d\n", unknownGamma));
-
-			return result.toString();
+			return result;
 		}
 	}
 
@@ -9081,7 +7974,7 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
-			boolean first = true;
+			boolean first;
 
 			result.append(String.format("Cooldown Ticks:          %7d\n", cooldownTicks));
 			result.append(String.format("Cooldown Goal:           %7d\n", cooldownTicksGoal));
@@ -9178,11 +8071,8 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 
 		@Override
 		public String toString() {
-			StringBuilder result = new StringBuilder();
 
-			result.append(String.format("X,Y: %3d,%3d\n", x, y));
-
-			return result.toString();
+			return String.format("X,Y: %3d,%3d\n", x, y);
 		}
 	}
 
@@ -9199,17 +8089,6 @@ System.err.println(String.format("Projectile: @%d", in.getChannel().position()))
 		}
 
 		return n;
-	}
-
-	private void writeMinMaxedInt(OutputStream out, int n) throws IOException {
-		if (n == Integer.MIN_VALUE) {
-			n = -2147483648;
-		}
-		else if (n == Integer.MAX_VALUE) {
-			n = 2147483647;
-		}
-
-		writeInt(out, n);
 	}
 
 
@@ -9235,7 +8114,7 @@ System.err.println(String.format("\nZeus: @%d", in.getChannel().position()));
 		gameState.setUnknownNu(readInt(in));
 
 		if (gameState.getNearbyShipState() != null) {
-			gameState.setUnknownXi(new Integer(readInt(in)));
+			gameState.setUnknownXi(readInt(in));
 		}
 
 		gameState.setAutofire(readBool(in));
@@ -9253,45 +8132,6 @@ System.err.println(String.format("\nZeus: @%d", in.getChannel().position()));
 		}
 
 		gameState.setRebelFlagshipState(flagship);
-	}
-
-	/**
-	 * Writes additional SavedGameState fields.
-	 *
-	 * This method does not involve a dedicated class.
-	 */
-	public void writeZeus(OutputStream out, SavedGameState gameState, int headerAlpha) throws IOException {
-		writeInt(out, gameState.getProjectileList().size());
-		for (ProjectileState projectile : gameState.getProjectileList()) {
-			writeProjectile(out, projectile);
-		}
-
-		writeExtendedShipInfo(out, gameState.getPlayerShipState(), headerAlpha);
-
-		if (gameState.getNearbyShipState() != null) {
-			writeExtendedShipInfo(out, gameState.getNearbyShipState(), headerAlpha);
-		}
-
-		writeInt(out, gameState.getUnknownNu());
-
-		if (gameState.getNearbyShipState() != null) {
-			writeInt(out, gameState.getUnknownXi().intValue());
-		}
-
-		writeBool(out, gameState.getAutofire());
-
-		RebelFlagshipState flagship = gameState.getRebelFlagshipState();
-
-		writeInt(out, flagship.getUnknownAlpha());
-		writeInt(out, flagship.getPendingStage());
-		writeInt(out, flagship.getUnknownGamma());
-		writeInt(out, flagship.getUnknownDelta());
-
-		writeInt(out, flagship.getOccupancyMap().size());
-		for (Map.Entry<Integer, Integer> entry : flagship.getOccupancyMap().entrySet()) {
-			int occupantCount = entry.getValue().intValue();
-			writeInt(out, occupantCount);
-		}
 	}
 
 	/**
@@ -9319,8 +8159,7 @@ System.err.println(String.format("Extended Ship Info: @%d", in.getChannel().posi
 			if (DroneType.REPAIR.equals(droneType) ||
 				 DroneType.BATTLE.equals(droneType)) {
 				// No drone pod for these types.
-			}
-			else {
+			} else {
 				DronePodState dronePod = readDronePod(in, droneType);
 				droneInfo.setDronePod(dronePod);
 			}
@@ -9411,78 +8250,6 @@ System.err.println(String.format("Extended Ship Info: @%d", in.getChannel().posi
 		}
 	}
 
-	/**
-	 * Writes additional fields of various ship-related classes.
-	 *
-	 * This method does not involve a dedicated class.
-	 */
-	public void writeExtendedShipInfo(OutputStream out, ShipState shipState, int headerAlpha) throws IOException {
-		// There is no explicit list count for drones.
-		for (DroneState drone : shipState.getDroneList()) {
-			ExtendedDroneInfo droneInfo = drone.getExtendedDroneInfo();
-			writeBool(out, droneInfo.isDeployed());
-			writeBool(out, droneInfo.isArmed());
-
-			if (droneInfo.getDronePod() != null) {
-				writeDronePod(out, droneInfo.getDronePod());
-			}
-		}
-
-		SystemState hackingState = shipState.getSystem(SystemType.HACKING);
-		if (hackingState != null && hackingState.getCapacity() > 0) {
-			// TODO: Compare system room count with extended info count.
-
-			HackingInfo hackingInfo = shipState.getExtendedSystemInfo(HackingInfo.class);
-			// This should not be null.
-			writeInt(out, hackingInfo.getUnknownAlpha());
-			writeInt(out, hackingInfo.getUnknownBeta());
-			writeInt(out, hackingInfo.getUnknownGamma());
-			writeInt(out, hackingInfo.getUnknownDelta());
-
-			writeInt(out, hackingInfo.getDisruptionTicks());
-			writeInt(out, hackingInfo.getDisruptionTicksGoal());
-
-			writeBool(out, hackingInfo.isDisrupting());
-
-			writeDronePod(out, hackingInfo.getDronePod());
-		}
-
-		SystemState mindState = shipState.getSystem(SystemType.MIND);
-		if (mindState != null && mindState.getCapacity() > 0) {
-			MindInfo mindInfo = shipState.getExtendedSystemInfo(MindInfo.class);
-			// This should not be null.
-			writeInt(out, mindInfo.getMindControlTicks());
-			writeInt(out, mindInfo.getMindControlTicksGoal());
-		}
-
-		// If there's a Weapons system, write the weapon modules (even if there are 0 of them).
-		SystemState weaponsState = shipState.getSystem(SystemType.WEAPONS);
-		if (weaponsState != null && weaponsState.getCapacity() > 0) {
-
-			int weaponCount = shipState.getWeaponList().size();
-			writeInt(out, weaponCount);
-			for (WeaponState weapon : shipState.getWeaponList()) {
-				writeWeaponModule(out, weapon.getWeaponModule(), headerAlpha);
-			}
-		}
-
-		List<ArtilleryInfo> artilleryInfoList = shipState.getExtendedSystemInfoList(ArtilleryInfo.class);
-		for (ArtilleryInfo artilleryInfo : artilleryInfoList) {
-			writeWeaponModule(out, artilleryInfo.getWeaponModule(), headerAlpha);
-		}
-
-		writeInt(out, shipState.getStandaloneDroneList().size());
-		for (StandaloneDroneState standaloneDrone : shipState.getStandaloneDroneList()) {
-			writeString(out, standaloneDrone.getDroneId());
-
-			writeDronePod(out, standaloneDrone.getDronePod());
-
-			writeInt(out, standaloneDrone.getUnknownAlpha());
-			writeInt(out, standaloneDrone.getUnknownBeta());
-			writeInt(out, standaloneDrone.getUnknownGamma());
-		}
-	}
-
 	private DronePodState readDronePod(FileInputStream in, DroneType droneType) throws IOException {
 		if (droneType == null) throw new IllegalArgumentException("DroneType cannot be null.");
 System.err.println(String.format("Drone Pod: @%d", in.getChannel().position()));
@@ -9509,7 +8276,7 @@ System.err.println(String.format("Drone Pod: @%d", in.getChannel().position()));
 
 		dronePod.setDeathAnim(readAnim(in));
 
-		ExtendedDronePodInfo extendedInfo = null;
+		ExtendedDronePodInfo extendedInfo;
 		if (DroneType.BOARDER.equals(droneType)) {
 			BoarderDronePodInfo boarderPodInfo = new BoarderDronePodInfo();
 			boarderPodInfo.setUnknownAlpha(readInt(in));
@@ -9566,68 +8333,6 @@ System.err.println(String.format("Drone Pod: @%d", in.getChannel().position()));
 		return dronePod;
 	}
 
-	public void writeDronePod(OutputStream out, DronePodState dronePod) throws IOException {
-		writeInt(out, dronePod.getMourningTicks());
-		writeInt(out, dronePod.getCurrentSpace());
-		writeInt(out, dronePod.getDestinationSpace());
-
-		writeMinMaxedInt(out, dronePod.getCurrentPositionX());
-		writeMinMaxedInt(out, dronePod.getCurrentPositionY());
-		writeMinMaxedInt(out, dronePod.getPreviousPositionX());
-		writeMinMaxedInt(out, dronePod.getPreviousPositionY());
-		writeMinMaxedInt(out, dronePod.getGoalPositionX());
-		writeMinMaxedInt(out, dronePod.getGoalPositionY());
-
-		for (int n : dronePod.getUnknownBeta()) {
-			writeMinMaxedInt(out, n);
-		}
-
-		for (int n : dronePod.getUnknownGamma()) {
-			writeMinMaxedInt(out, n);
-		}
-
-		writeAnim(out, dronePod.getDeathAnim());
-
-		ExtendedDronePodInfo extendedInfo = dronePod.getExtendedInfo(ExtendedDronePodInfo.class);
-		if (extendedInfo instanceof IntegerDronePodInfo) {
-			IntegerDronePodInfo intPodInfo = dronePod.getExtendedInfo(IntegerDronePodInfo.class);
-			for (int i=0; i < intPodInfo.getSize(); i++) {
-				writeMinMaxedInt(out, intPodInfo.get(i));
-			}
-		}
-		else if (extendedInfo instanceof BoarderDronePodInfo) {
-			BoarderDronePodInfo boarderPodInfo = dronePod.getExtendedInfo(BoarderDronePodInfo.class);
-			writeInt(out, boarderPodInfo.getUnknownAlpha());
-			writeInt(out, boarderPodInfo.getUnknownBeta());
-			writeInt(out, boarderPodInfo.getUnknownGamma());
-			writeInt(out, boarderPodInfo.getUnknownDelta());
-			writeInt(out, boarderPodInfo.getBodyHealth());
-			writeInt(out, boarderPodInfo.getBodyX());
-			writeInt(out, boarderPodInfo.getBodyY());
-			writeInt(out, boarderPodInfo.getBodyRoomId());
-			writeInt(out, boarderPodInfo.getBodyRoomSquare());
-		}
-		else if (extendedInfo instanceof ShieldDronePodInfo) {
-			ShieldDronePodInfo shieldPodInfo = dronePod.getExtendedInfo(ShieldDronePodInfo.class);
-			writeInt(out, shieldPodInfo.getUnknownAlpha());
-		}
-		else if (extendedInfo instanceof HackingDronePodInfo) {
-			HackingDronePodInfo hackingPodInfo = dronePod.getExtendedInfo(HackingDronePodInfo.class);
-			writeInt(out, hackingPodInfo.getUnknownAlpha());
-			writeInt(out, hackingPodInfo.getUnknownBeta());
-			writeInt(out, hackingPodInfo.getUnknownGamma());
-			writeInt(out, hackingPodInfo.getUnknownDelta());
-			writeAnim(out, hackingPodInfo.getLandingAnim());
-			writeAnim(out, hackingPodInfo.getExtensionAnim());
-		}
-		else if (extendedInfo instanceof EmptyDronePodInfo) {
-			// No-op.
-		}
-		else {
-			throw new IOException("Unsupported extended drone pod info: "+ extendedInfo.getClass().getSimpleName());
-		}
-	}
-
 	private WeaponModuleState readWeaponModule(FileInputStream in, int headerAlpha) throws IOException {
 System.err.println(String.format("Weapon Module: @%d", in.getChannel().position()));
 		WeaponModuleState weaponMod = new WeaponModuleState();
@@ -9680,48 +8385,6 @@ System.err.println(String.format("Weapon Module: @%d", in.getChannel().position(
 		return weaponMod;
 	}
 
-	public void writeWeaponModule(OutputStream out, WeaponModuleState weaponMod, int headerAlpha) throws IOException {
-		writeInt(out, weaponMod.getCooldownTicks());
-		writeInt(out, weaponMod.getCooldownTicksGoal());
-		writeInt(out, weaponMod.getSubcooldownTicks());
-		writeInt(out, weaponMod.getSubcooldownTicksGoal());
-		writeInt(out, weaponMod.getBoost());
-		writeInt(out, weaponMod.getCharge());
-
-		writeInt(out, weaponMod.getCurrentTargets().size());
-		for (ReticleCoordinate target : weaponMod.getCurrentTargets()) {
-			writeReticleCoordinate(out, target);
-		}
-
-		writeInt(out, weaponMod.getPreviousTargets().size());
-		for (ReticleCoordinate target : weaponMod.getPreviousTargets()) {
-			writeReticleCoordinate(out, target);
-		}
-
-		writeBool(out, weaponMod.getAutofire());
-		writeBool(out, weaponMod.getFireWhenReady());
-		writeInt(out, weaponMod.getTargetId());
-
-		writeAnim(out, weaponMod.getWeaponAnim());
-
-		writeInt(out, weaponMod.getProtractAnimTicks());
-		writeBool(out, weaponMod.isFiring());
-		writeBool(out, weaponMod.getUnknownPhi());
-
-		if (headerAlpha == 9) {
-			writeInt(out, weaponMod.getAnimCharge());
-
-			writeAnim(out, weaponMod.getChargeAnim());
-		}
-
-		writeInt(out, weaponMod.getLastProjectileId());
-
-		writeInt(out, weaponMod.getPendingProjectiles().size());
-		for (ProjectileState projectile : weaponMod.getPendingProjectiles()) {
-			writeProjectile(out, projectile);
-		}
-	}
-
 	private ReticleCoordinate readReticleCoordinate(FileInputStream in) throws IOException {
 		ReticleCoordinate reticle = new ReticleCoordinate();
 
@@ -9731,8 +8394,4 @@ System.err.println(String.format("Weapon Module: @%d", in.getChannel().position(
 		return reticle;
 	}
 
-	public void writeReticleCoordinate(OutputStream out, ReticleCoordinate reticle) throws IOException {
-		writeInt(out, reticle.getX());
-		writeInt(out, reticle.getY());
-	}
 }

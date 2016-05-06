@@ -20,24 +20,12 @@ public class Encounters {
 	@XmlElement(name="ship")
 	private List<ShipEvent> shipEvents;
 
-	public void setEvents(List<FTLEvent> events) {
-		this.events = events;
-	}
-
 	public List<FTLEvent> getEvents() {
 		return events;
 	}
 
-	public void setEventLists(List<FTLEventList> eventLists) {
-		this.eventLists = eventLists;
-	}
-
 	public List<FTLEventList> getEventLists() {
 		return eventLists;
-	}
-
-	public void setShipEvents(List<ShipEvent> shipEvents) {
-		this.shipEvents = shipEvents;
 	}
 
 	public List<ShipEvent> getShipEvents() {

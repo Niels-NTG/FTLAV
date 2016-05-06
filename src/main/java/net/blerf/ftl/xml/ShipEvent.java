@@ -22,16 +22,8 @@ public class ShipEvent {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getAutoBlueprintId() {
 		return autoBlueprintId;
-	}
-
-	public void setAutoBlueprintId(String autoBlueprintId) {
-		this.autoBlueprintId = autoBlueprintId;
 	}
 
 	@Override

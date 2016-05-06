@@ -21,43 +21,28 @@ public class Blueprints {
 	public List<BlueprintList> getBlueprintList() {
 		return blueprintList;
 	}
-	public void setBlueprintList(List<BlueprintList> blueprintList) {
-		this.blueprintList = blueprintList;
-	}
+
 	public List<CrewBlueprint> getCrewBlueprint() {
 		return crewBlueprint;
 	}
-	public void setCrewBlueprint(List<CrewBlueprint> crewBlueprint) {
-		this.crewBlueprint = crewBlueprint;
-	}
+
 	public List<SystemBlueprint> getSystemBlueprint() {
 		return systemBlueprint;
 	}
-	public void setSystemBlueprint(List<SystemBlueprint> systemBlueprint) {
-		this.systemBlueprint = systemBlueprint;
-	}
+
 	public List<WeaponBlueprint> getWeaponBlueprint() {
 		return weaponBlueprint;
 	}
-	public void setWeaponBlueprint(List<WeaponBlueprint> weaponBlueprint) {
-		this.weaponBlueprint = weaponBlueprint;
-	}
+
 	public List<DroneBlueprint> getDroneBlueprint() {
 		return droneBlueprint;
 	}
-	public void setDroneBlueprint(List<DroneBlueprint> droneBlueprint) {
-		this.droneBlueprint = droneBlueprint;
-	}
+
 	public List<AugBlueprint> getAugBlueprint() {
 		return augBlueprint;
 	}
-	public void setAugBlueprint(List<AugBlueprint> augBlueprint) {
-		this.augBlueprint = augBlueprint;
-	}
+
 	public List<ShipBlueprint> getShipBlueprint() {
 		return shipBlueprint;
-	}
-	public void setShipBlueprint(List<ShipBlueprint> shipBlueprint) {
-		this.shipBlueprint = shipBlueprint;
 	}
 }

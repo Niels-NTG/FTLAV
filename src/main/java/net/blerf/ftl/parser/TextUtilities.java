@@ -48,7 +48,7 @@ public class TextUtilities {
 		byte[] allBytes = tmpData.toByteArray();
 		tmpData.reset();
 
-		Map<byte[],String> boms = new LinkedHashMap<byte[],String>();
+		Map<byte[],String> boms = new LinkedHashMap<>();
 		boms.put(new byte[] {(byte)0xEF,(byte)0xBB,(byte)0xBF}, "UTF-8");
 		boms.put(new byte[] {(byte)0xFF,(byte)0xFE}, "UTF-16LE");
 		boms.put(new byte[] {(byte)0xFE,(byte)0xFF}, "UTF-16BE");
@@ -75,7 +75,7 @@ public class TextUtilities {
 		else {
 			ByteBuffer byteBuffer = ByteBuffer.wrap(allBytes);
 
-			Map<String,Exception> errorMap = new LinkedHashMap<String,Exception>();
+			Map<String,Exception> errorMap = new LinkedHashMap<>();
 			for (String guess : new String[] {"UTF-8", "windows-1252"}) {
 				try {
 					byteBuffer.rewind();
@@ -124,7 +124,7 @@ public class TextUtilities {
 	 * @see net.vhati.modmanager.core.SloppyXMLParser
 	 */
 	public static Document parseStrictOrSloppyXML(CharSequence srcSeq, String srcDescription) throws IOException, JDOMException {
-		Document doc = null;
+		Document doc;
 
 		try {
 			SAXBuilder strictParser = new SAXBuilder();

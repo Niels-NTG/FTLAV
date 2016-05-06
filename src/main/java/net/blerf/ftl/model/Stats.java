@@ -13,7 +13,7 @@ public class Stats {
 
 	private static final Logger log = LogManager.getLogger(Stats.class);
 
-	public static enum StatType {
+	public enum StatType {
 		// IntRecords
 		MOST_SHIPS_DEFEATED   ("Most Ships Defeated"),
 		MOST_BEACONS_EXPLORED ("Most Beacons Explored"),
@@ -36,7 +36,7 @@ public class Stats {
 		TOTAL_VICTORIES       ("Total Victories");
 
 		private final String name;
-		private StatType(String name) {
+		StatType(String name) {
 			this.name = name;
 		}
 		public String getName() { return name; }

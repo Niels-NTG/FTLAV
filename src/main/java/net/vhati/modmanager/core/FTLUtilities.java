@@ -18,9 +18,7 @@ public class FTLUtilities {
 	 */
 	public static boolean isDatsDirValid(File d) {
 		if (!d.exists() || !d.isDirectory()) return false;
-		if (!new File(d, "data.dat").exists()) return false;
-		if (!new File(d, "resource.dat").exists()) return false;
-		return true;
+		return new File(d, "data.dat").exists() && new File(d, "resource.dat").exists();
 	}
 
 	/**
@@ -176,7 +174,7 @@ public class FTLUtilities {
 		if (exeFile == null) return null;
 
 		Process result = null;
-		ProcessBuilder pb = null;
+		ProcessBuilder pb;
 		if (System.getProperty("os.name").contains("OS X")) {
 			pb = new ProcessBuilder("open", "-a", exeFile.getAbsolutePath());
 		} else {

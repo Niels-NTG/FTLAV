@@ -47,24 +47,12 @@ public class Achievement {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getImagePath() {
-		return imagePath;
 	}
 
 	public void setImagePath(String imagePath) {
@@ -79,24 +67,8 @@ public class Achievement {
 		this.shipId = shipId;
 	}
 
-	public int getMultiDifficulty() {
-		return multiDifficulty;
-	}
-
-	public void setMultiDifficulty(int multiDifficulty) {
-		this.multiDifficulty = multiDifficulty;
-	}
-
-	public boolean isVictory() {
-		return victory;
-	}
-
 	public void setVictory(boolean b) {
 		victory = b;
-	}
-
-	public boolean isQuest() {
-		return quest;
 	}
 
 	public void setQuest(boolean b) {

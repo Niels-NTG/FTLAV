@@ -31,12 +31,12 @@ public class Profile {
 	public Profile(Profile srcProfile) {
 		unknownHeaderAlpha = srcProfile.getHeaderAlpha();
 
-		achievements = new ArrayList<AchievementRecord>();
+		achievements = new ArrayList<>();
 		for (AchievementRecord rec : srcProfile.getAchievements()) {
 			achievements.add(new AchievementRecord(rec));
 		}
 
-		shipUnlockMap = new LinkedHashMap<String, ShipAvailability>();
+		shipUnlockMap = new LinkedHashMap<>();
 		for (Map.Entry<String, ShipAvailability> entry : srcProfile.getShipUnlockMap().entrySet()) {
 			shipUnlockMap.put(entry.getKey(), new ShipAvailability(entry.getValue()));
 		}
@@ -47,15 +47,6 @@ public class Profile {
 	}
 
 
-	/**
-	 * Sets the magic number indicating file format, apparently.
-	 *
-	 * 4 = Profile, FTL 1.01-1.03.3
-	 * 9 = AE Profile, FTL 1.5.4+
-	 */
-	public void setHeaderAlpha(int n) {
-		this.unknownHeaderAlpha = n;
-	}
 	public int getHeaderAlpha() {
 		return unknownHeaderAlpha;
 	}
@@ -74,61 +65,23 @@ public class Profile {
 		return newbieTipLevel;
 	}
 
-	public void setAchievements(List<AchievementRecord> achievements) {
-		this.achievements = achievements;
-	}
 	public List<AchievementRecord> getAchievements() {
 		return achievements;
 	}
 
-	public void setShipUnlockMap(Map<String, ShipAvailability> shipUnlockMap) {
-		this.shipUnlockMap = shipUnlockMap;
-	}
 	public Map<String, ShipAvailability> getShipUnlockMap() {
 		return shipUnlockMap;
 	}
 
-	public void setStats(Stats stats) {
-		this.stats = stats;
-	}
 	public Stats getStats() {
 		return stats;
 	}
 
 
-	public static Profile createEmptyProfile() {
-		Profile profile = new Profile();
-		profile.setHeaderAlpha(4);
-		profile.setAchievements(new ArrayList<AchievementRecord>());
-		profile.setShipUnlockMap(new LinkedHashMap<String, ShipAvailability>());
-
-		Stats stats = new Stats();
-		stats.setTopScores(new ArrayList<Score>());
-		stats.setShipBest(new ArrayList<Score>());
-
-		StatType[] intStatTypes = {StatType.MOST_SHIPS_DEFEATED, StatType.MOST_BEACONS_EXPLORED,
-		                           StatType.MOST_SCRAP_COLLECTED, StatType.MOST_CREW_HIRED,
-		                           StatType.TOTAL_SHIPS_DEFEATED, StatType.TOTAL_BEACONS_EXPLORED,
-		                           StatType.TOTAL_SCRAP_COLLECTED, StatType.TOTAL_CREW_HIRED,
-                               StatType.TOTAL_GAMES_PLAYED, StatType.TOTAL_VICTORIES};
-		StatType[] crewStatTypes = {StatType.MOST_REPAIRS, StatType.MOST_COMBAT_KILLS,
-		                            StatType.MOST_PILOTED_EVASIONS, StatType.MOST_JUMPS_SURVIVED,
-		                            StatType.MOST_SKILL_MASTERIES};
-		for (StatType type : intStatTypes) {
-			stats.setIntRecord(type, 0);
-		}
-		for (StatType type : crewStatTypes) {
-			stats.setCrewRecord(type, new CrewRecord("", "", true, 0));
-		}
-		profile.setStats(stats);
-
-		return profile;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		boolean first = true;
+		boolean first;
 
 		StatType[] intStatTypes = {StatType.MOST_SHIPS_DEFEATED, StatType.MOST_BEACONS_EXPLORED,
 		                           StatType.MOST_SCRAP_COLLECTED, StatType.MOST_CREW_HIRED,
@@ -139,7 +92,7 @@ public class Profile {
 		                            StatType.MOST_PILOTED_EVASIONS, StatType.MOST_JUMPS_SURVIVED,
 		                            StatType.MOST_SKILL_MASTERIES};
 
-		String formatDesc = null;
+		String formatDesc;
 		switch (unknownHeaderAlpha) {
 			case(4): formatDesc = "Profile, FTL 1.01-1.03.3"; break;
 			case(9): formatDesc = "AE Profile, FTL 1.5.4+"; break;

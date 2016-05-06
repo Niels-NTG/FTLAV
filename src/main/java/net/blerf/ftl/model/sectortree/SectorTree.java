@@ -36,10 +36,10 @@ public class SectorTree {
 	 */
 	public void setSectorDots(SectorTree srcTree) {
 		List<List<SectorDot>> srcColumns = srcTree.getSectorDots();
-		List<List<SectorDot>> newColumns = new ArrayList<List<SectorDot>>();
+		List<List<SectorDot>> newColumns = new ArrayList<>();
 
 		for (List<SectorDot> srcColumn : srcColumns) {
-			List<SectorDot> newColumn = new ArrayList<SectorDot>(srcColumn.size());
+			List<SectorDot> newColumn = new ArrayList<>(srcColumn.size());
 			for (SectorDot srcDot : srcColumn) {
 				newColumn.add(new SectorDot(srcDot));
 			}
@@ -61,11 +61,9 @@ public class SectorTree {
 	public void setSectorVisitation(List<Boolean> route) {
 		int dotsSoFar = 0;
 
-		for (int c=0; c < dotColumns.size(); c++) {
-			List<SectorDot> columnDots = dotColumns.get(c);
-
-			for (int r=0; r < columnDots.size(); r++) {
-				boolean visited = route.get(dotsSoFar + r).booleanValue();
+		for (List<SectorDot> columnDots : dotColumns) {
+			for (int r = 0; r < columnDots.size(); r++) {
+				boolean visited = route.get(dotsSoFar + r);
 				columnDots.get(r).setVisited(visited);
 			}
 
@@ -79,13 +77,11 @@ public class SectorTree {
 	 * Each call creates a new List.
 	 */
 	public List<Boolean> getSectorVisitation() {
-		List<Boolean> result = new ArrayList<Boolean>();
+		List<Boolean> result = new ArrayList<>();
 
-		for (int c=0; c < dotColumns.size(); c++) {
-			List<SectorDot> columnDots = dotColumns.get(c);
-
-			for (int r=0; r < columnDots.size(); r++) {
-				boolean visited = columnDots.get(r).isVisited();
+		for (List<SectorDot> columnDots : dotColumns) {
+			for (SectorDot columnDot : columnDots) {
+				boolean visited = columnDot.isVisited();
 				result.add(visited);
 			}
 		}
@@ -262,7 +258,7 @@ public class SectorTree {
 		else {
 			// The column was not visited, recurse through prior dots.
 
-			List<SectorDot> nearList = new ArrayList<SectorDot>(4);
+			List<SectorDot> nearList = new ArrayList<>(4);
 
 			getConnectedDots(column, row, false, nearList);
 			List<SectorDot> nearColumn = dotColumns.get(column-1);
@@ -408,29 +404,6 @@ public class SectorTree {
 			dotsSoFar += columnDots.size();
 		}
 		return dotsSoFar;
-	}
-
-	/**
-	 * Sets visitation of a potential tree.
-	 *
-	 * If route contains fewer entries than the total dots in the tree, the
-	 * remainder will be unvisited.
-	 */
-	public static void setVisitation(List<List<SectorDot>> newColumns, List<Boolean> route) {
-		int dotsSoFar = 0;
-
-		for (List<SectorDot> columnDots : newColumns) {
-			for (SectorDot dot : columnDots) {
-				boolean visited = false;
-
-				if (dotsSoFar < route.size()) {
-					visited = route.get(dotsSoFar).booleanValue();
-				}
-
-				dot.setVisited(visited);
-				dotsSoFar++;
-			}
-		}
 	}
 
 	/**

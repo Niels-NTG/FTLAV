@@ -19,16 +19,8 @@ public class SectorType {
 	@XmlElement(name="sector")
 	public List<String> sectorIds;
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getId() {
 		return id;
-	}
-
-	public void setSectorIds(List<String> sectorIds) {
-		this.sectorIds = sectorIds;
 	}
 
 	public List<String> getSectorIds() {

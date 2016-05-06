@@ -31,40 +31,20 @@ public class DroneBlueprint {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getType() {
 		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getShortTitle() {
 		return shortTitle;
 	}
 
-	public void setShortTitle(String shortTitle) {
-		this.shortTitle = shortTitle;
-	}
-
 	public String getDescription() {
 		return desc;
-	}
-
-	public void setDescription(String desc) {
-		this.desc = desc;
 	}
 
 	// TODO: bp?
@@ -73,72 +53,36 @@ public class DroneBlueprint {
 		return power;
 	}
 
-	public void setPower(int power) {
-		this.power = power;
-	}
-
 	public int getCooldown() {
 		return cooldown;
-	}
-
-	public void setCooldown(int cooldown) {
-		this.cooldown = cooldown;
 	}
 
 	public int getDodge() {
 		return dodge;
 	}
 
-	public void setDodge(int dodge) {
-		this.dodge = dodge;
-	}
-
 	public int getSpeed() {
 		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
 	}
 
 	public int getCost() {
 		return cost;
 	}
 
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
 	public String getDroneImage() {
 		return droneImage;
-	}
-
-	public void setDroneImage(String droneImage) {
-		this.droneImage = droneImage;
 	}
 
 	public String getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public String getWeaponId() {
 		return weaponId;
 	}
 
-	public void setWeaponId(String weaponId) {
-		this.weaponId = weaponId;
-	}
-
 	public int getRarity() {
 		return cost;
-	}
-
-	public void setRarity(int rarity) {
-		this.rarity = rarity;
 	}
 
 	@Override

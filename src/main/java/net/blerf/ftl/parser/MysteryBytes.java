@@ -26,7 +26,7 @@ public class MysteryBytes {
 	 * @param length the number of bytes to read.
 	 */
 	public MysteryBytes(InputStream in, int length) throws IOException {
-		int numRead = 0;
+		int numRead;
 		int unOffset = 0;
 		byte[] unBytes = new byte[length];
 		while (unOffset < unBytes.length && (numRead = in.read(unBytes, unOffset, unBytes.length)) >= 0)

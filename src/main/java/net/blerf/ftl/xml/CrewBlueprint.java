@@ -50,16 +50,8 @@ public class CrewBlueprint {
 		}
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getId() {
 		return id;
-	}
-
-	public void setSpriteTintLayerList(List<SpriteTintLayer> layerList) {
-		spriteTintLayerList = layerList;
 	}
 
 	public List<SpriteTintLayer> getSpriteTintLayerList() {

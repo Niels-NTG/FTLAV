@@ -66,7 +66,7 @@ public class FileChannelRegionInputStream extends InputStream {
 
 		// Do an absolute get() from the buffer,
 		//   and interpret the byte as if it were unsigned.
-		int result = (int)(buf.get((int)(intraPos - bufOffset)) & 0xff);
+		int result = buf.get((int)(intraPos - bufOffset)) & 0xff;
 		intraPos++;
 		return result;
 	}
@@ -98,7 +98,7 @@ public class FileChannelRegionInputStream extends InputStream {
 			// Refill the buffer at the current intraPos.
 
 			bufOffset = intraPos;
-			int len = 0;
+			int len;
 			buf.position(0);
 			len = channel.read(buf, regionOffset + bufOffset);
 			if (len == -1) {
@@ -111,7 +111,6 @@ public class FileChannelRegionInputStream extends InputStream {
 			buf.position(0);
 			int bufTodo = Math.min(bytesRemaining, bufLength);
 			buf.get(b, bOff + bytesRead, bufTodo);
-			bytesRemaining -= bufTodo;
 			bytesRead += bufTodo;
 			intraPos += bufTodo;
 		}

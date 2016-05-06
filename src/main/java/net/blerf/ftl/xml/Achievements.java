@@ -19,8 +19,4 @@ public class Achievements {
 		return achievements;
 	}
 
-	public void setAchievements(List<Achievement> achievements) {
-		this.achievements = achievements;
-	}
-	
 }

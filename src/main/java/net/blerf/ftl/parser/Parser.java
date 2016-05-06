@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 
 public class Parser {
@@ -24,17 +23,10 @@ public class Parser {
 	}
 
 	/**
-	 * Writes a boolean to a stream as a little-endian int.
-	 */
-	protected void writeBool(OutputStream out, boolean b) throws IOException {
-		writeInt(out, (b ? 1 : 0));
-	}
-
-	/**
 	 * Reads a little-endian int from a stream.
 	 */
 	protected int readInt(InputStream in) throws IOException {
-		int numRead = 0;
+		int numRead;
 		int offset = 0;
 		while (offset < intbuf.length && (numRead = in.read(intbuf, offset, intbuf.length)) >= 0)
 			offset += numRead;
@@ -48,17 +40,6 @@ public class Parser {
 		}
 
 		return v;
-	}
-
-	/**
-	 * Writes a little-endian int to a stream.
-	 */
-	protected void writeInt(OutputStream out, int value) throws IOException {
-		for (int i = 0; i < intbuf.length; i++) {
-			intbuf[i] = (byte)(value >> (i*8));
-		}
-
-		out.write(intbuf);
 	}
 
 	/**
@@ -87,7 +68,7 @@ public class Parser {
 				throw new RuntimeException("Expected string length ("+ length +") would extend beyond the end of the stream");
 		}
 
-		int numRead = 0;
+		int numRead;
 		int offset = 0;
 		byte[] strBytes = new byte[length];
 		while (offset < strBytes.length && (numRead = in.read(strBytes, offset, strBytes.length)) >= 0)
@@ -99,8 +80,4 @@ public class Parser {
 		return new String(strBytes, "US-ASCII");
 	}
 
-	protected void writeString(OutputStream out, String str) throws IOException {
-		writeInt(out, str.length());
-		out.write(str.getBytes());
-	}
 }

@@ -104,38 +104,25 @@ public class ShipBlueprint {
 			public int getPower() {
 				return power;
 			}
-			public void setPower(int power) {
-				this.power = power;
-			}
+
 			public Integer getMaxPower() {
 				return maxPower;
 			}
-			public void setMaxPower(Integer maxPower) {
-				this.maxPower = maxPower;
-			}
+
 			public int getRoomId() {
 				return roomId;
 			}
-			public void setRoomId(int roomId) {
-				this.roomId = roomId;
-			}
+
 			public Boolean getStart() {
 				return start;
 			}
-			public void setStart(Boolean start) {
-				this.start = start;
-			}
+
 			public String getImg() {
 				return img;
 			}
-			public void setImg(String img) {
-				this.img = img;
-			}
+
 			public RoomSlot getSlot() {
 				return slot;
-			}
-			public void setSlot(RoomSlot slot) {
-				this.slot = slot;
 			}
 
 		}
@@ -176,7 +163,7 @@ public class ShipBlueprint {
 		public SystemRoom[] getSystemRooms() {
 			SystemRoom[] rooms = new SystemRoom[] { pilotRoom, doorsRoom, sensorsRoom, medicalRoom, lifeSupportRoom, shieldRoom,
 					engineRoom, weaponRoom, droneRoom, teleporterRoom, cloakRoom };
-			List<SystemRoom> list = new ArrayList<SystemRoom>();
+			List<SystemRoom> list = new ArrayList<>();
 			for (SystemRoom room : rooms) {
 				if(room != null) list.add(room);
 			}
@@ -188,98 +175,65 @@ public class ShipBlueprint {
 		public SystemRoom getPilotRoom() {
 			return pilotRoom;
 		}
-		public void setPilotRoom(SystemRoom pilotRoom) {
-			this.pilotRoom = pilotRoom;
-		}
+
 		public SystemRoom getDoorsRoom() {
 			return doorsRoom;
 		}
-		public void setDoorsRoom(SystemRoom doorsRoom) {
-			this.doorsRoom = doorsRoom;
-		}
+
 		public SystemRoom getSensorsRoom() {
 			return sensorsRoom;
 		}
-		public void setSensorsRoom(SystemRoom sensorsRoom) {
-			this.sensorsRoom = sensorsRoom;
-		}
+
 		public SystemRoom getMedicalRoom() {
 			return medicalRoom;
 		}
-		public void setMedicalRoom(SystemRoom medicalRoom) {
-			this.medicalRoom = medicalRoom;
-		}
+
 		public SystemRoom getLifeSupportRoom() {
 			return lifeSupportRoom;
 		}
-		public void setLifeSupportRoom(SystemRoom lifeSupportRoom) {
-			this.lifeSupportRoom = lifeSupportRoom;
-		}
+
 		public SystemRoom getShieldRoom() {
 			return shieldRoom;
 		}
-		public void setShieldRoom(SystemRoom shieldRoom) {
-			this.shieldRoom = shieldRoom;
-		}
+
 		public SystemRoom getEngineRoom() {
 			return engineRoom;
 		}
-		public void setEngineRoom(SystemRoom engineRoom) {
-			this.engineRoom = engineRoom;
-		}
+
 		public SystemRoom getWeaponRoom() {
 			return weaponRoom;
 		}
-		public void setWeaponRoom(SystemRoom weaponRoom) {
-			this.weaponRoom = weaponRoom;
-		}
+
 		public SystemRoom getDroneRoom() {
 			return droneRoom;
 		}
-		public void setDroneRoom(SystemRoom droneRoom) {
-			this.droneRoom = droneRoom;
-		}
+
 		public SystemRoom getTeleporterRoom() {
 			return teleporterRoom;
 		}
-		public void setTeleporterRoom(SystemRoom teleporterRoom) {
-			this.teleporterRoom = teleporterRoom;
-		}
+
 		public SystemRoom getCloakRoom() {
 			return cloakRoom;
 		}
-		public void setCloakRoom(SystemRoom cloakRoom) {
-			this.cloakRoom = cloakRoom;
-		}
+
 		public List<SystemRoom> getArtilleryRooms() {
 			return artilleryRooms;
 		}
-		public void setArtilleryRooms(List<SystemRoom> artilleryRooms) {
-			this.artilleryRooms = artilleryRooms;
-		}
+
 		public SystemRoom getCloneRoom() {
 			return cloneRoom;
 		}
-		public void setCloneRoom(SystemRoom cloneRoom) {
-			this.cloneRoom = cloneRoom;
-		}
+
 		public SystemRoom getHackRoom() {
 			return hackRoom;
 		}
-		public void setHackRoom(SystemRoom hackRoom) {
-			this.hackRoom = hackRoom;
-		}
+
 		public SystemRoom getMindRoom() {
 			return mindRoom;
 		}
-		public void setMindRoom(SystemRoom mindRoom) {
-			this.mindRoom = mindRoom;
-		}
+
 		public SystemRoom getBatteryRoom() {
 			return batteryRoom;
-		}
-		public void setBatteryRoom(SystemRoom batteryRoom) {
-			this.batteryRoom = batteryRoom;
 		}
 
 		/**
@@ -378,8 +332,6 @@ public class ShipBlueprint {
 			return (weaponIds != null ? weaponIds.size() : 0);
 		}
 
-		public void setCount(int n) { /* No-op */ }
-
 		public List<WeaponId> getWeaponIds() {
 			return weaponIds;
 		}
@@ -417,8 +369,6 @@ public class ShipBlueprint {
 			return (droneIds != null ? droneIds.size() : 0);
 		}
 
-		public void setCount(int n) { /* No-op */ }
-
 		public List<DroneId> getDroneIds() {
 			return droneIds;
 		}
@@ -446,120 +396,60 @@ public class ShipBlueprint {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getLayout() {
 		return layout;
-	}
-
-	public void setLayout(String layout) {
-		this.layout = layout;
 	}
 
 	public String getGraphicsBaseName() {
 		return gfxBaseName;
 	}
 
-	public void setGraphicsBaseName(String gfxBaseName) {
-		this.gfxBaseName = gfxBaseName;
-	}
-
 	public String getShipClass() {
 		return shipClass;
-	}
-
-	public void setShipClass(String shipClass) {
-		this.shipClass = shipClass;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getDesc() {
 		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 	public SystemList getSystemList() {
 		return systemList;
 	}
 
-	public void setSystemList(SystemList systemList) {
-		this.systemList = systemList;
-	}
-
 	public Integer getWeaponSlots() {
 		return weaponSlots;
-	}
-
-	public void setWeaponSlots(Integer weaponSlots) {
-		this.weaponSlots = weaponSlots;
 	}
 
 	public Integer getDroneSlots() {
 		return droneSlots;
 	}
 
-	public void setDroneSlots(Integer droneSlots) {
-		this.droneSlots = droneSlots;
-	}
-
 	public WeaponList getWeaponList() {
 		return weaponList;
-	}
-
-	public void setWeaponList(WeaponList weaponList) {
-		this.weaponList = weaponList;
 	}
 
 	public List<AugmentId> getAugments() {
 		return augmentIds;
 	}
 
-	public void setAugments(List<AugmentId> augmentIds) {
-		this.augmentIds = augmentIds;
-	}
-
 	public DroneList getDroneList() {
 		return droneList;
-	}
-
-	public void setDroneList(DroneList droneList) {
-		this.droneList = droneList;
 	}
 
 	public Health getHealth() {
 		return health;
 	}
 
-	public void setHealth(Health health) {
-		this.health = health;
-	}
-
 	public MaxPower getMaxPower() {
 		return maxPower;
 	}
 
-	public void setMaxPower(MaxPower maxPower) {
-		this.maxPower = maxPower;
-	}
-
 	public Object getCrewCount() {
 		return crewCount;
-	}
-
-	public void setCrewCount(Object crewCount) {
-		this.crewCount = crewCount;
 	}
 
 	@Override

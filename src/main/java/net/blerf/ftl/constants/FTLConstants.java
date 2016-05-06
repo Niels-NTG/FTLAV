@@ -9,7 +9,7 @@ public interface FTLConstants {
 
 	// ShipState constants.
 
-	public int getMaxReservePoolCapacity();
+	int getMaxReservePoolCapacity();
 
 
 	// SystemState constants.
@@ -19,19 +19,19 @@ public interface FTLConstants {
 	 *
 	 * @param batterySystemCapacity the capacity of the system itself (its level)
 	 */
-	public int getBatteryPoolCapacity(int batterySystemCapacity);
+	int getBatteryPoolCapacity(int batterySystemCapacity);
 
-	public int getMaxIonizedBars();
+	int getMaxIonizedBars();
 
 
 	// CrewState constants.
 
-	public List<CrewType> getCrewTypes();
+	List<CrewType> getCrewTypes();
 
-	public int getMasteryIntervalPilot(String race);
-	public int getMasteryIntervalEngine(String race);
-	public int getMasteryIntervalShield(String race);
-	public int getMasteryIntervalWeapon(String race);
-	public int getMasteryIntervalRepair(String race);
-	public int getMasteryIntervalCombat(String race);
+	int getMasteryIntervalPilot(String race);
+	int getMasteryIntervalEngine(String race);
+	int getMasteryIntervalShield(String race);
+	int getMasteryIntervalWeapon(String race);
+	int getMasteryIntervalRepair(String race);
+	int getMasteryIntervalCombat(String race);
 }

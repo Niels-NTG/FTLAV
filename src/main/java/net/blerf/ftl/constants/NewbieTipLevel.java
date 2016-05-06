@@ -16,7 +16,7 @@ public enum NewbieTipLevel {
 
 	private final String name;
 	private final String description;
-	private NewbieTipLevel(String name, String description) {
+	NewbieTipLevel(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}

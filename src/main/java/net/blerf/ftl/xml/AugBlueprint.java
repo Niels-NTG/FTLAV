@@ -25,24 +25,12 @@ public class AugBlueprint {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getDescription() {
 		return desc;
-	}
-
-	public void setDescription(String desc) {
-		this.desc = desc;
 	}
 
 	// TODO: bp?
@@ -51,24 +39,12 @@ public class AugBlueprint {
 		return cost;
 	}
 
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
 	public int getRarity() {
 		return cost;
 	}
 
-	public void setRarity(int rarity) {
-		this.rarity = rarity;
-	}
-
 	public boolean isStackable() {
 		return stackable;
-	}
-
-	public void setStackable(boolean b) {
-		stackable = b;
 	}
 
 	public float getValue() {

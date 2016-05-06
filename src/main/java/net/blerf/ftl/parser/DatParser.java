@@ -101,10 +101,7 @@ public class DatParser {
 
 		ShipLayout shipLayout = new ShipLayout();
 
-		String line = null;
-		boolean firstLine = true;
-		boolean comment = false;
-
+		String line;
 		while ((line = in.readLine()) != null) {
 			if (line.length() == 0) continue;
 

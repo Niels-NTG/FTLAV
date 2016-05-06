@@ -17,16 +17,8 @@ public class SectorData {
 	@XmlElement(name="sectorDescription")
 	private List<SectorDescription> sectorDescriptions;
 
-	public void setSectorTypes(List<SectorType> sectorTypes) {
-		this.sectorTypes = sectorTypes;
-	}
-
 	public List<SectorType> getSectorTypes() {
 		return sectorTypes;
-	}
-
-	public void setSectorDescriptions(List<SectorDescription> sectorDescriptions) {
-		this.sectorDescriptions = sectorDescriptions;
 	}
 
 	public List<SectorDescription> getSectorDescriptions() {

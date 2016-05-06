@@ -258,14 +258,14 @@ public class FTLDat {
 		/**
 		 * Writes the contents of the file with innerPath to dstFile.
 		 */
-		public void extractTo(String innerPath, OutputStream os) throws FileNotFoundException, IOException {
+		public void extractTo(String innerPath, OutputStream os) throws IOException {
 			throw new UnsupportedOperationException();
 		}
 
 		/**
 		 * Removes the file with innerPath from the pack.
 		 */
-		public void remove(String innerPath) throws FileNotFoundException, IOException {
+		public void remove(String innerPath) throws IOException {
 			throw new UnsupportedOperationException();
 		}
 
@@ -283,7 +283,7 @@ public class FTLDat {
 		 * modify this dat. Do not pass an input stream from
 		 * this dat instance into another of its own methods.
 		 */
-		public InputStream getInputStream(String innerPath) throws FileNotFoundException, IOException {
+		public InputStream getInputStream(String innerPath) throws IOException {
 			throw new UnsupportedOperationException();
 		}
 
@@ -324,9 +324,9 @@ public class FTLDat {
 
 		@Override
 		public List<String> list() {
-			List<String> result = new ArrayList<String>();
+			List<String> result = new ArrayList<>();
 
-			Stack<String> pendingPaths = new Stack<String>();
+			Stack<String> pendingPaths = new Stack<>();
 			pendingPaths.push("");
 
 			while (!pendingPaths.isEmpty()) {
@@ -346,7 +346,7 @@ public class FTLDat {
 
 		@Override
 		public List<PathAndSize> listSizes() {
-			List<PathAndSize> result = new ArrayList<PathAndSize>();
+			List<PathAndSize> result = new ArrayList<>();
 			List<String> innerPaths = list();
 			for (String innerPath : innerPaths) {
 				File tmpFile = getFile(innerPath);
@@ -413,7 +413,7 @@ public class FTLDat {
 		}
 
 		@Override
-		public InputStream getInputStream(String innerPath) throws FileNotFoundException, IOException  {
+		public InputStream getInputStream(String innerPath) throws IOException  {
 			return new FileInputStream(getFile(innerPath));
 		}
 
@@ -560,11 +560,11 @@ public class FTLDat {
 		 * WARNING: This will erase the file.
 		 */
 		private void createIndex(int indexSize) throws IOException {
-			entryList = new ArrayList<DatEntry>(indexSize);
+			entryList = new ArrayList<>(indexSize);
 			for (int i=0; i < indexSize; i++)
 				entryList.add(null);
 
-			pathToIndexMap = new HashMap<String,Integer>(indexSize);
+			pathToIndexMap = new HashMap<>(indexSize);
 
 			raf.seek(0);
 			raf.setLength(0);
@@ -583,11 +583,11 @@ public class FTLDat {
 				throw new IOException(String.format("Corrupt dat file (%s): Its header claims to be larger than the entire file.", getName()));
 			}
 
-			entryList = new ArrayList<DatEntry>(indexSize);
+			entryList = new ArrayList<>(indexSize);
 			for (int i=0; i < indexSize; i++)
 				entryList.add(null);
 
-			pathToIndexMap = new HashMap<String,Integer>(indexSize);
+			pathToIndexMap = new HashMap<>(indexSize);
 
 			// Store partial DatEntry objects in entryList (leaving nulls where absent).
 			for (int i=0; i < indexSize; i++) {
@@ -612,7 +612,7 @@ public class FTLDat {
 				if (pathToIndexMap.containsKey(entry.innerPath)) {
 					throw new IOException("InnerPath occurs more than once: "+ entry.innerPath);
 				}
-				pathToIndexMap.put(entry.innerPath, new Integer(i));
+				pathToIndexMap.put(entry.innerPath, i);
 			}
 		}
 
@@ -655,7 +655,7 @@ public class FTLDat {
 		 * be filled with additional indeces.
 		 */
 		private void growIndex(int amount) throws IOException {
-			int freeRoom = -1;
+			int freeRoom;
 
 			while (true) {
 				int vacancyCount = Collections.frequency(entryList, null);
@@ -708,14 +708,14 @@ public class FTLDat {
 
 		@Override
 		public List<String> list() {
-			List<String> result = new ArrayList<String>();
+			List<String> result = new ArrayList<>();
 			result.addAll(pathToIndexMap.keySet());
 			return result;
 		}
 
 		@Override
 		public List<PathAndSize> listSizes() {
-			List<PathAndSize> result = new ArrayList<PathAndSize>();
+			List<PathAndSize> result = new ArrayList<>();
 			for (DatEntry entry : entryList) {
 				if (entry == null) continue;
 				PathAndSize pas = new PathAndSize(entry.innerPath, entry.dataSize);
@@ -726,7 +726,7 @@ public class FTLDat {
 
 		@Override
 		public void add(String innerPath, InputStream is) throws IOException {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			if (pathToIndexMap.containsKey(innerPath)) {
 				throw new IOException("InnerPath already exists: "+ innerPath);
 			}
@@ -770,13 +770,13 @@ public class FTLDat {
 		}
 
 		@Override
-		public void extractTo(String innerPath, OutputStream os) throws FileNotFoundException, IOException {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+		public void extractTo(String innerPath, OutputStream os) throws IOException {
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			if (!pathToIndexMap.containsKey(innerPath)) {
 				throw new FileNotFoundException("InnerPath does not exist: "+ innerPath);
 			}
 
-			int entryIndex = pathToIndexMap.get(innerPath).intValue();
+			int entryIndex = pathToIndexMap.get(innerPath);
 			DatEntry entry = entryList.get(entryIndex);
 
 			raf.seek(entry.dataOffset);
@@ -796,13 +796,13 @@ public class FTLDat {
 		}
 
 		@Override
-		public void remove(String innerPath) throws FileNotFoundException, IOException {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+		public void remove(String innerPath) throws IOException {
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			if (!pathToIndexMap.containsKey(innerPath)) {
 				throw new FileNotFoundException("InnerPath does not exist: "+ innerPath);
 			}
 
-			int entryIndex = pathToIndexMap.get(innerPath).intValue();
+			int entryIndex = pathToIndexMap.get(innerPath);
 			pathToIndexMap.remove(innerPath);
 			DatEntry removedEntry = entryList.set(entryIndex, null);
 
@@ -817,18 +817,18 @@ public class FTLDat {
 
 		@Override
 		public boolean contains(String innerPath) {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			return pathToIndexMap.containsKey(innerPath);
 		}
 
 		@Override
-		public InputStream getInputStream(String innerPath) throws FileNotFoundException, IOException {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+		public InputStream getInputStream(String innerPath) throws IOException {
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			if (!pathToIndexMap.containsKey(innerPath)) {
 				throw new FileNotFoundException("InnerPath does not exist: "+ innerPath);
 			}
 
-			int entryIndex = pathToIndexMap.get(innerPath).intValue();
+			int entryIndex = pathToIndexMap.get(innerPath);
 			DatEntry entry = entryList.get(entryIndex);
 
 			// Create a stream that can only see this region.
@@ -852,7 +852,7 @@ public class FTLDat {
 		}
 
 		public List<DatEntry> listMetadata() {
-			return new ArrayList<DatEntry>(entryList);
+			return new ArrayList<>(entryList);
 		}
 
 		/**
@@ -862,10 +862,10 @@ public class FTLDat {
 		public RepackResult repack() throws IOException {
 			// Build a list of non-null entries, sorted in the order their data appears.
 
-			ArrayList<DatEntry> tmpEntries = new ArrayList<DatEntry>(pathToIndexMap.size());
+			ArrayList<DatEntry> tmpEntries = new ArrayList<>(pathToIndexMap.size());
 			for (Map.Entry<String,Integer> mapping : pathToIndexMap.entrySet()) {
 				Integer iObj = mapping.getValue();
-				DatEntry entry = entryList.get(iObj.intValue());
+				DatEntry entry = entryList.get(iObj);
 				if (entry != null) {
 					tmpEntries.add(entry);
 				} else {  // The following should never happen!
@@ -876,15 +876,15 @@ public class FTLDat {
 				public int compare(DatEntry a, DatEntry b) {
 					if (b == null) return -1;
 					if (a == null) return 1;
-					DatEntry dA = (DatEntry)a;
-					DatEntry dB = (DatEntry)b;
+					DatEntry dA = a;
+					DatEntry dB = b;
 					if (dA.entryOffset < dB.entryOffset) return -1;
 					if (dA.entryOffset > dB.entryOffset) return 1;
 					return 0;
 				}
 				@Override
 				public boolean equals(Object o) {
-					return (o != null ? o == this : false);
+					return (o != null && o == this);
 				}
 			});
 
@@ -910,7 +910,7 @@ public class FTLDat {
 
 			for (int i=0; i < tmpEntries.size(); i++) {
 				DatEntry entry = tmpEntries.get (i);
-				pathToIndexMap.put(entry.innerPath, new Integer(i));
+				pathToIndexMap.put(entry.innerPath, i);
 
 				// Write the header index.
 				raf.seek(getHeaderIndexPosition(i));

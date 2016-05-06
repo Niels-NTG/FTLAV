@@ -83,11 +83,6 @@ public class EmptyAwareSAXHandlerFactory implements SAXHandlerFactory {
 		}
 
 		@Override
-		public void processingInstruction(String target, String data) throws SAXException {
-			super.processingInstruction(target, data);
-		}
-
-		@Override
 		public void startCDATA() {
 			emptyTag = false;
 			super.startCDATA();

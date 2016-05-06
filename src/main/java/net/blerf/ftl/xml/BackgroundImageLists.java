@@ -18,7 +18,4 @@ public class BackgroundImageLists {
 		return imageLists;
 	}
 
-	public void setImageLists(List<BackgroundImageList> imageLists) {
-		this.imageLists = imageLists;
-	}
 }
