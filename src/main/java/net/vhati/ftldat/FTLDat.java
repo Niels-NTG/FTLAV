@@ -409,7 +409,7 @@ public class FTLDat {
 		 * The location it represents is not guaranteed to exist.
 		 */
 		public File getFile(String innerPath) {
-			if (innerPath.indexOf("\\") != -1) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
+			if (innerPath.contains("\\")) throw new IllegalArgumentException("InnerPath contains backslashes: "+ innerPath);
 			File tmpFile = new File(rootDir, innerPath);
 
 			// Check if the file is inside rootDir.

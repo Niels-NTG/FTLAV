@@ -16,8 +16,7 @@ public class FTLUtilities {
 	 * Confirms the FTL resources dir exists and contains the dat files.
 	 */
 	public static boolean isDatsDirValid(File d) {
-		if (!d.exists() || !d.isDirectory()) return false;
-		return new File(d, "data.dat").exists() && new File(d, "resource.dat").exists();
+		return !(!d.exists() || !d.isDirectory()) && new File(d, "data.dat").exists() && new File(d, "resource.dat").exists();
 	}
 
 	/**
