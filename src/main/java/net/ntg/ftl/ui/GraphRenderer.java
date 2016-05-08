@@ -1,13 +1,15 @@
-package net.ntg.ftl.ui.graph;
+package net.ntg.ftl.ui;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.core.PFont;
+import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.data.Table;
 import processing.data.TableRow;
+
+import java.util.Map;
 
 import static net.ntg.ftl.FTLAdventureVisualiser.recording;
 import static net.ntg.ftl.FTLAdventureVisualiser.recordingHeaders;
@@ -21,52 +23,52 @@ public class GraphRenderer extends PApplet {
 
 	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(collumName iterator)
 
-	Table table;
-	int maxTableValue;
-	int startIndex = 0;
-	int endIndex;
+	private Table table;
+	private int maxTableValue;
+	private int startIndex = 0;
+	private int endIndex;
 
 	// graphics
-	int margin = 32; // px
-	int jumpSize = 32; // px
-	int glowSpread = 9; // px
-	int graphWidth;
-	int graphHeigth;
+	private final int margin = 32; // px
+	private int jumpSize = 32; // px
+	private final int glowSpread = 9; // px
+	private int graphWidth;
+	private int graphHeigth;
 
-	PFont mainFont13;
-	PFont mainFont39;
-	PFont headerFont11;
-	PFont headerFontAlt11;
-	PFont headerFont22;
-	PFont headerFontAlt22;
+	private PFont mainFont13;
+	private PFont mainFont39;
+	private PFont headerFont11;
+	private PFont headerFontAlt11;
+	private PFont headerFont22;
+	private PFont headerFontAlt22;
 
-	PImage crewCombat;
-	PImage crewEngine;
-	PImage crewHealth;
-	PImage crewPilot;
-	PImage crewRepairs;
-	PImage crewShield;
-	PImage crewWeapon;
+	private PImage crewCombat;
+	private PImage crewEngine;
+	private PImage crewHealth;
+	private PImage crewPilot;
+	private PImage crewRepairs;
+	private PImage crewShield;
+	private PImage crewWeapon;
 
-	final int BG_NORMAL = color(55, 45, 46);		// dark purple brown 	(background color)
-	final int BG_LIGHT = color(122, 100, 99);		// light purple brown	(background color)
-	final int BG_DARK = color(24, 20, 19);			// dark brown			(background color)
-	final int BORDER = color(235, 245, 229);		// white-greenish		(panel border color)
-	final int BUTTON = color(235, 245, 229);		// white-greenish		(button color)
-	final int BUTTON_ACTIVE = color(255, 230, 94);	// yellow				(button color)
-	final int MAINTEXT = color(255, 255, 255);		// white				(standard text color)
-	final int HEADERTEXT = color(65, 120, 128);		// turquoise			(standard text color)
-	final int HEADERTEXT_ALT = color(54, 78, 80);	// dark turquoise		(standard text color)
-	final int SECTOR_CIVILIAN = color(135, 199, 74);// bright green			(sector color)
-	final int SECTOR_HOSTILE = color(214, 50, 50);	// bright red			(sector color)
-	final int SECTOR_NEBULA = color(128, 51, 210);	// pure purple			(sector color)
-	final int SYSTEM_ACTIVE = color(100, 255, 99);	// bright green			(system status color)
-	final int SYSTEM_OFF = color(211, 211, 211);	// light grey			(system status color)
-	final int SYSTEM_DAMAGE = color(248, 59, 51);	// bright red			(system status color)
-	final int SYSTEM_HACKED = color(212, 70, 253);	// magenta				(system status color)
-	final int SYSTEM_IONIZED = color(133, 231, 237);// cyan					(system status color)
+	private final int BG_NORMAL = color(55, 45, 46);		// dark purple brown 	(background color)
+	private final int BG_LIGHT = color(122, 100, 99);		// light purple brown	(background color)
+	private final int BG_DARK = color(24, 20, 19);			// dark brown			(background color)
+	private final int BORDER = color(235, 245, 229);		// white-greenish		(panel border color)
+	private final int BUTTON = color(235, 245, 229);		// white-greenish		(button color)
+	private final int BUTTON_ACTIVE = color(255, 230, 94);	// yellow				(button color)
+	private final int MAINTEXT = color(255, 255, 255);		// white				(standard text color)
+	private final int HEADERTEXT = color(65, 120, 128);		// turquoise			(standard text color)
+	private final int HEADERTEXT_ALT = color(54, 78, 80);	// dark turquoise		(standard text color)
+	private final int SECTOR_CIVILIAN = color(135, 199, 74);// bright green			(sector color)
+	private final int SECTOR_HOSTILE = color(214, 50, 50);	// bright red			(sector color)
+	private final int SECTOR_NEBULA = color(128, 51, 210);	// pure purple			(sector color)
+	private final int SYSTEM_ACTIVE = color(100, 255, 99);	// bright green			(system status color)
+	private final int SYSTEM_OFF = color(211, 211, 211);	// light grey			(system status color)
+	private final int SYSTEM_DAMAGE = color(248, 59, 51);	// bright red			(system status color)
+	private final int SYSTEM_HACKED = color(212, 70, 253);	// magenta				(system status color)
+	private final int SYSTEM_IONIZED = color(133, 231, 237);// cyan					(system status color)
 
-	final int[] GLOW_BLUE = {
+	private final int[] GLOW_BLUE = {
 		BORDER,
 		color(69, 110, 112, 226),
 		color(61, 94, 97, 198),
@@ -77,7 +79,7 @@ public class GraphRenderer extends PApplet {
 		color(37, 50, 49, 56),
 		color(36, 47, 46, 28)
 	};
-	final int[] GLOW_GREEN = {
+	private final int[] GLOW_GREEN = {
 		BORDER,
 		color(66, 119, 17, 226),
 		color(53, 106, 4, 198),
@@ -88,7 +90,7 @@ public class GraphRenderer extends PApplet {
 		color(30, 61, 1, 56),
 		color(29, 58, 1, 25)
 	};
-	final int[] GLOW_RED = {
+	private final int[] GLOW_RED = {
 		BORDER,
 		color(182, 30, 30, 226),
 		color(162, 24, 24, 198),
@@ -99,7 +101,7 @@ public class GraphRenderer extends PApplet {
 		color(93, 7, 7, 56),
 		color(88, 5, 5, 25)
 	};
-	final int[] GLOW_PURPLE = {
+	private final int[] GLOW_PURPLE = {
 		BORDER,
 		color(130, 4, 165, 226),
 		color(117, 1, 150, 198),
@@ -122,19 +124,19 @@ public class GraphRenderer extends PApplet {
 
 		// data
 		table = new Table();
-		for (int i = 0; i < recordingHeaders.length; i++) {
-			table.addColumn(recordingHeaders[i]);
+		for (String recordingHeader : recordingHeaders) {
+			table.addColumn(recordingHeader);
 		}
-		for (int i = 0; i < recording.size(); i++) {
+		for (Map<String, String> aRecording : recording) {
 			TableRow newRow = table.addRow();
-			for (int k = 0; k < recordingHeaders.length; k++) {
+			for (String recordingHeader : recordingHeaders) {
 				try {
 					newRow.setString(
-						recordingHeaders[k],
-						recording.get(i).get(recordingHeaders[k])
+						recordingHeader,
+						aRecording.get(recordingHeader)
 					);
 				} catch (NullPointerException e) {
-					newRow.setString(recordingHeaders[k], "");
+					newRow.setString(recordingHeader, "");
 				}
 			}
 		}
