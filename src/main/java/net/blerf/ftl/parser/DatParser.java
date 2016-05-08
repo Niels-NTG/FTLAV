@@ -27,22 +27,6 @@ public class DatParser {
 	}
 
 
-	public List<Achievement> readAchievements(InputStream stream, String fileName) throws IOException, JAXBException, JDOMException {
-
-		String streamText = TextUtilities.decodeText(stream, fileName).text;
-		streamText = xmlDeclPtn.matcher(streamText).replaceFirst("");
-		streamText = "<achievements>"+ streamText +"</achievements>";
-		Document doc = TextUtilities.parseStrictOrSloppyXML(streamText, fileName);
-		DOMOutputter domOutputter = new DOMOutputter();
-
-		JAXBContext jc = JAXBContext.newInstance(Achievements.class);
-		Unmarshaller u = jc.createUnmarshaller();
-		Achievements ach = (Achievements)u.unmarshal(domOutputter.output(doc));
-
-		return ach.getAchievements();
-	}
-
-
 	public Blueprints readBlueprints(InputStream stream, String fileName) throws IOException, JAXBException, JDOMException {
 
 		String streamText = TextUtilities.decodeText(stream, fileName).text;

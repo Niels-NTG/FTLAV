@@ -67,14 +67,6 @@ public abstract class DataManager implements Closeable {
 		throw new UnsupportedOperationException();
 	}
 
-	public Achievement getAchievement(String id) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Map<String, Achievement> getAchievements() {
-		throw new UnsupportedOperationException();
-	}
-
 	public AugBlueprint getAugment(String id, boolean dlcEnabled) {
 		throw new UnsupportedOperationException();
 	}
@@ -237,20 +229,9 @@ public abstract class DataManager implements Closeable {
 		return getPlayerShipVariant(baseId, n, dlcEnabledByDefault);
 	}
 
-	public List<Achievement> getShipAchievements(ShipBlueprint ship, boolean dlcEnabled) {
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * A frontend using the global DLC default.
 	 */
-	public List<Achievement> getShipAchievements(ShipBlueprint ship) {
-		return getShipAchievements(ship, dlcEnabledByDefault);
-	}
-
-	public List<Achievement> getGeneralAchievements() {
-		throw new UnsupportedOperationException();
-	}
 
 	public ShipLayout getShipLayout(String id) {
 		throw new UnsupportedOperationException();
