@@ -338,7 +338,4 @@ public abstract class DataManager implements Closeable {
 		throw new UnsupportedOperationException();
 	}
 
-	public Map<String, BackgroundImageList> getBackgroundImageLists() {
-		throw new UnsupportedOperationException();
-	}
 }

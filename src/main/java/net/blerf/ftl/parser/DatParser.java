@@ -211,19 +211,4 @@ public class DatParser {
 		return shvts.getShipEvents();
 	}
 
-
-	public List<BackgroundImageList> readImageLists(InputStream stream, String fileName) throws IOException, JAXBException, JDOMException {
-
-		String streamText = TextUtilities.decodeText(stream, fileName).text;
-		streamText = xmlDeclPtn.matcher(streamText).replaceFirst("");
-		streamText = "<imageLists>"+ streamText  +"</imageLists>";
-		Document doc = TextUtilities.parseStrictOrSloppyXML(streamText, fileName);
-		DOMOutputter domOutputter = new DOMOutputter();
-
-		JAXBContext jc = JAXBContext.newInstance(BackgroundImageLists.class);
-		Unmarshaller u = jc.createUnmarshaller();
-		BackgroundImageLists imgs = (BackgroundImageLists)u.unmarshal(domOutputter.output(doc));
-
-		return imgs.getImageLists();
-	}
 }

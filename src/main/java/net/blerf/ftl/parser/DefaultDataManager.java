@@ -30,8 +30,6 @@ public class DefaultDataManager extends DataManager {
 	private List<String> stdPlayerShipIds;
 	private List<String> dlcPlayerShipIds;
 
-	private Map<String, BackgroundImageList> backgroundImageLists;
-
 	private Map<String, Blueprints> allBlueprints;
 	private Map<String, Blueprints> stdBlueprints;
 	private Map<String, Blueprints> dlcBlueprints;
@@ -220,7 +218,6 @@ public class DefaultDataManager extends DataManager {
 			log.debug("Reading \"data/events_imageList.xml\"...");
 			InputStream imageListsStream = getDataInputStream("data/events_imageList.xml");
 			streams.add(imageListsStream);
-			List<BackgroundImageList> imageLists = datParser.readImageLists(imageListsStream, "events_imageList.xml");
 
 			log.info("Finished reading FTL resources.");
 
@@ -528,10 +525,6 @@ public class DefaultDataManager extends DataManager {
 				else
 					crewNamesFemale.addAll(crewNameList.getNames());
 			}
-
-			backgroundImageLists = new LinkedHashMap<>();
-			for (BackgroundImageList imageList : imageLists)
-				backgroundImageLists.put(imageList.getId(), imageList);
 
 			stdEvents = new LinkedHashMap<>(stdEventsFileNames.size());
 			dlcEvents = new LinkedHashMap<>(dlcEventsFileNames.size() + stdEventsFileNames.size());
@@ -1088,14 +1081,4 @@ public class DefaultDataManager extends DataManager {
 		return result;
 	}
 
-	/**
-	 * Returns all BackgroundImageList objects, mapped to ids.
-	 *
-	 * When unspecified, images are randomly chosen from the
-	 * "PLANET" and "BACKGROUND" lists for sprites and backgrounds.
-	 */
-	@Override
-	public Map<String, BackgroundImageList> getBackgroundImageLists() {
-		return backgroundImageLists;
-	}
 }
