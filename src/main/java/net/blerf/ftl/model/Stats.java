@@ -76,49 +76,28 @@ public class Stats {
 		}
 	}
 
-	public void setTopScores(List<Score> topScores) { this.topScores = topScores; }
-	public void setShipBest(List<Score> shipBest) { this.shipBest = shipBest; }
-
 	public List<Score> getTopScores() { return topScores; }
 	public List<Score> getShipBest() { return shipBest; }
 
 	public Map<StatType, CrewRecord> getCrewRecordMap() { return crewMap; }
 	public Map<StatType, Integer> getIntRecordMap() { return intMap; }
 
-	public void setCrewRecord(StatType type, CrewRecord r) {
-		crewMap.put(type, r);
-	}
 	public CrewRecord getCrewRecord(StatType  type) {
 		if (!crewMap.containsKey(type))
 			log.error("No crew record found for type: "+ type);
 		return crewMap.get(type);
 	}
 
-	public void setIntRecord(StatType type, int n) {
-		intMap.put(type, n);
-	}
 	public int getIntRecord(StatType type) {
 		if (!intMap.containsKey(type))
 			log.error("No int record found for type: "+ type);
 		return intMap.get(type);
 	}
 
-	public void setMostShipsDefeated(int n) { setIntRecord(StatType.MOST_SHIPS_DEFEATED, n); }
-	public void setMostBeaconsExplored(int n) { setIntRecord(StatType.MOST_BEACONS_EXPLORED, n); }
-	public void setMostScrapCollected(int n) { setIntRecord(StatType.MOST_SCRAP_COLLECTED, n); }
-	public void setMostCrewHired(int n) { setIntRecord(StatType.MOST_CREW_HIRED, n); }
-
 	public int getMostShipsDefeated() { return getIntRecord(StatType.MOST_SHIPS_DEFEATED); }
 	public int getMostBeaconsExplored() { return getIntRecord(StatType.MOST_BEACONS_EXPLORED); }
 	public int getMostScrapCollected() { return getIntRecord(StatType.MOST_SCRAP_COLLECTED); }
 	public int getMostCrewHired() { return getIntRecord(StatType.MOST_CREW_HIRED); }
-
-	public void setTotalShipsDefeated(int n) { setIntRecord(StatType.TOTAL_SHIPS_DEFEATED, n); }
-	public void setTotalBeaconsExplored(int n) { setIntRecord(StatType.TOTAL_BEACONS_EXPLORED, n); }
-	public void setTotalScrapCollected(int n) { setIntRecord(StatType.TOTAL_SCRAP_COLLECTED, n); }
-	public void setTotalCrewHired(int n) { setIntRecord(StatType.TOTAL_CREW_HIRED, n); }
-	public void setTotalGamesPlayed(int n) { setIntRecord(StatType.TOTAL_GAMES_PLAYED, n); }
-	public void setTotalVictories(int n) { setIntRecord(StatType.TOTAL_VICTORIES, n); }
 
 	public int getTotalShipsDefeated() { return getIntRecord(StatType.TOTAL_SHIPS_DEFEATED); }
 	public int getTotalBeaconsExplored() { return getIntRecord(StatType.TOTAL_BEACONS_EXPLORED); }
@@ -127,15 +106,10 @@ public class Stats {
 	public int getTotalGamesPlayed() { return getIntRecord(StatType.TOTAL_GAMES_PLAYED); }
 	public int getTotalVictories() { return getIntRecord(StatType.TOTAL_VICTORIES); }
 
-	public void setMostRepairs(CrewRecord record) { setCrewRecord(StatType.MOST_REPAIRS, record); }
-	public void setMostKills(CrewRecord record) { setCrewRecord(StatType.MOST_COMBAT_KILLS, record); }
-	public void setMostEvasions(CrewRecord record) { setCrewRecord(StatType.MOST_PILOTED_EVASIONS, record); }
-	public void setMostJumps(CrewRecord record) { setCrewRecord(StatType.MOST_JUMPS_SURVIVED, record); }
-	public void setMostSkills(CrewRecord record) { setCrewRecord(StatType.MOST_SKILL_MASTERIES, record); }
-
 	public CrewRecord getMostRepairs() { return getCrewRecord(StatType.MOST_REPAIRS); }
 	public CrewRecord getMostKills() { return getCrewRecord(StatType.MOST_COMBAT_KILLS); }
 	public CrewRecord getMostEvasions() { return getCrewRecord(StatType.MOST_PILOTED_EVASIONS); }
 	public CrewRecord getMostJumps() { return getCrewRecord(StatType.MOST_JUMPS_SURVIVED); }
 	public CrewRecord getMostSkills() { return getCrewRecord(StatType.MOST_SKILL_MASTERIES); }
+
 }
