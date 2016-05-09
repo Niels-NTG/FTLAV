@@ -47,10 +47,6 @@ public class AugBlueprint {
 		return value;
 	}
 
-	public void setValue(float n) {
-		value = n;
-	}
-
 	@Override
 	public String toString() {
 		return ""+title;

@@ -58,23 +58,9 @@ public class Stats {
 	 *
 	 * Each Score and CrewRecord will be copy-constructed as well.
 	 */
-	public Stats(Stats srcStats) {
-		for (Score s : srcStats.getTopScores()) {
-			topScores.add(new Score(s));
-		}
 
-		for (Score s : srcStats.getShipBest()) {
-			shipBest.add(new Score(s));
-		}
-
-		for (Map.Entry<StatType, CrewRecord> entry : srcStats.getCrewRecordMap().entrySet()) {
-			crewMap.put(entry.getKey(), new CrewRecord(entry.getValue()));
-		}
-
-		for (Map.Entry<StatType, Integer> entry : srcStats.getIntRecordMap().entrySet()) {
-			intMap.put(entry.getKey(), entry.getValue());
-		}
-	}
+	public void setTopScores(List<Score> topScores) { this.topScores = topScores; }
+	public void setShipBest(List<Score> shipBest) { this.shipBest = shipBest; }
 
 	public List<Score> getTopScores() { return topScores; }
 	public List<Score> getShipBest() { return shipBest; }
@@ -82,12 +68,18 @@ public class Stats {
 	public Map<StatType, CrewRecord> getCrewRecordMap() { return crewMap; }
 	public Map<StatType, Integer> getIntRecordMap() { return intMap; }
 
+	public void setCrewRecord(StatType type, CrewRecord r) {
+		crewMap.put(type, r);
+	}
 	public CrewRecord getCrewRecord(StatType  type) {
 		if (!crewMap.containsKey(type))
 			log.error("No crew record found for type: "+ type);
 		return crewMap.get(type);
 	}
 
+	public void setIntRecord(StatType type, int n) {
+		intMap.put(type, n);
+	}
 	public int getIntRecord(StatType type) {
 		if (!intMap.containsKey(type))
 			log.error("No int record found for type: "+ type);
@@ -111,5 +103,4 @@ public class Stats {
 	public CrewRecord getMostEvasions() { return getCrewRecord(StatType.MOST_PILOTED_EVASIONS); }
 	public CrewRecord getMostJumps() { return getCrewRecord(StatType.MOST_JUMPS_SURVIVED); }
 	public CrewRecord getMostSkills() { return getCrewRecord(StatType.MOST_SKILL_MASTERIES); }
-
 }

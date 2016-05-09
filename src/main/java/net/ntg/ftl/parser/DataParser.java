@@ -7,6 +7,7 @@ import net.ntg.ftl.FTLAdventureVisualiser;
 
 public class DataParser {
 
+
 	public static int getShipOxygenLevel() {
 
 		int roomCount = FTLAdventureVisualiser.shipState.getRoomList().size();

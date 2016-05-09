@@ -58,22 +58,11 @@ public class Score implements Comparable<Score> {
 		this.dlcEnabled = srcScore.isDLCEnabled();
 	}
 
-	public void setShipName(String s) { shipName = s; }
-	public void setShipId(String s) { shipId = s; }
-	public void setValue(int n) { value = n; }
-
 	public String getShipName() { return shipName; }
 	public String getShipId() { return shipId; }
 	public int getValue() { return value; }
 
-	/**
-	 * Sets the 1-based sector the player was in when that campaign ended.
-	 */
-	public void setSector(int n) { sector = n; }
 	public int getSector() { return sector; }
-
-	public void setDifficulty(Difficulty d) { difficulty = d; }
-	public void setVictory(boolean b) { victory = b; }
 
 	public Difficulty getDifficulty() { return difficulty; }
 	public boolean isVictory() { return victory; }
