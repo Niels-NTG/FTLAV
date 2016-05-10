@@ -1,7 +1,9 @@
 package net.ntg.ftl.ui;
 
+import net.blerf.ftl.model.Profile;
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.MysteryBytes;
+import net.blerf.ftl.parser.ProfileParser;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.NativeRandom;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
@@ -10,6 +12,7 @@ import net.ntg.ftl.parser.ConfigParser;
 import net.ntg.ftl.parser.ParseCSV;
 import net.ntg.ftl.util.FileWatcher;
 import net.vhati.modmanager.core.FTLUtilities;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -470,18 +473,75 @@ public class FTLFrame extends JFrame {
 	}
 
 
-	 private void setupInspector() {
+	private void setupInspector() {
 
-	 	inspector = new GraphInspector(this);
-	 	JScrollPane inspectorScrollPane = new JScrollPane(
-	 		inspector,
-	 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-	 		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-	 	);
-	 	inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-	 	add(inspectorScrollPane, BorderLayout.CENTER);
+		inspector = new GraphInspector(this);
+		JScrollPane inspectorScrollPane = new JScrollPane(
+			inspector,
+			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		);
+		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+		add(inspectorScrollPane, BorderLayout.CENTER);
 
-	 }
+	}
+
+
+	private Profile loadProfileFile(File file) {
+
+		FileInputStream in = null;
+		StringBuilder hexBuf = new StringBuilder();
+		Profile p = null;
+
+		try {
+
+			log.info("Opening profile: " + file.getAbsolutePath());
+
+			in = new FileInputStream(file);
+
+			// Read the content in advance, in case an error ocurs.
+			byte[] buf = new byte[4096];
+			int len;
+			while ((len = in.read(buf)) >= 0) {
+				for (int j = 0; j < len; j++) {
+					hexBuf.append(String.format("%02x", buf[j]));
+					if ((j + 1) % 32 == 0) {
+						hexBuf.append("\n");
+					}
+				}
+			}
+			in.getChannel().position(0);
+
+			// Parse file data.
+			ProfileParser parser = new ProfileParser();
+			p = parser.readProfile(in);
+
+		} catch (Exception f) {
+			log.error(
+				String.format(
+					"Error reading profile (\"%s\").",
+					file.getName()
+				),
+				f
+			);
+			showErrorDialog(
+				String.format(
+					"Error reading profile (\"%s\"):\n%s: %s",
+					file.getName(),
+					f.getClass().getSimpleName(),
+					f.getMessage()
+				)
+			);
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException f) {}
+		}
+		log.info("getMostCrewHired " + p.getStats().getMostCrewHired());
+		log.info("getTotalVictories " + p.getStats().getTotalVictories());
+		return p;
+
+	}
 
 
 	private void loadGameStateFile(File file) {
@@ -623,8 +683,11 @@ public class FTLFrame extends JFrame {
 				log.info("CSV doesn't exist yet. Creating new CSV...");
 				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
 			}
+
+			FTLAdventureVisualiser.profile = loadProfileFile(FTLAdventureVisualiser.profileFile);
+
 			// TODO read/write/read first, then inspector.setGameState()
-//			inspector.setGraphSettings();
+			// inspector.setGraphSettings();
 
 			// graphRenderer.destroy();
 			// graphRenderer.init();

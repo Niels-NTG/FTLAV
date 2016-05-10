@@ -1,5 +1,6 @@
 package net.ntg.ftl;
 
+import net.blerf.ftl.model.Profile;
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
@@ -7,10 +8,11 @@ import net.blerf.ftl.parser.SavedGameParser;
 import net.ntg.ftl.parser.ConfigParser;
 import net.ntg.ftl.ui.FTLFrame;
 import net.vhati.modmanager.core.FTLUtilities;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jdom2.JDOMException;
 
+import org.jdom2.JDOMException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
@@ -30,6 +32,7 @@ public class FTLAdventureVisualiser {
 
 	public static final File configFile = new File("FTLAVconfig.cfg");
 	public static File gameStateFile;
+	public static File profileFile;
 
 	public static SavedGameParser.SavedGameState gameState = null;
 	public static SavedGameParser.ShipState shipState = null;
@@ -39,6 +42,8 @@ public class FTLAdventureVisualiser {
 	public static SavedGameParser.EnvironmentState environmentState = null;
 	public static ArrayList<SectorDot> sectorArray = new ArrayList<>();
 	public static String fileChangedTimeStamp;
+
+	public static Profile profile = null;
 
 	public static String recordFilePath;
 	public static ArrayList<Map<String, String>> recording = new ArrayList<>();
@@ -71,6 +76,7 @@ public class FTLAdventureVisualiser {
 		// FTL Resources Path.
 		String datsPath = config.getProperty("ftlDatsPath");
 		String continuePath = config.getProperty("ftlContinuePath");
+		String profilePath = config.getProperty("ftlProfilePath");
 
 		if (datsPath != null && datsPath.length() > 0) {
 			log.info("Using FTL dats path from config: " + datsPath);
@@ -95,6 +101,20 @@ public class FTLAdventureVisualiser {
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
 
+				File candidateProfileFile;
+				if (profilePath != null) {
+					log.info("The config's ftlProfilePath exists");
+					candidateProfileFile = new File(profilePath);
+				} else {
+					log.info("No path to prof.sav found in config. Guessing possible location...");
+					candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
+				}
+				if (candidateProfileFile.exists()) {
+					profileFile = candidateProfileFile;
+					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+				} else {
+					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL profile file because it doesn't exist or is invalid");
+				}
 
 				configParser.writeConfig(config);
 
@@ -133,6 +153,12 @@ public class FTLAdventureVisualiser {
 					gameStateFile = candidateSaveFile;
 					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
 				}
+				File candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
+				if (candidateProfileFile.exists()) {
+					profileFile = candidateProfileFile;
+					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+				}
+
 				configParser.writeConfig(config);
 				log.info("FTL dats located at: " + datsDir.getAbsolutePath());
 			}
