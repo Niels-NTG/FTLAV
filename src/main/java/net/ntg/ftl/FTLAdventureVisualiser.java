@@ -4,6 +4,7 @@ import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
+import net.ntg.ftl.parser.ConfigParser;
 import net.ntg.ftl.ui.FTLFrame;
 import net.vhati.modmanager.core.FTLUtilities;
 import org.apache.logging.log4j.LogManager;
@@ -24,10 +25,10 @@ public class FTLAdventureVisualiser {
 
 	private static final Logger log = LogManager.getLogger(FTLAdventureVisualiser.class);
 
-	private static final String APP_NAME = "FTL Adventure Visualiser";
-	private static final int APP_VERSION = 3;
+	public static final String APP_NAME = "FTL Adventure Visualiser";
+	public static final int APP_VERSION = 3;
 
-	private static final File configFile = new File("FTLAVconfig.cfg");
+	public static final File configFile = new File("FTLAVconfig.cfg");
 	public static File gameStateFile;
 
 	public static SavedGameParser.SavedGameState gameState = null;
@@ -64,7 +65,8 @@ public class FTLAdventureVisualiser {
 
 		File datsDir = null;
 
-		Properties config = readConfig();
+		ConfigParser configParser = new ConfigParser();
+		Properties config = configParser.readConfig();
 
 		// FTL Resources Path.
 		String datsPath = config.getProperty("ftlDatsPath");
@@ -89,10 +91,12 @@ public class FTLAdventureVisualiser {
 				if (candidateSaveFile.exists()) {
 					gameStateFile = candidateSaveFile;
 					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
-					writeConfig(config);
 				} else {
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
+
+
+				configParser.writeConfig(config);
 
 			}
 		} else {
@@ -106,7 +110,9 @@ public class FTLAdventureVisualiser {
 				// TODO a more welcoming confirm dialog
 				int response = JOptionPane.showConfirmDialog(
 					null,
-					"FTL resources were found in:\n"+ datsDir.getPath() +"\nIs this correct?",
+					"FTL resources were found in:\n"+
+					datsDir.getPath() + "\n" +
+					"Is this correct?",
 					String.format("%s %s - Setup", APP_NAME, APP_VERSION),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE
@@ -127,7 +133,7 @@ public class FTLAdventureVisualiser {
 					gameStateFile = candidateSaveFile;
 					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
 				}
-				writeConfig(config);
+				configParser.writeConfig(config);
 				log.info("FTL dats located at: " + datsDir.getAbsolutePath());
 			}
 		}
@@ -157,52 +163,6 @@ public class FTLAdventureVisualiser {
 			System.exit(1);
 		}
 
-	}
-
-
-	public static Properties readConfig() {
-		Properties config = new Properties();
-		// Read the config file.
-		InputStream in = null;
-		try {
-			if (configFile.exists()) {
-				log.trace("Loading properties from config file.");
-				in = new FileInputStream(configFile);
-				config.load(new InputStreamReader(in, "UTF-8"));
-			} else {
-				writeConfig(config);
-			}
-		} catch (IOException e) {
-			log.error("Error loading config.", e);
-			showErrorDialog("Error loading config from " + configFile.getPath());
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (IOException e) {}
-		}
-		return config;
-	}
-
-	public static void writeConfig(String key, String value) {
-		writeConfig((Properties) readConfig().setProperty(key, value));
-	}
-
-	private static void writeConfig(Properties config) {
-		OutputStream out = null;
-		try {
-			out = new FileOutputStream(configFile);
-			String configComments = APP_NAME + " " + APP_VERSION + " - Config File";
-			OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
-			config.store(writer, configComments);
-			writer.flush();
-		} catch (IOException e) {
-			log.error("Error saving config to "+ configFile.getPath(), e);
-			showErrorDialog("Error saving config to " + configFile.getPath());
-		} finally {
-			try {
-				if (out != null) out.close();
-			} catch (IOException e) {}
-		}
 	}
 
 

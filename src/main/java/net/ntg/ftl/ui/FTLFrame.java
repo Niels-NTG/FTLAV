@@ -6,6 +6,7 @@ import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.NativeRandom;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 import net.ntg.ftl.FTLAdventureVisualiser;
+import net.ntg.ftl.parser.ConfigParser;
 import net.ntg.ftl.parser.ParseCSV;
 import net.ntg.ftl.util.FileWatcher;
 import net.vhati.modmanager.core.FTLUtilities;
@@ -56,6 +57,9 @@ public class FTLFrame extends JFrame {
 
 	private final String appName;
 	private final int appVersion;
+
+	private final ConfigParser configParser = new ConfigParser();
+
 
 	public FTLFrame(String appName, int appVersion) {
 
@@ -183,7 +187,7 @@ public class FTLFrame extends JFrame {
 				}
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
-					FTLAdventureVisualiser.writeConfig("ftlContinuePath", FTLAdventureVisualiser.gameStateFile.getAbsolutePath());
+					configParser.addConfigProperty("ftlContinuePath", FTLAdventureVisualiser.gameStateFile.getAbsolutePath());
 					loadGameStateFile(FTLAdventureVisualiser.gameStateFile);
 					recordingNewBtn.setEnabled(true);
 					recordingOpenBtn.setEnabled(true);
