@@ -53,12 +53,6 @@ public class Stats {
 	public Stats() {
 	}
 
-	/**
-	 * Copy constructor.
-	 *
-	 * Each Score and CrewRecord will be copy-constructed as well.
-	 */
-
 	public void setTopScores(List<Score> topScores) { this.topScores = topScores; }
 	public void setShipBest(List<Score> shipBest) { this.shipBest = shipBest; }
 
@@ -103,4 +97,7 @@ public class Stats {
 	public CrewRecord getMostEvasions() { return getCrewRecord(StatType.MOST_PILOTED_EVASIONS); }
 	public CrewRecord getMostJumps() { return getCrewRecord(StatType.MOST_JUMPS_SURVIVED); }
 	public CrewRecord getMostSkills() { return getCrewRecord(StatType.MOST_SKILL_MASTERIES); }
+
+
+
 }

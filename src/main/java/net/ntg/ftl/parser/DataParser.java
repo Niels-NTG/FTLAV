@@ -1,5 +1,6 @@
 package net.ntg.ftl.parser;
 
+import net.blerf.ftl.constants.Difficulty;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.ntg.ftl.FTLAdventureVisualiser;
@@ -244,6 +245,69 @@ public class DataParser {
 		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
 
 		return sb.replaceAll(",\\s*$","");
+
+	}
+
+
+	public static int getBestShipScore() {
+
+		int bestShipScore = 0;
+
+		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
+			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
+			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
+			if (
+				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
+				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
+			) {
+				bestShipScore = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getValue();
+				break;
+			}
+		}
+
+		return bestShipScore;
+
+	}
+
+
+	public static String getBestShipName() {
+
+		String bestShipName = "";
+
+		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
+			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
+			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
+			if (
+				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
+				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
+			) {
+				bestShipName = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipName();
+				break;
+			}
+		}
+
+		return bestShipName;
+
+	}
+
+
+	public static int getBestShipSector() {
+
+		int bestShipSector = 0;
+
+		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
+			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
+			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
+			if (
+				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
+				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
+			) {
+				bestShipSector = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getSector() + 1;
+				break;
+			}
+		}
+
+		return bestShipSector;
 
 	}
 
