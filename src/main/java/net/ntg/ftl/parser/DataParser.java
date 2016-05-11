@@ -23,22 +23,22 @@ public class DataParser {
 	}
 
 
-	// public static int getNearbyShipOxygenLevel() {
+	 public static int getNearbyShipOxygenLevel() {
 
-	// 	if (FTLAdventureVisualiser.nearbyShipState != null) {
-	// 		int roomCount = FTLAdventureVisualiser.nearbyShipState.getRoomList().size();
-	// 		int sum = 0;
+	 	if (FTLAdventureVisualiser.nearbyShipState != null) {
+	 		int roomCount = FTLAdventureVisualiser.nearbyShipState.getRoomList().size();
+	 		int sum = 0;
 
-	// 		for (int i = 0; i < roomCount; i++) {
-	// 			sum += FTLAdventureVisualiser.nearbyShipState.getRoomList().get(i).getOxygen();
-	// 		}
+	 		for (int i = 0; i < roomCount; i++) {
+	 			sum += FTLAdventureVisualiser.nearbyShipState.getRoomList().get(i).getOxygen();
+	 		}
 
-	// 		return (int)sum / roomCount;
-	// 	} else {
-	// 		return -1;
-	// 	}
+	 		return (int)sum / roomCount;
+	 	} else {
+	 		return -1;
+	 	}
 
-	// }
+	 }
 
 
 	public static String getFullShipType() {

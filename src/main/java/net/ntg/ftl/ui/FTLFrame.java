@@ -620,7 +620,7 @@ public class FTLFrame extends JFrame {
 		) {
 			FTLAdventureVisualiser.gameState = currentGameState;
 			FTLAdventureVisualiser.shipState = currentGameState.getPlayerShipState();
-			// FTLAdventureVisualiser.nearbyShipState = currentGameState.getNearbyShipState();
+			FTLAdventureVisualiser.nearbyShipState = currentGameState.getNearbyShipState();
 			FTLAdventureVisualiser.environmentState = currentGameState.getEnvironment();
 			FTLAdventureVisualiser.fileChangedTimeStamp = getTimeStamp();
 

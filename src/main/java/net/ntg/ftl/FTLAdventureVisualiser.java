@@ -36,7 +36,7 @@ public class FTLAdventureVisualiser {
 
 	public static SavedGameParser.SavedGameState gameState = null;
 	public static SavedGameParser.ShipState shipState = null;
-	// public static SavedGameParser.ShipState nearbyShipState = null;
+	public static SavedGameParser.ShipState nearbyShipState = null;
 	public static List<SavedGameParser.CrewState> playerCrewState;
 	public static List<SavedGameParser.CrewState> enemyCrewState;
 	public static SavedGameParser.EnvironmentState environmentState = null;
