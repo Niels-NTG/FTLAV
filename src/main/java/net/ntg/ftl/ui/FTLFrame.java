@@ -537,8 +537,6 @@ public class FTLFrame extends JFrame {
 				if (in != null) in.close();
 			} catch (IOException f) {}
 		}
-		log.info("getMostCrewHired " + p.getStats().getMostCrewHired());
-		log.info("getTotalVictories " + p.getStats().getTotalVictories());
 		return p;
 
 	}
@@ -684,7 +682,8 @@ public class FTLFrame extends JFrame {
 				new ParseCSV().writeCSV(FTLAdventureVisualiser.recordFilePath);
 			}
 
-			FTLAdventureVisualiser.profile = loadProfileFile(FTLAdventureVisualiser.profileFile);
+			// TODO figure out what prof.sav and ae_prof.sav are used for
+			FTLAdventureVisualiser.profile = loadProfileFile(FTLAdventureVisualiser.aeProfileFile);
 
 			// TODO read/write/read first, then inspector.setGameState()
 			// inspector.setGraphSettings();

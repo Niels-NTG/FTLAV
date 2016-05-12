@@ -29,6 +29,7 @@ public class ProfileParser extends Parser {
 		} else if (headerAlpha == 9) {
 			// FTL 1.5.4+.
 			p.setHeaderAlpha(headerAlpha);
+			readInt(in); // skip newbie flag
 		} else {
 			throw new IOException("Unexpected first byte ("+ headerAlpha +") for a PROFILE.");
 		}
@@ -44,13 +45,15 @@ public class ProfileParser extends Parser {
 
 
 	private void skipAchievements(InputStream in, int headerAlpha) throws IOException {
-		int achievementCount = readInt(in);
+		int achievementCount = readInt(in); // number of achievements to skip
 		for (int i = 0; i < achievementCount; i++) {
-			readString(in);
-			readInt(in);
+			String achID = readString(in); // skip achievement ID
+			readInt(in); // skip difficulty flag
 			if (headerAlpha == 9) {
-				for (int j = 0; j < 3; j++) {
-					readInt(in);
+				if (achID.contains("VICTORY")) {
+					for (int j = 0; j < 3; j++) {
+						readInt(in); // skip victory achievement
+					}
 				}
 			}
 		}
@@ -58,30 +61,11 @@ public class ProfileParser extends Parser {
 
 
 	private void skipShipUnlocks(InputStream in, int headerAlpha ) throws IOException {
-		ArrayList<String> unlockableShipIds = new ArrayList<>();
-		unlockableShipIds.add( "PLAYER_SHIP_HARD" );
-		unlockableShipIds.add( "PLAYER_SHIP_STEALTH" );
-		unlockableShipIds.add( "PLAYER_SHIP_MANTIS" );
-		unlockableShipIds.add( "PLAYER_SHIP_CIRCLE" );
-		unlockableShipIds.add( "PLAYER_SHIP_FED" );
-		unlockableShipIds.add( "PLAYER_SHIP_JELLY" );
-		unlockableShipIds.add( "PLAYER_SHIP_ROCK" );
-		unlockableShipIds.add( "PLAYER_SHIP_ENERGY" );
-		unlockableShipIds.add( "PLAYER_SHIP_CRYSTAL" );
-		if ( headerAlpha == 4 ) {
-			unlockableShipIds.add( "UNKNOWN_ALPHA" );
-			unlockableShipIds.add( "UNKNOWN_BETA" );
-			unlockableShipIds.add( "UNKNOWN_GAMMA" );
-		} else if ( headerAlpha == 9 ) {
-			unlockableShipIds.add( "PLAYER_SHIP_ANAEROBIC" );
-			unlockableShipIds.add( "UNKNOWN_BETA" );
-			unlockableShipIds.add( "UNKNOWN_GAMMA" );
-		}
 		// Yes, the profile format has 12 slots for 9 ships (10 ships with DLC).
-		for (int i = 0; i < unlockableShipIds.size(); i++) {
-			readBool(in);
+		for (int i = 0; i < 12; i++) {
+			readBool(in); // skip unlocked A/B ship layouts
 			if (headerAlpha == 9) {
-				readBool(in);
+				readBool(in); // skip unlocked C ship layouts
 			}
 		}
 	}

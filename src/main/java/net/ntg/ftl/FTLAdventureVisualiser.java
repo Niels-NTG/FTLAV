@@ -32,7 +32,8 @@ public class FTLAdventureVisualiser {
 
 	public static final File configFile = new File("FTLAVconfig.cfg");
 	public static File gameStateFile;
-	public static File profileFile;
+//	public static File profileFile;
+	public static File aeProfileFile;
 
 	public static SavedGameParser.SavedGameState gameState = null;
 	public static SavedGameParser.ShipState shipState = null;
@@ -77,6 +78,7 @@ public class FTLAdventureVisualiser {
 		String datsPath = config.getProperty("ftlDatsPath");
 		String continuePath = config.getProperty("ftlContinuePath");
 		String profilePath = config.getProperty("ftlProfilePath");
+		String aeProfilePath = config.getProperty("ftlAEProfilePath");
 
 		if (datsPath != null && datsPath.length() > 0) {
 			log.info("Using FTL dats path from config: " + datsPath);
@@ -86,6 +88,7 @@ public class FTLAdventureVisualiser {
 				datsDir = null;
 			} else {
 
+				// try locating continue.sav
 				File candidateSaveFile;
 				if (continuePath != null) {
 					log.info("The config's ftlContinuePath exists");
@@ -101,19 +104,36 @@ public class FTLAdventureVisualiser {
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
 
-				File candidateProfileFile;
-				if (profilePath != null) {
-					log.info("The config's ftlProfilePath exists");
-					candidateProfileFile = new File(profilePath);
+//				// try locating prof.sav
+//				File candidateProfileFile;
+//				if (profilePath != null) {
+//					log.info("The config's ftlProfilePath exists");
+//					candidateProfileFile = new File(profilePath);
+//				} else {
+//					log.info("No path to prof.sav found in config. Guessing possible location...");
+//					candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
+//				}
+//				if (candidateProfileFile.exists()) {
+//					profileFile = candidateProfileFile;
+//					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+//				} else {
+//					log.error(candidateProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL profile file because it doesn't exist or is invalid");
+//				}
+
+				// try locating ae_prof.sav
+				File candidateAEProfileFile;
+				if (aeProfilePath != null) {
+					log.info("The config's ftlAEProfilePath exists");
+					candidateAEProfileFile = new File(aeProfilePath);
 				} else {
-					log.info("No path to prof.sav found in config. Guessing possible location...");
-					candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
+					log.info("No path to ae_prof.sav found in config. Guessing possible location...");
+					candidateAEProfileFile = new File(FTLUtilities.findUserDataDir(), "ae_prof.sav");
 				}
-				if (candidateProfileFile.exists()) {
-					profileFile = candidateProfileFile;
-					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+				if (candidateAEProfileFile.exists()) {
+					aeProfileFile = candidateAEProfileFile;
+					config.setProperty("ftlAEProfilePath", candidateAEProfileFile.getAbsolutePath());
 				} else {
-					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL profile file because it doesn't exist or is invalid");
+					log.error(candidateAEProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL AE profile file because it doesn't exist or is invalid");
 				}
 
 				configParser.writeConfig(config);
@@ -153,10 +173,17 @@ public class FTLAdventureVisualiser {
 					gameStateFile = candidateSaveFile;
 					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
 				}
-				File candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
-				if (candidateProfileFile.exists()) {
-					profileFile = candidateProfileFile;
-					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+
+//				File candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
+//				if (candidateProfileFile.exists()) {
+//					profileFile = candidateProfileFile;
+//					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+//				}
+
+				File candidateAEProfileFile = new File(FTLUtilities.findUserDataDir(), "ae_prof.sav");
+				if (candidateAEProfileFile.exists()) {
+					aeProfileFile = candidateAEProfileFile;
+					config.setProperty("ftlAEProfilePath", candidateAEProfileFile.getAbsolutePath());
 				}
 
 				configParser.writeConfig(config);
