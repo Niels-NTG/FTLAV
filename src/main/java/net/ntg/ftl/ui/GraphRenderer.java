@@ -50,23 +50,23 @@ public class GraphRenderer extends PApplet {
 	private PImage crewShield;
 	private PImage crewWeapon;
 
-	private final int BG_NORMAL = color(55, 45, 46);		// dark purple brown 	(background color)
-	private final int BG_LIGHT = color(122, 100, 99);		// light purple brown	(background color)
-	private final int BG_DARK = color(24, 20, 19);			// dark brown			(background color)
-	private final int BORDER = color(235, 245, 229);		// white-greenish		(panel border color)
-	private final int BUTTON = color(235, 245, 229);		// white-greenish		(button color)
-	private final int BUTTON_ACTIVE = color(255, 230, 94);	// yellow				(button color)
-	private final int MAINTEXT = color(255, 255, 255);		// white				(standard text color)
-	private final int HEADERTEXT = color(65, 120, 128);		// turquoise			(standard text color)
-	private final int HEADERTEXT_ALT = color(54, 78, 80);	// dark turquoise		(standard text color)
-	private final int SECTOR_CIVILIAN = color(135, 199, 74);// bright green			(sector color)
-	private final int SECTOR_HOSTILE = color(214, 50, 50);	// bright red			(sector color)
-	private final int SECTOR_NEBULA = color(128, 51, 210);	// pure purple			(sector color)
-	private final int SYSTEM_ACTIVE = color(100, 255, 99);	// bright green			(system status color)
-	private final int SYSTEM_OFF = color(211, 211, 211);	// light grey			(system status color)
-	private final int SYSTEM_DAMAGE = color(248, 59, 51);	// bright red			(system status color)
-	private final int SYSTEM_HACKED = color(212, 70, 253);	// magenta				(system status color)
-	private final int SYSTEM_IONIZED = color(133, 231, 237);// cyan					(system status color)
+	private final int BG_NORMAL = color(50, 43, 43);			// dark purple brown 	(background color)
+	private final int BG_LIGHT = color(130, 109, 106);			// light purple brown	(background color)
+	private final int BG_DARK = color(31, 35, 35);				// dark turquoise		(background color)
+	private final int BORDER = color(230, 244, 222);			// white-greenish		(panel border color)
+	private final int BUTTON = color(230, 244, 222);			// white-greenish		(button color)
+	private final int BUTTON_ENABLED = color(253, 227, 77);		// yellow				(button color)
+	private final int BUTTON_ACTIVE = color(148, 155, 143);		// greenish grey		(button color)
+	private final int BUTTON_TEXT = color(20, 37, 39);			// dark turquoise		(button text color)
+	private final int MAINTEXT = color(230, 244, 222);			// white-greenish		(standard text color)
+	private final int SECTOR_CIVILIAN = color(118, 191, 58);	// bright green			(sector color)
+	private final int SECTOR_HOSTILE = color(202, 29, 37);		// bright red			(sector color)
+	private final int SECTOR_NEBULA = color(107, 18, 200);		// purple				(sector color)
+	private final int SYSTEM_ACTIVE = color(89, 255, 82);		// bright green			(system status color)
+	private final int SYSTEM_OFF = color(201, 201, 201);		// light grey			(system status color)
+	private final int SYSTEM_DAMAGE = color(245, 56, 53);		// bright red			(system status color)
+	private final int SYSTEM_HACKED = color(193, 27, 253);		// magenta				(system status color)
+	private final int SYSTEM_IONIZED = color(119, 245, 253);	// cyan					(system status color)
 
 	private final int[] GLOW_BLUE = {
 		BORDER,
@@ -306,11 +306,11 @@ public class GraphRenderer extends PApplet {
 				graphics.endShape();
 
 				// draw sectorName text
-				graphics.fill(HEADERTEXT_ALT);
+				graphics.fill(BUTTON_TEXT);
 				graphics.text(sectorName[i], sectorNumberTextWidth + 4, 22);
 
 				// draw sectorNumber box
-				graphics.fill(HEADERTEXT_ALT);
+				graphics.fill(BUTTON_TEXT);
 				graphics.beginShape();
 				graphics.vertex(2, 20);
 				graphics.vertex(sectorNumberTextWidth, 20);
