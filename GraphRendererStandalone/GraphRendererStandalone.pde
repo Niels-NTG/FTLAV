@@ -13,8 +13,8 @@ int graphHeigth;
 int pWidth;
 int pHeight;
 
-PFont mainFont13;
-PFont mainFont39;
+PFont mainFont16;
+PFont mainFont32;
 PFont headerFont11;
 PFont headerFontAlt11;
 PFont headerFont22;
@@ -128,8 +128,8 @@ void setup() {
 	maxTableValue = max(columnMax);
 
 	// graphics
-	mainFont13		= loadFont("C&CRedAlertINET-13.vlw");	// for small sized text and user defined strings
-	mainFont39		= loadFont("C&CRedAlertINET-39.vlw");
+	mainFont16		= loadFont("JustinFont8-16.vlw");		// for small sized text and user defined strings
+	mainFont32		= loadFont("JustinFont8-32.vlw");
 	headerFont11	= loadFont("Half-Life2-11.vlw");
 	headerFontAlt11	= loadFont("Half-Life1-11.vlw");
 	headerFont22	= loadFont("Half-Life2-22.vlw");		// for labeling static things
@@ -222,7 +222,7 @@ PGraphics drawStandardAxisX() {
 	PGraphics graphics = createGraphics(graphWidth, graphHeigth);
 	graphics.beginDraw();
 	graphics.strokeWeight(0.8f);
-	graphics.textFont(mainFont13, 13);
+	graphics.textFont(mainFont16, 16);
 	graphics.textAlign(LEFT, BOTTOM);
 	graphics.fill(MAINTEXT);
 
@@ -266,10 +266,10 @@ PGraphics drawStandardAxisY() {
 		// draw sector label
 		if (i == 0 || sectorNumber[i] != lastSectorNumber) {
 
-			graphics.textFont(mainFont13, 13);
+			graphics.textFont(mainFont16, 16);
 			int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
 			int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
-			sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim();
+			sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b","").trim();
 			graphics.textFont(headerFontAlt11, 11);
 			int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i]));
 			sectorNumberTextWidth = sectorNumberTextWidth < 22 ? 22 : sectorNumberTextWidth * 2;
@@ -326,7 +326,7 @@ PGraphics drawStandardAxisY() {
 
 		}
 
-		graphics.textFont(mainFont13, 13);
+		graphics.textFont(mainFont16, 16);
 		graphics.fill(MAINTEXT);
 		graphics.text(beaconNumber[i], 0, 6.5);
 
@@ -354,9 +354,9 @@ PGraphics drawHeader() {
 	PGraphics graphics = createGraphics(width, height);
 	graphics.beginDraw();
 
-	graphics.textFont(mainFont13, 13);
+	graphics.textFont(mainFont16, 16);
 	int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 8;
-	graphics.textFont(mainFont39, 39);
+	graphics.textFont(mainFont32, 32);
 	int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
 
 	// container
@@ -391,13 +391,13 @@ PGraphics drawHeader() {
 	// info text
 	graphics.fill(BG_DARK);
 	graphics.textAlign(LEFT, CENTER);
-	graphics.textFont(mainFont13, 13);
+	graphics.textFont(mainFont16, 16);
 	graphics.text(lastChangedTimestamp, 8, 13);
 
 	// shipName text
 	graphics.fill(MAINTEXT);
 	graphics.textAlign(CENTER, CENTER);
-	graphics.textFont(mainFont39, 39);
+	graphics.textFont(mainFont32, 32);
 	graphics.text(shipName, 4 + shipNameTextWidth / 2, 44.5);
 
 	graphics.endDraw();

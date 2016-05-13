@@ -35,8 +35,8 @@ public class GraphRenderer extends PApplet {
 	private int graphWidth;
 	private int graphHeigth;
 
-	private PFont mainFont13;
-	private PFont mainFont39;
+	private PFont mainFont16;
+	private PFont mainFont32;
 	private PFont headerFont11;
 	private PFont headerFontAlt11;
 	private PFont headerFont22;
@@ -148,8 +148,8 @@ public class GraphRenderer extends PApplet {
 		maxTableValue = max(columnMax);
 
 		// graphics
-		mainFont13		= loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-13.vlw").toString());
-		mainFont39		= loadFont(ClassLoader.getSystemResource("graph/C&CRedAlertINET-39.vlw").toString());
+		mainFont16		= loadFont(ClassLoader.getSystemResource("graph/JustinFont8-16.vlw").toString());
+		mainFont32		= loadFont(ClassLoader.getSystemResource("graph/JustinFont8-32.vlw").toString());
 		headerFont11	= loadFont(ClassLoader.getSystemResource("graph/Half-Life2-11.vlw").toString());
 		headerFontAlt11	= loadFont(ClassLoader.getSystemResource("graph/Half-Life1-11.vlw").toString());
 		headerFont22	= loadFont(ClassLoader.getSystemResource("graph/Half-Life2-22.vlw").toString());
@@ -239,7 +239,7 @@ public class GraphRenderer extends PApplet {
 		PGraphics graphics = createGraphics(graphWidth, graphHeigth);
 		graphics.beginDraw();
 		graphics.strokeWeight(0.8f);
-		graphics.textFont(mainFont13, 13);
+		graphics.textFont(mainFont32, 16);
 		graphics.textAlign(LEFT, BOTTOM);
 		graphics.fill(MAINTEXT);
 
@@ -283,7 +283,7 @@ public class GraphRenderer extends PApplet {
 			// draw sector label
 			if (i == 0 || sectorNumber[i] != lastSectorNumber) {
 
-				graphics.textFont(mainFont13, 13);
+				graphics.textFont(mainFont32, 16);
 				int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
 				int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
 				sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim();
@@ -343,7 +343,7 @@ public class GraphRenderer extends PApplet {
 
 			}
 
-			graphics.textFont(mainFont13, 13);
+			graphics.textFont(mainFont32, 16);
 			graphics.fill(MAINTEXT);
 			graphics.text(beaconNumber[i], 0, 6.5f);
 
@@ -371,9 +371,9 @@ public class GraphRenderer extends PApplet {
 		PGraphics graphics = createGraphics(width, height);
 		graphics.beginDraw();
 
-		graphics.textFont(mainFont13, 13);
+		graphics.textFont(mainFont32, 16);
 		int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 8;
-		graphics.textFont(mainFont39, 39);
+		graphics.textFont(mainFont32, 32);
 		int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
 
 		// container
@@ -408,13 +408,13 @@ public class GraphRenderer extends PApplet {
 		// info text
 		graphics.fill(BG_DARK);
 		graphics.textAlign(LEFT, CENTER);
-		graphics.textFont(mainFont13, 13);
+		graphics.textFont(mainFont32, 16);
 		graphics.text(lastChangedTimestamp, 8, 13);
 
 		// shipName text
 		graphics.fill(MAINTEXT);
 		graphics.textAlign(CENTER, CENTER);
-		graphics.textFont(mainFont39, 39);
+		graphics.textFont(mainFont32, 32);
 		graphics.text(shipName, 4 + shipNameTextWidth / 2, 44.5f);
 
 		graphics.endDraw();
