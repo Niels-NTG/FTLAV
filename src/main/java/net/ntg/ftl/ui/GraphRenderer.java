@@ -371,51 +371,46 @@ public class GraphRenderer extends PApplet {
 		PGraphics graphics = createGraphics(width, height);
 		graphics.beginDraw();
 
-		graphics.textFont(mainFont16);
-		int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 8;
-		graphics.textFont(mainFont32);
-		int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
+		graphics.image(drawBox(lastChangedTimestamp, mainFont16, BUTTON_TEXT, BUTTON, false), 4, 4);
 
-		// container
-		graphics.fill(BORDER);
+		graphics.image(drawBox(shipName, mainFont32, MAINTEXT, BG_DARK, true), 4, 30);
+
+		graphics.endDraw();
+		return graphics;
+
+	}
+
+
+	private PGraphics drawBox(String text, PFont font, int textColor, int backgroundColor, boolean hasBorder) {
+
+		PGraphics graphics = createGraphics(width, height);
+		graphics.beginDraw();
+
+		graphics.textFont(font);
+		graphics.textAlign(CENTER, CENTER);
+
+		int w = (int)graphics.textWidth(text) + 16;
+		int h = (int)graphics.textSize;
+
+		if (hasBorder) {
+			graphics.stroke(BORDER);
+			graphics.strokeWeight(4);
+		}
+		graphics.fill(backgroundColor);
 		graphics.beginShape();
 		graphics.vertex(4, 0);
-		graphics.vertex(lastChangedTimestampTextWidth + 4, 0);
-		graphics.vertex(lastChangedTimestampTextWidth + 8, 4);
-		graphics.vertex(lastChangedTimestampTextWidth + 8, 21);
-		graphics.vertex(shipNameTextWidth + 4, 21);
-		graphics.vertex(shipNameTextWidth + 8, 25);
-		graphics.vertex(shipNameTextWidth + 8, 64);
-		graphics.vertex(shipNameTextWidth + 4, 68);
-		graphics.vertex(4, 68);
-		graphics.vertex(0, 64);
+		graphics.vertex(w - 4, 0);
+		graphics.vertex(w, 4);
+		graphics.vertex(w, h - 4);
+		graphics.vertex(w - 4, h);
+		graphics.vertex(4, h);
+		graphics.vertex(0, h - 4);
 		graphics.vertex(0, 4);
-		graphics.endShape();
+		graphics.endShape(CLOSE);
 
-		// shipName box
-		graphics.fill(BG_NORMAL);
-		graphics.beginShape();
-		graphics.vertex(8, 25);
-		graphics.vertex(shipNameTextWidth, 25);
-		graphics.vertex(shipNameTextWidth + 4, 29);
-		graphics.vertex(shipNameTextWidth + 4, 60);
-		graphics.vertex(shipNameTextWidth, 64);
-		graphics.vertex(8, 64);
-		graphics.vertex(4, 60);
-		graphics.vertex(4, 29);
-		graphics.endShape();
-
-		// info text
-		graphics.fill(BG_DARK);
-		graphics.textAlign(LEFT, CENTER);
-		graphics.textFont(mainFont16);
-		graphics.text(lastChangedTimestamp, 8, 13);
-
-		// shipName text
-		graphics.fill(MAINTEXT);
-		graphics.textAlign(CENTER, CENTER);
-		graphics.textFont(mainFont32);
-		graphics.text(shipName, 4 + shipNameTextWidth / 2, 44.5f);
+		graphics.noStroke();
+		graphics.fill(textColor);
+		graphics.text(text, w / 2, h / 2);
 
 		graphics.endDraw();
 		return graphics;
