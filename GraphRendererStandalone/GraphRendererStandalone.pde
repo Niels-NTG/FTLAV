@@ -222,7 +222,7 @@ PGraphics drawStandardAxisX() {
 	PGraphics graphics = createGraphics(graphWidth, graphHeigth);
 	graphics.beginDraw();
 	graphics.strokeWeight(0.8f);
-	graphics.textFont(mainFont16, 16);
+	graphics.textFont(mainFont16);
 	graphics.textAlign(LEFT, BOTTOM);
 	graphics.fill(MAINTEXT);
 
@@ -266,14 +266,14 @@ PGraphics drawStandardAxisY() {
 		// draw sector label
 		if (i == 0 || sectorNumber[i] != lastSectorNumber) {
 
-			graphics.textFont(mainFont16, 16);
+			graphics.textFont(mainFont16);
 			int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
 			int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
 			sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b","").trim();
-			graphics.textFont(headerFontAlt11, 11);
+			graphics.textFont(headerFontAlt11);
 			int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i]));
 			sectorNumberTextWidth = sectorNumberTextWidth < 22 ? 22 : sectorNumberTextWidth * 2;
-			graphics.textFont(headerFont11, 11);
+			graphics.textFont(headerFont11);
 			int sectorNameTextWidth = (int)graphics.textWidth(sectorName[i]);
 
 			// draw sectorName box
@@ -305,7 +305,7 @@ PGraphics drawStandardAxisY() {
 			// draw sectorNumber text
 			graphics.fill(MAINTEXT);
 			graphics.textAlign(CENTER, TOP);
-			graphics.textFont(headerFontAlt11, 11);
+			graphics.textFont(headerFontAlt11);
 			graphics.text(sectorNumber[i], sectorNumberTextWidth / 2 + 2, 22);
 
 			// draw glow accent
@@ -326,7 +326,7 @@ PGraphics drawStandardAxisY() {
 
 		}
 
-		graphics.textFont(mainFont16, 16);
+		graphics.textFont(mainFont16);
 		graphics.fill(MAINTEXT);
 		graphics.text(beaconNumber[i], 0, 6.5);
 
@@ -354,9 +354,9 @@ PGraphics drawHeader() {
 	PGraphics graphics = createGraphics(width, height);
 	graphics.beginDraw();
 
-	graphics.textFont(mainFont16, 16);
+	graphics.textFont(mainFont16);
 	int lastChangedTimestampTextWidth = (int)graphics.textWidth(lastChangedTimestamp) + 8;
-	graphics.textFont(mainFont32, 32);
+	graphics.textFont(mainFont32);
 	int shipNameTextWidth = (int)graphics.textWidth(shipName) + 32;
 
 	// container
@@ -391,13 +391,13 @@ PGraphics drawHeader() {
 	// info text
 	graphics.fill(BG_DARK);
 	graphics.textAlign(LEFT, CENTER);
-	graphics.textFont(mainFont16, 16);
+	graphics.textFont(mainFont16);
 	graphics.text(lastChangedTimestamp, 8, 13);
 
 	// shipName text
 	graphics.fill(MAINTEXT);
 	graphics.textAlign(CENTER, CENTER);
-	graphics.textFont(mainFont32, 32);
+	graphics.textFont(mainFont32);
 	graphics.text(shipName, 4 + shipNameTextWidth / 2, 44.5);
 
 	graphics.endDraw();
