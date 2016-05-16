@@ -42,9 +42,9 @@ public class GraphInspector extends JPanel {
 		// main graph settings
 		// TODO replace with TogglePanel class
 		graphMainSettings = new TogglePanel("Main settings");
-		graphMainSettings.addCheckBox("Graph title enabled");
-		graphMainSettings.addCheckBox("Graph transparancy");
-		graphMainSettings.addCheckBox("Show game info", loadGameIcon);
+		graphMainSettings.addCheckBox("Graph title enabled", true);
+		graphMainSettings.addCheckBox("Graph transparancy", true);
+		graphMainSettings.addCheckBox("Show game info", true, loadGameIcon);
 
 		add(graphMainSettings, BorderLayout.NORTH);
 
