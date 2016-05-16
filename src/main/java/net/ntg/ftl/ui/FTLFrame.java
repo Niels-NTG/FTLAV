@@ -125,6 +125,12 @@ public class FTLFrame extends JFrame {
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
 		final JButton helpBtn = new JButton(helpIcon);
 
+		gameStateLoadBtn.setToolTipText("Choose FTL save game file (continue.sav)");
+		gameStateRecordBtn.setToolTipText("Pause/Unpause continuous monitoring of the FTL save game file");
+		recordingNewBtn.setToolTipText("Create new spreadsheet file for recording the game state's history");
+		recordingOpenBtn.setToolTipText("Open existing spreadsheet file with recordings of the game state's history");
+		toggleGraphBtn.setToolTipText("Show/Hide graph window");
+		exportImageBtn.setToolTipText("Export high-res image of the current graph view");
 
 		gameStateRecordBtn.setEnabled(false);
 		recordingNewBtn.setEnabled(false);
