@@ -167,7 +167,6 @@ public class FTLFrame extends JFrame {
 
 				fc.setDialogTitle("Select continue.sav (saved game)");
 				int chooserResponse = fc.showOpenDialog(null);
-				FTLAdventureVisualiser.gameStateFile = fc.getSelectedFile();
 				boolean sillyMistake = false;
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
@@ -190,6 +189,8 @@ public class FTLFrame extends JFrame {
 				}
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
+					resetGameState();
+					FTLAdventureVisualiser.gameStateFile = fc.getSelectedFile();
 					prefs.put("ftlContinuePath", FTLAdventureVisualiser.gameStateFile.getAbsolutePath());
 					loadGameStateFile(FTLAdventureVisualiser.gameStateFile);
 					recordingNewBtn.setEnabled(true);
@@ -239,8 +240,6 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO fix not wanting to write to a new file when their is already a record opened
-
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(null);
 				fc.setFileHidingEnabled(true);
@@ -248,22 +247,26 @@ public class FTLFrame extends JFrame {
 
 				int chooserResponse = fc.showSaveDialog(null);
 
-				FTLAdventureVisualiser.recordFilePath = (
-					fc.getSelectedFile().getAbsolutePath() +
-					" (FTLAV " + appVersion + ") " +
-					getTimeStamp().replaceAll("[/:]", "") + ".csv"
-				);
+				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
+					FTLAdventureVisualiser.recordFilePath = (
+						fc.getSelectedFile().getAbsolutePath() +
+							" (FTLAV " + appVersion + ") " +
+							getTimeStamp().replaceAll("[/:]", "") + ".csv"
+					);
 
-				loadGameStateFile(FTLAdventureVisualiser.gameStateFile);
+					log.info("Created new record at " + FTLAdventureVisualiser.recordFilePath);
 
-				gameStateRecordBtn.setEnabled(true);
-				gameStateRecordBtn.doClick();
+					resetGameState();
+					loadGameStateFile(FTLAdventureVisualiser.gameStateFile);
 
-				toggleGraphBtn.setEnabled(true);
-				toggleGraphBtn.setSelected(true);
-				graphFrame.setVisible(true);
+					gameStateRecordBtn.setEnabled(true);
+					gameStateRecordBtn.doClick();
 
-				log.info("Created new record at " + FTLAdventureVisualiser.recordFilePath);
+					toggleGraphBtn.setEnabled(true);
+					toggleGraphBtn.setSelected(true);
+					graphFrame.setVisible(true);
+
+				}
 
 			}
 		});
@@ -273,7 +276,6 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO fix not wanting to write to another file when their is already a record opened
 				// TODO file filter
 
 				JFileChooser fc = new JFileChooser();
@@ -315,6 +317,7 @@ public class FTLFrame extends JFrame {
 				if (chooserResponse == JFileChooser.APPROVE_OPTION && !sillyMistake) {
 					FTLAdventureVisualiser.recordFilePath = fc.getSelectedFile().getAbsolutePath();
 
+					resetGameState();
 					loadGameStateFile(FTLAdventureVisualiser.gameStateFile);
 
 					gameStateRecordBtn.setEnabled(true);
@@ -607,7 +610,7 @@ public class FTLFrame extends JFrame {
 
 	private void loadGameState(SavedGameParser.SavedGameState currentGameState) {
 
-		log.info("------");
+		log.info("");
 		log.info("Ship Name : " + currentGameState.getPlayerShipName());
 		log.info("Currently at beacon number : " + currentGameState.getTotalBeaconsExplored());
 		log.info("Currently in sector : " + (currentGameState.getSectorNumber() + 1));
@@ -695,6 +698,12 @@ public class FTLFrame extends JFrame {
 
 		lastGameState = currentGameState;
 
+	}
+
+
+	private void resetGameState() {
+		FTLAdventureVisualiser.gameState = null;
+		lastGameState = null;
 	}
 
 
