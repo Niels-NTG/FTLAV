@@ -5,7 +5,6 @@ import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
-import net.ntg.ftl.parser.ConfigParser;
 import net.ntg.ftl.ui.FTLFrame;
 import net.vhati.modmanager.core.FTLUtilities;
 
@@ -20,7 +19,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 
 public class FTLAdventureVisualiser {
@@ -30,7 +30,12 @@ public class FTLAdventureVisualiser {
 	public static final String APP_NAME = "FTL Adventure Visualiser";
 	public static final int APP_VERSION = 3;
 
-	public static final File configFile = new File("FTLAVconfig.cfg");
+	private static final Preferences prefs = Preferences.userNodeForPackage(net.ntg.ftl.FTLAdventureVisualiser.class);
+	private static final String FTL_DAT_PATH = "ftlDatsPath";
+	private static final String FTL_CONTINUE_PATH = "ftlContinuePath";
+	private static final String FTL_PROFILE_PATH = "ftlProfilePath";
+	private static final String FTL_AE_PROFILE_PATH = "ftlAEProfilePath";
+
 	public static File gameStateFile;
 //	public static File profileFile;
 	public static File aeProfileFile;
@@ -69,37 +74,43 @@ public class FTLAdventureVisualiser {
 		log.debug(String.format("%s %s", System.getProperty("os.name"), System.getProperty("os.version")));
 		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
 
+		// TODO remove this in place of a reset button in the UI
+		try {
+			prefs.clear();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
+		log.debug(prefs.absolutePath());
+
+
 		File datsDir = null;
 
-		ConfigParser configParser = new ConfigParser();
-		Properties config = configParser.readConfig();
-
 		// FTL Resources Path.
-		String datsPath = config.getProperty("ftlDatsPath");
-		String continuePath = config.getProperty("ftlContinuePath");
-		String profilePath = config.getProperty("ftlProfilePath");
-		String aeProfilePath = config.getProperty("ftlAEProfilePath");
+		String datsPath = prefs.get(FTL_DAT_PATH, "");
+		String continuePath = prefs.get(FTL_CONTINUE_PATH, "");
+		String profilePath = prefs.get(FTL_PROFILE_PATH, "");
+		String aeProfilePath = prefs.get(FTL_AE_PROFILE_PATH, "");
 
-		if (datsPath != null && datsPath.length() > 0) {
+		if (datsPath.length() > 0) {
 			log.info("Using FTL dats path from config: " + datsPath);
 			datsDir = new File(datsPath);
 			if (!FTLUtilities.isDatsDirValid(datsDir)) {
-				log.error("The config's ftlDatsPath does not exist, or it lacks data.dat.");
+				log.error("The config's " + FTL_DAT_PATH + " does not exist, or it lacks data.dat.");
 				datsDir = null;
 			} else {
 
 				// try locating continue.sav
 				File candidateSaveFile;
 				if (continuePath != null) {
-					log.info("The config's ftlContinuePath exists");
+					log.info("The config's " + FTL_CONTINUE_PATH + " exists");
 					candidateSaveFile = new File(continuePath);
 				} else {
-					log.info("No path to continue.sav found in config. Guessing possible location...");
+					log.info("No path to continue.sav found in config " + FTL_CONTINUE_PATH + ". Guessing possible location...");
 					candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
 				}
 				if (candidateSaveFile.exists()) {
 					gameStateFile = candidateSaveFile;
-					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
+					prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
 				} else {
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
@@ -107,15 +118,15 @@ public class FTLAdventureVisualiser {
 //				// try locating prof.sav
 //				File candidateProfileFile;
 //				if (profilePath != null) {
-//					log.info("The config's ftlProfilePath exists");
+//					log.info("The config's " + FTL_PROFILE_PATH + " exists");
 //					candidateProfileFile = new File(profilePath);
 //				} else {
-//					log.info("No path to prof.sav found in config. Guessing possible location...");
+//					log.info("No path to prof.sav found in config " + FTL_PROFILE_PATH + ". Guessing possible location...");
 //					candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
 //				}
 //				if (candidateProfileFile.exists()) {
 //					profileFile = candidateProfileFile;
-//					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+//					prefs.put(FTL_PROFILE_PATH, candidateProfileFile.getAbsolutePath());
 //				} else {
 //					log.error(candidateProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL profile file because it doesn't exist or is invalid");
 //				}
@@ -123,20 +134,18 @@ public class FTLAdventureVisualiser {
 				// try locating ae_prof.sav
 				File candidateAEProfileFile;
 				if (aeProfilePath != null) {
-					log.info("The config's ftlAEProfilePath exists");
+					log.info("The config's " + FTL_AE_PROFILE_PATH + " exists");
 					candidateAEProfileFile = new File(aeProfilePath);
 				} else {
-					log.info("No path to ae_prof.sav found in config. Guessing possible location...");
+					log.info("No path to ae_prof.sav found in config " + FTL_AE_PROFILE_PATH + ". Guessing possible location...");
 					candidateAEProfileFile = new File(FTLUtilities.findUserDataDir(), "ae_prof.sav");
 				}
 				if (candidateAEProfileFile.exists()) {
 					aeProfileFile = candidateAEProfileFile;
-					config.setProperty("ftlAEProfilePath", candidateAEProfileFile.getAbsolutePath());
+					prefs.put(FTL_AE_PROFILE_PATH, candidateAEProfileFile.getAbsolutePath());
 				} else {
 					log.error(candidateAEProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL AE profile file because it doesn't exist or is invalid");
 				}
-
-				configParser.writeConfig(config);
 
 			}
 		} else {
@@ -166,27 +175,26 @@ public class FTLAdventureVisualiser {
 			}
 
 			if (datsDir != null) {
-				config.setProperty("ftlDatsPath", datsDir.getAbsolutePath());
+				prefs.put(FTL_DAT_PATH, datsDir.getAbsolutePath());
 
 				File candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
 				if (candidateSaveFile.exists()) {
 					gameStateFile = candidateSaveFile;
-					config.setProperty("ftlContinuePath", candidateSaveFile.getAbsolutePath());
+					prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
 				}
 
 //				File candidateProfileFile = new File(FTLUtilities.findUserDataDir(), "prof.sav");
 //				if (candidateProfileFile.exists()) {
 //					profileFile = candidateProfileFile;
-//					config.setProperty("ftlProfilePath", candidateProfileFile.getAbsolutePath());
+//					prefs.setProperty(FTL_PROFILE_PATH, candidateProfileFile.getAbsolutePath());
 //				}
 
 				File candidateAEProfileFile = new File(FTLUtilities.findUserDataDir(), "ae_prof.sav");
 				if (candidateAEProfileFile.exists()) {
 					aeProfileFile = candidateAEProfileFile;
-					config.setProperty("ftlAEProfilePath", candidateAEProfileFile.getAbsolutePath());
+					prefs.put(FTL_AE_PROFILE_PATH, candidateAEProfileFile.getAbsolutePath());
 				}
 
-				configParser.writeConfig(config);
 				log.info("FTL dats located at: " + datsDir.getAbsolutePath());
 			}
 		}
