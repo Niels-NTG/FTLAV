@@ -75,12 +75,11 @@ public class FTLAdventureVisualiser {
 		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
 
 		// TODO remove this in place of a reset button in the UI
-		try {
-			prefs.clear();
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		}
-		log.debug(prefs.absolutePath());
+//		try {
+//			prefs.clear();
+//		} catch (BackingStoreException e) {
+//			e.printStackTrace();
+//		}
 
 
 		File datsDir = null;
@@ -112,6 +111,7 @@ public class FTLAdventureVisualiser {
 					gameStateFile = candidateSaveFile;
 					prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
 				} else {
+					prefs.remove(FTL_CONTINUE_PATH);
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
 
@@ -128,6 +128,7 @@ public class FTLAdventureVisualiser {
 //					profileFile = candidateProfileFile;
 //					prefs.put(FTL_PROFILE_PATH, candidateProfileFile.getAbsolutePath());
 //				} else {
+//					prefs.remove(FTL_PROFILE_PATH);
 //					log.error(candidateProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL profile file because it doesn't exist or is invalid");
 //				}
 
@@ -144,6 +145,7 @@ public class FTLAdventureVisualiser {
 					aeProfileFile = candidateAEProfileFile;
 					prefs.put(FTL_AE_PROFILE_PATH, candidateAEProfileFile.getAbsolutePath());
 				} else {
+					prefs.remove(FTL_AE_PROFILE_PATH);
 					log.error(candidateAEProfileFile.getAbsolutePath() + " doesn't seem to be a valid FTL AE profile file because it doesn't exist or is invalid");
 				}
 

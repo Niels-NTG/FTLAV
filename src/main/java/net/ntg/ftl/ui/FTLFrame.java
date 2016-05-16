@@ -177,8 +177,8 @@ public class FTLFrame extends JFrame {
 
 				if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 					if (
-						"ae_prof.sav".equals(FTLAdventureVisualiser.gameStateFile.getName()) ||
-						"prof.sav".equals(FTLAdventureVisualiser.gameStateFile.getName())
+						"ae_prof.sav".equals(fc.getSelectedFile().getName()) ||
+						"prof.sav".equals(fc.getSelectedFile().getName())
 					) {
 						int sillyResponse = JOptionPane.showConfirmDialog(
 							FTLFrame.this,
