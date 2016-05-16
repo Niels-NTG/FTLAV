@@ -24,3 +24,4 @@ hs_err_pid*
 .idea
 ftl-adventure-visualiser.iml
 GraphRendererStandalone/build-tmp
+net.ntg.ftl.plist
