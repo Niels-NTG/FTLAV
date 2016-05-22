@@ -11,22 +11,12 @@ public class GraphInspector extends JPanel {
 
 	private static final Logger log = LogManager.getLogger(GraphInspector.class);
 
-	// TODO construct tabbed pane UI
-
-	// TODO make pane scrollable and fit screen heigth
-	// TODO add actionListener to each checkbox. Should destroy and init GraphRenderer when toggled
-	// TODO output checkbox status to FTLAdventureVisualer.enabledRecordingHeaders as true/false
-	// TODO remember if box was already (un)checked by only adding new boxes that don't appear in enabledRecordingHeaders yet
-	// TODO get values from latest entry FTLAdventureVisualer.recording to put next to checkboxes
-	// TODO sort boxes into titled borderboxes, this is something this class should do, NOT TogglePanel
-
 	private final FTLFrame frame;
 
 	private JTabbedPane graphTypeInspectorPanel;
 
 	// Graph settings
 	private TogglePanel graphMainSettings;
-	private TogglePanel graphSettings;
 	private TogglePanel lineGraphShipLogSettings;
 
 	// icons
@@ -40,11 +30,11 @@ public class GraphInspector extends JPanel {
 
 
 		// main graph settings
-		// TODO replace with TogglePanel class
 		graphMainSettings = new TogglePanel("Main settings");
 		graphMainSettings.addCheckBox("Graph title enabled", true);
 		graphMainSettings.addCheckBox("Graph transparancy", true);
 		graphMainSettings.addCheckBox("Show game info", true, loadGameIcon);
+		graphMainSettings.addDataTypeSetting("Show personal records", false, loadGameIcon);
 
 		add(graphMainSettings, BorderLayout.NORTH);
 
