@@ -117,7 +117,7 @@ public class GraphRenderer extends PApplet {
 	public void setup() {
 
 		// window
-		size(800, 800);
+		size(1200, 700);
 
 		graphWidth = width - (margin + margin);
 		graphHeigth = height - (margin + margin + margin);
@@ -167,6 +167,9 @@ public class GraphRenderer extends PApplet {
 
 
 	public void draw() {
+
+		graphWidth = width - (margin + margin);
+		graphHeigth = height - (margin + margin + margin);
 
 		// background
 		background(BG_DARK);

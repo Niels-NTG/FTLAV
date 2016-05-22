@@ -20,10 +20,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -503,10 +500,18 @@ public class FTLFrame extends JFrame {
 		graphFrame.setLayout(new BorderLayout());
 
 		graphRenderer = new GraphRenderer();
-		graphFrame.add(graphRenderer);
-		// GraphRenderer.panelWidth  = graphFrame.getWidth();
-		// GraphRenderer.panelHeight = graphFrame.getHeight();
 		graphRenderer.init();
+
+		graphFrame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				super.componentResized(e);
+				graphRenderer.size(graphFrame.getWidth(), graphFrame.getHeight());
+				graphRenderer.redraw();
+			}
+		});
+
+		graphFrame.add(graphRenderer);
 
 		graphFrame.setVisible(false);
 
@@ -728,8 +733,8 @@ public class FTLFrame extends JFrame {
 			// TODO read/write/read first, then inspector.setGameState()
 			// inspector.setGraphSettings();
 
-			// graphRenderer.destroy();
-			// graphRenderer.init();
+//			graphRenderer.destroy();
+			graphRenderer.init();
 
 		}
 
