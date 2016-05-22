@@ -68,7 +68,7 @@ public class TogglePanel extends JPanel {
 		checkBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				log.info("checkBox " + checkBox.getText() + ": " + checkBox.isSelected());
+				log.info("checkBox " + valueName+ ": " + checkBox.isSelected());
 				prefs.putBoolean(valueName + ENABLED, checkBox.isSelected());
 			}
 		});
@@ -79,10 +79,10 @@ public class TogglePanel extends JPanel {
 
 	}
 
-	public void addDataTypeSetting(String valueName, boolean defaultValue) {
-		addDataTypeSetting(valueName, defaultValue, null);
+	public void addDataTypeSetting(String valueName, boolean defaultEnabled, boolean defaultIsDelta) {
+		addDataTypeSetting(valueName, defaultEnabled, defaultIsDelta, null);
 	}
-	public void addDataTypeSetting(final String valueName, boolean defaultValue, ImageIcon icon) {
+	public void addDataTypeSetting(final String valueName, boolean defaultEnabled, boolean defaultIsDelta, ImageIcon icon) {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
@@ -95,21 +95,22 @@ public class TogglePanel extends JPanel {
 		}
 		panel.add(iconLabel);
 
-		boolean userValueEnabled = prefs.getBoolean(valueName + ENABLED, defaultValue);
+		boolean userValueEnabled = prefs.getBoolean(valueName + ENABLED, defaultEnabled);
 		prefs.putBoolean(valueName + ENABLED, userValueEnabled);
 		final JCheckBox enabledCheckBox = new JCheckBox();
+		enabledCheckBox.setText("⎚");
 		enabledCheckBox.setSelected(userValueEnabled);
 		enabledCheckBox.setToolTipText("Enable visibility");
 		enabledCheckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				log.info("checkBox " + enabledCheckBox.getToolTipText() + ": " + enabledCheckBox.isSelected());
+				log.info("checkBox " + valueName + ": " + enabledCheckBox.isSelected());
 				prefs.putBoolean(valueName + ENABLED, enabledCheckBox.isSelected());
 			}
 		});
 		panel.add(enabledCheckBox);
 
-		boolean userValueDeltaType = prefs.getBoolean(valueName + DELTA, false);
+		boolean userValueDeltaType = prefs.getBoolean(valueName + DELTA, defaultIsDelta);
 		prefs.putBoolean(valueName + ENABLED, userValueDeltaType);
 		final JCheckBox isDeltaTypeCheckBox = new JCheckBox();
 		isDeltaTypeCheckBox.setText("∆");
@@ -118,7 +119,7 @@ public class TogglePanel extends JPanel {
 		isDeltaTypeCheckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				log.info("checkBox " + isDeltaTypeCheckBox.getText() + ": " + isDeltaTypeCheckBox.isSelected());
+				log.info("checkBox " + valueName + ": " + isDeltaTypeCheckBox.isSelected());
 				prefs.putBoolean(valueName + DELTA, isDeltaTypeCheckBox.isSelected());
 			}
 		});
@@ -127,12 +128,13 @@ public class TogglePanel extends JPanel {
 		int userValueColor = prefs.getInt(valueName + COLOR, 0);
 		prefs.putInt(valueName + COLOR, userValueColor);
 		final JComboBox<Object> colorComboBox = new JComboBox<>(COLORS);
+		colorComboBox.setSelectedIndex(userValueColor);
 		colorComboBox.setToolTipText("Set graph line");
 		colorComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					log.info("comboBox " + colorComboBox.getToolTipText() + ": " + colorComboBox.getSelectedIndex());
+					log.info("comboBox " + valueName + ": " + colorComboBox.getSelectedIndex());
 					prefs.putInt(valueName + COLOR, colorComboBox.getSelectedIndex());
 				}
 			}

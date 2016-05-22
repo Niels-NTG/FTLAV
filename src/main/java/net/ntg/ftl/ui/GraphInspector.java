@@ -17,7 +17,6 @@ public class GraphInspector extends JPanel {
 
 	// Graph settings
 	private TogglePanel graphMainSettings;
-	private TogglePanel lineGraphShipLogSettings;
 
 	// icons
 	private final ImageIcon loadGameIcon = new ImageIcon(ClassLoader.getSystemResource("crew-shield.gif"));
@@ -34,7 +33,6 @@ public class GraphInspector extends JPanel {
 		graphMainSettings.addCheckBox("Graph title enabled", true);
 		graphMainSettings.addCheckBox("Graph transparancy", true);
 		graphMainSettings.addCheckBox("Show game info", true, loadGameIcon);
-		graphMainSettings.addDataTypeSetting("Show personal records", false, loadGameIcon);
 
 		add(graphMainSettings, BorderLayout.NORTH);
 
@@ -48,7 +46,9 @@ public class GraphInspector extends JPanel {
 		// bar graph
 		setupBarGraphInspectorPanel();
 
-
+		graphTypeInspectorPanel.setPreferredSize(
+			new Dimension(this.getWidth(), 400)
+		);
 		add(graphTypeInspectorPanel, BorderLayout.SOUTH);
 
 		this.frame = frame;
@@ -60,14 +60,37 @@ public class GraphInspector extends JPanel {
 
 		JPanel graphInspectorPanel = new JPanel();
 		graphInspectorPanel.setLayout(new GridBagLayout());
-		// TODO fill the thing with switches using the TogglePanel class
-		// TODO completly refactor and simplify TogglePanel class
+		GridBagConstraints gridC = new GridBagConstraints();
+		gridC.gridx = 0;
+		gridC.gridy = 0;
+		gridC.weightx = 1.0;
+		gridC.weighty = 1.0;
+		gridC.fill = GridBagConstraints.BOTH;
 
-		lineGraphShipLogSettings = new TogglePanel("Ship Log");
-		graphInspectorPanel.add(lineGraphShipLogSettings);
+		TogglePanel graphSettingShipLog = new TogglePanel("Ship Log");
+		graphSettingShipLog.addDataTypeSetting("Fleet Advancement", false, true);
+		graphSettingShipLog.addDataTypeSetting("Total Ships Defeated", false, true);
+		graphSettingShipLog.addDataTypeSetting("Total Scrap Collected", false, true);
+		graphSettingShipLog.addDataTypeSetting("Total Crew Hired", false, true);
+		graphSettingShipLog.addDataTypeSetting("Score", false, true);
+		graphInspectorPanel.add(graphSettingShipLog, gridC);
+		gridC.gridy++;
+
+		TogglePanel graphSettingShipSupplies = new TogglePanel("Ship Supplies");
+		graphSettingShipSupplies.addDataTypeSetting("Scrap", true, false);
+		graphSettingShipSupplies.addDataTypeSetting("Hull", false, false);
+		graphSettingShipSupplies.addDataTypeSetting("Fuel", true, false);
+		graphSettingShipSupplies.addDataTypeSetting("Drone Parts", false, false);
+		graphSettingShipSupplies.addDataTypeSetting("Missiles", false, false);
+		graphSettingShipSupplies.addDataTypeSetting("Oxygen level", false, false);
+		graphSettingShipSupplies.addDataTypeSetting("Power Capacity", false, true);
+		graphInspectorPanel.add(graphSettingShipSupplies, gridC);
+		gridC.gridy++;
+
 
 		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.setViewportView(graphInspectorPanel);
 
 		graphTypeInspectorPanel.addTab("Line graph", scrollPane);
@@ -83,6 +106,7 @@ public class GraphInspector extends JPanel {
 
 		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.setViewportView(graphInspectorPanel);
 
 		graphTypeInspectorPanel.addTab("Bar graph", graphInspectorPanel);
