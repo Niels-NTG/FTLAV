@@ -73,14 +73,6 @@ public class FTLAdventureVisualiser {
 		log.debug(String.format("%s %s", System.getProperty("os.name"), System.getProperty("os.version")));
 		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
 
-		// TODO remove this in place of a reset button in the UI
-//		try {
-//			prefs.clear();
-//		} catch (BackingStoreException e) {
-//			e.printStackTrace();
-//		}
-
-
 		File datsDir = null;
 
 		// FTL Resources Path.
@@ -114,6 +106,7 @@ public class FTLAdventureVisualiser {
 					log.error(candidateSaveFile.getAbsolutePath() + " doesn't seem to be a valid FTL save file because it doesn't exist or is invalid");
 				}
 
+				// TODO give FTLAV a splash screen
 //				// try locating prof.sav
 //				File candidateProfileFile;
 //				if (profilePath != null) {

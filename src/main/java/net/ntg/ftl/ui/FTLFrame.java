@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 
@@ -55,6 +56,7 @@ public class FTLFrame extends JFrame {
 	private final ImageIcon openRecordIcon	= new ImageIcon(ClassLoader.getSystemResource("open.gif"));
 	private final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 	private final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("savegraph.gif"));
+	private final ImageIcon resetIcon       = new ImageIcon(ClassLoader.getSystemResource("reset.gif"));
 	private final ImageIcon helpIcon		= new ImageIcon(ClassLoader.getSystemResource("help.gif"));
 
 	private final URL helpPage = ClassLoader.getSystemResource("help.html");
@@ -126,6 +128,7 @@ public class FTLFrame extends JFrame {
 		final JButton recordingOpenBtn = new JButton("Open recording", openRecordIcon);
 		final JToggleButton toggleGraphBtn = new JToggleButton("Graph", graphIcon, false);
 		final JButton exportImageBtn = new JButton("Export image", exportImageIcon);
+		final JButton resetBtn = new JButton(resetIcon);
 		final JButton helpBtn = new JButton(helpIcon);
 
 		gameStateLoadBtn.setToolTipText("Choose FTL save game file (continue.sav)");
@@ -133,6 +136,7 @@ public class FTLFrame extends JFrame {
 		recordingNewBtn.setToolTipText("Create new spreadsheet file for recording the game state's history");
 		recordingOpenBtn.setToolTipText("Open existing spreadsheet file with recordings of the game state's history");
 		toggleGraphBtn.setToolTipText("Show/Hide graph window");
+		resetBtn.setToolTipText("Reset all preferences back to default");
 		exportImageBtn.setToolTipText("Export high-res image of the current graph view");
 
 		gameStateRecordBtn.setEnabled(false);
@@ -384,6 +388,29 @@ public class FTLFrame extends JFrame {
 		});
 
 
+		resetBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int dialogChoice = JOptionPane.showConfirmDialog(
+					null,
+					"Are you sure you want to reset all preferences? This operation will quit " + appName + ".",
+					"Reset all preferences",
+					JOptionPane.YES_NO_OPTION
+				);
+				if (dialogChoice == JOptionPane.YES_OPTION) {
+					log.info("All preferences will be ereased.");
+					try {
+						prefs.clear();
+						log.info("All preferences have been cleared. Exiting...");
+						System.exit(0);
+					} catch (BackingStoreException bse) {
+						log.trace("Something went wrong while attempting to reset all preferences", bse);
+					}
+				}
+			}
+		});
+
+
 		helpBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -426,6 +453,7 @@ public class FTLFrame extends JFrame {
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportImageBtn);
 		toolbar.add(Box.createHorizontalGlue());
+		toolbar.add(resetBtn);
 		toolbar.add(helpBtn);
 
 	}
