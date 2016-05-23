@@ -120,13 +120,13 @@ public class DataParser {
 	}
 
 
-	// public static String getNearbyShipAugmentListing() {
-	// 	String aug = "";
-	// 	for (int i = 0; i < FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().size(); i++) {
-	// 		aug += FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().get(i) + ", ";
-	// 	}
-	// 	return aug.replaceAll("_"," ").replaceAll(",\\s$","");
-	// }
+	 public static String getNearbyShipAugmentListing() {
+	 	String aug = "";
+	 	for (int i = 0; i < FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().size(); i++) {
+	 		aug += FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().get(i) + ", ";
+	 	}
+	 	return aug.replaceAll("_"," ").replaceAll(",\\s$","");
+	 }
 
 
 	public static String getStoreListing() {
