@@ -1,10 +1,18 @@
 package net.ntg.ftl.ui;
 
+import net.ntg.ftl.constants.RecordingHeader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 
 public class GraphInspector extends JPanel {
@@ -68,22 +76,21 @@ public class GraphInspector extends JPanel {
 		gridC.fill = GridBagConstraints.BOTH;
 
 		TogglePanel graphSettingShipLog = new TogglePanel("Ship Log");
-		graphSettingShipLog.addDataTypeSetting("Fleet Advancement", false, true);
-		graphSettingShipLog.addDataTypeSetting("Total Ships Defeated", false, true);
-		graphSettingShipLog.addDataTypeSetting("Total Scrap Collected", false, true);
-		graphSettingShipLog.addDataTypeSetting("Total Crew Hired", false, true);
-		graphSettingShipLog.addDataTypeSetting("Score", false, true);
+		graphSettingShipLog.addDataTypeSetting(RecordingHeader.Location.FLEET_ADVANCEMENT, false, true);
+		graphSettingShipLog.addDataTypeSetting(RecordingHeader.Log.TOTAL_SHIPS_DEFEATED, false, true);
+		graphSettingShipLog.addDataTypeSetting(RecordingHeader.Log.TOTAL_SCRAP_COLLECTED, false, true);
+		graphSettingShipLog.addDataTypeSetting(RecordingHeader.Log.TOTAL_CREW_HIRED, false, true);
+		graphSettingShipLog.addDataTypeSetting(RecordingHeader.Log.SCORE, false, true);
 		graphInspectorPanel.add(graphSettingShipLog, gridC);
 		gridC.gridy++;
 
 		TogglePanel graphSettingShipSupplies = new TogglePanel("Ship Supplies");
-		graphSettingShipSupplies.addDataTypeSetting("Scrap", true, false);
-		graphSettingShipSupplies.addDataTypeSetting("Hull", false, false);
-		graphSettingShipSupplies.addDataTypeSetting("Fuel", true, false);
-		graphSettingShipSupplies.addDataTypeSetting("Drone Parts", false, false);
-		graphSettingShipSupplies.addDataTypeSetting("Missiles", false, false);
-		graphSettingShipSupplies.addDataTypeSetting("Oxygen level", false, false);
-		graphSettingShipSupplies.addDataTypeSetting("Power Capacity", false, true);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.SCRAP, true, false);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.HULL, false, false);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.FUEL, true, false);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.DRONE_PARTS, false, false);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.MISSILES, false, false);
+		graphSettingShipSupplies.addDataTypeSetting(RecordingHeader.Supplies.CREW_SIZE, false, false);
 		graphInspectorPanel.add(graphSettingShipSupplies, gridC);
 		gridC.gridy++;
 

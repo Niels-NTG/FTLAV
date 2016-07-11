@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static net.ntg.ftl.FTLAdventureVisualiser.recording;
 import static net.ntg.ftl.FTLAdventureVisualiser.recordingHeaders;
+import net.ntg.ftl.constants.RecordingHeader;
 
 
 public class GraphRenderer extends PApplet {
@@ -191,9 +192,9 @@ public class GraphRenderer extends PApplet {
 
 		pg.image(drawStandardAxisX(), margin, margin);
 		try {
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn("SCORE")), GLOW_BLUE), margin, margin);
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn("TOTAL SCRAP COLLECTED")), GLOW_PURPLE), margin, margin);
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn("FLEET ADVANCEMENT")), GLOW_RED), margin, margin);
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Log.SCORE)), GLOW_BLUE), margin, margin);
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Log.TOTAL_SCRAP_COLLECTED)), GLOW_PURPLE), margin, margin);
+			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Location.FLEET_ADVANCEMENT)), GLOW_RED), margin, margin);
 		} catch (IllegalArgumentException e) {
 			println(e);
 		}
@@ -266,10 +267,10 @@ public class GraphRenderer extends PApplet {
 
 	private PGraphics drawStandardAxisY() {
 
-		int[] beaconNumber = getDataRange(table.getIntColumn("BEACON"));
-		int[] sectorNumber = getDataRange(table.getIntColumn("SECTOR NUMBER"));
-		String[] sectorType = getDataRange(table.getStringColumn("SECTOR TYPE"));
-		String[] sectorName = getDataRange(table.getStringColumn("SECTOR TITLE"));
+		int[] beaconNumber = getDataRange(table.getIntColumn(RecordingHeader.Location.BEACON_NUMBER));
+		int[] sectorNumber = getDataRange(table.getIntColumn(RecordingHeader.Location.SECTOR_NUMBER));
+		String[] sectorType = getDataRange(table.getStringColumn(RecordingHeader.Location.SECTOR_TYPE));
+		String[] sectorName = getDataRange(table.getStringColumn(RecordingHeader.Location.SECTOR_TITLE));
 
 		int lastSectorNumber = sectorNumber[0];
 
@@ -365,11 +366,11 @@ public class GraphRenderer extends PApplet {
 	private PGraphics drawHeader() {
 
 		int lastRowIndex = table.getRowCount() - 1;
-		String lastChangedTimestamp = table.getString(lastRowIndex, "TIME");
-		String shipName = table.getString(lastRowIndex, "SHIP NAME");
-		String shipType = table.getString(lastRowIndex, "SHIP TYPE");
-		String difficulty = table.getString(lastRowIndex, "DIFFICULTY");
-		String ae = "AE content " + table.getString(lastRowIndex, "AE CONTENT");
+		String lastChangedTimestamp = table.getString(lastRowIndex, RecordingHeader.TIME);
+		String shipName = table.getString(lastRowIndex, RecordingHeader.SHIP_NAME);
+		String shipType = table.getString(lastRowIndex, RecordingHeader.SHIP_TYPE);
+		String difficulty = table.getString(lastRowIndex, RecordingHeader.DIFFICULTY);
+		String ae = "AE content " + table.getString(lastRowIndex, RecordingHeader.AE_CONTENT);
 
 		PGraphics graphics = createGraphics(width, height);
 		graphics.beginDraw();
