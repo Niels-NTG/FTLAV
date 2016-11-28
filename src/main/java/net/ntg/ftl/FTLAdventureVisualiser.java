@@ -225,4 +225,36 @@ public class FTLAdventureVisualiser {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
+
+	public static ArrayList<Integer> extractIntColumn(String columnName) {
+
+		ArrayList<Integer> columnList = new ArrayList<>();
+
+		for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
+			try {
+				columnList.add(Integer.parseInt(FTLAdventureVisualiser.recording.get(i).get(columnName)));
+			} catch (Exception e) {
+				columnList.add(0);
+			}
+		}
+
+		return columnList;
+
+	}
+	public static ArrayList<String> extractStringColumn(String columnName) {
+
+		ArrayList<String> columnList = new ArrayList<>();
+
+		for (int i = 0; i < FTLAdventureVisualiser.recording.size(); i++) {
+			try {
+				columnList.add(FTLAdventureVisualiser.recording.get(i).get(columnName));
+			} catch (Exception e) {
+				columnList.add("");
+			}
+		}
+
+		return columnList;
+
+	}
+
 }

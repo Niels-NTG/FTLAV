@@ -1,16 +1,20 @@
 package net.ntg.ftl.ui;
 
+import net.ntg.ftl.FTLAdventureVisualiser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
 import processing.core.PImage;
-import processing.data.Table;
-import processing.data.TableRow;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.prefs.PreferenceChangeEvent;
+import java.util.prefs.PreferenceChangeListener;
+import java.util.prefs.Preferences;
 
+import static net.ntg.ftl.FTLAdventureVisualiser.extractIntColumn;
 import static net.ntg.ftl.FTLAdventureVisualiser.recording;
 import static net.ntg.ftl.FTLAdventureVisualiser.recordingHeaders;
 import net.ntg.ftl.constants.RecordingHeader;
@@ -22,9 +26,10 @@ public class GraphRenderer extends PApplet {
 
 	// TODO make complete version in Processing
 
-	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(collumName iterator)
+	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(columnName iterator)
 
-	private Table table;
+	private static final Preferences prefs = Preferences.userNodeForPackage(net.ntg.ftl.FTLAdventureVisualiser.class);
+
 	private int maxTableValue;
 	private int startIndex = 0;
 	private int endIndex;
@@ -123,30 +128,20 @@ public class GraphRenderer extends PApplet {
 		graphWidth = width - (margin + margin);
 		graphHeigth = height - (margin + margin + margin);
 
-		// data
-		table = new Table();
-		for (String recordingHeader : recordingHeaders) {
-			table.addColumn(recordingHeader);
+		// Data
+		ArrayList<Integer> columnMax = new ArrayList<>();
+		for (int i = 0; i < recordingHeaders.length; i++) {
+			columnMax.add(Collections.max(extractIntColumn(recordingHeaders[i])));
 		}
-		for (Map<String, String> aRecording : recording) {
-			TableRow newRow = table.addRow();
-			for (String recordingHeader : recordingHeaders) {
-				try {
-					newRow.setString(
-						recordingHeader,
-						aRecording.get(recordingHeader)
-					);
-				} catch (NullPointerException e) {
-					newRow.setString(recordingHeader, "");
-				}
-			}
-		}
+		maxTableValue = Collections.max(columnMax);
 
-		int[] columnMax = new int[table.getColumnCount()];
-		for (int i = 0; i < table.getColumnCount(); ++i) {
-			columnMax[i] = max(table.getIntColumn(i));
-		}
-		maxTableValue = max(columnMax);
+		// Preference change event listener
+		prefs.addPreferenceChangeListener(new PreferenceChangeListener() {
+			@Override
+			public void preferenceChange(PreferenceChangeEvent evt) {
+				log.info(evt.getKey() + ": " + evt.getNewValue());
+			}
+		});
 
 		// graphics
 		mainFont16		= loadFont(ClassLoader.getSystemResource("graph/JustinFont8-16.vlw").toString());
@@ -192,9 +187,35 @@ public class GraphRenderer extends PApplet {
 
 		pg.image(drawStandardAxisX(), margin, margin);
 		try {
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Log.SCORE)), GLOW_BLUE), margin, margin);
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Log.TOTAL_SCRAP_COLLECTED)), GLOW_PURPLE), margin, margin);
-			pg.image(drawGraphLine(getDataRange(table.getIntColumn(RecordingHeader.Location.FLEET_ADVANCEMENT)), GLOW_RED), margin, margin);
+			pg.image(
+				drawGraphLine(
+					getDataRangeInt(
+						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Log.SCORE)
+					),
+					GLOW_BLUE
+				),
+				margin,
+				margin
+			);
+			pg.image(
+				drawGraphLine(
+					getDataRangeInt(
+						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Log.TOTAL_SCRAP_COLLECTED)
+					),
+					GLOW_PURPLE),
+				margin,
+				margin
+			);
+			pg.image(
+				drawGraphLine(
+					getDataRangeInt(
+						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.FLEET_ADVANCEMENT)
+					),
+					GLOW_RED
+				),
+				margin,
+				margin
+			);
 		} catch (IllegalArgumentException e) {
 			println(e);
 		}
@@ -208,10 +229,10 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private PGraphics drawGraphLine(int[] dataPoints) {
+	private PGraphics drawGraphLine(ArrayList<Integer> dataPoints) {
 		return drawGraphLine(dataPoints, GLOW_BLUE);
 	}
-	private PGraphics drawGraphLine(int[] dataPoints, int[] gradient) {
+	private PGraphics drawGraphLine(ArrayList<Integer> dataPoints, int[] gradient) {
 
 		PGraphics glowLine = createGraphics(graphWidth, graphHeigth);
 		glowLine.beginDraw();
@@ -223,10 +244,10 @@ public class GraphRenderer extends PApplet {
 			glowLine.beginShape();
 			glowLine.stroke(gradient[g]);
 			glowLine.strokeWeight(g == gradient.length - 1 ? 2 : 2 + (g * 2));
-			for (int i = 0; i < dataPoints.length; ++i) {
+			for (int i = 0; i < dataPoints.size(); ++i) {
 				glowLine.vertex(
 					jumpSize * i,
-					map(dataPoints[i], 0, maxTableValue, graphHeigth, 0) - glowSpread
+					map(dataPoints.get(i), 0, maxTableValue, graphHeigth, 0) - glowSpread
 				);
 			}
 			glowLine.endShape();
@@ -267,35 +288,50 @@ public class GraphRenderer extends PApplet {
 
 	private PGraphics drawStandardAxisY() {
 
-		int[] beaconNumber = getDataRange(table.getIntColumn(RecordingHeader.Location.BEACON_NUMBER));
-		int[] sectorNumber = getDataRange(table.getIntColumn(RecordingHeader.Location.SECTOR_NUMBER));
-		String[] sectorType = getDataRange(table.getStringColumn(RecordingHeader.Location.SECTOR_TYPE));
-		String[] sectorName = getDataRange(table.getStringColumn(RecordingHeader.Location.SECTOR_TITLE));
+		ArrayList<Integer> beaconNumber = getDataRangeInt(
+			FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.BEACON_NUMBER)
+		);
+		ArrayList<Integer> sectorNumber = getDataRangeInt(
+			FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.SECTOR_NUMBER)
+		);
+		ArrayList<String> sectorType = getDataRangeString(
+			FTLAdventureVisualiser.extractStringColumn(RecordingHeader.Location.SECTOR_TYPE)
+		);
+		ArrayList<String> sectorName = getDataRangeString(
+			FTLAdventureVisualiser.extractStringColumn(RecordingHeader.Location.SECTOR_TITLE)
+		);
 
-		int lastSectorNumber = sectorNumber[0];
+		int lastSectorNumber = sectorNumber.get(0);
 
 		PGraphics graphics = createGraphics(graphWidth, margin * 2);
 		graphics.beginDraw();
 		graphics.noStroke();
 		graphics.textAlign(LEFT, TOP);
 
-		for (int i = 0; i < beaconNumber.length; ++i) {
+		for (int i = 0; i < beaconNumber.size(); ++i) {
 
 			graphics.pushMatrix();
 			graphics.translate(jumpSize * i, 0);
 
 			// draw sector label
-			if (i == 0 || sectorNumber[i] != lastSectorNumber) {
+			if (i == 0 || sectorNumber.get(i) != lastSectorNumber) {
 
 				graphics.textFont(mainFont16);
-				int lastIndexSectorNumber = lastIndexOfIntArray(sectorNumber, sectorNumber[i]);
-				int lastBeaconNumberTextWidth = (int)graphics.textWidth(Integer.toString(beaconNumber[lastIndexSectorNumber]));
-				sectorName[i] = sectorName[i].toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim();
+				int lastIndexSectorNumber = sectorNumber.lastIndexOf(sectorNumber.get(i));
+				int lastBeaconNumberTextWidth = (int)graphics.textWidth(
+					Integer.toString(beaconNumber.get(lastIndexSectorNumber))
+				);
+				sectorName.set(
+					i,
+					sectorName.get(i).toUpperCase().replaceAll("\\b(SECTOR|CONTROLLED|UNCHARTED|HOMEWORLDS|THE)\\b", "").trim()
+				);
 				graphics.textFont(headerFontAlt11);
-				int sectorNumberTextWidth = (int)graphics.textWidth(Integer.toString(sectorNumber[i]));
+				int sectorNumberTextWidth = (int)graphics.textWidth(
+					Integer.toString(sectorNumber.get(i))
+				);
 				sectorNumberTextWidth = sectorNumberTextWidth < 22 ? 22 : sectorNumberTextWidth * 2;
 				graphics.textFont(headerFont11);
-				int sectorNameTextWidth = (int)graphics.textWidth(sectorName[i]);
+				int sectorNameTextWidth = (int)graphics.textWidth(sectorName.get(i));
 
 				// draw sectorName box
 				graphics.fill(BORDER);
@@ -311,7 +347,7 @@ public class GraphRenderer extends PApplet {
 
 				// draw sectorName text
 				graphics.fill(BUTTON_TEXT);
-				graphics.text(sectorName[i], sectorNumberTextWidth + 4, 22);
+				graphics.text(sectorName.get(i), sectorNumberTextWidth + 4, 22);
 
 				// draw sectorNumber box
 				graphics.fill(BUTTON_TEXT);
@@ -327,11 +363,11 @@ public class GraphRenderer extends PApplet {
 				graphics.fill(MAINTEXT);
 				graphics.textAlign(CENTER, TOP);
 				graphics.textFont(headerFontAlt11);
-				graphics.text(sectorNumber[i], sectorNumberTextWidth / 2 + 2, 22);
+				graphics.text(sectorNumber.get(i), sectorNumberTextWidth / 2 + 2, 22);
 
 				// draw glow accent
 				int[] gradient;
-				switch (sectorType[i]) {
+				switch (sectorType.get(i)) {
 					case "CIVILIAN": gradient = GLOW_GREEN; break;
 					case "HOSTILE" : gradient = GLOW_RED; break;
 					case "NEBULA"  : gradient = GLOW_PURPLE; break;
@@ -339,7 +375,12 @@ public class GraphRenderer extends PApplet {
 				}
 				for (int g = 1; g < gradient.length; ++g) {
 					graphics.fill(gradient[g]);
-					graphics.rect(0, 18, jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth, -g * 1.6f);
+					graphics.rect(
+						0,
+						18,
+						jumpSize * (lastIndexSectorNumber - i) + lastBeaconNumberTextWidth,
+						-g * 1.6f
+					);
 				}
 
 				// reset
@@ -349,11 +390,11 @@ public class GraphRenderer extends PApplet {
 
 			graphics.textFont(mainFont16);
 			graphics.fill(MAINTEXT);
-			graphics.text(beaconNumber[i], 0, 6.5f);
+			graphics.text(beaconNumber.get(i), 0, 6.5f);
 
 			graphics.popMatrix();
 
-			lastSectorNumber = sectorNumber[i];
+			lastSectorNumber = sectorNumber.get(i);
 
 		}
 
@@ -365,12 +406,12 @@ public class GraphRenderer extends PApplet {
 
 	private PGraphics drawHeader() {
 
-		int lastRowIndex = table.getRowCount() - 1;
-		String lastChangedTimestamp = table.getString(lastRowIndex, RecordingHeader.TIME);
-		String shipName = table.getString(lastRowIndex, RecordingHeader.SHIP_NAME);
-		String shipType = table.getString(lastRowIndex, RecordingHeader.SHIP_TYPE);
-		String difficulty = table.getString(lastRowIndex, RecordingHeader.DIFFICULTY);
-		String ae = "AE content " + table.getString(lastRowIndex, RecordingHeader.AE_CONTENT);
+		int lastRowIndex = recording.size() - 1;
+		String lastChangedTimestamp = recording.get(lastRowIndex).get(RecordingHeader.TIME);
+		String shipName = recording.get(lastRowIndex).get(RecordingHeader.SHIP_NAME);
+		String shipType = recording.get(lastRowIndex).get(RecordingHeader.SHIP_TYPE);
+		String difficulty = recording.get(lastRowIndex).get(RecordingHeader.DIFFICULTY);
+		String ae = "AE content " + recording.get(lastRowIndex).get(RecordingHeader.AE_CONTENT);
 
 		PGraphics graphics = createGraphics(width, height);
 		graphics.beginDraw();
@@ -423,43 +464,21 @@ public class GraphRenderer extends PApplet {
 
 
 	// data util
-	private int[] getDataRange(int[] dataPoints) {
-		int count = dataPoints.length;
+	private ArrayList<Integer> getDataRangeInt(ArrayList<Integer> dataPoints) {
+		int count = dataPoints.size();
 		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 		while (graphWidth / count + 1 < jumpSize) count--;
-		endIndex = dataPoints.length - count;
-		dataPoints = subset(dataPoints, constrain(startIndex, 0, endIndex), count);
+		endIndex = dataPoints.size() - count;
+		dataPoints = (ArrayList<Integer>)dataPoints.subList(constrain(startIndex, 0, endIndex), count);
 		return dataPoints;
 	}
-	private String[] getDataRange(String[] dataPoints) {
-		int count = dataPoints.length;
+	private ArrayList<String> getDataRangeString(ArrayList<String> dataPoints) {
+		int count = dataPoints.size();
 		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 		while (graphWidth / count + 1 < jumpSize) count--;
-		endIndex = dataPoints.length - count;
-		dataPoints = subset(dataPoints, constrain(startIndex, 0, endIndex), count);
+		endIndex = dataPoints.size()- count;
+		dataPoints = (ArrayList<String>)dataPoints.subList(constrain(startIndex, 0, endIndex), count);
 		return dataPoints;
-	}
-
-
-	private int indexOfIntArray(int[] array, int key) {
-		int returnvalue = -1;
-		for (int i = 0; i < array.length; ++i) {
-			if (key == array[i]) {
-				returnvalue = i;
-				break;
-			}
-		}
-		return returnvalue;
-	}
-	private int lastIndexOfIntArray(int[] array, int key) {
-		int returnvalue = -1;
-		for (int i = array.length - 1; i >= 0; --i) {
-			if (key == array[i]) {
-				returnvalue = i;
-				break;
-			}
-		}
-		return returnvalue;
 	}
 
 
