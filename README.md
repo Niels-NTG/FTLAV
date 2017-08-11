@@ -27,7 +27,7 @@ It’s possible to track data from games that are already ongoing. It’s howeve
 
 ## Roadmap
 
-### Version 3 (summer 2016)
+### Version 3 (somewhere 2017)
 - The method for storing the game state history has been completely redone. Instead of storing the complete history in RAM, each new game state is written directly to a CSV file. This change makes FTLAV a much more flexible and powerful tool. This means you can stop and resume tracking FTL data at any time. This also opens up the possibility for creating your own visualisations on top of FTLAV.
 - The graph renderer code has been completely rewritten. This not only improves overal performance, but also makes it easier to write alternative visualisations.
 - The graph renderer is now available as a stand-alone Processing sketch.
