@@ -1,9 +1,13 @@
 package net.ntg.ftl.parser;
 
 import net.blerf.ftl.constants.Difficulty;
+import net.blerf.ftl.model.Score;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.ntg.ftl.FTLAdventureVisualiser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataParser {
@@ -11,11 +15,13 @@ public class DataParser {
 
 	public static int getShipOxygenLevel() {
 
-		int roomCount = FTLAdventureVisualiser.shipState.getRoomList().size();
+		List<SavedGameParser.RoomState> roomList = FTLAdventureVisualiser.shipState.getRoomList();
+		int roomCount = roomList.size();
 		int sum = 0;
 
-		for (int i = 0; i < roomCount; i++) {
-			sum += FTLAdventureVisualiser.shipState.getRoomList().get(i).getOxygen();
+		for (int i = 0; i < roomList.size(); i++) {
+			SavedGameParser.RoomState aRoomList = roomList.get(i);
+			sum += aRoomList.getOxygen();
 		}
 
 		return sum / roomCount;
@@ -26,14 +32,15 @@ public class DataParser {
 	 public static int getNearbyShipOxygenLevel() {
 
 	 	if (FTLAdventureVisualiser.nearbyShipState != null) {
-	 		int roomCount = FTLAdventureVisualiser.nearbyShipState.getRoomList().size();
+	 		List<SavedGameParser.RoomState> roomList = FTLAdventureVisualiser.nearbyShipState.getRoomList();
+	 		int roomCount = roomList.size();
 	 		int sum = 0;
 
 	 		for (int i = 0; i < roomCount; i++) {
-	 			sum += FTLAdventureVisualiser.nearbyShipState.getRoomList().get(i).getOxygen();
+	 			sum += roomList.get(i).getOxygen();
 	 		}
 
-	 		return (int)sum / roomCount;
+	 		return sum / roomCount;
 	 	} else {
 	 		return -1;
 	 	}
@@ -43,51 +50,46 @@ public class DataParser {
 
 	public static String getFullShipType() {
 
-		String shipType;
-
 		switch (FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId()) {
-			case "PLAYER_SHIP_HARD"   : shipType = "Kestrel Cruiser A"; break;
-			case "PLAYER_SHIP_HARD_2" : shipType = "Kestrel Cruiser B"; break;
-			case "PLAYER_SHIP_HARD_3" : shipType = "Kestrel Cruiser C"; break;
+			case "PLAYER_SHIP_HARD"   : return "Kestrel Cruiser A";
+			case "PLAYER_SHIP_HARD_2" : return "Kestrel Cruiser B";
+			case "PLAYER_SHIP_HARD_3" : return "Kestrel Cruiser C";
 
-			case "PLAYER_SHIP_CIRCLE"   : shipType = "Engi Cruiser A"; break;
-			case "PLAYER_SHIP_CIRCLE_2" : shipType = "Engi Cruiser B"; break;
-			case "PLAYER_SHIP_CIRCLE_3" : shipType = "Engi Cruiser C"; break;
+			case "PLAYER_SHIP_CIRCLE"   : return "Engi Cruiser A";
+			case "PLAYER_SHIP_CIRCLE_2" : return "Engi Cruiser B";
+			case "PLAYER_SHIP_CIRCLE_3" : return "Engi Cruiser C";
 
-			case "PLAYER_SHIP_FED"   : shipType = "Federation Cruiser A"; break;
-			case "PLAYER_SHIP_FED_2" : shipType = "Federation Cruiser B"; break;
-			case "PLAYER_SHIP_FED_3" : shipType = "Federation Cruiser C"; break;
+			case "PLAYER_SHIP_FED"   : return "Federation Cruiser A";
+			case "PLAYER_SHIP_FED_2" : return "Federation Cruiser B";
+			case "PLAYER_SHIP_FED_3" : return "Federation Cruiser C";
 
-			case "PLAYER_SHIP_ENERGY"   : shipType = "Zoltan Cruiser A"; break;
-			case "PLAYER_SHIP_ENERGY_2" : shipType = "Zoltan Cruiser B"; break;
-			case "PLAYER_SHIP_ENERGY_3" : shipType = "Zoltan Cruiser C"; break;
+			case "PLAYER_SHIP_ENERGY"   : return "Zoltan Cruiser A";
+			case "PLAYER_SHIP_ENERGY_2" : return "Zoltan Cruiser B";
+			case "PLAYER_SHIP_ENERGY_3" : return "Zoltan Cruiser C";
 
-			case "PLAYER_SHIP_STEALTH"   : shipType = "Stealth Cruiser A"; break;
-			case "PLAYER_SHIP_STEALTH_2" : shipType = "Stealth Cruiser B"; break;
-			case "PLAYER_SHIP_STEALTH_3" : shipType = "Stealth Cruiser C"; break;
+			case "PLAYER_SHIP_STEALTH"   : return "Stealth Cruiser A";
+			case "PLAYER_SHIP_STEALTH_2" : return "Stealth Cruiser B";
+			case "PLAYER_SHIP_STEALTH_3" : return "Stealth Cruiser C";
 
-			case "PLAYER_SHIP_ROCK"   : shipType = "Rock Cruiser A"; break;
-			case "PLAYER_SHIP_ROCK_2" : shipType = "Rock Cruiser B"; break;
-			case "PLAYER_SHIP_ROCK_3" : shipType = "Rock Cruiser C"; break;
+			case "PLAYER_SHIP_ROCK"   : return "Rock Cruiser A";
+			case "PLAYER_SHIP_ROCK_2" : return "Rock Cruiser B";
+			case "PLAYER_SHIP_ROCK_3" : return "Rock Cruiser C";
 
-			case "PLAYER_SHIP_MANTIS"   : shipType = "Mantis Cruiser A"; break;
-			case "PLAYER_SHIP_MANTIS_2" : shipType = "Mantis Cruiser B"; break;
-			case "PLAYER_SHIP_MANTIS_3" : shipType = "Mantis Cruiser C"; break;
+			case "PLAYER_SHIP_MANTIS"   : return "Mantis Cruiser A";
+			case "PLAYER_SHIP_MANTIS_2" : return "Mantis Cruiser B";
+			case "PLAYER_SHIP_MANTIS_3" : return "Mantis Cruiser C";
 
-			case "PLAYER_SHIP_JELLY"   : shipType = "Slug Cruiser A"; break;
-			case "PLAYER_SHIP_JELLY_2" : shipType = "Slug Cruiser B"; break;
-			case "PLAYER_SHIP_JELLY_3" : shipType = "Slug Cruiser C"; break;
+			case "PLAYER_SHIP_JELLY"   : return "Slug Cruiser A";
+			case "PLAYER_SHIP_JELLY_2" : return "Slug Cruiser B";
+			case "PLAYER_SHIP_JELLY_3" : return "Slug Cruiser C";
 
-			case "PLAYER_SHIP_ANAEROBIC"   : shipType = "Lanius Cruiser A"; break;
-			case "PLAYER_SHIP_ANAEROBIC_2" : shipType = "Lanius Cruiser B"; break;
-			case "PLAYER_SHIP_ANAEROBIC_3" : shipType = "Lanius Cruiser C"; break;
+			case "PLAYER_SHIP_ANAEROBIC"   : return "Lanius Cruiser A";
+			case "PLAYER_SHIP_ANAEROBIC_2" : return "Lanius Cruiser B";
+			case "PLAYER_SHIP_ANAEROBIC_3" : return "Lanius Cruiser C";
 
 			default :
-				shipType = FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().replaceAll("_"," ");
-			break;
+				return FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().replaceAll("_"," ");
 		}
-
-		return shipType;
 
 	}
 
@@ -103,29 +105,23 @@ public class DataParser {
 
 
 	public static String getCargoListing() {
-		String cargo = "";
-		for (int i = 0; i < FTLAdventureVisualiser.gameState.getCargoIdList().size(); i++) {
-			cargo += FTLAdventureVisualiser.gameState.getCargoIdList().get(i) + ", ";
-		}
-		return cargo.replaceAll("_"," ").replaceAll(",\\s*$","");
+		List<String> cargoIdList = FTLAdventureVisualiser.gameState.getCargoIdList();
+		String cargo = String.join(", ", cargoIdList);
+		return cargo.replaceAll("_"," ");
 	}
 
 
 	public static String getAugmentListing() {
-		String aug = "";
-		for (int i = 0; i < FTLAdventureVisualiser.shipState.getAugmentIdList().size(); i++) {
-			aug += FTLAdventureVisualiser.shipState.getAugmentIdList().get(i) + ", ";
-		}
-		return aug.replaceAll("_"," ").replaceAll(",\\s*$","");
+		List<String> augmentIdList = FTLAdventureVisualiser.shipState.getAugmentIdList();
+		String aug = String.join(", ", augmentIdList);
+		return aug.replaceAll("_"," ");
 	}
 
 
 	 public static String getNearbyShipAugmentListing() {
-	 	String aug = "";
-	 	for (int i = 0; i < FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().size(); i++) {
-	 		aug += FTLAdventureVisualiser.nearbyShipState.getAugmentIdList().get(i) + ", ";
-	 	}
-	 	return aug.replaceAll("_"," ").replaceAll(",\\s$","");
+	 	List<String> augmentIdList = FTLAdventureVisualiser.nearbyShipState.getAugmentIdList();
+	 	String aug = String.join(", ", augmentIdList);
+	 	return aug.replaceAll("_"," ");
 	 }
 
 
@@ -221,30 +217,31 @@ public class DataParser {
 
 	public static String getBeaconHazards() {
 
-		String sb = "";
+		List<String> hazards = new ArrayList<>();
 
 		SavedGameParser.BeaconState beacon = FTLAdventureVisualiser.gameState.getBeaconList().get(
 			FTLAdventureVisualiser.gameState.getCurrentBeaconId()
 		);
 
-		if (FTLAdventureVisualiser.environmentState.isRedGiantPresent()) sb += "Solar Flares, ";
-		if (FTLAdventureVisualiser.environmentState.isPulsarPresent()) sb += "Pulsar Star, ";
+		if (FTLAdventureVisualiser.environmentState.isRedGiantPresent()) hazards.add("Solar Flares");
+		if (FTLAdventureVisualiser.environmentState.isPulsarPresent()) hazards.add("Pulsar Star");
 		if (FTLAdventureVisualiser.environmentState.isPDSPresent()) {
 			if (FTLAdventureVisualiser.environmentState.getVulnerableShips() == SavedGameParser.HazardVulnerability.NEARBY_SHIP) {
-				sb += "Allied Planetary Defense System, ";
+				hazards.add("Allied Planetary Defense System");
 			} else {
-				sb += "Hostile Planetary Defense System, ";
+				hazards.add("Hostile Planetary Defense System");
 			}
 		}
-		if (FTLAdventureVisualiser.environmentState.getAsteroidField() != null) sb += "Asteroid Field, ";
-		if (beacon.isEnemyPresent()) sb += "Enemy Ship, ";
-		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) sb += "Rebel Fleet, ";
-		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) sb += "Federation Fleet, ";
-		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) sb += "Rebel & Federation Fleet, ";
+		if (FTLAdventureVisualiser.environmentState.getAsteroidField() != null) hazards.add("Asteroid Field");
+		if (beacon.isEnemyPresent()) hazards.add("Enemy Ship");
+		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.REBEL) hazards.add("Rebel Fleet");
+		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.FEDERATION) hazards.add("Federation Fleet");
+		if (beacon.getFleetPresence() == SavedGameParser.FleetPresence.BOTH) hazards.add("Rebel & Federation Fleet");
+
 		// TODO pulsar ion storm hazard
 		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
 
-		return sb.replaceAll(",\\s*$","");
+		return String.join(", ", hazards);
 
 	}
 
@@ -252,17 +249,9 @@ public class DataParser {
 	public static int getBestShipScore() {
 
 		int bestShipScore = 0;
-
-		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
-			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
-			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
-			if (
-				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
-				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
-			) {
-				bestShipScore = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getValue();
-				break;
-			}
+		Score bestShip = getBestShip();
+		if (bestShip != null) {
+			bestShipScore= bestShip.getValue();
 		}
 
 		return bestShipScore;
@@ -273,17 +262,9 @@ public class DataParser {
 	public static String getBestShipName() {
 
 		String bestShipName = "";
-
-		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
-			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
-			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
-			if (
-				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
-				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
-			) {
-				bestShipName = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipName();
-				break;
-			}
+		Score bestShip = getBestShip();
+		if (bestShip != null) {
+			bestShipName= bestShip.getShipName();
 		}
 
 		return bestShipName;
@@ -294,20 +275,34 @@ public class DataParser {
 	public static int getBestShipSector() {
 
 		int bestShipSector = 0;
+		Score bestShip = getBestShip();
+		if (bestShip != null) {
+			bestShipSector= bestShip.getSector() + 1;
+		}
 
-		for (int i = 0; i < FTLAdventureVisualiser.profile.getStats().getShipBest().size(); i++) {
-			String shipID = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getShipId();
-			Difficulty difficulty = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getDifficulty();
+		return bestShipSector;
+
+	}
+
+
+	private static Score getBestShip() {
+
+		List<Score> shipBest = FTLAdventureVisualiser.profile.getStats().getShipBest();
+		Score bestShip = null;
+
+		for (int i = 0; i < shipBest.size(); i++) {
+			String shipID = shipBest.get(i).getShipId();
+			Difficulty difficulty = shipBest.get(i).getDifficulty();
 			if (
 				FTLAdventureVisualiser.gameState.getPlayerShipBlueprintId().equals(shipID) &&
 				FTLAdventureVisualiser.gameState.getDifficulty().equals(difficulty)
 			) {
-				bestShipSector = FTLAdventureVisualiser.profile.getStats().getShipBest().get(i).getSector() + 1;
+				bestShip = shipBest.get(i);
 				break;
 			}
 		}
 
-		return bestShipSector;
+		return bestShip;
 
 	}
 

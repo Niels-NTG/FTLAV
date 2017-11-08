@@ -26,6 +26,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -752,14 +754,8 @@ public class FTLFrame extends JFrame {
 	private String getTimeStamp() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(FTLAdventureVisualiser.gameStateFile.lastModified());
-		return (
-			cal.get(Calendar.YEAR) + "/" +
-			String.format("%02d", cal.get(Calendar.MONTH) + 1) + "/" +
-			String.format("%02d", cal.get(Calendar.DAY_OF_MONTH)) + " " +
-			String.format("%02d", cal.get(Calendar.HOUR_OF_DAY)) + ":" +
-			String.format("%02d", cal.get(Calendar.MINUTE)) + ":" +
-			String.format("%02d", cal.get(Calendar.SECOND))
-		);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		return dateFormat.format(cal);
 	}
 
 
