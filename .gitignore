@@ -25,3 +25,12 @@ hs_err_pid*
 ftl-adventure-visualiser.iml
 GraphRendererStandalone/build-tmp
 net.ntg.ftl.plist
+
+# Processing
+.DS_Store
+applet
+application.linux32
+application.linux64
+application.windows32
+application.windows64
+application.macosx
