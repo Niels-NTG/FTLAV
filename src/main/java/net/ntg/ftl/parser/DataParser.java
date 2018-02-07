@@ -133,21 +133,13 @@ public class DataParser {
 			FTLAdventureVisualiser.gameState.getCurrentBeaconId()
 		);
 
-		if (beacon.getStore() != null) {
-			for (int i = 0; i < beacon.getStore().getShelfList().size(); i++) {
-				storeItems += beacon.getStore().getShelfList().get(i).getItemType().toString() + ": ";
-				for (int k = 0; k < beacon.getStore().getShelfList().get(i).getItems().size(); k++) {
-					if (beacon.getStore().getShelfList().get(i).getItemType().toString().equals("Crew")) {
-						storeItems += getFullCrewType(beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId()) + ", ";
-					} else {
-						storeItems += beacon.getStore().getShelfList().get(i).getItems().get(k).getItemId() + ", ";
-					}
-				}
-				storeItems = storeItems.replaceAll(",\\s*$","");
-			}
+		SavedGameParser.StoreState store = beacon.getStore();
+
+		if (store != null) {
+			storeItems = store.toString();
 		}
 
-		return storeItems.replaceAll("_"," ").replaceAll(",\\s*$","");
+		return storeItems.replaceAll("_"," ").replaceAll("\\s{2,}", " ");
 
 	}
 
