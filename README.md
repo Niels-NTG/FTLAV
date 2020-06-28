@@ -1,7 +1,7 @@
 # FTLAV
 *FTL: Faster Than Light Adventure Visualiser*
 
-With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](http://www.ftlgame.com/). It’s a nice way to archive spectacular FTL sessions for posterity. It can also be a powerful tool for analysing and optimising your play style.
+With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](https://subsetgames.com/ftl.html). It’s a nice way to archive spectacular FTL sessions for posterity. It can also be a powerful tool for analysing and optimising your play style.
 
 <a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"/></a>
 
