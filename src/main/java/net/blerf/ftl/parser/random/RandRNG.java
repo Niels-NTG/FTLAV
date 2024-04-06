@@ -3,7 +3,9 @@ package net.blerf.ftl.parser.random;
 
 public interface RandRNG {
 
-	void srand(int newSeed);
+    void srand(int newSeed);
 
-	int rand();
+    int rand();
+
+    void setName(String newName);
 }

@@ -1,75 +1,41 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@XmlRootElement(name="systemBlueprint")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "systemBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SystemBlueprint {
-	@XmlAttribute(name="name")
-	private String id;
-	private String type, title, desc;
-	private int startPower;  // Initial system capacity.
-	private int maxPower;    // Highest possible capacity attainable by upgrading.
-	private int rarity;
-	private UpgradeCost upgradeCost;
-	private int cost;
-	@XmlElement(required=false)
-	private int locked;
 
-	@XmlRootElement(name="upgradeCost")
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class UpgradeCost {
-		private List<Integer> level;
+    @XmlAttribute(name = "name")
+    private String id;
 
-		public List<Integer> getLevel() {
-			return level;
-		}
+    private String type;
+    private DefaultDeferredText title;
+    private DefaultDeferredText desc;
+    private int startPower;  // Initial system capacity.
+    private int maxPower;    // Highest possible capacity attainable by upgrading.
+    private int rarity;
 
-		public void setLevel(List<Integer> level) {
-			this.level = level;
-		}
-	}
+    @XmlElementWrapper(name = "upgradeCost")
+    @XmlElement(name = "level")
+    private List<Integer> upgradeCosts;
 
-	public String getId() {
-		return id;
-	}
+    private int cost;
 
-	public String getType() {
-		return type;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getDescription() {
-		return desc;
-	}
-
-	public int getStartPower() {
-		return startPower;
-	}
-
-	public int getMaxPower() {
-		return maxPower;
-	}
-
-	public int getRarity() {
-		return rarity;
-	}
-
-	public UpgradeCost getUpgradeCost() {
-		return upgradeCost;
-	}
-
-	public int getCost() {
-		return cost;
-	}
-
-	public int getLocked() {
-		return locked;
-	}
+    @XmlElement()
+    private Integer locked;
 
 }

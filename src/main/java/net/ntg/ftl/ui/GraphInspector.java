@@ -1,8 +1,7 @@
 package net.ntg.ftl.ui;
 
+import lombok.extern.slf4j.Slf4j;
 import net.ntg.ftl.constants.RecordingHeader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -15,9 +14,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 
+@Slf4j
 public class GraphInspector extends JPanel {
-
-	private static final Logger log = LogManager.getLogger(GraphInspector.class);
 
 	private final FTLFrame frame;
 

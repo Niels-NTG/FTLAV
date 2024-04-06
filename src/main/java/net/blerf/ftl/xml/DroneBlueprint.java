@@ -1,88 +1,56 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@XmlRootElement(name="droneBlueprint")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "droneBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DroneBlueprint {
-	@XmlAttribute(name="name")
-	private String id;
-	private String type, title;
-	@XmlElement(name="short")
-	private String shortTitle;
-	private String desc;
-	@XmlElement(name="bp")
-	private int bp;  // TODO: Rename this.
-	@XmlElement(required=false)
-	private int cooldown, dodge, speed;
-	private int power, cost;
-	@XmlElement(required=false)
-	private String droneImage, image;
-	@XmlElement(name="weaponBlueprint",required=false)
-	private String weaponId;
-	private int rarity;
 
-	public String getId() {
-		return id;
-	}
+    @XmlAttribute(name = "name")
+    private String id;
+    private String type;
+    private Integer locked;
+    private DefaultDeferredText title;
 
-	public String getType() {
-		return type;
-	}
+    @XmlElement(name = "short")
+    private DefaultDeferredText shortTitle;
+    @XmlElement(name = "desc")
+    private DefaultDeferredText description;
 
-	public String getTitle() {
-		return title;
-	}
+    @XmlElement(name = "bp")
+    private int blueprint;
 
-	public String getShortTitle() {
-		return shortTitle;
-	}
+    private Integer cooldown;
+    private Integer dodge;
+    private Integer speed;
 
-	public String getDescription() {
-		return desc;
-	}
+    private int power;
+    private int cost;
 
-	// TODO: bp?
+    private String droneImage;
 
-	public int getPower() {
-		return power;
-	}
+    @XmlElement(name = "image")
+    private String imagePath;  // InnerPath of a projectile anim sheet. Unused?
 
-	public int getCooldown() {
-		return cooldown;
-	}
+    private String iconImage;  // TODO: FTL 1.5.4 introduced this. For iPad?
 
-	public int getDodge() {
-		return dodge;
-	}
+    @XmlElement(name = "weaponBlueprint")
+    private String weaponId;
 
-	public int getSpeed() {
-		return speed;
-	}
+    private int rarity;
 
-	public int getCost() {
-		return cost;
-	}
-
-	public String getDroneImage() {
-		return droneImage;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public String getWeaponId() {
-		return weaponId;
-	}
-
-	public int getRarity() {
-		return cost;
-	}
-
-	@Override
-	public String toString() {
-		return ""+title;
-	}
+    @Override
+    public String toString() {
+        return "" + title;
+    }
 }

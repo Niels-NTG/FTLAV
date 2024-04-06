@@ -1,98 +1,76 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@XmlRootElement(name="weaponBlueprint")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "weaponBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WeaponBlueprint {
 
-	@XmlAttribute(name="name")
-	private String id;
-	private String type, title;
-	@XmlElement(name="short")
-	private String shortTitle;
-	private String desc, tooltip;
-	@XmlElement(name="sp")
-	private int shieldPiercing;
-	@XmlElement(name="bp")
-	private int bp;  // TODO: Rename this.
-	private int damage, shots, fireChance, breachChance, cooldown, power, cost, rarity;
-	private String image;
-	private SoundList launchSounds, hitShipSounds, hitShieldSounds, missSounds;
-	private String weaponArt;
+    @XmlAttribute(name = "name")
+    private String id;
+    private String type;
+    private DefaultDeferredText title;
+    private Integer locked;
 
-	@XmlRootElement
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class SoundList {
-		private List<String> sound;
-	}
+    @XmlElement(name = "short")
+    private DefaultDeferredText shortTitle;
 
-	public String getId() {
-		return id;
-	}
+    @XmlElement(name = "desc")
+    private DefaultDeferredText description;
+    @XmlElement(name = "tooltip")
+    private DefaultDeferredText tooltip;
 
-	public String getType() {
-		return type;
-	}
+    @XmlElement(name = "sp")
+    private int shieldPiercing;
 
-	public String getTitle() {
-		return title;
-	}
+    @XmlElement(name = "bp")
+    private int blueprint;
 
-	public String getShortTitle() {
-		return shortTitle;
-	}
+    private int damage;
+    private int shots;
+    private int fireChance;
+    private int breachChance;
+    private int cooldown;
+    private int power;
+    private int cost;
+    private int rarity;
 
-	public String getDescription() {
-		return desc;
-	}
+    @XmlElement(name = "image")
+    private String projectileAnimId;  // Projectile / Beam-spot anim.
 
-	public String getTooltip() {
-		return tooltip;
-	}
+    @XmlElementWrapper(name = "launchSounds")
+    @XmlElement(name = "sound")
+    private List<String> launchSounds;
 
-	public int getShieldPiercing() {
-		return shieldPiercing;
-	}
+    @XmlElementWrapper(name = "hitShipSounds")
+    @XmlElement(name = "sound")
+    private List<String> hitShipSounds;
 
-	// TODO: bp?
+    @XmlElementWrapper(name = "hitShieldSounds")
+    @XmlElement(name = "sound")
+    private List<String> hitShieldSounds;
 
-	public int getDamage() {
-		return damage;
-	}
+    @XmlElementWrapper(name = "missSounds")
+    @XmlElement(name = "sound")
+    private List<String> missSounds;
 
-	public int getShots() {
-		return shots;
-	}
+    @XmlElement(name = "weaponArt")
+    private String weaponAnimId;
 
-	public int getFireChance() {
-		return fireChance;
-	}
-
-	public int getBreachChance() {
-		return breachChance;
-	}
-
-	public int getCooldown() {
-		return cooldown;
-	}
-
-	public int getPower() {
-		return power;
-	}
-
-	public int getCost() {
-		return cost;
-	}
-
-	public int getRarity() {
-		return cost;
-	}
-
-	@Override
-	public String toString() {
-		return ""+title;
-	}
+    @Override
+    public String toString() {
+        return "" + title;
+    }
 }

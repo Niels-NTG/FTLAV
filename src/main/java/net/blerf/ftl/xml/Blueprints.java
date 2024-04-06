@@ -1,47 +1,42 @@
 package net.blerf.ftl.xml;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.blerf.ftl.xml.ship.ShipBlueprint;
 
-
-@XmlRootElement(name="blueprints")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "blueprints")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Blueprints {
 
-	private List<BlueprintList> blueprintList;
-	private List<CrewBlueprint> crewBlueprint;
-	private List<SystemBlueprint> systemBlueprint;
-	private List<WeaponBlueprint> weaponBlueprint;
-	private List<DroneBlueprint> droneBlueprint;
-	private List<AugBlueprint> augBlueprint;
-	private List<ShipBlueprint> shipBlueprint;
-	public List<BlueprintList> getBlueprintList() {
-		return blueprintList;
-	}
+    @XmlElement(name = "blueprintList")
+    private List<BlueprintList> blueprintLists = new ArrayList<>();
 
-	public List<CrewBlueprint> getCrewBlueprint() {
-		return crewBlueprint;
-	}
+    @XmlElement(name = "crewBlueprint")
+    private List<CrewBlueprint> crewBlueprints = new ArrayList<>();
 
-	public List<SystemBlueprint> getSystemBlueprint() {
-		return systemBlueprint;
-	}
+    @XmlElement(name = "systemBlueprint")
+    private List<SystemBlueprint> systemBlueprints = new ArrayList<>();
 
-	public List<WeaponBlueprint> getWeaponBlueprint() {
-		return weaponBlueprint;
-	}
+    @XmlElement(name = "weaponBlueprint")
+    private List<WeaponBlueprint> weaponBlueprints = new ArrayList<>();
 
-	public List<DroneBlueprint> getDroneBlueprint() {
-		return droneBlueprint;
-	}
+    @XmlElement(name = "droneBlueprint")
+    private List<DroneBlueprint> droneBlueprints = new ArrayList<>();
 
-	public List<AugBlueprint> getAugBlueprint() {
-		return augBlueprint;
-	}
+    @XmlElement(name = "augBlueprint")
+    private List<AugBlueprint> augBlueprints = new ArrayList<>();
 
-	public List<ShipBlueprint> getShipBlueprint() {
-		return shipBlueprint;
-	}
+    @XmlElement(name = "shipBlueprint")
+    private List<ShipBlueprint> shipBlueprints = new ArrayList<>();
+
 }

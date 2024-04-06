@@ -1,82 +1,80 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@XmlRootElement(name="sectorDescription")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "sectorDescription")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SectorDescription {
 
-	@XmlAttribute(name="name")
-	private String id;
+    @XmlAttribute(name = "name")
+    private String id;
 
-	@XmlAttribute
-	private int minSector;
+    @XmlAttribute
+    private int minSector;
 
-	@XmlAttribute
-	private boolean unique;
+    @XmlAttribute
+    private boolean unique;
 
-	private NameList nameList;
+    private NameList nameList;
 
-	private TrackList trackList;
+    private TrackList trackList;
 
-	@XmlElement(required=false)
-	private String startEvent;
+    private RarityList rarityList;
 
-	@XmlElement(name="event")
-	private List<EventDistribution> eventDistributions;
+    @XmlElement()
+    private String startEvent;
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class NameList {
-		@XmlElement(name="name")
-		public List<String> names;
-	}
+    @XmlElement(name = "event")
+    private List<EventDistribution> eventDistributions;
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class TrackList {
-		@XmlElement(name="track")
-		public List<String> tracks;
-	}
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class NameList {
+        @XmlElement(name = "name")
+        public List<DefaultDeferredText> names;
+    }
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class EventDistribution {
-		@XmlAttribute
-		public String name;
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class TrackList {
+        @XmlElement(name = "track")
+        public List<String> tracks;
+    }
 
-		@XmlAttribute
-		public int min;
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class RarityList {
+        @XmlElement(name = "blueprint")
+        public List<BlueprintRarity> blueprints;
+    }
 
-		@XmlAttribute
-		public int max;
-	}
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class BlueprintRarity {
+        @XmlAttribute(name = "name")
+        public String id;
 
+        @XmlAttribute
+        public int rarity;
+    }
 
-	public String getId() {
-		return id;
-	}
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class EventDistribution {
+        @XmlAttribute
+        public String name;
 
-	public int getMinSector() {
-		return minSector;
-	}
+        @XmlAttribute
+        public int min;
 
-	public boolean isUnique() {
-		return unique;
-	}
+        @XmlAttribute
+        public int max;
+    }
 
-	public NameList getNameList() {
-		return nameList;
-	}
-
-	public TrackList getTrackList() {
-		return trackList;
-	}
-
-	public String getStartEvent() {
-		return startEvent;
-	}
-
-	public List<EventDistribution> getEventDistributions() {
-		return eventDistributions;
-	}
 }

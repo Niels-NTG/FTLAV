@@ -1,8 +1,8 @@
 package net.ntg.ftl.ui;
 
-import net.ntg.ftl.FTLAdventureVisualiser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+import net.ntg.ftl.parser.DataUtil;
+import net.ntg.ftl.parser.TableRow;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -10,19 +10,14 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
 
-import static net.ntg.ftl.FTLAdventureVisualiser.extractIntColumn;
-import static net.ntg.ftl.FTLAdventureVisualiser.recording;
-import static net.ntg.ftl.FTLAdventureVisualiser.recordingHeaders;
-import net.ntg.ftl.constants.RecordingHeader;
 
-
+@Slf4j
 public class GraphRenderer extends PApplet {
-
-	private static final Logger log = LogManager.getLogger(GraphRenderer.class);
 
 	// TODO make complete version in Processing
 
@@ -130,8 +125,8 @@ public class GraphRenderer extends PApplet {
 
 		// Data
 		ArrayList<Integer> columnMax = new ArrayList<>();
-		for (int i = 0; i < recordingHeaders.length; i++) {
-			columnMax.add(Collections.max(extractIntColumn(recordingHeaders[i])));
+		for (String columnName : DataUtil.getTableHeaders(int.class)) {
+			columnMax.addAll(DataUtil.extractIntColumn(columnName));
 		}
 		maxTableValue = Collections.max(columnMax);
 
@@ -139,7 +134,7 @@ public class GraphRenderer extends PApplet {
 		prefs.addPreferenceChangeListener(new PreferenceChangeListener() {
 			@Override
 			public void preferenceChange(PreferenceChangeEvent evt) {
-				log.info(evt.getKey() + ": " + evt.getNewValue());
+				log.info("{}: {}", evt.getKey(), evt.getNewValue());
 			}
 		});
 
@@ -173,7 +168,7 @@ public class GraphRenderer extends PApplet {
 		// graphics with transparant background
 		image(generateGraphics(), 0, 0);
 
-		// overlay graphics (mouseover, etc)
+		// overlay graphics (mouseover, etc.)
 
 		noLoop();
 
@@ -190,7 +185,7 @@ public class GraphRenderer extends PApplet {
 			pg.image(
 				drawGraphLine(
 					getDataRangeInt(
-						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Log.SCORE)
+						DataUtil.extractIntColumn("totalScore")
 					),
 					GLOW_BLUE
 				),
@@ -200,7 +195,7 @@ public class GraphRenderer extends PApplet {
 			pg.image(
 				drawGraphLine(
 					getDataRangeInt(
-						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Log.TOTAL_SCRAP_COLLECTED)
+						DataUtil.extractIntColumn("totalScrapCollected")
 					),
 					GLOW_PURPLE),
 				margin,
@@ -209,7 +204,7 @@ public class GraphRenderer extends PApplet {
 			pg.image(
 				drawGraphLine(
 					getDataRangeInt(
-						FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.FLEET_ADVANCEMENT)
+						DataUtil.extractIntColumn("fleetAdvancement")
 					),
 					GLOW_RED
 				),
@@ -229,10 +224,10 @@ public class GraphRenderer extends PApplet {
 	}
 
 
-	private PGraphics drawGraphLine(ArrayList<Integer> dataPoints) {
+	private PGraphics drawGraphLine(List<Integer> dataPoints) {
 		return drawGraphLine(dataPoints, GLOW_BLUE);
 	}
-	private PGraphics drawGraphLine(ArrayList<Integer> dataPoints, int[] gradient) {
+	private PGraphics drawGraphLine(List<Integer> dataPoints, int[] gradient) {
 
 		PGraphics glowLine = createGraphics(graphWidth, graphHeigth);
 		glowLine.beginDraw();
@@ -288,17 +283,17 @@ public class GraphRenderer extends PApplet {
 
 	private PGraphics drawStandardAxisY() {
 
-		ArrayList<Integer> beaconNumber = getDataRangeInt(
-			FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.BEACON_NUMBER)
+		List<Integer> beaconNumber = getDataRangeInt(
+			DataUtil.extractIntColumn("beaconNumber")
 		);
-		ArrayList<Integer> sectorNumber = getDataRangeInt(
-			FTLAdventureVisualiser.extractIntColumn(RecordingHeader.Location.SECTOR_NUMBER)
+		List<Integer> sectorNumber = getDataRangeInt(
+			DataUtil.extractIntColumn("sectorNumber")
 		);
-		ArrayList<String> sectorType = getDataRangeString(
-			FTLAdventureVisualiser.extractStringColumn(RecordingHeader.Location.SECTOR_TYPE)
+		List<String> sectorType = getDataRangeString(
+			DataUtil.extractStringColumn("sectorType")
 		);
-		ArrayList<String> sectorName = getDataRangeString(
-			FTLAdventureVisualiser.extractStringColumn(RecordingHeader.Location.SECTOR_TITLE)
+		List<String> sectorName = getDataRangeString(
+			DataUtil.extractStringColumn("sectorName")
 		);
 
 		int lastSectorNumber = sectorNumber.get(0);
@@ -406,12 +401,12 @@ public class GraphRenderer extends PApplet {
 
 	private PGraphics drawHeader() {
 
-		int lastRowIndex = recording.size() - 1;
-		String lastChangedTimestamp = recording.get(lastRowIndex).get(RecordingHeader.TIME);
-		String shipName = recording.get(lastRowIndex).get(RecordingHeader.SHIP_NAME);
-		String shipType = recording.get(lastRowIndex).get(RecordingHeader.SHIP_TYPE);
-		String difficulty = recording.get(lastRowIndex).get(RecordingHeader.DIFFICULTY);
-		String ae = "AE content " + recording.get(lastRowIndex).get(RecordingHeader.AE_CONTENT);
+		TableRow lastRow = DataUtil.getLastRecord();
+		String lastChangedTimestamp = lastRow.getTime();
+		String shipName = lastRow.getShipName();
+		String shipType = lastRow.getShipType();
+		String difficulty = lastRow.getDifficulty().toString();
+		String ae = "AE content " + (lastRow.isAEContentEnabled() ? "enabled" : "disabled");
 
 		PGraphics graphics = createGraphics(width, height);
 		graphics.beginDraw();
@@ -464,21 +459,19 @@ public class GraphRenderer extends PApplet {
 
 
 	// data util
-	private ArrayList<Integer> getDataRangeInt(ArrayList<Integer> dataPoints) {
+	private List<Integer> getDataRangeInt(ArrayList<Integer> dataPoints) {
 		int count = dataPoints.size();
 		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 		while (graphWidth / count + 1 < jumpSize) count--;
 		endIndex = dataPoints.size() - count;
-		dataPoints = (ArrayList<Integer>)dataPoints.subList(constrain(startIndex, 0, endIndex), count);
-		return dataPoints;
+		return dataPoints.subList(constrain(startIndex, 0, endIndex), count);
 	}
-	private ArrayList<String> getDataRangeString(ArrayList<String> dataPoints) {
+	private List<String> getDataRangeString(ArrayList<String> dataPoints) {
 		int count = dataPoints.size();
 		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
 		while (graphWidth / count + 1 < jumpSize) count--;
 		endIndex = dataPoints.size()- count;
-		dataPoints = (ArrayList<String>)dataPoints.subList(constrain(startIndex, 0, endIndex), count);
-		return dataPoints;
+		return dataPoints.subList(constrain(startIndex, 0, endIndex), count);
 	}
 
 

@@ -1,35 +1,40 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@XmlRootElement(name="nameList")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "nameList")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CrewNameList {
-	@XmlAttribute
-	private String race, sex;  // FTL ignores race.
 
-	@XmlElement(name="name")
-	private List<CrewName> names;
+    @XmlAttribute
+    private String race;  // FTL ignores race.
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class CrewName {
-		@XmlAttribute(required=false)
-		public String shortName;
-		@XmlValue
-		public String name;
-	}
+    @XmlAttribute
+    private String sex;
 
-	public String getRace() {
-		return race;
-	}
+    @XmlElement(name = "name")
+    private List<CrewName> names;
 
-	public String getSex() {
-		return sex;
-	}
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class CrewName {
 
-	public List<CrewName> getNames() {
-		return names;
-	}
+        @XmlAttribute()
+        public String shortName;
+
+        @XmlValue
+        public String name;
+    }
+
 }

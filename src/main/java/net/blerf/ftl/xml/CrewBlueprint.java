@@ -1,54 +1,60 @@
 package net.blerf.ftl.xml;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@XmlRootElement(name="crewBlueprint")
+@Getter
+@Setter
+@NoArgsConstructor
+@XmlRootElement(name = "crewBlueprint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CrewBlueprint {
-	@XmlAttribute(name="name")
-	private String id;
-	private String desc;
-	private int cost;
-	@XmlElement(name="bp")
-	private int bp;  // TODO: Rename this.
-	private String title;
-	@XmlElement(name="short")
-	private String shortTitle;
-	private int rarity;
-	private PowerList powerList;
 
-	@XmlElementWrapper(name = "colorList")
-	@XmlElement(name="layer")
-	private List<SpriteTintLayer> spriteTintLayerList;  // FTL 1.5.4 introduced sprite tinting.
+    @XmlAttribute(name = "name")
+    private String id;
 
-	@XmlRootElement(name="powerList")
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class PowerList {
-		private List<String> power;
-	}
+    private DefaultDeferredText desc;
+    private int cost;
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class SpriteTintLayer {
+    @XmlElement(name = "bp")
+    private int blueprint;
 
-		@XmlElement(name="color")
-		public List<SpriteTintColor> tintList;
+    private DefaultDeferredText title;
 
-		@XmlAccessorType(XmlAccessType.FIELD)
-		public static class SpriteTintColor {
-			@XmlAttribute
-			public int r, g, b;
-			@XmlAttribute
-			public float a;
-		}
-	}
+    @XmlElement(name = "short")
+    private DefaultDeferredText shortTitle;
 
-	public String getId() {
-		return id;
-	}
+    private int rarity;
 
-	public List<SpriteTintLayer> getSpriteTintLayerList() {
-		return spriteTintLayerList;
-	}
+    @XmlElementWrapper(name = "powerList")
+    @XmlElement(name = "power")
+    private List<DefaultDeferredText> powerList;
+
+    @XmlElementWrapper(name = "colorList")
+    @XmlElement(name = "layer")
+    private List<SpriteTintLayer> spriteTintLayerList;  // FTL 1.5.4 introduced sprite tinting.
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class SpriteTintLayer {
+
+        @XmlElement(name = "color")
+        public List<SpriteTintColor> tintList;
+
+        @XmlAccessorType(XmlAccessType.FIELD)
+        public static class SpriteTintColor {
+            @XmlAttribute
+            public int r, g, b;
+            @XmlAttribute
+            public float a;
+        }
+    }
+
 }
