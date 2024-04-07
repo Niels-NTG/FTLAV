@@ -18,6 +18,10 @@
 	non-existent class files.
 	-->
 	<dependencies>
+<!--		TODO consider including net.blerf.ftl / net.vhati.ftl as maven dependencies-->
+<!--		TODO first make sure everything is working -->
+<!--		TODO alternativly: include git submodule of -->
+<!--			https://maven.apache.org/pom.html#Dependencies-->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -58,6 +62,7 @@
 			<groupId>org.processing</groupId>
 			<artifactId>core</artifactId>
 			<version>2.2.1</version>
+<!--			TODO consider upgrading Processing -->
 		</dependency>
 		<dependency>
 			<groupId>net.sf.supercsv</groupId>
