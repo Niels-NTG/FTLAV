@@ -7,11 +7,12 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.FileAppender;
 import lombok.extern.slf4j.Slf4j;
 import net.blerf.ftl.model.sectortree.SectorDot;
+import net.blerf.ftl.model.sectortree.SectorTree;
 import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
-import net.blerf.ftl.parser.random.NativeRandom;
+import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 import net.ntg.ftl.parser.TableRow;
 import net.ntg.ftl.ui.FTLFrame;
@@ -34,7 +35,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.prefs.Preferences;
 
 
@@ -223,17 +223,14 @@ public class FTLAdventureVisualiser {
 			}
 			gameState = newGameState;
 
-			RandomSectorTreeGenerator sectorTreeGenerator = new RandomSectorTreeGenerator(new NativeRandom());
-			List<List<SectorDot>> sectorTree = sectorTreeGenerator.generateSectorTree(gameState.getSectorTreeSeed(), gameState.isDLCEnabled());
-			// TODO sector map does not work. subList is out of range sometimes. Probaply caused by NativeRandom.
-			int columnOffset = 0;
-			for (List<SectorDot> column : sectorTree) {
-				for (int d = 0; d < column.size(); d++) {
-					if (gameState.getSectorVisitation().subList(columnOffset, columnOffset + column.size()).get(d)) {
-						sectorList.add(column.get(d));
-					}
-				}
-				columnOffset += column.size();
+			RandomSectorTreeGenerator sectorTreeGenerator = new RandomSectorTreeGenerator(new FTL_1_6_Random());
+			SectorTree sectorTree = new SectorTree();
+			sectorTree.setSectorDots(sectorTreeGenerator.generateSectorTree(gameState.getSectorTreeSeed(), gameState.isDLCEnabled()));
+			sectorTree.setSectorVisitation(gameState.getSectorVisitation());
+			int lastVisitedColumn = sectorTree.getLastVisitedColumn();
+			sectorList.clear();
+			for (int c = 0; c <= lastVisitedColumn; c++) {
+				sectorList.add(sectorTree.getVisitedDot(c));
 			}
 
 			log.info("Ship name: {}", gameState.getPlayerShipName());
