@@ -48,6 +48,7 @@ public class TableRow {
 	private int oxygenLevel;
 	private JSONArray shipAugments;
 	private JSONArray cargo;
+	private JSONArray crew;
 
 	// Systems current
 	// Pilot
@@ -162,6 +163,7 @@ public class TableRow {
 		oxygenLevel = DataUtil.getShipOxygenLevel(playerShip);
 		shipAugments = DataUtil.getShipAugments(playerShip);
 		cargo = new JSONArray(new StringList(gameState.getCargoIdList()));
+		crew = DataUtil.getCrewList(playerShip);
 
 		// Systems current
 		// Pilot
@@ -246,7 +248,6 @@ public class TableRow {
 			teleporterSystemPowerCapacity = teleporterSystem.getCapacity();
 			teleporterSystemPowerConsumption = teleporterSystem.getPower();
 			teleporterSystemDamage = teleporterSystem.getDamagedBars();
-			// TODO can we add more teleporter things?
 		}
 		// Cloaking
 		SystemState cloakingSystem = playerShip.getSystem(SystemType.CLOAKING);
@@ -262,7 +263,6 @@ public class TableRow {
 			artillerySystemPowerCapacity = artillerySystem.getCapacity();
 			artillerySystemPowerConsumption = artillerySystem.getPower();
 			artillerySystemDamage = artillerySystem.getDamagedBars();
-			// TODO are more artillery?
 		}
 		// Battery
 		SystemState batterySystem = playerShip.getSystem(SystemType.BATTERY);
@@ -278,7 +278,6 @@ public class TableRow {
 			cloneBaySystemPowerCapacity = clonebaySystem.getCapacity();
 			cloneBaySystemPowerConsumption = clonebaySystem.getPower();
 			cloneBaySystemDamage = clonebaySystem.getDamagedBars();
-			// TODO clone stats?
 		}
 		// Mind Control
 		SystemState mindControlSystem = playerShip.getSystem(SystemType.MIND);

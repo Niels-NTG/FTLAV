@@ -4,6 +4,7 @@ import net.blerf.ftl.constants.FleetPresence;
 import net.blerf.ftl.constants.HazardVulnerability;
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.model.state.BeaconState;
+import net.blerf.ftl.model.state.CrewState;
 import net.blerf.ftl.model.state.DroneState;
 import net.blerf.ftl.model.state.EnvironmentState;
 import net.blerf.ftl.model.state.RoomState;
@@ -241,19 +242,38 @@ public class DataUtil {
 		return storeItems.replaceAll("_"," ").replaceAll("\\s{2,}", " ");
 	}
 
+	public static JSONArray getCrewList(ShipState shipState) {
+		JSONArray crewList = new JSONArray();
+		for (CrewState crewState : shipState.getCrewList()) {
+			JSONObject crewObject = new JSONObject();
 
-//	public static String getFullEnemyCrewType(SavedGameState gameState, int crewIndex) {
-//		return getFullCrewType(gameState, crewIndex, true);
-//	}
-//	public static String getFullCrewType(SavedGameState gameState, int crewIndex) {
-//		return getFullCrewType(gameState, crewIndex, false);
-//	}
-//	private static String getFullCrewType(SavedGameState gameState, int crewIndex, boolean isEnemyCrew) {
-//		String rawCrewType = isEnemyCrew ?
-//			gameState.enemyCrewState.get(crewIndex).getRace().toString() :
-//			gameState.playerCrewState.get(crewIndex).getRace().toString();
-//		return getFullCrewType(rawCrewType);
-//	}
+			crewObject.setString("name", crewState.getName());
+			crewObject.setString("race", getFullCrewType(crewState.getRace().toString()));
+			crewObject.setInt("health", crewState.getHealth());
+			crewObject.setInt("jumpsSurvived", crewState.getJumpsSurvived());
+			crewObject.setInt("pilotedEvasions", crewState.getPilotedEvasions());
+			crewObject.setInt("repairs", crewState.getRepairs());
+			crewObject.setInt("combatKills", crewState.getCombatKills());
+			crewObject.setInt("pilotSkill", crewState.getPilotSkill());
+			crewObject.setInt("engineSkill", crewState.getEngineSkill());
+			crewObject.setInt("shieldSkill", crewState.getShieldSkill());
+			crewObject.setInt("weaponsSkill", crewState.getWeaponSkill());
+			crewObject.setInt("repairSkill", crewState.getRepairSkill());
+			crewObject.setInt("combatSkill", crewState.getCombatSkill());
+			crewObject.setInt("skillMasteriesEarned", crewState.getSkillMasteriesEarned());
+			crewObject.setBoolean("isEnemyBoardingDrone", crewState.isEnemyBoardingDrone());
+			crewObject.setBoolean("isMindControlled", crewState.isMindControlled());
+			crewObject.setBoolean("isPlayerControlled", crewState.isPlayerControlled());
+			// TODO current room
+//			DataManager.get().getShipLayout().getRoom(crewState.getRoomId());
+			// TODO saved room
+//			crewState.getSavedRoomId();
+
+			crewList.append(crewObject);
+		}
+		return crewList;
+	}
+
 	private static String getFullCrewType(String rawCrewType) {
 
 		String fullCrewType = "";
