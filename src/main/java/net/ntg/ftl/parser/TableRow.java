@@ -63,7 +63,6 @@ public class TableRow {
 	private int doorsDamanged;
 	// Sensors
 	private int sensorSystemPowerCapacity;
-	private int sensorSystemPowerConsumption;
 	private int sensorSystemDamage;
 	// Medbay
 	private int medbaySystemPowerCapacity;
@@ -191,7 +190,6 @@ public class TableRow {
 		SystemState sensorSystem = playerShip.getSystem(SystemType.SENSORS);
 		if (sensorSystem.getCapacity() != 0) {
 			sensorSystemPowerCapacity = sensorSystem.getCapacity();
-			sensorSystemPowerConsumption = sensorSystem.getPower();
 			sensorSystemDamage = sensorSystem.getDamagedBars();
 		}
 		// Medbay
