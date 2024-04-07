@@ -4,6 +4,7 @@ import net.blerf.ftl.constants.FleetPresence;
 import net.blerf.ftl.constants.HazardVulnerability;
 import net.blerf.ftl.model.sectortree.SectorDot;
 import net.blerf.ftl.model.state.BeaconState;
+import net.blerf.ftl.model.state.DroneState;
 import net.blerf.ftl.model.state.EnvironmentState;
 import net.blerf.ftl.model.state.RoomState;
 import net.blerf.ftl.model.state.SavedGameState;
@@ -11,6 +12,7 @@ import net.blerf.ftl.model.state.ShipState;
 import net.blerf.ftl.model.state.StoreState;
 import net.blerf.ftl.model.state.WeaponState;
 import net.blerf.ftl.parser.DataManager;
+import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
 import net.ntg.ftl.FTLAdventureVisualiser;
 import processing.data.JSONArray;
@@ -149,6 +151,34 @@ public class DataUtil {
 		weaponObject.setInt("power", blueprint.getPower());
 		weaponObject.setInt("rarity", blueprint.getRarity());
 		return weaponObject;
+	}
+
+	public static JSONArray getDroneLayout(ShipState shipState) {
+		List<DroneState> droneStates = shipState.getDroneList();
+		JSONArray droneList = new JSONArray();
+		for (DroneState droneState : droneStates) {
+			JSONObject droneObject = new JSONObject();
+			droneObject.setString("droneId", droneState.getDroneId());
+			droneObject.setBoolean("isArmed", droneState.isArmed());
+			droneObject.setInt("health", droneState.getHealth());
+			droneObject.setBoolean("isDeployed", droneState.getExtendedDroneInfo().isDeployed());
+			droneObject.setJSONObject("blueprint", getDroneBluePrint(droneState));
+			droneList.append(droneObject);
+		}
+		return droneList;
+	}
+	private static JSONObject getDroneBluePrint(DroneState droneState) {
+		DroneBlueprint blueprint = DataManager.get().getDrone(droneState.getDroneId());
+		JSONObject droneObject = new JSONObject();
+		droneObject.setString("type", blueprint.getType());
+		droneObject.setString("fullName", blueprint.getTitle().toString());
+		droneObject.setInt("cooldown", blueprint.getCooldown());
+		droneObject.setInt("dodge", blueprint.getDodge());
+		droneObject.setInt("speed", blueprint.getSpeed());
+		droneObject.setInt("power", blueprint.getPower());
+		droneObject.setInt("cost", blueprint.getCost());
+		droneObject.setInt("rarity", blueprint.getRarity());
+		return droneObject;
 	}
 	public static int getWeaponSlotCount(SavedGameState gameState) {
 		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getWeaponSlots();

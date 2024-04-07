@@ -88,6 +88,7 @@ public class TableRow {
 	private int droneControlSystemPowerCapacity;
 	private int droneControlSystemPowerConsumption;
 	private int droneControlSystemDamage;
+	private JSONArray droneControlLayout;
 	// Teleporter
 	private int teleporterSystemPowerCapacity;
 	private int teleporterSystemPowerConsumption;
@@ -228,7 +229,7 @@ public class TableRow {
 			droneControlSystemPowerCapacity = droneControlSystem.getCapacity();
 			droneControlSystemPowerConsumption = droneControlSystem.getPower();
 			droneControlSystemDamage = droneControlSystem.getDamagedBars();
-			// TODO add more drone stuff
+			droneControlLayout = DataUtil.getDroneLayout(playerShip);
 		}
 		// Teleporter
 		SystemState teleporterSystem = playerShip.getSystem(SystemType.TELEPORTER);
