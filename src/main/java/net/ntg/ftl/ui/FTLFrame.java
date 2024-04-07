@@ -170,7 +170,7 @@ public class FTLFrame extends JFrame {
 				if (chosenExportFileFolder != null) {
 					String recordingFilePath = (
 						chosenExportFileFolder.getAbsolutePath() + " " +
-							FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV version" + appVersion +
+							FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
 							FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".tsv"
 					);
 					File recordingFile = new File(recordingFilePath);
