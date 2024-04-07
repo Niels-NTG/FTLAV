@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
+			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -86,19 +86,7 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-assembly-plugin</artifactId>
-			<version>2.4</version>  <!-- Plexus Archiver had bad tar support before. -->
-			<dependencies>
-				<dependency> <!-- Newer Archiver than required fixing tar bugs. -->
-					<groupId>org.codehaus.plexus</groupId>
-					<artifactId>plexus-archiver</artifactId>
-					<version>2.4.3</version>
-				</dependency>
-				<dependency> <!-- Newer IO than Archiver required fixing another bug. -->
-					<groupId>org.codehaus.plexus</groupId>
-					<artifactId>plexus-io</artifactId>
-					<version>2.0.8</version>
-				</dependency>
-			</dependencies>
+			<version>2.4.1</version>
 			<executions>
 				 <!-- Build jar. -->
 				<execution>
@@ -126,7 +114,7 @@
 				</execution>
 				<!-- uncomment this section if you wish to also build zip and/or tar.gz archives -->
 				<!-- Build zip archive. -->
-				<!-- <execution>
+				<execution>
 					<id>dist-win</id>
 					<phase>package</phase>
 					<goals>
@@ -140,9 +128,9 @@
 						<appendAssemblyId>false</appendAssemblyId>
 						<attach>false</attach>
 					</configuration>
-				</execution> -->
+				</execution>
 				<!-- Build tar.gz archive. -->
-				<!-- <execution>
+				<execution>
 					<id>dist-unix</id>
 					<phase>package</phase>
 					<goals>
@@ -156,7 +144,7 @@
 						<appendAssemblyId>false</appendAssemblyId>
 						<attach>false</attach>
 					</configuration>
-				</execution> -->
+				</execution>
 			</executions>
 		</plugin>
 	</plugins>
