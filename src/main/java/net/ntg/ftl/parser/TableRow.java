@@ -57,7 +57,6 @@ public class TableRow {
 	private int pilotSystemDamage;
 	// Doors
 	private int doorSystemPowerCapacity;
-	private int doorSystemPowerConsumption;
 	private int doorSystemDamage;
 	private int doorCount;
 	private int doorsOpen;
@@ -177,7 +176,6 @@ public class TableRow {
 		SystemState doorSystem = playerShip.getSystem(SystemType.DOORS);
 		if (doorSystem.getCapacity() != 0) {
 			doorSystemPowerCapacity = doorSystem.getCapacity();
-			doorSystemPowerConsumption = doorSystem.getPower();
 			doorSystemDamage = doorSystem.getDamagedBars();
 			for (DoorState doorState : playerShip.getDoorMap().values()) {
 				doorCount++;
