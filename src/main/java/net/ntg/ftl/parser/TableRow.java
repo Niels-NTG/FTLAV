@@ -59,7 +59,7 @@ public class TableRow {
 	private int doorSystemDamage;
 	private int doorCount;
 	private int doorsOpen;
-	private int doorsDamanged;
+	private int doorsDamaged;
 	// Sensors
 	private int sensorSystemPowerCapacity;
 	private int sensorSystemDamage;
@@ -180,7 +180,7 @@ public class TableRow {
 					doorsOpen++;
 				}
 				if (doorState.getHealth() < doorState.getNominalHealth()) {
-					doorsDamanged++;
+					doorsDamaged++;
 				}
 			}
 		}
