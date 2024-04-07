@@ -53,7 +53,6 @@ public class TableRow {
 	// Systems current
 	// Pilot
 	private int pilotSystemPowerCapacity;
-	private int pilotSystemPowerConsumption;
 	private int pilotSystemDamage;
 	// Doors
 	private int doorSystemPowerCapacity;
@@ -168,7 +167,6 @@ public class TableRow {
 		SystemState pilotSystem = playerShip.getSystem(SystemType.PILOT);
 		if (pilotSystem.getCapacity() != 0) {
 			pilotSystemPowerCapacity = pilotSystem.getCapacity();
-			pilotSystemPowerConsumption = pilotSystem.getPower();
 			pilotSystemDamage = pilotSystem.getDamagedBars();
 		}
 		// Doors
