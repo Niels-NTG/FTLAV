@@ -302,38 +302,38 @@ public class DataUtil {
 		return Math.max(0, result);
 	}
 
-	public static ArrayList<String> getBeaconHazards(SavedGameState gameState) {
-		ArrayList<String> hazards = new ArrayList<>();
+	public static JSONArray getBeaconHazards(SavedGameState gameState) {
+		JSONArray hazards = new JSONArray();
 
 		EnvironmentState environment = gameState.getEnvironment();
 		if (environment.isRedGiantPresent()) {
-			hazards.add("Red Giant");
+			hazards.append("Red Giant");
 		}
 		if (environment.isPulsarPresent()) {
-			hazards.add("Pulsar");
+			hazards.append("Pulsar");
 		}
 		if (environment.isPDSPresent()) {
 			if (environment.getVulnerableShips() == HazardVulnerability.BOTH_SHIPS) {
-				hazards.add("Neutral Planetary Defense System");
+				hazards.append("Neutral Planetary Defense System");
 			} else if (environment.getVulnerableShips() == HazardVulnerability.PLAYER_SHIP) {
-				hazards.add("Hostile Planetary Defense System");
+				hazards.append("Hostile Planetary Defense System");
 			} else if (environment.getVulnerableShips() == HazardVulnerability.NEARBY_SHIP) {
-				hazards.add("Allied Planetary Defense System");
+				hazards.append("Allied Planetary Defense System");
 			}
 		}
 		if (environment.getAsteroidField() != null) {
-			hazards.add("Asteroid Field");
+			hazards.append("Asteroid Field");
 		}
 
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
 		if (beacon.isEnemyPresent()) {
-			hazards.add("Enemy Ship");
+			hazards.append("Enemy Ship");
 		}
 		if (beacon.getFleetPresence() == FleetPresence.REBEL) {
-			hazards.add("Rebel Fleet");
+			hazards.append("Rebel Fleet");
 		}
 		if (beacon.getFleetPresence() == FleetPresence.FEDERATION) {
-			hazards.add("Federation Fleet");
+			hazards.append("Federation Fleet");
 		}
 
 		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event

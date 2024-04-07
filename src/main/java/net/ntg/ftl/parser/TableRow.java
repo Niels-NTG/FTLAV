@@ -29,7 +29,7 @@ public class TableRow {
 	private int fleetAdvancement;
 
 	// Encounter
-	private ArrayList<String> beaconHazards;
+	private JSONArray beaconHazards;
 	private String encounterText;
 
 	// Resources totals
