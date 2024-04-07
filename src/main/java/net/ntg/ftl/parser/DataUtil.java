@@ -14,6 +14,7 @@ import net.blerf.ftl.model.state.WeaponState;
 import net.blerf.ftl.model.systeminfo.BatteryInfo;
 import net.blerf.ftl.model.systeminfo.ShieldsInfo;
 import net.blerf.ftl.parser.DataManager;
+import net.blerf.ftl.xml.AugBlueprint;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
 import net.ntg.ftl.FTLAdventureVisualiser;
@@ -123,7 +124,22 @@ public class DataUtil {
 			default :
 				return gameState.getPlayerShipBlueprintId().replaceAll("_"," ");
 		}
+	}
 
+	public static JSONArray getShipAugments(ShipState shipState) {
+		JSONArray augments = new JSONArray();
+		for (String id : shipState.getAugmentIdList()) {
+			AugBlueprint blueprint = DataManager.get().getAugment(id);
+			JSONObject augmentObject = new JSONObject();
+			augmentObject.setString("augmentId", blueprint.getId());
+			augmentObject.setString("name", blueprint.getTitle().toString());
+			augmentObject.setInt("cost", blueprint.getCost());
+			augmentObject.setInt("rarity", blueprint.getRarity());
+			augmentObject.setFloat("value", blueprint.getValue());
+			augmentObject.setBoolean("isStackable", blueprint.isStackable());
+			augments.append(augmentObject);
+		}
+		return augments;
 	}
 
 	public static int getShieldLayers(ShipState shipState) {
