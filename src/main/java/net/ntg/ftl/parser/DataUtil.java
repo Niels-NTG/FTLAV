@@ -164,18 +164,6 @@ public class DataUtil {
 		return cargo.replaceAll("_"," ");
 	}
 
-	public static String getAugmentListing(SavedGameState gameState) {
-		List<String> augmentIdList = gameState.getPlayerShip().getAugmentIdList();
-		String aug = String.join(", ", augmentIdList);
-		return aug.replaceAll("_"," ");
-	}
-
-	 public static String getNearbyShipAugmentListing(SavedGameState gameState) {
-	 	List<String> augmentIdList = gameState.getNearbyShip().getAugmentIdList();
-	 	String aug = String.join(", ", augmentIdList);
-	 	return aug.replaceAll("_"," ");
-	 }
-
 	public static String getStoreListing(SavedGameState gameState) {
 		String storeItems = "";
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());

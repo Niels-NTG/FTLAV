@@ -45,6 +45,7 @@ public class TableRow {
 	private int crewSize;
 	private int hull;
 	private int oxygenLevel;
+	private ArrayList<String> shipAugments;
 
 	// Systems current
 	// Pilot
@@ -152,6 +153,7 @@ public class TableRow {
 		crewSize = playerShip.getCrewList().size();
 		hull = playerShip.getHullAmt();
 		oxygenLevel = DataUtil.getShipOxygenLevel(playerShip);
+		shipAugments = (ArrayList<String>) playerShip.getAugmentIdList();
 
 		// Systems current
 		// Pilot
