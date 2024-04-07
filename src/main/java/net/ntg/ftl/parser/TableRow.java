@@ -54,15 +54,19 @@ public class TableRow {
 	// Pilot
 	private int pilotSystemPowerCapacity;
 	private int pilotSystemDamage;
+	// Sensors
+	private int sensorSystemPowerCapacity;
+	private int sensorSystemDamage;
 	// Doors
 	private int doorSystemPowerCapacity;
 	private int doorSystemDamage;
 	private int doorCount;
 	private int doorsOpen;
 	private int doorsDamaged;
-	// Sensors
-	private int sensorSystemPowerCapacity;
-	private int sensorSystemDamage;
+	// Battery
+	private int batterySystemPowerCapacity;
+	private int batterySystemDamage;
+	private int batterySystemUse;
 	// Medbay
 	private int medbaySystemPowerCapacity;
 	private int medbaySystemPowerConsumption;
@@ -104,11 +108,6 @@ public class TableRow {
 	private int artillerySystemPowerCapacity;
 	private int artillerySystemPowerConsumption;
 	private int artillerySystemDamage;
-	// Battery
-	private int batterySystemPowerCapacity;
-	private int batterySystemPowerConsumption;
-	private int batterySystemDamage;
-	private int batterySystemUse;
 	// Clonebay
 	private int cloneBaySystemPowerCapacity;
 	private int cloneBaySystemPowerConsumption;
@@ -169,6 +168,12 @@ public class TableRow {
 			pilotSystemPowerCapacity = pilotSystem.getCapacity();
 			pilotSystemDamage = pilotSystem.getDamagedBars();
 		}
+		// Sensors
+		SystemState sensorSystem = playerShip.getSystem(SystemType.SENSORS);
+		if (sensorSystem.getCapacity() != 0) {
+			sensorSystemPowerCapacity = sensorSystem.getCapacity();
+			sensorSystemDamage = sensorSystem.getDamagedBars();
+		}
 		// Doors
 		SystemState doorSystem = playerShip.getSystem(SystemType.DOORS);
 		if (doorSystem.getCapacity() != 0) {
@@ -184,11 +189,12 @@ public class TableRow {
 				}
 			}
 		}
-		// Sensors
-		SystemState sensorSystem = playerShip.getSystem(SystemType.SENSORS);
-		if (sensorSystem.getCapacity() != 0) {
-			sensorSystemPowerCapacity = sensorSystem.getCapacity();
-			sensorSystemDamage = sensorSystem.getDamagedBars();
+		// Battery
+		SystemState batterySystem = playerShip.getSystem(SystemType.BATTERY);
+		if (batterySystem.getCapacity() != 0) {
+			batterySystemPowerCapacity = batterySystem.getCapacity();
+			batterySystemDamage = batterySystem.getDamagedBars();
+			batterySystemUse = DataUtil.getBatterySystemUse(playerShip);
 		}
 		// Medbay
 		SystemState medbaySystem = playerShip.getSystem(SystemType.MEDBAY);
@@ -257,14 +263,6 @@ public class TableRow {
 			artillerySystemPowerCapacity = artillerySystem.getCapacity();
 			artillerySystemPowerConsumption = artillerySystem.getPower();
 			artillerySystemDamage = artillerySystem.getDamagedBars();
-		}
-		// Battery
-		SystemState batterySystem = playerShip.getSystem(SystemType.BATTERY);
-		if (batterySystem.getCapacity() != 0) {
-			batterySystemPowerCapacity = batterySystem.getCapacity();
-			batterySystemPowerConsumption = batterySystem.getPower();
-			batterySystemDamage = batterySystem.getDamagedBars();
-			batterySystemUse = DataUtil.getBatterySystemUse(playerShip);
 		}
 		// Clonebay
 		SystemState clonebaySystem = playerShip.getSystem(SystemType.CLONEBAY);
