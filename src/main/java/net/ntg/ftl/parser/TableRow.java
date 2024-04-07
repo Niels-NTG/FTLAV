@@ -2,11 +2,9 @@ package net.ntg.ftl.parser;
 
 import lombok.Data;
 import net.blerf.ftl.constants.Difficulty;
-import net.blerf.ftl.model.state.DoorState;
-import net.blerf.ftl.model.state.SavedGameState;
-import net.blerf.ftl.model.state.ShipState;
-import net.blerf.ftl.model.state.SystemState;
+import net.blerf.ftl.model.state.*;
 import net.blerf.ftl.model.type.SystemType;
+import processing.data.JSONArray;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -84,6 +82,7 @@ public class TableRow {
 	private int weaponsSystemPowerCapacity;
 	private int weaponsSystemPowerConsumption;
 	private int weaponsSystemDamage;
+	private JSONArray weaponsLayout;
 	// Drone Control
 	private int droneControlSystemPowerCapacity;
 	private int droneControlSystemPowerConsumption;
@@ -219,7 +218,7 @@ public class TableRow {
 			weaponsSystemPowerCapacity = weaponsSystem.getCapacity();
 			weaponsSystemPowerConsumption = weaponsSystem.getPower();
 			weaponsSystemDamage = weaponsSystem.getDamagedBars();
-			// TODO add more weapon stuff
+			weaponsLayout = DataUtil.getWeaponLayout(playerShip);
 		}
 		// Drone Control
 		SystemState droneControlSystem = playerShip.getSystem(SystemType.DRONE_CTRL);

@@ -9,8 +9,12 @@ import net.blerf.ftl.model.state.RoomState;
 import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
 import net.blerf.ftl.model.state.StoreState;
+import net.blerf.ftl.model.state.WeaponState;
 import net.blerf.ftl.parser.DataManager;
+import net.blerf.ftl.xml.WeaponBlueprint;
 import net.ntg.ftl.FTLAdventureVisualiser;
+import processing.data.JSONArray;
+import processing.data.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -118,6 +122,34 @@ public class DataUtil {
 
 	}
 
+	public static JSONArray getWeaponLayout(ShipState shipState) {
+		List<WeaponState> weaponStates = shipState.getWeaponList();
+		JSONArray weaponList = new JSONArray();
+		for (WeaponState weaponState : weaponStates) {
+			JSONObject weaponObject = new JSONObject();
+			weaponObject.setString("weaponId", weaponState.getWeaponId());
+			weaponObject.setBoolean("isArmed", weaponState.isArmed());
+			weaponObject.setJSONObject("blueprint", getWeaponBluePrint(weaponState));
+			weaponList.append(weaponObject);
+		}
+		return weaponList;
+	}
+	private static JSONObject getWeaponBluePrint(WeaponState weaponState) {
+		WeaponBlueprint blueprint = DataManager.get().getWeapon(weaponState.getWeaponId());
+		JSONObject weaponObject = new JSONObject();
+		weaponObject.setString("type", blueprint.getType());
+		weaponObject.setString("fullName", blueprint.getTitle().toString());
+		weaponObject.setInt("shieldPiercing", blueprint.getShieldPiercing());
+		weaponObject.setInt("damage", blueprint.getDamage());
+		weaponObject.setInt("shots", blueprint.getShots());
+		weaponObject.setInt("fireChance", blueprint.getFireChance());
+		weaponObject.setInt("breachChance", blueprint.getBreachChance());
+		weaponObject.setInt("cooldown", blueprint.getCooldown());
+		weaponObject.setInt("cost", blueprint.getCost());
+		weaponObject.setInt("power", blueprint.getPower());
+		weaponObject.setInt("rarity", blueprint.getRarity());
+		return weaponObject;
+	}
 	public static int getWeaponSlotCount(SavedGameState gameState) {
 		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getWeaponSlots();
 	}
