@@ -11,6 +11,7 @@ import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
 import net.blerf.ftl.model.state.StoreState;
 import net.blerf.ftl.model.state.WeaponState;
+import net.blerf.ftl.model.systeminfo.ShieldsInfo;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
@@ -122,6 +123,22 @@ public class DataUtil {
 				return gameState.getPlayerShipBlueprintId().replaceAll("_"," ");
 		}
 
+	}
+
+	public static int getShieldLayers(ShipState shipState) {
+		ShieldsInfo info = shipState.getExtendedSystemInfo(ShieldsInfo.class);
+		if (info != null) {
+			return info.getShieldLayers();
+		}
+		return 0;
+	}
+
+	public static int getZoltanShieldLayers(ShipState shipState) {
+		ShieldsInfo info = shipState.getExtendedSystemInfo(ShieldsInfo.class);
+		if (info != null) {
+			return info.getEnergyShieldLayers();
+		}
+		return 0;
 	}
 
 	public static JSONArray getWeaponLayout(ShipState shipState) {

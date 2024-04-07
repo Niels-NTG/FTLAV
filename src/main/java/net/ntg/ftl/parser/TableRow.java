@@ -75,6 +75,8 @@ public class TableRow {
 	private int shieldSystemPowerCapacity;
 	private int shieldSystemPowerConsumption;
 	private int shieldSystemDamage;
+	private int shieldLayers;
+	private int zoltanShieldLayers;
 	// Engines
 	private int engineSystemPowerCapacity;
 	private int engineSystemPowerConsumption;
@@ -207,6 +209,8 @@ public class TableRow {
 			shieldSystemPowerCapacity = shieldSystem.getCapacity();
 			shieldSystemPowerConsumption = shieldSystem.getPower();
 			shieldSystemDamage = shieldSystem.getDamagedBars();
+			shieldLayers = DataUtil.getShieldLayers(playerShip);
+			zoltanShieldLayers = DataUtil.getZoltanShieldLayers(playerShip);
 		}
 		// Engines
 		SystemState engineSystem = playerShip.getSystem(SystemType.ENGINES);
