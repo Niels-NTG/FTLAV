@@ -11,6 +11,7 @@ import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
 import net.blerf.ftl.model.state.StoreState;
 import net.blerf.ftl.model.state.WeaponState;
+import net.blerf.ftl.model.systeminfo.BatteryInfo;
 import net.blerf.ftl.model.systeminfo.ShieldsInfo;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.xml.DroneBlueprint;
@@ -197,6 +198,15 @@ public class DataUtil {
 		droneObject.setInt("rarity", blueprint.getRarity());
 		return droneObject;
 	}
+
+	public static int getBatterySystemUse(ShipState shipState) {
+		BatteryInfo info = shipState.getExtendedSystemInfo(BatteryInfo.class);
+		if (info != null) {
+			return info.getUsedBattery();
+		}
+		return 0;
+	}
+
 	public static int getWeaponSlotCount(SavedGameState gameState) {
 		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getWeaponSlots();
 	}

@@ -107,6 +107,7 @@ public class TableRow {
 	private int batterySystemPowerCapacity;
 	private int batterySystemPowerConsumption;
 	private int batterySystemDamage;
+	private int batterySystemUse;
 	// Clonebay
 	private int cloneBaySystemPowerCapacity;
 	private int cloneBaySystemPowerConsumption;
@@ -265,6 +266,7 @@ public class TableRow {
 			batterySystemPowerCapacity = batterySystem.getCapacity();
 			batterySystemPowerConsumption = batterySystem.getPower();
 			batterySystemDamage = batterySystem.getDamagedBars();
+			batterySystemUse = DataUtil.getBatterySystemUse(playerShip);
 		}
 		// Clonebay
 		SystemState clonebaySystem = playerShip.getSystem(SystemType.CLONEBAY);
