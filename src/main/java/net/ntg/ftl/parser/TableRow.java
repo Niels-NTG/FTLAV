@@ -99,6 +99,7 @@ public class TableRow {
 	private int cloakingSystemPowerCapacity;
 	private int cloakingSystemPowerConsumption;
 	private int cloakingSystemDamage;
+	private boolean isCloaked;
 	// Artillery
 	private int artillerySystemPowerCapacity;
 	private int artillerySystemPowerConsumption;
@@ -250,7 +251,7 @@ public class TableRow {
 			cloakingSystemPowerCapacity = cloakingSystem.getCapacity();
 			cloakingSystemPowerConsumption = cloakingSystem.getPower();
 			cloakingSystemDamage = cloakingSystem.getDamagedBars();
-			// TODO more cloaking?
+			isCloaked = playerShip.getCloakAnimTicks() > 0;
 		}
 		// Artillery
 		SystemState artillerySystem = playerShip.getSystem(SystemType.ARTILLERY);
