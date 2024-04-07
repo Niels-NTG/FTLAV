@@ -231,12 +231,6 @@ public class DataUtil {
 		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getDroneSlots();
 	}
 
-	public static String getCargoListing(SavedGameState gameState) {
-		List<String> cargoIdList = gameState.getCargoIdList();
-		String cargo = String.join(", ", cargoIdList);
-		return cargo.replaceAll("_"," ");
-	}
-
 	public static String getStoreListing(SavedGameState gameState) {
 		String storeItems = "";
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());

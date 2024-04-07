@@ -5,6 +5,7 @@ import net.blerf.ftl.constants.Difficulty;
 import net.blerf.ftl.model.state.*;
 import net.blerf.ftl.model.type.SystemType;
 import processing.data.JSONArray;
+import processing.data.StringList;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -46,6 +47,7 @@ public class TableRow {
 	private int hull;
 	private int oxygenLevel;
 	private JSONArray shipAugments;
+	private JSONArray cargo;
 
 	// Systems current
 	// Pilot
@@ -159,6 +161,7 @@ public class TableRow {
 		hull = playerShip.getHullAmt();
 		oxygenLevel = DataUtil.getShipOxygenLevel(playerShip);
 		shipAugments = DataUtil.getShipAugments(playerShip);
+		cargo = new JSONArray(new StringList(gameState.getCargoIdList()));
 
 		// Systems current
 		// Pilot
