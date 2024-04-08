@@ -505,6 +505,9 @@ public class TableRow {
 		}
 	}
 
+	public void setDifficulty(String difficulty) {
+		this.difficulty = Difficulty.valueOf(difficulty);
+	}
 	public String[] getFieldNames() {
 		return getFieldNames(null);
 	}
