@@ -121,6 +121,85 @@ public class TableRow {
 	private int hackingSystemPowerConsumption;
 	private int hackingSystemDamage;
 
+	// Nearby Ship
+	private boolean nearbyShipExists;
+	private boolean nearbyShipHostile;
+	// Nearby Ship Resources current
+	private int nearbyShipCrewSize;
+	private int nearbyShipHull;
+	private int nearbyShipOxygenLevel;
+	private JSONArray nearbyShipAugments;
+	private JSONArray nearbyShipCrew;
+	// Nearby Ship Systems Current
+	private int nearbyShipPilotSystemPowerCapacity;
+	private int nearbyShipPilotSystemDamage;
+	// Sensors
+	private int nearbyShipSensorSystemPowerCapacity;
+	private int nearbyShipSensorSystemDamage;
+	// Doors
+	private int nearbyShipDoorSystemPowerCapacity;
+	private int nearbyShipDoorSystemDamage;
+	private int nearbyShipDoorCount;
+	private int nearbyShipDoorsOpen;
+	private int nearbyShipDoorsDamaged;
+	// Battery
+	private int nearbyShipBatterySystemPowerCapacity;
+	private int nearbyShipBatterySystemDamage;
+	private int nearbyShipBatterySystemUse;
+	// Medbay
+	private int nearbyShipMedbaySystemPowerCapacity;
+	private int nearbyShipMedbaySystemPowerConsumption;
+	private int nearbyShipMedbaySystemDamage;
+	// Oxygen
+	private int nearbyShipOxygenSystemPowerCapacity;
+	private int nearbyShipOxygenSystemPowerConsumption;
+	private int nearbyShipOxygenSystemDamage;
+	// Shields
+	private int nearbyShipShieldSystemPowerCapacity;
+	private int nearbyShipShieldSystemPowerConsumption;
+	private int nearbyShipShieldSystemDamage;
+	private int nearbyShipShieldLayers;
+	private int nearbyShipZoltanShieldLayers;
+	// Engines
+	private int nearbyShipEngineSystemPowerCapacity;
+	private int nearbyShipEngineSystemPowerConsumption;
+	private int nearbyShipEngineSystemDamage;
+	// Weapons
+	private int nearbyShipWeaponsSystemPowerCapacity;
+	private int nearbyShipWeaponsSystemPowerConsumption;
+	private int nearbyShipWeaponsSystemDamage;
+	private JSONArray nearbyShipWeaponsLayout;
+	// Drone Control
+	private int nearbyShipDroneControlSystemPowerCapacity;
+	private int nearbyShipDroneControlSystemPowerConsumption;
+	private int nearbyShipDroneControlSystemDamage;
+	private JSONArray nearbyShipDroneControlLayout;
+	// Teleporter
+	private int nearbyShipTeleporterSystemPowerCapacity;
+	private int nearbyShipTeleporterSystemPowerConsumption;
+	private int nearbyShipTeleporterSystemDamage;
+	// Cloaking
+	private int nearbyShipCloakingSystemPowerCapacity;
+	private int nearbyShipCloakingSystemPowerConsumption;
+	private int nearbyShipCloakingSystemDamage;
+	private boolean nearbyShipCloaked;
+	// Artillery
+	private int nearbyShipArtillerySystemPowerCapacity;
+	private int nearbyShipArtillerySystemPowerConsumption;
+	private int nearbyShipArtillerySystemDamage;
+	// Clonebay
+	private int nearbyShipCloneBaySystemPowerCapacity;
+	private int nearbyShipCloneBaySystemPowerConsumption;
+	private int nearbyShipCloneBaySystemDamage;
+	// Mind Control
+	private int nearbyShipmindControlSystemPowerCapacity;
+	private int nearbyShipMindControlSystemPowerConsumption;
+	private int nearbyShipMindControlSystemDamage;
+	// Hacking System
+	private int nearbyShipHackingSystemPowerCapacity;
+	private int nearbyShipHackingSystemPowerConsumption;
+	private int nearbyShipHackingSystemDamage;
+
 	public TableRow(SavedGameState gameState, String timeStamp) {
 
 		ShipState playerShip = gameState.getPlayerShip();
@@ -154,6 +233,7 @@ public class TableRow {
 		fuel = playerShip.getFuelAmt();
 		missles = playerShip.getMissilesAmt();
 		droneParts = playerShip.getDronePartsAmt();
+		// TODO check if this also includes enemy boarders
 		crewSize = playerShip.getCrewList().size();
 		hull = playerShip.getHullAmt();
 		oxygenLevel = DataUtil.getShipOxygenLevel(playerShip);
@@ -284,6 +364,142 @@ public class TableRow {
 			hackingSystemPowerCapacity = hackingSystem.getCapacity();
 			hackingSystemPowerConsumption = hackingSystem.getPower();
 			hackingSystemDamage = hackingSystem.getDamagedBars();
+		}
+
+		// Nearby Ship
+		ShipState nearbyShip = gameState.getNearbyShip();
+		nearbyShipExists = nearbyShip != null;
+		if (nearbyShipExists) {
+			nearbyShipHostile = nearbyShip.isHostile();
+
+			nearbyShipCrewSize = nearbyShip.getCrewList().size();
+			nearbyShipHull = nearbyShip.getHullAmt();
+			nearbyShipOxygenLevel = DataUtil.getShipOxygenLevel(nearbyShip);
+			nearbyShipAugments = DataUtil.getShipAugments(nearbyShip);
+			nearbyShipCrew = DataUtil.getCrewList(nearbyShip);
+
+			SystemState nearbyShipPilotSystem = nearbyShip.getSystem(SystemType.PILOT);
+			if (nearbyShipPilotSystem.getCapacity() != 0) {
+				nearbyShipPilotSystemPowerCapacity = nearbyShipPilotSystem.getCapacity();
+				nearbyShipPilotSystemDamage = nearbyShipPilotSystem.getDamagedBars();
+			}
+			// Sensors
+			SystemState nearbyShipSensorSystem = nearbyShip.getSystem(SystemType.SENSORS);
+			if (nearbyShipSensorSystem.getCapacity() != 0) {
+				nearbyShipSensorSystemPowerCapacity = nearbyShipSensorSystem.getCapacity();
+				nearbyShipSensorSystemDamage = nearbyShipSensorSystem.getDamagedBars();
+			}
+			// Doors
+			SystemState nearbyShipDoorSystem = nearbyShip.getSystem(SystemType.DOORS);
+			if (nearbyShipDoorSystem.getCapacity() != 0) {
+				nearbyShipDoorSystemPowerCapacity = nearbyShipDoorSystem.getCapacity();
+				nearbyShipDoorSystemDamage = nearbyShipDoorSystem.getDamagedBars();
+				for (DoorState doorState : nearbyShip.getDoorMap().values()) {
+					nearbyShipDoorCount++;
+					if (doorState.isOpen()) {
+						nearbyShipDoorsOpen++;
+					}
+					if (doorState.getHealth() < doorState.getNominalHealth()) {
+						nearbyShipDoorsDamaged++;
+					}
+				}
+			}
+			// Battery
+			SystemState nearbyShipBatterySystem = nearbyShip.getSystem(SystemType.BATTERY);
+			if (nearbyShipBatterySystem.getCapacity() != 0) {
+				nearbyShipBatterySystemPowerCapacity = nearbyShipBatterySystem.getCapacity();
+				nearbyShipBatterySystemDamage = nearbyShipBatterySystem.getDamagedBars();
+				nearbyShipBatterySystemUse = DataUtil.getBatterySystemUse(nearbyShip);
+			}
+			// Medbay
+			SystemState nearbyShipMedbaySystem = nearbyShip.getSystem(SystemType.MEDBAY);
+			if (nearbyShipMedbaySystem.getCapacity() != 0) {
+				nearbyShipMedbaySystemPowerCapacity = nearbyShipMedbaySystem.getCapacity();
+				nearbyShipMedbaySystemPowerConsumption = nearbyShipMedbaySystem.getPower();
+				nearbyShipMedbaySystemDamage = nearbyShipMedbaySystem.getDamagedBars();
+			}
+			// Oxygen
+			SystemState nearbyShipOxygenSystem = nearbyShip.getSystem(SystemType.OXYGEN);
+			if (nearbyShipOxygenSystem.getCapacity() != 0) {
+				nearbyShipOxygenSystemPowerCapacity = nearbyShipOxygenSystem.getCapacity();
+				nearbyShipOxygenSystemPowerConsumption = nearbyShipOxygenSystem.getPower();
+				nearbyShipOxygenSystemDamage = nearbyShipOxygenSystem.getDamagedBars();
+			}
+			// Shields
+			SystemState nearbyShipShieldSystem = nearbyShip.getSystem(SystemType.SHIELDS);
+			if (nearbyShipShieldSystem.getCapacity() != 0) {
+				nearbyShipShieldSystemPowerCapacity = nearbyShipShieldSystem.getCapacity();
+				nearbyShipShieldSystemPowerConsumption = shieldSystem.getPower();
+				nearbyShipShieldSystemDamage = shieldSystem.getDamagedBars();
+				nearbyShipShieldLayers = DataUtil.getShieldLayers(nearbyShip);
+				nearbyShipZoltanShieldLayers = DataUtil.getZoltanShieldLayers(nearbyShip);
+			}
+			// Engines
+			SystemState nearbyShipEngineSystem = nearbyShip.getSystem(SystemType.ENGINES);
+			if (nearbyShipEngineSystem.getCapacity() != 0) {
+				nearbyShipEngineSystemPowerCapacity = nearbyShipEngineSystem.getCapacity();
+				nearbyShipEngineSystemPowerConsumption = nearbyShipEngineSystem.getPower();
+				nearbyShipEngineSystemDamage = nearbyShipEngineSystem.getDamagedBars();
+			}
+			// Weapons
+			SystemState nearbyShipWeaponsSystem = nearbyShip.getSystem(SystemType.WEAPONS);
+			if (nearbyShipWeaponsSystem.getCapacity() != 0) {
+				nearbyShipWeaponsSystemPowerCapacity = nearbyShipWeaponsSystem.getCapacity();
+				nearbyShipWeaponsSystemPowerConsumption = nearbyShipWeaponsSystem.getPower();
+				nearbyShipWeaponsSystemDamage = nearbyShipWeaponsSystem.getDamagedBars();
+				nearbyShipWeaponsLayout = DataUtil.getWeaponLayout(nearbyShip);
+			}
+			// Drone Control
+			SystemState nearbyShipDroneControlSystem = nearbyShip.getSystem(SystemType.DRONE_CTRL);
+			if (nearbyShipDroneControlSystem.getCapacity() != 0) {
+				nearbyShipDroneControlSystemPowerCapacity = nearbyShipDroneControlSystem.getCapacity();
+				nearbyShipDroneControlSystemPowerConsumption = nearbyShipDroneControlSystem.getPower();
+				nearbyShipDroneControlSystemDamage = nearbyShipDroneControlSystem.getDamagedBars();
+				nearbyShipDroneControlLayout = DataUtil.getDroneLayout(nearbyShip);
+			}
+			// Teleporter
+			SystemState nearbyShipTeleporterSystem = nearbyShip.getSystem(SystemType.TELEPORTER);
+			if (nearbyShipTeleporterSystem.getCapacity() != 0) {
+				nearbyShipTeleporterSystemPowerCapacity = nearbyShipTeleporterSystem.getCapacity();
+				nearbyShipTeleporterSystemPowerConsumption = nearbyShipTeleporterSystem.getPower();
+				nearbyShipTeleporterSystemDamage = nearbyShipTeleporterSystem.getDamagedBars();
+			}
+			// Cloaking
+			SystemState nearbyShipCloakingSystem = nearbyShip.getSystem(SystemType.CLOAKING);
+			if (nearbyShipCloakingSystem.getCapacity() != 0) {
+				nearbyShipCloakingSystemPowerCapacity = nearbyShipCloakingSystem.getCapacity();
+				nearbyShipCloakingSystemPowerConsumption = nearbyShipCloakingSystem.getPower();
+				nearbyShipCloakingSystemDamage = nearbyShipCloakingSystem.getDamagedBars();
+				nearbyShipCloaked = nearbyShip.getCloakAnimTicks() > 0;
+			}
+			// Artillery
+			SystemState nearbyShipArtillerySystem = nearbyShip.getSystem(SystemType.ARTILLERY);
+			if (nearbyShipArtillerySystem.getCapacity() != 0) {
+				nearbyShipArtillerySystemPowerCapacity = nearbyShipArtillerySystem.getCapacity();
+				nearbyShipArtillerySystemPowerConsumption = nearbyShipArtillerySystem.getPower();
+				nearbyShipArtillerySystemDamage = nearbyShipArtillerySystem.getDamagedBars();
+			}
+			// Clonebay
+			SystemState nearbyShipClonebaySystem = nearbyShip.getSystem(SystemType.CLONEBAY);
+			if (nearbyShipClonebaySystem.getCapacity() != 0) {
+				nearbyShipCloneBaySystemPowerCapacity = nearbyShipClonebaySystem.getCapacity();
+				nearbyShipCloneBaySystemPowerConsumption = nearbyShipClonebaySystem.getPower();
+				nearbyShipCloneBaySystemDamage = nearbyShipClonebaySystem.getDamagedBars();
+			}
+			// Mind Control
+			SystemState nearbyShipMindControlSystem = nearbyShip.getSystem(SystemType.MIND);
+			if (nearbyShipMindControlSystem.getCapacity() != 0) {
+				nearbyShipmindControlSystemPowerCapacity = nearbyShipMindControlSystem.getCapacity();
+				nearbyShipMindControlSystemPowerConsumption = nearbyShipMindControlSystem.getPower();
+				nearbyShipMindControlSystemDamage = nearbyShipMindControlSystem.getDamagedBars();
+			}
+			// Hacking System
+			SystemState nearbyShipHackingSystem = nearbyShip.getSystem(SystemType.HACKING);
+			if (nearbyShipHackingSystem.getCapacity() != 0) {
+				nearbyShipHackingSystemPowerCapacity = nearbyShipHackingSystem.getCapacity();
+				nearbyShipHackingSystemPowerConsumption = nearbyShipHackingSystem.getPower();
+				nearbyShipHackingSystemDamage = nearbyShipHackingSystem.getDamagedBars();
+			}
 		}
 	}
 

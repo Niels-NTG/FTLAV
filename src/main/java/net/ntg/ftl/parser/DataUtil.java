@@ -76,14 +76,6 @@ public class DataUtil {
 		return sum / roomCount;
 	}
 
-	 public static int getNearbyShipOxygenLevel(SavedGameState gameState) {
-		 ShipState nearbyShip = gameState.getNearbyShip();
-		 if (nearbyShip != null) {
-			 return getShipOxygenLevel(nearbyShip);
-	 	}
-		return -1;
-	 }
-
 	public static String getFullShipType(SavedGameState gameState) {
 		switch (gameState.getPlayerShipBlueprintId()) {
 			case "PLAYER_SHIP_HARD"   : return "Kestrel Cruiser A";
