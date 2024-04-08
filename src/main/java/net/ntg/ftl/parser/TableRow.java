@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 @Data
 public class TableRow {
 
@@ -200,6 +201,7 @@ public class TableRow {
 	private int nearbyShipHackingSystemPowerConsumption;
 	private int nearbyShipHackingSystemDamage;
 
+	public TableRow() {}
 	public TableRow(SavedGameState gameState, String timeStamp) {
 
 		ShipState playerShip = gameState.getPlayerShip();
