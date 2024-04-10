@@ -1,7 +1,6 @@
 package net.ntg.ftl.ui;
 
 import lombok.extern.slf4j.Slf4j;
-import net.blerf.ftl.model.state.SavedGameState;
 import net.ntg.ftl.FTLAdventureVisualiser;
 import net.ntg.ftl.parser.TableMaker;
 import net.ntg.ftl.parser.TableReader;
@@ -105,6 +104,9 @@ public class FTLFrame extends JFrame {
 //		setupInspector();
 
 		pack();
+
+		toggleGameStateRecordingButton.setSelected(hasGameState());
+		toggleGraphButton.setSelected(hasRecords());
 
 		startGameStateWatcher();
 
@@ -388,12 +390,6 @@ public class FTLFrame extends JFrame {
 	private void onGameStateUpdate() {
 		updateToolbarButtonStates();
 		graphRenderer.redraw();
-		if (hasGameState()) {
-			SavedGameState currentGameState = FTLAdventureVisualiser.gameState;
-			log.info("Ship name: {}", currentGameState.getPlayerShipName());
-			log.info("Number of beacons explored: {}", currentGameState.getTotalBeaconsExplored());
-			log.info("Currently in sector: {}", currentGameState.getSectorNumber() + 1);
-		}
 	}
 
 	private void updateToolbarButtonStates() {
