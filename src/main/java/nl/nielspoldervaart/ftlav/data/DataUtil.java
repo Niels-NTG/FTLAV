@@ -1,4 +1,4 @@
-package net.ntg.ftl.parser;
+package nl.nielspoldervaart.ftlav.data;
 
 import net.blerf.ftl.constants.FleetPresence;
 import net.blerf.ftl.constants.HazardVulnerability;
@@ -18,7 +18,7 @@ import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.xml.AugBlueprint;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
-import net.ntg.ftl.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 

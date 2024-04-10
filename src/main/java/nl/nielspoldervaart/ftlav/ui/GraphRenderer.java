@@ -1,8 +1,9 @@
-package net.ntg.ftl.ui;
+package nl.nielspoldervaart.ftlav.ui;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ntg.ftl.parser.DataUtil;
-import net.ntg.ftl.parser.TableRow;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.data.DataUtil;
+import nl.nielspoldervaart.ftlav.data.TableRow;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -23,7 +24,7 @@ public class GraphRenderer extends PApplet {
 
 	// TODO delete columns if FTLAdventureVisualser.enabledRecordingHeaders.get(columnName iterator)
 
-	private static final Preferences prefs = Preferences.userNodeForPackage(net.ntg.ftl.FTLAdventureVisualiser.class);
+	private static final Preferences prefs = Preferences.userNodeForPackage(FTLAdventureVisualiser.class);
 
 	private int maxTableValue;
 	private int startIndex = 0;

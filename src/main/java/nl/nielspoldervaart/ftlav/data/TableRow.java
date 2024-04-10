@@ -1,4 +1,4 @@
-package net.ntg.ftl.parser;
+package nl.nielspoldervaart.ftlav.data;
 
 import lombok.Data;
 import net.blerf.ftl.constants.Difficulty;

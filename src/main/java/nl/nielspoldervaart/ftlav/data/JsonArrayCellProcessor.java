@@ -1,4 +1,4 @@
-package net.ntg.ftl.parser;
+package nl.nielspoldervaart.ftlav.data;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.util.CsvContext;

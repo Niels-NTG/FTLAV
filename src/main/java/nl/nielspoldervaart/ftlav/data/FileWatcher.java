@@ -1,4 +1,4 @@
-package net.ntg.ftl.util;
+package nl.nielspoldervaart.ftlav.data;
 
 import java.io.File;
 import java.util.TimerTask;

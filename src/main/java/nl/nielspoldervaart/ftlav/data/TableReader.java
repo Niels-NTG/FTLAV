@@ -1,6 +1,6 @@
-package net.ntg.ftl.parser;
+package nl.nielspoldervaart.ftlav.data;
 
-import net.ntg.ftl.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.prefs.CsvPreference;

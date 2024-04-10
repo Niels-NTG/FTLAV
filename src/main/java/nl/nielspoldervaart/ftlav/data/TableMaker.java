@@ -1,7 +1,7 @@
-package net.ntg.ftl.parser;
+package nl.nielspoldervaart.ftlav.data;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ntg.ftl.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 

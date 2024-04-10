@@ -1,6 +1,7 @@
-package net.ntg.ftl.ui;
+package nl.nielspoldervaart.ftlav.ui;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -18,7 +19,7 @@ import java.util.prefs.Preferences;
 @Slf4j
 public class TogglePanel extends JPanel {
 
-	private static final Preferences prefs = Preferences.userNodeForPackage(net.ntg.ftl.FTLAdventureVisualiser.class);
+	private static final Preferences prefs = Preferences.userNodeForPackage(FTLAdventureVisualiser.class);
 	private static final String ENABLED = "_enabled";
 	private static final String DELTA = "_isDelta";
 	private static final String COLOR = "_color";

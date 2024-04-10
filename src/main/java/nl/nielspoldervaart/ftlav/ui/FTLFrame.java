@@ -1,10 +1,10 @@
-package net.ntg.ftl.ui;
+package nl.nielspoldervaart.ftlav.ui;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ntg.ftl.FTLAdventureVisualiser;
-import net.ntg.ftl.parser.TableMaker;
-import net.ntg.ftl.parser.TableReader;
-import net.ntg.ftl.util.FileWatcher;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.data.TableMaker;
+import nl.nielspoldervaart.ftlav.data.TableReader;
+import nl.nielspoldervaart.ftlav.data.FileWatcher;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;

@@ -1,4 +1,4 @@
-package net.ntg.ftl;
+package nl.nielspoldervaart.ftlav;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -14,8 +14,8 @@ import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
-import net.ntg.ftl.parser.TableRow;
-import net.ntg.ftl.ui.FTLFrame;
+import nl.nielspoldervaart.ftlav.data.TableRow;
+import nl.nielspoldervaart.ftlav.ui.FTLFrame;
 import net.vhati.modmanager.core.FTLUtilities;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
