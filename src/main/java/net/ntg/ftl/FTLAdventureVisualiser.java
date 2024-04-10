@@ -145,8 +145,8 @@ public class FTLAdventureVisualiser {
 		if (!datsPath.isEmpty()) {
 			log.info("Using FTL dats path from config: {}", datsPath);
 			datsDir = new File(datsPath);
-			if (FTLUtilities.isDatsDirValid(datsDir)) {
-				log.error("The config's " + FTL_DAT_PATH + " does not exist, or it lacks data.dat.");
+			if (!FTLUtilities.isDatsDirValid(datsDir)) {
+				log.error("The config's {}:{} does not exist, or it lacks data.dat.", FTL_DAT_PATH, datsPath);
 				datsDir = null;
 			}
 		}
