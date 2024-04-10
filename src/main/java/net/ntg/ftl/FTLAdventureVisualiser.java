@@ -273,8 +273,7 @@ public class FTLAdventureVisualiser {
 
 		log.info("No valid FTL continue file path was found in config");
 
-		// TODO gameDatsDir is clearly the wrong default location. Should be ~/.local/share/FasterThanLight/
-		candidateSaveFile = new File(gameDatsDir, "continue.sav");
+		candidateSaveFile = new File(FTLUtilities.findUserDataDir(), "continue.sav");
 		if (validateContinueFile(candidateSaveFile)) {
 			log.info("Found continue.sav at the expected location {}", candidateSaveFile.getPath());
 			prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
@@ -310,7 +309,7 @@ public class FTLAdventureVisualiser {
 		if (candidateSaveFile != null && candidateSaveFile.exists()) {
 			continueFileChooser.setSelectedFile(candidateSaveFile);
 		} else {
-			continueFileChooser.setCurrentDirectory(gameDatsDir);
+			continueFileChooser.setCurrentDirectory(FTLUtilities.findUserDataDir());
 		}
 		int fileChooserResult = continueFileChooser.showOpenDialog(null);
 		candidateSaveFile = continueFileChooser.getSelectedFile();
