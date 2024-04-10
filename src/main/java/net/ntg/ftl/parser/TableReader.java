@@ -1,6 +1,7 @@
 package net.ntg.ftl.parser;
 
 import net.ntg.ftl.FTLAdventureVisualiser;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 
 public class TableReader {
 
+	public static final CellProcessor[] CELL_PROCESSORS = TableRow.getCellProcessors();
+
 	public TableReader(File targetFile) throws IOException {
 		CsvBeanReader tableReader = new CsvBeanReader(
 			new FileReader(targetFile),
@@ -20,7 +23,7 @@ public class TableReader {
 		try {
 			final String[] header = tableReader.getHeader(true);
 			TableRow row;
-			while ((row = tableReader.read(TableRow.class, header)) != null) {
+			while ((row = tableReader.read(TableRow.class, header, CELL_PROCESSORS)) != null) {
 				newTableRows.add(row);
 			}
 		} finally {

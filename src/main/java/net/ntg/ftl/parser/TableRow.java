@@ -4,6 +4,10 @@ import lombok.Data;
 import net.blerf.ftl.constants.Difficulty;
 import net.blerf.ftl.model.state.*;
 import net.blerf.ftl.model.type.SystemType;
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseBool;
+import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import processing.data.JSONArray;
 import processing.data.StringList;
 
@@ -505,15 +509,19 @@ public class TableRow {
 		}
 	}
 
+	public String getDifficulty() {
+		return this.difficulty.toString();
+	}
 	public void setDifficulty(String difficulty) {
 		this.difficulty = Difficulty.valueOf(difficulty);
 	}
-	public String[] getFieldNames() {
+
+	public static String[] getFieldNames() {
 		return getFieldNames(null);
 	}
-	public String[] getFieldNames(Type type) {
+	public static String[] getFieldNames(Type type) {
 		ArrayList<String> privateFields = new ArrayList<>();
-		Field[] fields = this.getClass().getDeclaredFields();
+		Field[] fields = TableRow.class.getDeclaredFields();
 		boolean hasNoTypeCheck = type == null;
 		for (Field field : fields) {
 			if (hasNoTypeCheck || field.getGenericType() == type) {
@@ -521,6 +529,23 @@ public class TableRow {
 			}
 		}
 		return privateFields.toArray(new String[privateFields.size()]);
+	}
+
+	public static CellProcessor[] getCellProcessors() {
+		Field[] fields = TableRow.class.getDeclaredFields();
+		ArrayList<CellProcessor> cellProcessors = new ArrayList<>(fields.length);
+		for (Field field : fields) {
+			if (field.getGenericType() == boolean.class) {
+				cellProcessors.add(new ParseBool(true));
+			} else if (field.getGenericType() == int.class) {
+				cellProcessors.add(new ParseInt());
+			} else if (field.getGenericType() == JSONArray.class) {
+				cellProcessors.add(new Optional(new JsonArrayCellProcessor()));
+			} else {
+				cellProcessors.add(null);
+			}
+		}
+		return cellProcessors.toArray(new CellProcessor[cellProcessors.size()]);
 	}
 
 	public Object getFieldValue(String fieldName) {

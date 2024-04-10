@@ -405,7 +405,7 @@ public class GraphRenderer extends PApplet {
 		String lastChangedTimestamp = lastRow.getTime();
 		String shipName = lastRow.getShipName();
 		String shipType = lastRow.getShipType();
-		String difficulty = lastRow.getDifficulty().toString();
+		String difficulty = lastRow.getDifficulty();
 		String ae = "AE content " + (lastRow.isAEContentEnabled() ? "enabled" : "disabled");
 
 		PGraphics graphics = createGraphics(width, height);
