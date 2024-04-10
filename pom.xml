@@ -10,18 +10,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<!--
-	Don't include meta-packages as dependencies.
-	They cause the "jar-with-dependencies" task
-	to throw an error about "Negative Time",
-	probably for setting timestamps on their
-	non-existent class files.
-	-->
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
-<!--		TODO consider including net.blerf.ftl / net.vhati.ftl as maven dependencies-->
-<!--		TODO first make sure everything is working -->
-<!--		TODO alternativly: include git submodule of -->
-<!--			https://maven.apache.org/pom.html#Dependencies-->
+		<dependency>
+			<groupId>com.github.reseto</groupId>
+			<artifactId>ftl-profile-editor</artifactId>
+			<version>8451b2428b</version>
+		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -41,16 +42,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>1.7.32</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jdom</groupId>
-			<artifactId>jdom2</artifactId>
-			<version>2.0.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>5.14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
