@@ -165,20 +165,18 @@ public class FTLFrame extends JFrame {
 			exportFileChooser.setCurrentDirectory(null);
 			exportFileChooser.setFileHidingEnabled(true);
 			exportFileChooser.setDialogTitle("Pick a location to store your recording");
+			exportFileChooser.setSelectedFile(new File(
+				FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
+				FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".tsv"
+			));
 
 			int chooserResponse = exportFileChooser.showSaveDialog(this);
 			if (chooserResponse == JFileChooser.APPROVE_OPTION) {
-				File chosenExportFileFolder = exportFileChooser.getSelectedFile();
-				if (chosenExportFileFolder != null) {
-					String recordingFilePath = (
-						chosenExportFileFolder.getAbsolutePath() + " " +
-							FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
-							FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".tsv"
-					);
-					File recordingFile = new File(recordingFilePath);
+				File chosenExportFile = exportFileChooser.getSelectedFile();
+				if (chosenExportFile != null) {
 					try {
-						log.info("Created TSV file at {}", recordingFilePath);
-						new TableMaker(recordingFile);
+						log.info("Created TSV file at {}", chosenExportFile.getAbsolutePath());
+						new TableMaker(chosenExportFile);
 					} catch (IOException ex) {
 						log.error("Unable to make table.", ex);
 						showErrorDialog(String.format("Unable to make table: %s", ex.getMessage()));
