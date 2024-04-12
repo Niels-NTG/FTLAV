@@ -461,20 +461,18 @@ public class GraphRenderer extends PApplet {
 
 	// data util
 	private List<Integer> getDataRangeInt(ArrayList<Integer> dataPoints) {
-		int count = dataPoints.size();
-		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
-		while (graphWidth / count + 1 < jumpSize) count--;
-		endIndex = dataPoints.size() - count;
-		return dataPoints.subList(constrain(startIndex, 0, endIndex), count);
+		return dataPoints.subList(constrain(startIndex, 0, endIndex), setEndIndex(dataPoints.size()));
 	}
 	private List<String> getDataRangeString(ArrayList<String> dataPoints) {
-		int count = dataPoints.size();
-		jumpSize = graphWidth / count + 1 < jumpSize ? 32 : graphWidth / count + 1;
-		while (graphWidth / count + 1 < jumpSize) count--;
-		endIndex = dataPoints.size()- count;
-		return dataPoints.subList(constrain(startIndex, 0, endIndex), count);
+		return dataPoints.subList(constrain(startIndex, 0, endIndex), setEndIndex(dataPoints.size()));
 	}
-
+	private int setEndIndex(int size) {
+		int count = size;
+		jumpSize = graphWidth / (count + 1) < jumpSize ? 32 : graphWidth / (count + 1);
+		while (graphWidth / (count + 1) < jumpSize) count--;
+		endIndex = size - count;
+		return count;
+	}
 
 	// Processing environment
 	public void keyPressed() {
