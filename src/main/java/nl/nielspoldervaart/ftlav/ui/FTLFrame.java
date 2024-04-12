@@ -18,9 +18,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -153,13 +150,6 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		toggleGameStateRecordingButton.addItemListener(e -> {
-			int state = e.getStateChange();
-			if (hasGameState() && state == ItemEvent.SELECTED) {
-				startGameStateWatcher();
-			}
-		});
-
 		exportRecordingButton.addActionListener(e -> {
 			JFileChooser exportFileChooser = new JFileChooser();
 			exportFileChooser.setCurrentDirectory(null);
@@ -222,6 +212,7 @@ public class FTLFrame extends JFrame {
 					if (canImport) {
 						try {
 							log.info("Reading TSV file at {}", chosenImportFile.getAbsolutePath());
+							// TODO fix table importer
 							new TableReader(chosenImportFile);
 						} catch (IOException ex) {
 							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
@@ -369,20 +360,17 @@ public class FTLFrame extends JFrame {
 //	}
 
 	private void startGameStateWatcher() {
-		TimerTask task = new FileWatcher(FTLAdventureVisualiser.gameStateFile) {
-			@Override
-			protected void onChange(File file) {
+		FileWatcher fileWatcher = new FileWatcher(
+			FTLAdventureVisualiser.gameStateFile,
+			(File file) -> {
 				if (toggleGameStateRecordingButton.isSelected()) {
 					log.info("File {} has updated", file.getName());
 					FTLAdventureVisualiser.loadGameState(file);
-				} else {
-					this.cancel();
 				}
 				onGameStateUpdate();
 			}
-		};
-		java.util.Timer timer = new Timer();
-		timer.schedule(task, new Date(), 1000);
+		);
+		fileWatcher.watch();
 	}
 
 	private void onGameStateUpdate() {
