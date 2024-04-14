@@ -25,9 +25,9 @@ import java.util.prefs.Preferences;
 public class FTLFrame extends JFrame {
 
 	private final JLabel loadedSaveGameLabel;
+	public JToggleButton toggleGameStateRecordingButton;
 	private JButton exportRecordingButton;
 	private JButton importRecordingButton;
-	public JToggleButton toggleGameStateRecordingButton;
 	private JToggleButton toggleGraphButton;
 //	private JButton exportImageButton;
 
@@ -269,13 +269,12 @@ public class FTLFrame extends JFrame {
 		});
 
 		toolbar.add(gameStateLoadBtn);
+		toolbar.add(toggleGameStateRecordingButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(exportRecordingButton);
 		toolbar.add(importRecordingButton);
-		toolbar.add(toggleGameStateRecordingButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(toggleGraphButton);
-		toolbar.add(Box.createHorizontalGlue());
 //		toolbar.add(exportImageButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(resetButton);
