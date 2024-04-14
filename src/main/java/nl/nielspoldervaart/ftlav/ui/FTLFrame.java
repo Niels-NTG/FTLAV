@@ -38,10 +38,8 @@ public class FTLFrame extends JFrame {
 
 	private static final ImageIcon loadGameIcon	    = new ImageIcon(ClassLoader.getSystemResource("loadgame.gif"));
 	private static final ImageIcon isRecordingIcon	= new ImageIcon(ClassLoader.getSystemResource("recording.gif"));
-	// TODO find new better icon for "export"
-	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("new.gif"));
-	// TODO find new better icon for "import"
-	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("open.gif"));
+	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("export.gif"));
+	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("import.gif"));
 	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
 //	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("savegraph.gif"));
 	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("reset.gif"));
