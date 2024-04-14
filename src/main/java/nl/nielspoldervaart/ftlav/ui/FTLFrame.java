@@ -211,7 +211,7 @@ public class FTLFrame extends JFrame {
 						try {
 							log.info("Reading TSV file at {}", chosenImportFile.getAbsolutePath());
 							// TODO fix table importer
-							new TableReader(chosenImportFile);
+							TableReader.read(chosenImportFile);
 						} catch (IOException ex) {
 							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
 							showErrorDialog(String.format("Unable to read TSV file: %s", ex.getMessage()));

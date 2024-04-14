@@ -14,20 +14,18 @@ public class TableReader {
 
 	public static final CellProcessor[] CELL_PROCESSORS = TableRow.getCellProcessors();
 
-	public TableReader(File targetFile) throws IOException {
-		CsvBeanReader tableReader = new CsvBeanReader(
+	public static void read(File targetFile) throws IOException {
+		ArrayList<TableRow> newTableRows = new ArrayList<>();
+		try (CsvBeanReader tableReader = new CsvBeanReader(
 			new FileReader(targetFile),
 			CsvPreference.TAB_PREFERENCE
-		);
-		ArrayList<TableRow> newTableRows = new ArrayList<>();
-		try {
+		)) {
 			final String[] header = tableReader.getHeader(true);
 			TableRow row;
 			while ((row = tableReader.read(TableRow.class, header, CELL_PROCESSORS)) != null) {
 				newTableRows.add(row);
 			}
 		} finally {
-			tableReader.close();
 			if (!newTableRows.isEmpty()) {
 				FTLAdventureVisualiser.recording = newTableRows;
 			}
