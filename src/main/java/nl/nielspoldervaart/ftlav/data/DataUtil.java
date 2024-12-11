@@ -34,6 +34,7 @@ public class DataUtil {
 	public static ArrayList<Integer> extractIntColumn(String columnName) {
 		ArrayList<Integer> column = new ArrayList<>();
 		for (TableRow row : FTLAdventureVisualiser.recording) {
+			// TODO fill with placeholder if fieldValue does not exist in this row
 			column.add((int)row.getFieldValue(columnName));
 		}
 		return column;
@@ -42,6 +43,7 @@ public class DataUtil {
 	public static ArrayList<String> extractStringColumn(String columnName) {
 		ArrayList<String> column = new ArrayList<>();
 		for (TableRow row : FTLAdventureVisualiser.recording) {
+			// TODO fill with placeholder if fieldValue does not exist in this row
 			column.add((String)row.getFieldValue(columnName));
 		}
 		return column;
@@ -52,8 +54,8 @@ public class DataUtil {
 	}
 	public static LinkedHashSet<String> getTableHeaders(Type type) {
 		LinkedHashSet<String> headers = new LinkedHashSet<>();
-		for (TableRow row : FTLAdventureVisualiser.recording) {
-			headers.addAll(Arrays.asList(row.getFieldNames(type)));
+		for (TableRow ignored : FTLAdventureVisualiser.recording) {
+			headers.addAll(Arrays.asList(TableRow.getFieldNames(type)));
 		}
 		return headers;
 	}
@@ -256,9 +258,9 @@ public class DataUtil {
 			crewObject.setBoolean("isEnemyBoardingDrone", crewState.isEnemyBoardingDrone());
 			crewObject.setBoolean("isMindControlled", crewState.isMindControlled());
 			crewObject.setBoolean("isPlayerControlled", crewState.isPlayerControlled());
-			// TODO current room
+			// TODO current room of crew member
 //			DataManager.get().getShipLayout().getRoom(crewState.getRoomId());
-			// TODO saved room
+			// TODO saved room of crew member
 //			crewState.getSavedRoomId();
 
 			crewList.append(crewObject);

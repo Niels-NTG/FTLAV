@@ -1,13 +1,14 @@
 package nl.nielspoldervaart.ftlav.data;
 
-import lombok.Data;
-import net.blerf.ftl.constants.Difficulty;
-import net.blerf.ftl.model.state.*;
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvCustomBindByName;
+import lombok.Getter;
+import lombok.Setter;
+import net.blerf.ftl.model.state.DoorState;
+import net.blerf.ftl.model.state.SavedGameState;
+import net.blerf.ftl.model.state.ShipState;
+import net.blerf.ftl.model.state.SystemState;
 import net.blerf.ftl.model.type.SystemType;
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ParseBool;
-import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.ift.CellProcessor;
 import processing.data.JSONArray;
 import processing.data.StringList;
 
@@ -16,193 +17,333 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
-@Data
+@Getter
+@Setter
 public class TableRow {
 
 	// Non-temporal
+	@CsvBindByName(column = "time")
 	private String time;
+	@CsvBindByName(column = "ship name")
 	private String shipName;
+	@CsvBindByName(column = "ship type")
 	private String shipType;
-	private Difficulty difficulty;
+	@CsvBindByName(column = "difficulty")
+	private String difficulty;
+	@CsvBindByName(column = "ae content enabled")
 	private boolean AEContentEnabled;
 
-	// Location
+	// Sector
+	@CsvBindByName(column = "beacon number")
 	private int beaconNumber;
+	@CsvBindByName(column = "sector number")
 	private int sectorNumber;
+	@CsvBindByName(column = "sector type")
 	private String sectorType;
+	@CsvBindByName(column = "sector name")
 	private String sectorName;
+	@CsvBindByName(column = "fleet advancement")
 	private int fleetAdvancement;
 
 	// Encounter
+	@CsvCustomBindByName(column = "beacon hazards", converter = JsonArrayCellProcessor.class)
 	private JSONArray beaconHazards;
+	@CsvBindByName(column = "encounter text")
 	private String encounterText;
 
 	// Resources totals
+	@CsvBindByName(column = "total ships defeated")
 	private int totalShipsDefeated;
+	@CsvBindByName(column = "total scrap collected")
 	private int totalScrapCollected;
+	@CsvBindByName(column = "total crew hired")
 	private int totalCrewHired;
+	@CsvBindByName(column = "total score")
 	private int totalScore;
 
 	// Resources current
+	@CsvBindByName(column = "scrap")
 	private int scrap;
+	@CsvBindByName(column = "fuel")
 	private int fuel;
+	@CsvBindByName(column = "missles")
 	private int missles;
+	@CsvBindByName(column = "drone parts")
 	private int droneParts;
+	@CsvBindByName(column = "crew size")
 	private int crewSize;
+	@CsvBindByName(column = "hull")
 	private int hull;
+	@CsvBindByName(column = "oxygen level")
 	private int oxygenLevel;
+	@CsvCustomBindByName(column = "ship augments", converter = JsonArrayCellProcessor.class)
 	private JSONArray shipAugments;
+	@CsvCustomBindByName(column = "cargo", converter = JsonArrayCellProcessor.class)
 	private JSONArray cargo;
+	@CsvCustomBindByName(column = "crew", converter = JsonArrayCellProcessor.class)
 	private JSONArray crew;
 
 	// Systems current
 	// Pilot
+	@CsvBindByName(column = "pilot system power capacity")
 	private int pilotSystemPowerCapacity;
+	@CsvBindByName(column = "pilot system damage")
 	private int pilotSystemDamage;
 	// Sensors
+	@CsvBindByName(column = "sensor system power capacity")
 	private int sensorSystemPowerCapacity;
+	@CsvBindByName(column = "sensor system damage")
 	private int sensorSystemDamage;
 	// Doors
+	@CsvBindByName(column = "door system power capacity")
 	private int doorSystemPowerCapacity;
+	@CsvBindByName(column = "door system damage")
 	private int doorSystemDamage;
+	@CsvBindByName(column = "door count")
 	private int doorCount;
+	@CsvBindByName(column = "doors open")
 	private int doorsOpen;
+	@CsvBindByName(column = "doors damaged")
 	private int doorsDamaged;
 	// Battery
+	@CsvBindByName(column = "battery system power capacity")
 	private int batterySystemPowerCapacity;
+	@CsvBindByName(column = "battery system damage")
 	private int batterySystemDamage;
+	@CsvBindByName(column = "battery system use")
 	private int batterySystemUse;
 	// Medbay
+	@CsvBindByName(column = "medbay system power capacity")
 	private int medbaySystemPowerCapacity;
+	@CsvBindByName(column = "medbay system power consumption")
 	private int medbaySystemPowerConsumption;
+	@CsvBindByName(column = "medbay system damage")
 	private int medbaySystemDamage;
 	// Oxygen
+	@CsvBindByName(column = "oxygen system power capacity")
 	private int oxygenSystemPowerCapacity;
+	@CsvBindByName(column = "oxygen system power consumption")
 	private int oxygenSystemPowerConsumption;
+	@CsvBindByName(column = "oxygen system damage")
 	private int oxygenSystemDamage;
 	// Shields
+	@CsvBindByName(column = "shield system power capacity")
 	private int shieldSystemPowerCapacity;
+	@CsvBindByName(column = "shield system power consumption")
 	private int shieldSystemPowerConsumption;
+	@CsvBindByName(column = "shield system damage")
 	private int shieldSystemDamage;
+	@CsvBindByName(column = "shield layers")
 	private int shieldLayers;
+	@CsvBindByName(column = "zoltan shield layers")
 	private int zoltanShieldLayers;
 	// Engines
+	@CsvBindByName(column = "engine system power capacity")
 	private int engineSystemPowerCapacity;
+	@CsvBindByName(column = "engine system power consumption")
 	private int engineSystemPowerConsumption;
+	@CsvBindByName(column = "engine system damage")
 	private int engineSystemDamage;
 	// Weapons
+	@CsvBindByName(column = "weapons system power capacity")
 	private int weaponsSystemPowerCapacity;
+	@CsvBindByName(column = "weapons system power consumption")
 	private int weaponsSystemPowerConsumption;
+	@CsvBindByName(column = "weapons system damage")
 	private int weaponsSystemDamage;
+	@CsvCustomBindByName(column = "weapons layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray weaponsLayout;
 	// Drone Control
+	@CsvBindByName(column = "drone control system power capacity")
 	private int droneControlSystemPowerCapacity;
+	@CsvBindByName(column = "drone control system power consumption")
 	private int droneControlSystemPowerConsumption;
+	@CsvBindByName(column = "drone control system damage")
 	private int droneControlSystemDamage;
+	@CsvCustomBindByName(column = "drone control layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray droneControlLayout;
 	// Teleporter
+	@CsvBindByName(column = "teleporter system power capacity")
 	private int teleporterSystemPowerCapacity;
+	@CsvBindByName(column = "teleporter system power consumption")
 	private int teleporterSystemPowerConsumption;
+	@CsvBindByName(column = "teleporter system damage")
 	private int teleporterSystemDamage;
 	// Cloaking
+	@CsvBindByName(column = "cloaking system power capacity")
 	private int cloakingSystemPowerCapacity;
+	@CsvBindByName(column = "cloaking system power consumption")
 	private int cloakingSystemPowerConsumption;
+	@CsvBindByName(column = "cloaking system damage")
 	private int cloakingSystemDamage;
+	@CsvBindByName(column = "cloaked")
 	private boolean cloaked;
 	// Artillery
+	@CsvBindByName(column = "artillery system power capacity")
 	private int artillerySystemPowerCapacity;
+	@CsvBindByName(column = "artillery system power consumption")
 	private int artillerySystemPowerConsumption;
+	@CsvBindByName(column = "artillery system damage")
 	private int artillerySystemDamage;
 	// Clonebay
+	@CsvBindByName(column = "clone bay system power capacity")
 	private int cloneBaySystemPowerCapacity;
+	@CsvBindByName(column = "clone bay system power consumption")
 	private int cloneBaySystemPowerConsumption;
+	@CsvBindByName(column = "clone bay system damage")
 	private int cloneBaySystemDamage;
 	// Mind Control
+	@CsvBindByName(column = "mind control system power capacity")
 	private int mindControlSystemPowerCapacity;
+	@CsvBindByName(column = "mind control system power consumption")
 	private int mindControlSystemPowerConsumption;
+	@CsvBindByName(column = "mind control system damage")
 	private int mindControlSystemDamage;
 	// Hacking System
+	@CsvBindByName(column = "hacking system power capacity")
 	private int hackingSystemPowerCapacity;
+	@CsvBindByName(column = "hacking system power consumption")
 	private int hackingSystemPowerConsumption;
+	@CsvBindByName(column = "hacking system damage")
 	private int hackingSystemDamage;
 
 	// Nearby Ship
+	@CsvBindByName(column = "nearby ship exists")
 	private boolean nearbyShipExists;
+	@CsvBindByName(column = "nearby ship hostile")
 	private boolean nearbyShipHostile;
 	// Nearby Ship Resources current
+	@CsvBindByName(column = "nearby ship crew size")
 	private int nearbyShipCrewSize;
+	@CsvBindByName(column = "nearby ship hull")
 	private int nearbyShipHull;
+	@CsvBindByName(column = "nearby ship oxygen level")
 	private int nearbyShipOxygenLevel;
+	@CsvCustomBindByName(column = "nearby ship augments", converter = JsonArrayCellProcessor.class)
 	private JSONArray nearbyShipAugments;
+	@CsvCustomBindByName(column = "nearby ship crew", converter = JsonArrayCellProcessor.class)
 	private JSONArray nearbyShipCrew;
 	// Nearby Ship Systems Current
+	@CsvBindByName(column = "nearby ship pilot system power capacity")
 	private int nearbyShipPilotSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship pilot system damage")
 	private int nearbyShipPilotSystemDamage;
 	// Sensors
+	@CsvBindByName(column = "nearby ship sensor system power capacity")
 	private int nearbyShipSensorSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship sensor system damage")
 	private int nearbyShipSensorSystemDamage;
 	// Doors
+	@CsvBindByName(column = "nearby ship door system power capacity")
 	private int nearbyShipDoorSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship door system damage")
 	private int nearbyShipDoorSystemDamage;
+	@CsvBindByName(column = "nearby ship door count")
 	private int nearbyShipDoorCount;
+	@CsvBindByName(column = "nearby ship doors open")
 	private int nearbyShipDoorsOpen;
+	@CsvBindByName(column = "nearby ship doors damaged")
 	private int nearbyShipDoorsDamaged;
 	// Battery
+	@CsvBindByName(column = "nearby ship battery system power capacity")
 	private int nearbyShipBatterySystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship battery system damage")
 	private int nearbyShipBatterySystemDamage;
+	@CsvBindByName(column = "nearby ship battery system use")
 	private int nearbyShipBatterySystemUse;
 	// Medbay
+	@CsvBindByName(column = "nearby ship medbay system power capacity")
 	private int nearbyShipMedbaySystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship medbay system power consumption")
 	private int nearbyShipMedbaySystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship medbay system damage")
 	private int nearbyShipMedbaySystemDamage;
 	// Oxygen
+	@CsvBindByName(column = "nearby ship oxygen system power capacity")
 	private int nearbyShipOxygenSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship oxygen system power consumption")
 	private int nearbyShipOxygenSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship oxygen system damage")
 	private int nearbyShipOxygenSystemDamage;
 	// Shields
+	@CsvBindByName(column = "nearby ship shield system power capacity")
 	private int nearbyShipShieldSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship shield system power consumption")
 	private int nearbyShipShieldSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship shield system damage")
 	private int nearbyShipShieldSystemDamage;
+	@CsvBindByName(column = "nearby ship shield layers")
 	private int nearbyShipShieldLayers;
+	@CsvBindByName(column = "nearby ship zoltan shield layers")
 	private int nearbyShipZoltanShieldLayers;
 	// Engines
+	@CsvBindByName(column = "nearby ship engine system power capacity")
 	private int nearbyShipEngineSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship engine system power consumption")
 	private int nearbyShipEngineSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship engine system damage")
 	private int nearbyShipEngineSystemDamage;
 	// Weapons
+	@CsvBindByName(column = "nearby ship weapons system power capacity")
 	private int nearbyShipWeaponsSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship weapons system power consumption")
 	private int nearbyShipWeaponsSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship weapons system damage")
 	private int nearbyShipWeaponsSystemDamage;
+	@CsvCustomBindByName(column = "nearby ship weapons layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray nearbyShipWeaponsLayout;
 	// Drone Control
+	@CsvBindByName(column = "nearby ship drone control system power capacity")
 	private int nearbyShipDroneControlSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship drone control system power consumption")
 	private int nearbyShipDroneControlSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship drone control system damage")
 	private int nearbyShipDroneControlSystemDamage;
+	@CsvCustomBindByName(column = "nearby ship drone control layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray nearbyShipDroneControlLayout;
 	// Teleporter
+	@CsvBindByName(column = "nearby ship teleporter system power capacity")
 	private int nearbyShipTeleporterSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship teleporter system power consumption")
 	private int nearbyShipTeleporterSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship teleporter system damage")
 	private int nearbyShipTeleporterSystemDamage;
 	// Cloaking
+	@CsvBindByName(column = "nearby ship cloaking system power capacity")
 	private int nearbyShipCloakingSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship cloaking system power consumption")
 	private int nearbyShipCloakingSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship cloaking system damage")
 	private int nearbyShipCloakingSystemDamage;
+	@CsvBindByName(column = "nearby ship cloaked")
 	private boolean nearbyShipCloaked;
 	// Artillery
+	@CsvBindByName(column = "nearby ship artillery system power capacity")
 	private int nearbyShipArtillerySystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship artillery system power consumption")
 	private int nearbyShipArtillerySystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship artillery system damage")
 	private int nearbyShipArtillerySystemDamage;
 	// Clonebay
+	@CsvBindByName(column = "nearby ship clone bay system power capacity")
 	private int nearbyShipCloneBaySystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship clone bay system power consumption")
 	private int nearbyShipCloneBaySystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship clone bay system damage")
 	private int nearbyShipCloneBaySystemDamage;
 	// Mind Control
+	@CsvBindByName(column = "nearby ship mind control system power capacity")
 	private int nearbyShipmindControlSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship mind control system power consumption")
 	private int nearbyShipMindControlSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship mind control system damage")
 	private int nearbyShipMindControlSystemDamage;
 	// Hacking System
+	@CsvBindByName(column = "nearby ship hacking system power capacity")
 	private int nearbyShipHackingSystemPowerCapacity;
+	@CsvBindByName(column = "nearby ship hacking system power consumption")
 	private int nearbyShipHackingSystemPowerConsumption;
+	@CsvBindByName(column = "nearby ship hacking system damage")
 	private int nearbyShipHackingSystemDamage;
 
 	public TableRow() {}
@@ -214,7 +355,7 @@ public class TableRow {
 		time = timeStamp;
 		shipName = gameState.getPlayerShipName();
 		shipType = DataUtil.getFullShipType(gameState);
-		difficulty = gameState.getDifficulty();
+		difficulty = gameState.getDifficulty().toString();
 		AEContentEnabled = gameState.isDLCEnabled();
 
 		// Location
@@ -509,11 +650,23 @@ public class TableRow {
 		}
 	}
 
-	public String getDifficulty() {
-		return this.difficulty.toString();
-	}
-	public void setDifficulty(String difficulty) {
-		this.difficulty = Difficulty.valueOf(difficulty);
+	public static ArrayList<String> getTableWriterHeaders() {
+		ArrayList<String> headers = new ArrayList<>();
+		Field[] fields = TableRow.class.getDeclaredFields();
+		for (Field field : fields) {
+			CsvBindByName csvAnnotation1 = field.getAnnotation(CsvBindByName.class);
+			if (csvAnnotation1 != null && csvAnnotation1.column() != null && !csvAnnotation1.column().isEmpty()) {
+				headers.add(csvAnnotation1.column().toUpperCase());
+				continue;
+			}
+			CsvCustomBindByName csvAnnotation2 = field.getAnnotation(CsvCustomBindByName.class);
+			if (csvAnnotation2 != null && csvAnnotation2.column() != null && !csvAnnotation2.column().isEmpty()) {
+				headers.add(csvAnnotation2.column().toUpperCase());
+				continue;
+			}
+			headers.add(field.getName().toUpperCase());
+		}
+		return headers;
 	}
 
 	public static String[] getFieldNames() {
@@ -529,23 +682,6 @@ public class TableRow {
 			}
 		}
 		return privateFields.toArray(new String[privateFields.size()]);
-	}
-
-	public static CellProcessor[] getCellProcessors() {
-		Field[] fields = TableRow.class.getDeclaredFields();
-		ArrayList<CellProcessor> cellProcessors = new ArrayList<>(fields.length);
-		for (Field field : fields) {
-			if (field.getGenericType() == boolean.class) {
-				cellProcessors.add(new ParseBool(true));
-			} else if (field.getGenericType() == int.class) {
-				cellProcessors.add(new ParseInt());
-			} else if (field.getGenericType() == JSONArray.class) {
-				cellProcessors.add(new Optional(new JsonArrayCellProcessor()));
-			} else {
-				cellProcessors.add(null);
-			}
-		}
-		return cellProcessors.toArray(new CellProcessor[cellProcessors.size()]);
 	}
 
 	public Object getFieldValue(String fieldName) {

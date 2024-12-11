@@ -1,19 +1,12 @@
 package nl.nielspoldervaart.ftlav.data;
 
-import org.supercsv.cellprocessor.CellProcessorAdaptor;
-import org.supercsv.util.CsvContext;
+import com.opencsv.bean.AbstractBeanField;
 import processing.data.JSONArray;
 
-public class JsonArrayCellProcessor extends CellProcessorAdaptor {
-
-	public JsonArrayCellProcessor() {
-		super();
-	}
+public class JsonArrayCellProcessor extends AbstractBeanField<TableRow, Integer> {
 
 	@Override
-	public Object execute(Object value, CsvContext context) {
-		validateInputNotNull(value, context);
-
+	protected JSONArray convert(String value) {
 		return JSONArray.parse(String.valueOf(value));
 	}
 

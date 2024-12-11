@@ -1,34 +1,20 @@
 package nl.nielspoldervaart.ftlav.data;
 
+import com.opencsv.bean.CsvToBeanBuilder;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
-import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.CsvBeanReader;
-import org.supercsv.prefs.CsvPreference;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TableReader {
 
-	public static final CellProcessor[] CELL_PROCESSORS = TableRow.getCellProcessors();
-
 	public static void read(File targetFile) throws IOException {
-		ArrayList<TableRow> newTableRows = new ArrayList<>();
-		try (CsvBeanReader tableReader = new CsvBeanReader(
-			new FileReader(targetFile),
-			CsvPreference.TAB_PREFERENCE
-		)) {
-			final String[] header = tableReader.getHeader(true);
-			TableRow row;
-			while ((row = tableReader.read(TableRow.class, header, CELL_PROCESSORS)) != null) {
-				newTableRows.add(row);
-			}
-		} finally {
-			if (!newTableRows.isEmpty()) {
-				FTLAdventureVisualiser.recording = newTableRows;
-			}
+		List<TableRow> newTableRows = new CsvToBeanBuilder<TableRow>(new FileReader(targetFile)).withSeparator('\t').withType(TableRow.class).build().parse();
+		if (!newTableRows.isEmpty()) {
+			FTLAdventureVisualiser.recording.clear();
+			FTLAdventureVisualiser.recording.addAll(newTableRows);
 		}
 	}
 

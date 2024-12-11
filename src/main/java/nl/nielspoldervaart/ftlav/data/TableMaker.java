@@ -1,32 +1,36 @@
 package nl.nielspoldervaart.ftlav.data;
 
+import com.opencsv.bean.HeaderColumnNameMappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 @Slf4j
 public class TableMaker {
 
 	public TableMaker(File tableFile) throws IOException {
-		CsvBeanWriter tableWriter = new CsvBeanWriter(
-			new FileWriter(tableFile),
-			CsvPreference.TAB_PREFERENCE
-		);
-		String[] headers = DataUtil.getTableHeaders().toArray(new String[0]);
+		Writer writer = new FileWriter(tableFile);
 
+		HeaderColumnNameMappingStrategy<TableRow> mappingStrategy = new HeaderColumnNameMappingStrategy<>();
+		mappingStrategy.setColumnOrderOnWrite(new ColumnOrderComparator());
+		mappingStrategy.setType(TableRow.class);
+
+		StatefulBeanToCsv<TableRow> tableWriter = new StatefulBeanToCsvBuilder<TableRow>(writer).withSeparator('\t').withMappingStrategy(mappingStrategy).build();
 		try {
-			tableWriter.writeHeader(headers);
-			for (TableRow row : FTLAdventureVisualiser.recording) {
-				tableWriter.write(row, headers);
-			}
+			tableWriter.write(FTLAdventureVisualiser.recording);
 			log.info("Records are written to {}", tableFile.getAbsolutePath());
+		} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+			log.error(e.getMessage());
 		} finally {
-			tableWriter.close();
+			writer.close();
 		}
 	}
 
