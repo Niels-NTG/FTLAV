@@ -36,16 +36,16 @@ public class FTLFrame extends JFrame {
 
 	private final Preferences prefs;
 
-	private static final ImageIcon loadGameIcon	    = new ImageIcon(ClassLoader.getSystemResource("loadgame.gif"));
-	private static final ImageIcon isRecordingIcon	= new ImageIcon(ClassLoader.getSystemResource("recording.gif"));
-	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("export.gif"));
-	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("import.gif"));
-	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("graph.gif"));
-//	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("savegraph.gif"));
-	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("reset.gif"));
-	private static final ImageIcon helpIcon		    = new ImageIcon(ClassLoader.getSystemResource("help.gif"));
+	private static final ImageIcon loadGameIcon	    = new ImageIcon(ClassLoader.getSystemResource("UI/loadgame.gif"));
+	private static final ImageIcon isRecordingIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/recording.gif"));
+	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/export.gif"));
+	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/import.gif"));
+	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("UI/graph.gif"));
+//	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
+	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("UI/reset.gif"));
+	private static final ImageIcon helpIcon		    = new ImageIcon(ClassLoader.getSystemResource("UI/help.gif"));
 
-	private final URL helpPage = ClassLoader.getSystemResource("help.html");
+	private final URL helpPage = ClassLoader.getSystemResource("UI/help.html");
 	private final HyperlinkListener linkListener;
 
 //	private GraphInspector inspector;
@@ -372,7 +372,7 @@ public class FTLFrame extends JFrame {
 
 	private void onGameStateUpdate() {
 		updateToolbarButtonStates();
-		graphRenderer.redraw();
+//		graphRenderer.redraw();
 	}
 
 	private void updateToolbarButtonStates() {

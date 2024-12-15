@@ -24,14 +24,14 @@ public class TogglePanel extends JPanel {
 	private static final String DELTA = "_isDelta";
 	private static final String COLOR = "_color";
 	private static final Object[] COLORS = { // TODO replace with color gradient icons
-		new ImageIcon(ClassLoader.getSystemResource("color-blue.gif")),
-		new ImageIcon(ClassLoader.getSystemResource("color-green.gif")),
-		new ImageIcon(ClassLoader.getSystemResource("color-red.gif")),
-		new ImageIcon(ClassLoader.getSystemResource("color-purple.gif"))
+		new ImageIcon(ClassLoader.getSystemResource("UI/color-blue.gif")),
+		new ImageIcon(ClassLoader.getSystemResource("UI/color-green.gif")),
+		new ImageIcon(ClassLoader.getSystemResource("UI/color-red.gif")),
+		new ImageIcon(ClassLoader.getSystemResource("UI/color-purple.gif"))
 	};
 
 	private final GridBagConstraints gridC = new GridBagConstraints();
-	private static final ImageIcon emptyIcon = new ImageIcon(ClassLoader.getSystemResource("empty.gif"));
+	private static final ImageIcon emptyIcon = new ImageIcon(ClassLoader.getSystemResource("UI/empty.gif"));
 
 
 	public TogglePanel(String borderTitle) {
