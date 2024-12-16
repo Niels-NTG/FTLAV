@@ -53,7 +53,7 @@
 			<groupId>org.processing</groupId>
 			<artifactId>core</artifactId>
 			<version>2.2.1</version>
-<!--			TODO consider upgrading Processing -->
+			<!-- Cannot upgrade to Processing 4.x.x since uses Java 17. Cannot upgrade to Processing 3.x.x since it has removed direct support for java.awt.frame (see: https://javadoc.io/doc/org.processing/core/latest/index.html) -->
 		</dependency>
 		<dependency>
 			<groupId>com.opencsv</groupId>
