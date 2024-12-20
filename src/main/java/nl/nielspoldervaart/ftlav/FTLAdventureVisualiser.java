@@ -190,6 +190,7 @@ public class FTLAdventureVisualiser {
 			return;
 		}
 		log.info("Reading game state: {}", chosenFile.getAbsoluteFile());
+		log.info("Table rows: {}", recording.size() + 1);
 
 		loadGameState(chosenFile);
 	}
