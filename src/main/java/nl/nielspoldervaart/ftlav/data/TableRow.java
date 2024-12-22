@@ -9,6 +9,7 @@ import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
 import net.blerf.ftl.model.state.SystemState;
 import net.blerf.ftl.model.type.SystemType;
+import nl.nielspoldervaart.ftlav.visualiser.GraphLineColor;
 import processing.data.JSONArray;
 import processing.data.StringList;
 
@@ -61,18 +62,25 @@ public class TableRow {
 	private int totalScore;
 
 	// Resources current
+	@VisualiserAnnotation(isEnabledByDefault = true, defaultGraphLineColor = GraphLineColor.PURPLE, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "scrap")
 	private int scrap;
+	@VisualiserAnnotation(isEnabledByDefault = true, defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "fuel")
 	private int fuel;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "missles")
 	private int missles;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "drone parts")
 	private int droneParts;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "crew size")
 	private int crewSize;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "hull")
 	private int hull;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.RESOURCES)
 	@CsvBindByName(column = "oxygen level")
 	private int oxygenLevel;
 	@CsvCustomBindByName(column = "ship augments", converter = JsonArrayCellProcessor.class)
@@ -84,125 +92,175 @@ public class TableRow {
 
 	// Systems current
 	// Pilot
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "pilot system power capacity")
 	private int pilotSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "pilot system damage")
 	private int pilotSystemDamage;
 	// Sensors
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "sensor system power capacity")
 	private int sensorSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "sensor system damage")
 	private int sensorSystemDamage;
 	// Doors
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "door system power capacity")
 	private int doorSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "door system damage")
 	private int doorSystemDamage;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "door count")
 	private int doorCount;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "doors open")
 	private int doorsOpen;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "doors damaged")
 	private int doorsDamaged;
 	// Battery
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "battery system power capacity")
 	private int batterySystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "battery system damage")
 	private int batterySystemDamage;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "battery system use")
 	private int batterySystemUse;
 	// Medbay
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "medbay system power capacity")
 	private int medbaySystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "medbay system power consumption")
 	private int medbaySystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "medbay system damage")
 	private int medbaySystemDamage;
 	// Oxygen
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "oxygen system power capacity")
 	private int oxygenSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "oxygen system power consumption")
 	private int oxygenSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "oxygen system damage")
 	private int oxygenSystemDamage;
 	// Shields
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "shield system power capacity")
 	private int shieldSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "shield system power consumption")
 	private int shieldSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "shield system damage")
 	private int shieldSystemDamage;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.PURPLE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "shield layers")
 	private int shieldLayers;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "zoltan shield layers")
 	private int zoltanShieldLayers;
 	// Engines
 	@CsvBindByName(column = "engine system power capacity")
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	private int engineSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "engine system power consumption")
 	private int engineSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "engine system damage")
 	private int engineSystemDamage;
 	// Weapons
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "weapons system power capacity")
 	private int weaponsSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "weapons system power consumption")
 	private int weaponsSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "weapons system damage")
 	private int weaponsSystemDamage;
 	@CsvCustomBindByName(column = "weapons layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray weaponsLayout;
 	// Drone Control
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "drone control system power capacity")
 	private int droneControlSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "drone control system power consumption")
 	private int droneControlSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "drone control system damage")
 	private int droneControlSystemDamage;
 	@CsvCustomBindByName(column = "drone control layout", converter = JsonArrayCellProcessor.class)
 	private JSONArray droneControlLayout;
 	// Teleporter
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "teleporter system power capacity")
 	private int teleporterSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "teleporter system power consumption")
 	private int teleporterSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "teleporter system damage")
 	private int teleporterSystemDamage;
 	// Cloaking
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "cloaking system power capacity")
 	private int cloakingSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "cloaking system power consumption")
 	private int cloakingSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "cloaking system damage")
 	private int cloakingSystemDamage;
 	@CsvBindByName(column = "cloaked")
 	private boolean cloaked;
 	// Artillery
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "artillery system power capacity")
 	private int artillerySystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "artillery system power consumption")
 	private int artillerySystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "artillery system damage")
 	private int artillerySystemDamage;
 	// Clonebay
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "clone bay system power capacity")
 	private int cloneBaySystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "clone bay system power consumption")
 	private int cloneBaySystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "clone bay system damage")
 	private int cloneBaySystemDamage;
 	// Mind Control
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "mind control system power capacity")
 	private int mindControlSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "mind control system power consumption")
 	private int mindControlSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "mind control system damage")
 	private int mindControlSystemDamage;
 	// Hacking System
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "hacking system power capacity")
 	private int hackingSystemPowerCapacity;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "hacking system power consumption")
 	private int hackingSystemPowerConsumption;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.SYSTEMS)
 	@CsvBindByName(column = "hacking system damage")
 	private int hackingSystemDamage;
 
