@@ -13,7 +13,6 @@ import processing.data.JSONArray;
 import processing.data.StringList;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
@@ -669,21 +668,6 @@ public class TableRow {
 			return csvAnnotation2.column().toUpperCase();
 		}
 		return field.getName().toUpperCase();
-	}
-
-	public static String[] getFieldNames() {
-		return getFieldNames(null);
-	}
-	public static String[] getFieldNames(Type type) {
-		ArrayList<String> privateFields = new ArrayList<>();
-		Field[] fields = TableRow.class.getDeclaredFields();
-		boolean hasNoTypeCheck = type == null;
-		for (Field field : fields) {
-			if (hasNoTypeCheck || field.getGenericType() == type) {
-				privateFields.add(field.getName());
-			}
-		}
-		return privateFields.toArray(new String[privateFields.size()]);
 	}
 
 	public Object getFieldValue(String fieldName) {

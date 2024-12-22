@@ -22,12 +22,9 @@ import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 
@@ -57,17 +54,6 @@ public class DataUtil {
 		} catch (NoSuchFieldException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public static LinkedHashSet<String> getTableHeaders() {
-		return getTableHeaders(null);
-	}
-	public static LinkedHashSet<String> getTableHeaders(Type type) {
-		LinkedHashSet<String> headers = new LinkedHashSet<>();
-		for (TableRow ignored : FTLAdventureVisualiser.recording) {
-			headers.addAll(Arrays.asList(TableRow.getFieldNames(type)));
-		}
-		return headers;
 	}
 
 	public static TableRow getLastRecord() {
