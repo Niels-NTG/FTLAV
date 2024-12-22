@@ -58,8 +58,8 @@ public class TableRow {
 	private int totalScrapCollected;
 	@CsvBindByName(column = "total crew hired")
 	private int totalCrewHired;
-	@CsvBindByName(column = "total score")
-	private int totalScore;
+	@CsvBindByName(column = "score")
+	private int score;
 
 	// Resources current
 	@VisualiserAnnotation(isEnabledByDefault = true, defaultGraphLineColor = GraphLineColor.PURPLE, category = TableColumnCategory.RESOURCES)
@@ -430,7 +430,7 @@ public class TableRow {
 		totalShipsDefeated = gameState.getTotalShipsDefeated();
 		totalScrapCollected = gameState.getTotalScrapCollected();
 		totalCrewHired = gameState.getTotalCrewHired();
-		totalScore = gameState.calculateScore();
+		score = gameState.calculateScore();
 
 		// Resources current
 		scrap = playerShip.getScrapAmt();
