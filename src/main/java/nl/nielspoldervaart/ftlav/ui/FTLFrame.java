@@ -50,7 +50,7 @@ public class FTLFrame extends JFrame {
 	private final HyperlinkListener linkListener;
 
 	private Visualiser graphRenderer;
-	private GraphInspector graphInspector;
+	private JScrollPane graphInspectorScrollPane;
 
 	private final String appName;
 	private final int appVersion;
@@ -225,7 +225,8 @@ public class FTLFrame extends JFrame {
 		toggleGraphButton.addItemListener(e -> {
 			boolean hasGameStateAndGraphIsOpen = hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
 			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
-			graphInspector.setVisible(hasGameStateAndGraphIsOpen);
+			graphInspectorScrollPane.setVisible(hasGameStateAndGraphIsOpen);
+			pack();
 		});
 		graphFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -337,7 +338,6 @@ public class FTLFrame extends JFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				super.componentResized(e);
-//				graphRenderer.size(graphFrame.getWidth(), graphFrame.getHeight());
 				graphRenderer.redraw();
 			}
 		});
@@ -349,10 +349,14 @@ public class FTLFrame extends JFrame {
 	}
 
 	private void setupInspector() {
-
-		graphInspector = new GraphInspector(this);
-		add(graphInspector, BorderLayout.CENTER);
-
+		graphInspectorScrollPane = new JScrollPane(
+			new GraphInspector(this),
+			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		);
+		graphInspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+		graphInspectorScrollPane.setPreferredSize(new Dimension(getWidth(), 800));
+		add(graphInspectorScrollPane, BorderLayout.CENTER);
 	}
 
 	private void startGameStateWatcher() {
