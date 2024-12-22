@@ -9,7 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
@@ -34,13 +33,11 @@ public class TogglePanel extends JPanel {
 		gridC.gridy = 0;
 		gridC.weightx = 1.0;
 		gridC.weighty = 1.0;
-		gridC.fill = GridBagConstraints.BOTH;
+		gridC.fill = GridBagConstraints.BASELINE_LEADING;
 	}
 
 	public void addDataTypeInputs(String columnName) {
 		final String displayLabel = DataUtil.getColumnDisplayName(columnName);
-
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING, 4, 4));
 
 		JCheckBox enabledCheckBox = new JCheckBox(
 			displayLabel,
@@ -51,7 +48,9 @@ public class TogglePanel extends JPanel {
 			FTLAdventureVisualiser.columnsInVisualiser.put(columnName, enabledCheckBox.isSelected());
 			rootFrame.redrawVisualiser();
 		});
-		panel.add(enabledCheckBox);
+		gridC.anchor = GridBagConstraints.LINE_START;
+		gridC.gridx = 0;
+		add(enabledCheckBox, gridC);
 
 		JComboBox<Object> colorSelector = new JComboBox<>(COLORS);
 		colorSelector.setSelectedItem(FTLAdventureVisualiser.colorsInVisualiser.getOrDefault(columnName, GraphLineColor.PURPLE).icon);
@@ -62,10 +61,10 @@ public class TogglePanel extends JPanel {
 				rootFrame.redrawVisualiser();
 			}
 		});
-		panel.add(colorSelector);
+		gridC.gridx = 1;
+		gridC.anchor = GridBagConstraints.LINE_END;
+		add(colorSelector, gridC);
 
-		add(panel, gridC);
 		gridC.gridy++;
 	}
-
 }
