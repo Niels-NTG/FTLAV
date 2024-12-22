@@ -5,6 +5,7 @@ import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
+import nl.nielspoldervaart.ftlav.visualiser.Visualiser;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -49,7 +50,7 @@ public class FTLFrame extends JFrame {
 	private final HyperlinkListener linkListener;
 
 //	private GraphInspector inspector;
-	private processing.core.PApplet graphRenderer;
+	private Visualiser graphRenderer;
 
 	private final String appName;
 	private final int appVersion;
@@ -210,8 +211,8 @@ public class FTLFrame extends JFrame {
 					if (canImport) {
 						try {
 							log.info("Reading TSV file at {}", chosenImportFile.getAbsolutePath());
-							// TODO fix table importer
 							TableReader.read(chosenImportFile);
+							onGameStateUpdate();
 						} catch (IOException ex) {
 							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
 							showErrorDialog(String.format("Unable to read TSV file: %s", ex.getMessage()));
@@ -221,7 +222,11 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		toggleGraphButton.addItemListener(e -> graphFrame.setVisible(hasGameState() && e.getStateChange() == ItemEvent.SELECTED));
+		toggleGraphButton.addItemListener(e -> {
+			boolean hasGameStateAndGraphIsOpen = hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
+			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
+			// TODO toggle visibility graph inspector
+		});
 		graphFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				toggleGraphButton.setSelected(false);
@@ -325,14 +330,14 @@ public class FTLFrame extends JFrame {
 		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
 		graphFrame.setLayout(new BorderLayout());
 
-		graphRenderer = new GraphRenderer();
+		graphRenderer = new Visualiser();
 		graphRenderer.init();
 
 		graphFrame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				super.componentResized(e);
-				graphRenderer.size(graphFrame.getWidth(), graphFrame.getHeight());
+//				graphRenderer.size(graphFrame.getWidth(), graphFrame.getHeight());
 				graphRenderer.redraw();
 			}
 		});
@@ -372,7 +377,7 @@ public class FTLFrame extends JFrame {
 
 	private void onGameStateUpdate() {
 		updateToolbarButtonStates();
-//		graphRenderer.redraw();
+		graphRenderer.redraw();
 	}
 
 	private void updateToolbarButtonStates() {

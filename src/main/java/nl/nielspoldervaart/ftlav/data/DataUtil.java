@@ -25,6 +25,8 @@ import processing.data.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -342,6 +344,23 @@ public class DataUtil {
 
 		return hazards;
 
+	}
+
+	public static int getMaxValue(HashMap<String, Boolean> columns) {
+		ArrayList<String> keys = new ArrayList<>();
+		for (String key : columns.keySet()) {
+			if (columns.get(key)) {
+				keys.add(key);
+			}
+		}
+		return getMaxValue(keys);
+	}
+	public static int getMaxValue(ArrayList<String> columns) {
+		ArrayList<Integer> values = new ArrayList<>();
+		for (String key : columns) {
+			values.addAll(DataUtil.extractIntColumn(key));
+		}
+		return Collections.max(values);
 	}
 
 }
