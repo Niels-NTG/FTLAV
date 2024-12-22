@@ -49,6 +49,14 @@ public class DataUtil {
 		return column;
 	}
 
+	public static String getColumnDisplayName(String columnName) {
+		try {
+			return TableRow.getTableWriterHeader(TableRow.class.getDeclaredField(columnName));
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static LinkedHashSet<String> getTableHeaders() {
 		return getTableHeaders(null);
 	}

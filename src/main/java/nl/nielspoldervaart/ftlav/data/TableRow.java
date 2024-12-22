@@ -654,19 +654,21 @@ public class TableRow {
 		ArrayList<String> headers = new ArrayList<>();
 		Field[] fields = TableRow.class.getDeclaredFields();
 		for (Field field : fields) {
-			CsvBindByName csvAnnotation1 = field.getAnnotation(CsvBindByName.class);
-			if (csvAnnotation1 != null && csvAnnotation1.column() != null && !csvAnnotation1.column().isEmpty()) {
-				headers.add(csvAnnotation1.column().toUpperCase());
-				continue;
-			}
-			CsvCustomBindByName csvAnnotation2 = field.getAnnotation(CsvCustomBindByName.class);
-			if (csvAnnotation2 != null && csvAnnotation2.column() != null && !csvAnnotation2.column().isEmpty()) {
-				headers.add(csvAnnotation2.column().toUpperCase());
-				continue;
-			}
-			headers.add(field.getName().toUpperCase());
+			headers.add(getTableWriterHeader(field));
 		}
 		return headers;
+	}
+
+	public static String getTableWriterHeader(Field field) {
+		CsvBindByName csvAnnotation1 = field.getAnnotation(CsvBindByName.class);
+		if (csvAnnotation1 != null && csvAnnotation1.column() != null && !csvAnnotation1.column().isEmpty()) {
+			return csvAnnotation1.column().toUpperCase();
+		}
+		CsvCustomBindByName csvAnnotation2 = field.getAnnotation(CsvCustomBindByName.class);
+		if (csvAnnotation2 != null && csvAnnotation2.column() != null && !csvAnnotation2.column().isEmpty()) {
+			return csvAnnotation2.column().toUpperCase();
+		}
+		return field.getName().toUpperCase();
 	}
 
 	public static String[] getFieldNames() {
