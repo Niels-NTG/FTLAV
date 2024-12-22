@@ -346,6 +346,9 @@ public class DataUtil {
 		for (String key : columns) {
 			values.addAll(DataUtil.extractIntColumn(key));
 		}
+		if (values.isEmpty()) {
+			return 0;
+		}
 		return Collections.max(values);
 	}
 
