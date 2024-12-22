@@ -6,7 +6,7 @@ public enum TableColumnCategory {
 	ENCOUNTER("Encounter"),
 	RESOURCE_TOTALS("Resource Totals"),
 	RESOURCES("Resources"),
-	SYSTEMS("Systems"),
+	SYSTEMS("Player Ship Systems"),
 	NEARBY_SHIP("Nearby Ship"),
 	MISC("Misc");
 
