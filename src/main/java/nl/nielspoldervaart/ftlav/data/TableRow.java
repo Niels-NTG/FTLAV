@@ -52,12 +52,16 @@ public class TableRow {
 	private String encounterText;
 
 	// Resources totals
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCE_TOTALS)
 	@CsvBindByName(column = "total ships defeated")
 	private int totalShipsDefeated;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.PURPLE, category = TableColumnCategory.RESOURCE_TOTALS)
 	@CsvBindByName(column = "total scrap collected")
 	private int totalScrapCollected;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.RESOURCE_TOTALS)
 	@CsvBindByName(column = "total crew hired")
 	private int totalCrewHired;
+	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.RESOURCE_TOTALS)
 	@CsvBindByName(column = "score")
 	private int score;
 
