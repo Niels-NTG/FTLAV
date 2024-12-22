@@ -1,5 +1,6 @@
 package nl.nielspoldervaart.ftlav.visualiser;
 
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.DataUtil;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -26,19 +27,10 @@ public class LineGraph {
 		this.root = root;
 		this.GRAPHICS_WIDTH = width;
 		this.GRAPHICS_HEIGHT = height;
-
-		// TODO need to create UI to toggle elements on and off
-		timeSeriesData.put("scrap", true);
-		timeSeriesData.put("fuel", true);
-		timeSeriesData.put("missles", true);
-		timeSeriesData.put("droneParts", true);
-		timeSeriesData.put("crewSize", true);
-		timeSeriesData.put("hull", true);
-		timeSeriesData.put("oxygenLevel", true);
 	}
 
 	PGraphics draw() {
-		int yMax = Math.max(DataUtil.getMaxValue(timeSeriesData), Y_INCREMENT * 2);
+		int yMax = Math.max(DataUtil.getMaxValue(FTLAdventureVisualiser.columnsInVisualiser), Y_INCREMENT * 2);
 		yMax = yMax + Y_INCREMENT - yMax % Y_INCREMENT;
 
 		PGraphics graphics = root.createGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT);
@@ -132,15 +124,15 @@ public class LineGraph {
 	private void plotData(PGraphics g, int yMax) {
 		PVector lineGraphicsSize = new PVector(GRAPHICS_WIDTH - Y_AXIS_WIDTH, GRAPHICS_HEIGHT - (X_AXIS_HEIGHT + TOP_MARGIN));
 		PVector lineGraphicsOffset = new PVector(Y_AXIS_WIDTH, TOP_MARGIN);
-		for (String key : timeSeriesData.keySet()) {
-			if (timeSeriesData.get(key)) {
+		for (String key : FTLAdventureVisualiser.columnsInVisualiser.keySet()) {
+			if (FTLAdventureVisualiser.columnsInVisualiser.get(key)) {
 				GraphLine.createLine(root,
 					g,
 					lineGraphicsSize,
 					lineGraphicsOffset,
 					key,
 					yMax,
-					root.GLOW_PURPLE
+					root.getLineColor(FTLAdventureVisualiser.colorsInVisualiser.get(key).label)
 				);
 			}
 		}

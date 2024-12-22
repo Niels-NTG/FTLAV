@@ -15,8 +15,10 @@ import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
 import nl.nielspoldervaart.ftlav.data.TableRow;
+import nl.nielspoldervaart.ftlav.data.VisualiserAnnotation;
 import nl.nielspoldervaart.ftlav.ui.FTLFrame;
 import net.vhati.modmanager.core.FTLUtilities;
+import nl.nielspoldervaart.ftlav.visualiser.GraphLineColor;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +33,12 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.prefs.Preferences;
 
 
@@ -57,6 +61,9 @@ public class FTLAdventureVisualiser {
 	public static ArrayList<SectorDot> sectorList = new ArrayList<>();
 
 	public static ArrayList<TableRow> recording = new ArrayList<>();
+
+	public static HashMap<String, Boolean> columnsInVisualiser = new HashMap<>();
+	public static HashMap<String, GraphLineColor> colorsInVisualiser = new HashMap<>();
 
 	public static void main(String[] args) {
 		initLogger();
@@ -243,6 +250,8 @@ public class FTLAdventureVisualiser {
 			String timeStamp = getTimeStamp(chosenFile);
 			recording.add(new TableRow(gameState, timeStamp));
 
+			setDefaultVisualiserDataColumnVisibility();
+
 		} catch (IOException e) {
 			log.error("Reading game state from file {} failed: {}", chosenFile.getName(), e.getMessage());
 			showErrorDialog(String.format("Reading game state (\"%s\") failed:%n%s", chosenFile.getName(), e.getMessage()));
@@ -347,6 +356,17 @@ public class FTLAdventureVisualiser {
 			JOptionPane.WARNING_MESSAGE
 		);
 		return response == JOptionPane.YES_OPTION;
+	}
+
+	private static void setDefaultVisualiserDataColumnVisibility() {
+		Field[] fields = TableRow.class.getDeclaredFields();
+		for (Field field : fields) {
+			VisualiserAnnotation annotation = field.getAnnotation(VisualiserAnnotation.class);
+			if (annotation != null) {
+				columnsInVisualiser.putIfAbsent(field.getName(), annotation.isEnabledByDefault());
+				colorsInVisualiser.putIfAbsent(field.getName(), annotation.defaultGraphLineColor());
+			}
+		}
 	}
 
 	public static void unsetGameState() {

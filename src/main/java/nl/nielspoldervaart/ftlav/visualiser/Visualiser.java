@@ -113,16 +113,6 @@ public class Visualiser extends PApplet {
 		return (int) textWidth(text);
 	}
 
-	int getSectorColor(String sectorType) {
-		if (sectorType.equalsIgnoreCase("civilian")) {
-			return COLOR_SECTOR_HOSTILE;
-		}
-		if (sectorType.equalsIgnoreCase("nebula")) {
-			return COLOR_SECTOR_NEBULA;
-		}
-		return COLOR_SECTOR_HOSTILE;
-	}
-
 	int[] getSectorGradient(String sectorType) {
 		if (sectorType.equalsIgnoreCase("civilian")) {
 			return GLOW_GREEN;
@@ -134,6 +124,19 @@ public class Visualiser extends PApplet {
 			return GLOW_RED;
 		}
 		return GLOW_BLUE;
+	}
+
+	int[] getLineColor(String colorName) {
+		switch (colorName) {
+			case "Green":
+				return GLOW_GREEN;
+			case "Red":
+				return GLOW_RED;
+			case "Blue":
+				return GLOW_BLUE;
+			default:
+				return GLOW_PURPLE;
+		}
 	}
 
 }

@@ -26,7 +26,7 @@ import java.util.prefs.Preferences;
 public class FTLFrame extends JFrame {
 
 	private final JLabel loadedSaveGameLabel;
-	public JToggleButton toggleGameStateRecordingButton;
+	private JToggleButton toggleGameStateRecordingButton;
 	private JButton exportRecordingButton;
 	private JButton importRecordingButton;
 	private JToggleButton toggleGraphButton;
@@ -49,8 +49,8 @@ public class FTLFrame extends JFrame {
 	private final URL helpPage = ClassLoader.getSystemResource("UI/help.html");
 	private final HyperlinkListener linkListener;
 
-//	private GraphInspector inspector;
 	private Visualiser graphRenderer;
+	private GraphInspector graphInspector;
 
 	private final String appName;
 	private final int appVersion;
@@ -97,7 +97,7 @@ public class FTLFrame extends JFrame {
 		add(loadedSaveGameLabel, BorderLayout.SOUTH);
 
 		// inspector options
-//		setupInspector();
+		setupInspector();
 
 		pack();
 
@@ -225,7 +225,7 @@ public class FTLFrame extends JFrame {
 		toggleGraphButton.addItemListener(e -> {
 			boolean hasGameStateAndGraphIsOpen = hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
 			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
-			// TODO toggle visibility graph inspector
+			graphInspector.setVisible(hasGameStateAndGraphIsOpen);
 		});
 		graphFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -348,18 +348,12 @@ public class FTLFrame extends JFrame {
 
 	}
 
-//	private void setupInspector() {
-//
-//		inspector = new GraphInspector(this);
-//		JScrollPane inspectorScrollPane = new JScrollPane(
-//			inspector,
-//			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-//			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-//		);
-//		inspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-//		add(inspectorScrollPane, BorderLayout.CENTER);
-//
-//	}
+	private void setupInspector() {
+
+		graphInspector = new GraphInspector(this);
+		add(graphInspector, BorderLayout.CENTER);
+
+	}
 
 	private void startGameStateWatcher() {
 		FileWatcher fileWatcher = new FileWatcher(
@@ -377,6 +371,10 @@ public class FTLFrame extends JFrame {
 
 	private void onGameStateUpdate() {
 		updateToolbarButtonStates();
+		graphRenderer.redraw();
+	}
+
+	public void redrawVisualiser() {
 		graphRenderer.redraw();
 	}
 
@@ -399,7 +397,6 @@ public class FTLFrame extends JFrame {
 		toggleGraphButton.setEnabled(hasRecords);
 //		exportImageButton.setEnabled(hasRecords);
 		if (!hasRecords) {
-			graphFrame.setVisible(false);
 			toggleGraphButton.setSelected(false);
 		}
 	}
