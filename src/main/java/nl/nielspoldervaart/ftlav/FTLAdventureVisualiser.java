@@ -111,9 +111,9 @@ public class FTLAdventureVisualiser {
 //			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ignored) {}
 
-		log.debug(String.format("%s v%s", APP_NAME, APP_VERSION));
-		log.debug(String.format("%s %s", System.getProperty("os.name"), System.getProperty("os.version")));
-		log.debug(String.format("%s, %s, %s", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch")));
+		log.debug("{} v{}", APP_NAME, APP_VERSION);
+		log.debug("{} {}", System.getProperty("os.name"), System.getProperty("os.version"));
+		log.debug("{}, {}, {}", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch"));
 
 		gameDatsDir = loadDatsDir();
 
