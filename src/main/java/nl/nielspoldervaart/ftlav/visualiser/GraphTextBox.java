@@ -2,6 +2,7 @@ package nl.nielspoldervaart.ftlav.visualiser;
 
 import nl.nielspoldervaart.ftlav.data.DataUtil;
 import nl.nielspoldervaart.ftlav.data.TableRow;
+import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -17,6 +18,7 @@ public class GraphTextBox {
 			return null;
 		}
 		String shipName = lastRow.getShipName();
+
 		String shipType = lastRow.getShipType();
 		String score = "Score: " + lastRow.getScore();
 		String difficulty = "Difficulity: " + lastRow.getDifficulty();
@@ -24,17 +26,39 @@ public class GraphTextBox {
 			difficulty = difficulty + " (ADVANCED EDITION)";
 		}
 
+		String totalScrapCollected = "Total scrap collected: " + lastRow.getTotalScrapCollected();
+		String totalShipsDefeated = "Total ships defeated: " + lastRow.getTotalShipsDefeated();
+		String totalCrewHired = "Total crew hired: " + lastRow.getTotalCrewHired();
+
+		int shipTitleLabelWidth = root.getTextWidth(shipName, root.FONT_TITLE);
+		int column2Width = PApplet.max(
+			root.getTextWidth(shipType, root.FONT_MAIN),
+			root.getTextWidth(difficulty, root.FONT_MAIN),
+			root.getTextWidth(score, root.FONT_MAIN)
+		);
+
 		PGraphics titleGraphic = root.createGraphics(root.width, root.height);
 		titleGraphic.beginDraw();
 
 		titleGraphic.fill(root.COLOR_MAIN_TEXT);
 		titleGraphic.noStroke();
-		titleGraphic.textFont(root.FONT_LARGE_BOLD);
+
+		titleGraphic.textFont(root.FONT_TITLE);
 		titleGraphic.textAlign(PConstants.LEFT, PConstants.TOP);
-		titleGraphic.text(shipName, 8, 8);
+		titleGraphic.text(shipName, 12, 12);
 
 		titleGraphic.textFont(root.FONT_MAIN);
-		titleGraphic.text(shipType + "    " + difficulty + "    " + score, 8, 28);
+		titleGraphic.textLeading(15);
+		titleGraphic.text(
+			shipType + "\n" + difficulty + "\n" + score,
+			12 + shipTitleLabelWidth + 12,
+			8
+		);
+		titleGraphic.text(
+			totalScrapCollected + "\n" + totalShipsDefeated + "\n" + totalCrewHired,
+			12 + shipTitleLabelWidth + 12 + column2Width + 12,
+			8
+		);
 
 		titleGraphic.endDraw();
 		return titleGraphic;

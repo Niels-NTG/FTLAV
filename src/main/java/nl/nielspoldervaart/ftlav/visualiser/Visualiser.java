@@ -81,14 +81,14 @@ public class Visualiser extends PApplet {
 	final PFont FONT_SMALL;
 	final PFont FONT_MAIN;
 	final PFont FONT_LARGE;
-	final PFont FONT_LARGE_BOLD;
+	final PFont FONT_TITLE;
 
 	public Visualiser() {
 		super();
 		FONT_SMALL = loadFont(ClassLoader.getSystemResource("visualiser/JustinFont7-16.vlw").toString());
 		FONT_MAIN = loadFont(ClassLoader.getSystemResource("visualiser/JustinFont8-16.vlw").toString());
 		FONT_LARGE = loadFont(ClassLoader.getSystemResource("visualiser/JustinFont12-16.vlw").toString());
-		FONT_LARGE_BOLD = loadFont(ClassLoader.getSystemResource("visualiser/JustinFont12Bold-16.vlw").toString());
+		FONT_TITLE = loadFont(ClassLoader.getSystemResource("visualiser/JustinFont12Bold-32.vlw").toString());
 	}
 
 	public void setup() {
