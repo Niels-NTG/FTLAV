@@ -107,6 +107,10 @@ public class Visualiser extends PApplet {
 
 	}
 
+	public void exportGraph(String exportPath) {
+		save(exportPath);
+	}
+
 	int getTextWidth(String text, PFont font) {
 		textFont(font);
 		return (int) textWidth(text);

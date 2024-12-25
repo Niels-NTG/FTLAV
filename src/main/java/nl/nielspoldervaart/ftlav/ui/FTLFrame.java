@@ -30,7 +30,7 @@ public class FTLFrame extends JFrame {
 	private JButton exportRecordingButton;
 	private JButton importRecordingButton;
 	private JToggleButton toggleGraphButton;
-//	private JButton exportImageButton;
+	private JButton exportImageButton;
 
 	private JFrame graphFrame;
 	private JFrame helpFrame;
@@ -42,7 +42,7 @@ public class FTLFrame extends JFrame {
 	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/export.gif"));
 	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/import.gif"));
 	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("UI/graph.gif"));
-//	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
+	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
 	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("UI/reset.gif"));
 	private static final ImageIcon helpIcon		    = new ImageIcon(ClassLoader.getSystemResource("UI/help.gif"));
 
@@ -123,7 +123,7 @@ public class FTLFrame extends JFrame {
 		exportRecordingButton = new JButton("Export recording", exportRecordingIcon);
 		importRecordingButton = new JButton("Import recording", importRecordingIcon);
 		toggleGraphButton = new JToggleButton("Graph", graphIcon, false);
-//		exportImageButton = new JButton("Export image", exportImageIcon);
+		exportImageButton = new JButton("Export image", exportImageIcon);
 		JButton resetButton = new JButton(resetIcon);
 		JButton helpButton = new JButton(helpIcon);
 
@@ -133,13 +133,13 @@ public class FTLFrame extends JFrame {
 		importRecordingButton.setToolTipText("Open existing TSV file with recordings of the game state's history");
 		toggleGraphButton.setToolTipText("Show/Hide graph window");
 		resetButton.setToolTipText("Reset all preferences back to default");
-//		exportImageButton.setToolTipText("Export high-res image of the current graph view");
+		exportImageButton.setToolTipText("Export a full resolution image of the current graph view");
 
 		toggleGameStateRecordingButton.setEnabled(false);
 		exportRecordingButton.setEnabled(false);
 		importRecordingButton.setEnabled(false);
 		toggleGraphButton.setEnabled(false);
-//		exportImageButton.setEnabled(false);
+		exportImageButton.setEnabled(false);
 
 		gameStateLoadBtn.addActionListener(e -> {
 			FTLAdventureVisualiser.loadGameState(true);
@@ -226,6 +226,7 @@ public class FTLFrame extends JFrame {
 			boolean hasGameStateAndGraphIsOpen = hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
 			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
 			graphInspectorScrollPane.setVisible(hasGameStateAndGraphIsOpen);
+			exportImageButton.setEnabled(hasGameStateAndGraphIsOpen);
 			pack();
 		});
 		graphFrame.addWindowListener(new WindowAdapter() {
@@ -234,7 +235,25 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		// TODO implement export graph image
+		exportImageButton.addActionListener(e -> {
+			JFileChooser exportGraphFileChooser = new JFileChooser();
+			exportGraphFileChooser.setCurrentDirectory(null);
+			exportGraphFileChooser.setFileHidingEnabled(true);
+			exportGraphFileChooser.setDialogTitle("Pick a location to store your visualiser image");
+			exportGraphFileChooser.setSelectedFile(new File(
+				FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
+					FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".png"
+			));
+
+			int chooserResponse = exportGraphFileChooser.showSaveDialog(this);
+			if (chooserResponse == JFileChooser.APPROVE_OPTION) {
+				File chosenExportFile = exportGraphFileChooser.getSelectedFile();
+				if (chosenExportFile != null) {
+					log.info("Created PNG file at {}", chosenExportFile.getAbsolutePath());
+					graphRenderer.exportGraph(chosenExportFile.getAbsolutePath());
+				}
+			}
+		});
 
 		resetButton.addActionListener(e -> {
 			int dialogChoice = JOptionPane.showConfirmDialog(
@@ -281,7 +300,7 @@ public class FTLFrame extends JFrame {
 		toolbar.add(importRecordingButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(toggleGraphButton);
-//		toolbar.add(exportImageButton);
+		toolbar.add(exportImageButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(resetButton);
 		toolbar.add(helpButton);
@@ -399,7 +418,7 @@ public class FTLFrame extends JFrame {
 
 		boolean hasRecords = hasRecords();
 		toggleGraphButton.setEnabled(hasRecords);
-//		exportImageButton.setEnabled(hasRecords);
+		exportImageButton.setEnabled(hasRecords);
 		if (!hasRecords) {
 			toggleGraphButton.setSelected(false);
 		}
