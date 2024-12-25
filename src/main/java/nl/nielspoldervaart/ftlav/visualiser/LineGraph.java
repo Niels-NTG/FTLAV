@@ -20,8 +20,8 @@ public class LineGraph {
 
 	private final int Y_INCREMENT = 20;
 	private final int Y_AXIS_WIDTH = 32;
-	private final int X_AXIS_HEIGHT = 48;
-	private final int TOP_MARGIN = 16;
+	private final int X_AXIS_HEIGHT = 32;
+	private final int TOP_MARGIN = 32;
 
 	LineGraph(Visualiser root, int width, int height) {
 		this.root = root;

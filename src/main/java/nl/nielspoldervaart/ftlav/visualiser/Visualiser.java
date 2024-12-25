@@ -99,10 +99,10 @@ public class Visualiser extends PApplet {
 
 		background(COLOR_BG_DARK);
 
-		// TODO implement title graphic (no margin, upper-left corner, ship name, date, etc.)
-
 		LineGraph lineGraph = new LineGraph(this, Math.max(256, width) - MARGIN * 2, Math.max(256, height) - MARGIN * 2);
 		image(lineGraph.draw(), MARGIN, MARGIN);
+
+		image(GraphTextBox.createGraphTitle(this), 0, 0);
 
 		noLoop();
 

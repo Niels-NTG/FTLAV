@@ -1,5 +1,7 @@
 package nl.nielspoldervaart.ftlav.visualiser;
 
+import nl.nielspoldervaart.ftlav.data.DataUtil;
+import nl.nielspoldervaart.ftlav.data.TableRow;
 import processing.core.PConstants;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -7,7 +9,36 @@ import processing.core.PVector;
 
 public class GraphTextBox {
 
-	static final int BEVEL_SIZE = 4;
+	private static final int BEVEL_SIZE = 4;
+
+	static PGraphics createGraphTitle(Visualiser root) {
+		TableRow lastRow = DataUtil.getLastRecord();
+		if (lastRow == null) {
+			return null;
+		}
+		String shipName = lastRow.getShipName();
+		String shipType = lastRow.getShipType();
+		String score = "Score: " + lastRow.getScore();
+		String difficulty = "Difficulity: " + lastRow.getDifficulty();
+		if (lastRow.isAEContentEnabled()) {
+			difficulty = difficulty + " (ADVANCED EDITION)";
+		}
+
+		PGraphics titleGraphic = root.createGraphics(root.width, root.height);
+		titleGraphic.beginDraw();
+
+		titleGraphic.fill(root.COLOR_MAIN_TEXT);
+		titleGraphic.noStroke();
+		titleGraphic.textFont(root.FONT_LARGE_BOLD);
+		titleGraphic.textAlign(PConstants.LEFT, PConstants.TOP);
+		titleGraphic.text(shipName, 8, 8);
+
+		titleGraphic.textFont(root.FONT_MAIN);
+		titleGraphic.text(shipType + "    " + difficulty + "    " + score, 8, 28);
+
+		titleGraphic.endDraw();
+		return titleGraphic;
+	}
 
 	static PGraphics createDataSeriesLabel(Visualiser root, PVector size, PVector offset, String label) {
 		PGraphics dataSeriesLabelBox = root.createGraphics((int) size.x, (int) size.y);
