@@ -349,13 +349,13 @@ public class FTLFrame extends JFrame {
 	}
 
 	private void setupInspector() {
+		GraphInspector graphInspector = new GraphInspector(this);
 		graphInspectorScrollPane = new JScrollPane(
-			new GraphInspector(this),
+			graphInspector,
 			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 		);
 		graphInspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-		graphInspectorScrollPane.setPreferredSize(new Dimension(getWidth(), 800));
 		add(graphInspectorScrollPane, BorderLayout.CENTER);
 	}
 

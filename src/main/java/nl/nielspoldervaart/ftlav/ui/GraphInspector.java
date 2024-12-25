@@ -3,6 +3,7 @@ package nl.nielspoldervaart.ftlav.ui;
 import nl.nielspoldervaart.ftlav.data.TableColumnCategory;
 import nl.nielspoldervaart.ftlav.data.TableRow;
 import nl.nielspoldervaart.ftlav.data.VisualiserAnnotation;
+import nl.nielspoldervaart.ftlav.visualiser.PlotType;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ public class GraphInspector extends JPanel {
 		Field[] fields = TableRow.class.getDeclaredFields();
 		for (Field field : fields) {
 			VisualiserAnnotation annotation = field.getAnnotation(VisualiserAnnotation.class);
-			if (annotation != null && annotation.category() != null) {
+			if (annotation != null && annotation.category() != null && annotation.plotType() == PlotType.LINE) {
 				TogglePanel togglePanel = togglePanels.get(annotation.category());
 				if (togglePanel == null) {
 					togglePanel = new TogglePanel(rootFrame, annotation.category().label);

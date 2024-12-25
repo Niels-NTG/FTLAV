@@ -3,14 +3,20 @@ package nl.nielspoldervaart.ftlav.ui;
 import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.DataUtil;
+import nl.nielspoldervaart.ftlav.data.ShipSystemType;
+import nl.nielspoldervaart.ftlav.data.TableRow;
+import nl.nielspoldervaart.ftlav.data.VisualiserAnnotation;
 import nl.nielspoldervaart.ftlav.visualiser.GraphLineColor;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Container;
 import java.awt.event.ItemEvent;
 import java.util.Arrays;
 
@@ -20,37 +26,23 @@ public class TogglePanel extends JPanel {
 	private final FTLFrame rootFrame;
 	private static final Object[] COLORS = Arrays.stream(GraphLineColor.values()).map((color) -> color.icon).toArray();
 
-	private final GridBagConstraints gridC = new GridBagConstraints();
-
 	public TogglePanel(FTLFrame rootFrame, String borderTitle) {
 		this.rootFrame = rootFrame;
-
-		setLayout(new GridBagLayout());
-
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createTitledBorder(borderTitle));
-
-		gridC.gridx = 0;
-		gridC.gridy = 0;
-		gridC.weightx = 1.0;
-		gridC.weighty = 1.0;
-		gridC.fill = GridBagConstraints.BASELINE_LEADING;
 	}
 
 	public void addDataTypeInputs(String columnName) {
-		final String displayLabel = DataUtil.getColumnDisplayName(columnName);
+		String displayLabel = DataUtil.getColumnDisplayName(columnName);
 
-		JCheckBox enabledCheckBox = new JCheckBox(
-			displayLabel,
-			FTLAdventureVisualiser.columnsInVisualiser.getOrDefault(columnName, false)
-		);
-		enabledCheckBox.setToolTipText("Toggle visibility");
-		enabledCheckBox.addItemListener(e -> {
-			FTLAdventureVisualiser.columnsInVisualiser.put(columnName, enabledCheckBox.isSelected());
-			rootFrame.redrawVisualiser();
-		});
-		gridC.anchor = GridBagConstraints.LINE_START;
-		gridC.gridx = 0;
-		add(enabledCheckBox, gridC);
+		VisualiserAnnotation annotation = TableRow.getVisualiserAnnotation(columnName);
+		boolean isEnabled = FTLAdventureVisualiser.columnsInVisualiser.getOrDefault(columnName, false);
+
+		Container rowContainer = new Container();
+		rowContainer.setLayout(new BoxLayout(rowContainer, BoxLayout.X_AXIS));
+
+		JLabel label = new JLabel(new ImageIcon(annotation != null ? annotation.system().icon : ShipSystemType.NONE.icon));
+		rowContainer.add(label);
 
 		JComboBox<Object> colorSelector = new JComboBox<>(COLORS);
 		colorSelector.setSelectedItem(FTLAdventureVisualiser.colorsInVisualiser.getOrDefault(columnName, GraphLineColor.PURPLE).icon);
@@ -61,10 +53,22 @@ public class TogglePanel extends JPanel {
 				rootFrame.redrawVisualiser();
 			}
 		});
-		gridC.gridx = 1;
-		gridC.anchor = GridBagConstraints.LINE_END;
-		add(colorSelector, gridC);
+		colorSelector.setEnabled(isEnabled);
+		colorSelector.setMaximumSize(colorSelector.getPreferredSize());
 
-		gridC.gridy++;
+		JCheckBox enabledCheckBox = new JCheckBox(
+			displayLabel,
+			isEnabled
+		);
+		enabledCheckBox.setToolTipText("Toggle visibility");
+		enabledCheckBox.addItemListener(e -> {
+			FTLAdventureVisualiser.columnsInVisualiser.put(columnName, enabledCheckBox.isSelected());
+			rootFrame.redrawVisualiser();
+			colorSelector.setEnabled(enabledCheckBox.isSelected());
+		});
+		rowContainer.add(enabledCheckBox);
+		rowContainer.add(Box.createHorizontalGlue());
+		rowContainer.add(colorSelector);
+		add(rowContainer);
 	}
 }
