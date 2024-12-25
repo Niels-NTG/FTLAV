@@ -28,12 +28,7 @@ public class GraphLine {
 			glowLine.strokeWeight(gradient == glowGradient.length - 1 ? 2 : 2 + (gradient * 2));
 
 			for (int i = 0; i < dataPoints.size(); ++i) {
-				int x;
-				if (i == 0 || i == dataPoints.size() - 1) {
-					x = (int)PApplet.map(i, 0, dataPoints.size(), GLOW_SPREAD, glowLine.width + GLOW_SPREAD);
-				} else {
-					x = (int)PApplet.map(i, 0, dataPoints.size(), 0, glowLine.width);
-				}
+				int x = root.getDataX(i, 0, glowLine.width);
 				int y = (int)PApplet.map(dataPoints.get(i), 0, yMax, glowLine.height - GLOW_SPREAD, GLOW_SPREAD);
 				glowLine.vertex(x, y);
 
@@ -54,7 +49,7 @@ public class GraphLine {
 				root,
 				size,
 				new PVector(
-					PApplet.map(dataPoints.size() - 1, 0, dataPoints.size(), 0, glowLine.width) + GLOW_SPREAD,
+					root.getDataX(dataPoints.size() - 1, 0, glowLine.width) + GLOW_SPREAD,
 					PApplet.map(dataPoints.get(dataPoints.size() - 1), 0, yMax, glowLine.height, 0) - GLOW_SPREAD
 				),
 				DataUtil.getColumnDisplayName(dataColumn)

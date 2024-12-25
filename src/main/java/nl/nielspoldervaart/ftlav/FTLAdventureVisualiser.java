@@ -385,4 +385,16 @@ public class FTLAdventureVisualiser {
 		return dateFormat.format(file.lastModified());
 	}
 
+	public static String shortTimeStamp() {
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		return dateFormat.format(gameStateFile.lastModified());
+	}
+
+	public static boolean hasGameState() {
+		return gameState != null;
+	}
+
+	public static boolean hasRecords() {
+		return !recording.isEmpty();
+	}
 }

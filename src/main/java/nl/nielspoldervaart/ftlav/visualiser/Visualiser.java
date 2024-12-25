@@ -1,6 +1,7 @@
 package nl.nielspoldervaart.ftlav.visualiser;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -109,6 +110,10 @@ public class Visualiser extends PApplet {
 
 	public void exportGraph(String exportPath) {
 		save(exportPath);
+	}
+
+	int getDataX(int index, int targetMin, int targetMax) {
+		return (int) map(index, 0, Math.max(1, FTLAdventureVisualiser.recording.size()), targetMin, targetMax);
 	}
 
 	int getTextWidth(String text, PFont font) {

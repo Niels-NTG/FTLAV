@@ -44,7 +44,7 @@ public class LineGraph {
 	}
 
 	private void drawYAxis(PGraphics g, int yMax) {
-		PGraphics yAxis = root.createGraphics(GRAPHICS_WIDTH - Y_AXIS_WIDTH, g.height);
+		PGraphics yAxis = root.createGraphics(GRAPHICS_WIDTH, g.height);
 		yAxis.beginDraw();
 		yAxis.strokeCap(PConstants.SQUARE);
 		yAxis.strokeJoin(PConstants.ROUND);
@@ -58,7 +58,7 @@ public class LineGraph {
 
 			if (i > 0) {
 				yAxis.stroke(root.COLOR_BORDER);
-				yAxis.line(0, y, yAxis.width, y);
+				yAxis.line(Y_AXIS_WIDTH, y, yAxis.width, y);
 			}
 			yAxis.noStroke();
 			yAxis.text(i, Y_AXIS_WIDTH - 2, y - 2);
@@ -83,7 +83,7 @@ public class LineGraph {
 
 		xAxis.strokeWeight(0.4f);
 		for (int i = 0; i < beaconNumbers.size(); i++) {
-			int x = (int) PApplet.map(i, 0, beaconNumbers.size(), Y_AXIS_WIDTH, xAxis.width);
+			int x = root.getDataX(i, Y_AXIS_WIDTH, xAxis.width);
 
 			xAxis.stroke(root.COLOR_BORDER);
 			xAxis.line(x, xAxis.height - X_AXIS_HEIGHT, x, TOP_MARGIN);
@@ -96,7 +96,7 @@ public class LineGraph {
 						break;
 					}
 				}
-				int sectorWidth = (int) PApplet.map(nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex, 0, beaconNumbers.size(), Y_AXIS_WIDTH, xAxis.width) - x;
+				int sectorWidth = root.getDataX(nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex, Y_AXIS_WIDTH, xAxis.width) - x;
 				GraphTextBox.createSectorLabel(
 					root, g,
 					new PVector(sectorWidth, X_AXIS_HEIGHT),

@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -102,8 +100,8 @@ public class FTLFrame extends JFrame {
 
 		pack();
 
-		toggleGameStateRecordingButton.setSelected(hasGameState());
-		toggleGraphButton.setSelected(hasRecords());
+		toggleGameStateRecordingButton.setSelected(FTLAdventureVisualiser.hasGameState());
+		toggleGraphButton.setSelected(FTLAdventureVisualiser.hasRecords());
 
 		startGameStateWatcher();
 
@@ -145,7 +143,7 @@ public class FTLFrame extends JFrame {
 		gameStateLoadBtn.addActionListener(e -> {
 			FTLAdventureVisualiser.loadGameState(true);
 			onGameStateUpdate();
-			if (hasGameState()) {
+			if (FTLAdventureVisualiser.hasGameState()) {
 				toggleGraphButton.setSelected(true);
 			}
 		});
@@ -197,7 +195,7 @@ public class FTLFrame extends JFrame {
 				File chosenImportFile = importFileChooser.getSelectedFile();
 				if (chosenImportFile != null && chosenImportFile.exists()) {
 					boolean canImport = true;
-					if (hasRecords()) {
+					if (FTLAdventureVisualiser.hasRecords()) {
 						int dialogChoice = JOptionPane.showConfirmDialog(
 							this,
 							"Importing a recording will overwrite the existing recording. " +
@@ -224,7 +222,7 @@ public class FTLFrame extends JFrame {
 		});
 
 		toggleGraphButton.addItemListener(e -> {
-			boolean hasGameStateAndGraphIsOpen = hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
+			boolean hasGameStateAndGraphIsOpen = FTLAdventureVisualiser.hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
 			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
 			graphInspectorScrollPane.setVisible(hasGameStateAndGraphIsOpen);
 			exportImageButton.setEnabled(hasGameStateAndGraphIsOpen);
@@ -403,10 +401,10 @@ public class FTLFrame extends JFrame {
 	}
 
 	private void updateToolbarButtonStates() {
-		boolean hasGameState = hasGameState();
+		boolean hasGameState = FTLAdventureVisualiser.hasGameState();
 
 		loadedSaveGameLabel.setText(hasGameState ?
-			String.format("Loaded %s (%s)", FTLAdventureVisualiser.gameStateFile.getName(), shortTimeStamp()) :
+			String.format("Loaded %s (%s)", FTLAdventureVisualiser.gameStateFile.getName(), FTLAdventureVisualiser.shortTimeStamp()) :
 			"No save game loaded"
 		);
 
@@ -417,25 +415,12 @@ public class FTLFrame extends JFrame {
 			toggleGameStateRecordingButton.setSelected(false);
 		}
 
-		boolean hasRecords = hasRecords();
+		boolean hasRecords = FTLAdventureVisualiser.hasRecords();
 		toggleGraphButton.setEnabled(hasRecords);
 		exportImageButton.setEnabled(hasRecords);
 		if (!hasRecords) {
 			toggleGraphButton.setSelected(false);
 		}
-	}
-
-	private static String shortTimeStamp() {
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-		return dateFormat.format(FTLAdventureVisualiser.gameStateFile.lastModified());
-	}
-
-	private static boolean hasGameState() {
-		return FTLAdventureVisualiser.gameState != null;
-	}
-
-	private static boolean hasRecords() {
-		return !FTLAdventureVisualiser.recording.isEmpty();
 	}
 
 	private void showErrorDialog(String message) {
