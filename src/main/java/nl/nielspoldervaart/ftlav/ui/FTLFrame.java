@@ -2,6 +2,7 @@ package nl.nielspoldervaart.ftlav.ui;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
+import nl.nielspoldervaart.ftlav.data.DataUtil;
 import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
@@ -155,8 +156,8 @@ public class FTLFrame extends JFrame {
 			exportFileChooser.setFileHidingEnabled(true);
 			exportFileChooser.setDialogTitle("Pick a location to store your recording");
 			exportFileChooser.setSelectedFile(new File(
-				FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
-				FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".tsv"
+				DataUtil.getPlayerShipName() + " FTLAV v" + appVersion + " " +
+				DataUtil.getTimeStampLastRecord() + ".tsv"
 			));
 
 			int chooserResponse = exportFileChooser.showSaveDialog(this);
@@ -241,8 +242,8 @@ public class FTLFrame extends JFrame {
 			exportGraphFileChooser.setFileHidingEnabled(true);
 			exportGraphFileChooser.setDialogTitle("Pick a location to store your visualiser image");
 			exportGraphFileChooser.setSelectedFile(new File(
-				FTLAdventureVisualiser.gameState.getPlayerShipName() + " FTLAV v" + appVersion + " " +
-					FTLAdventureVisualiser.getTimeStamp().replaceAll("[/:]", "") + ".png"
+				DataUtil.getPlayerShipName() + " FTLAV v" + appVersion + " " +
+					DataUtil.getTimeStampLastRecord() + ".png"
 			));
 
 			int chooserResponse = exportGraphFileChooser.showSaveDialog(this);

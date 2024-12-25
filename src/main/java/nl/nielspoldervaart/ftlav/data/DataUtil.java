@@ -60,6 +60,14 @@ public class DataUtil {
 		return FTLAdventureVisualiser.recording.get(FTLAdventureVisualiser.recording.size() - 1);
 	}
 
+	public static String getPlayerShipName() {
+		return getLastRecord().getShipName();
+	}
+
+	public static String getTimeStampLastRecord() {
+		return getLastRecord().getTime().replaceAll("[/:]", ".");
+	}
+
 	public static SectorDot getSector(SavedGameState gameState) {
 		return FTLAdventureVisualiser.sectorList.get(gameState.getSectorNumber());
 	}

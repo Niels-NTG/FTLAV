@@ -380,9 +380,6 @@ public class FTLAdventureVisualiser {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public static String getTimeStamp() {
-		return getTimeStamp(gameStateFile);
-	}
 	public static String getTimeStamp(File file) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		return dateFormat.format(file.lastModified());
