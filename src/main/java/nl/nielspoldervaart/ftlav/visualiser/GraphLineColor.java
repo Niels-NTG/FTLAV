@@ -1,6 +1,6 @@
 package nl.nielspoldervaart.ftlav.visualiser;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 public enum GraphLineColor {
 	PURPLE("Purple"),

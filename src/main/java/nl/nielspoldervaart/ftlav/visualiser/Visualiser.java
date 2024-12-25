@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import processing.core.PApplet;
 import processing.core.PFont;
 
-
 @Slf4j
 public class Visualiser extends PApplet {
 
