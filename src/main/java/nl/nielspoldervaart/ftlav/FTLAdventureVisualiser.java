@@ -28,6 +28,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -107,9 +109,9 @@ public class FTLAdventureVisualiser {
 		ImageIO.setUseCache(false); // Small images don't need extra buffering.
 
 		// Try to get an OS-native look and feel.
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ignored) {}
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ignored) {}
 
 		log.debug("{} v{}", APP_NAME, APP_VERSION);
 		log.debug("{} {}", System.getProperty("os.name"), System.getProperty("os.version"));
