@@ -8,15 +8,12 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LineGraph {
 
 	private final Visualiser root;
 	private final int GRAPHICS_WIDTH;
 	private final int GRAPHICS_HEIGHT;
-
-	HashMap<String, Boolean> timeSeriesData = new HashMap<>();
 
 	private final int Y_INCREMENT = 20;
 	private final int Y_AXIS_WIDTH = 32;
