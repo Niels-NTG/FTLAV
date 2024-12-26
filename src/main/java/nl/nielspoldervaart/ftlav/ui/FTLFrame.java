@@ -85,7 +85,7 @@ public class FTLFrame extends JFrame {
 		add(setupToolbar(), BorderLayout.NORTH);
 
 		loadedSaveGameLabel = new JLabel(" ");
-		loadedSaveGameLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
+		loadedSaveGameLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 2));
 		loadedSaveGameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(loadedSaveGameLabel, BorderLayout.SOUTH);
 
@@ -367,7 +367,7 @@ public class FTLFrame extends JFrame {
 
 	private void onGameStateUpdate() {
 		updateToolbarButtonStates();
-		graphRenderer.redraw();
+		redrawVisualiser();
 	}
 
 	public void redrawVisualiser() {
@@ -378,7 +378,11 @@ public class FTLFrame extends JFrame {
 		boolean hasGameState = FTLAdventureVisualiser.hasGameState();
 
 		loadedSaveGameLabel.setText(hasGameState ?
-			String.format("Loaded %s (%s)", FTLAdventureVisualiser.gameStateFile.getName(), FTLAdventureVisualiser.shortTimeStamp()) :
+			String.format(
+				"Loaded %s (%s)",
+				FTLAdventureVisualiser.gameStateFile.getName(),
+				FTLAdventureVisualiser.getTimeStamp().replaceAll("T", " ")
+			) :
 			"No save game loaded"
 		);
 
