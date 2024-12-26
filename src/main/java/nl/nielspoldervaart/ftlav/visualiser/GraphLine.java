@@ -15,6 +15,10 @@ public class GraphLine {
 	static void createLine(Visualiser root, PGraphics g, PVector size, PVector offset, String dataColumn, int yMax, int[] glowGradient) {
 		ArrayList<Integer> dataPoints = DataUtil.extractIntColumn(dataColumn);
 
+		if (dataPoints.size() < 2) {
+			return;
+		}
+
 		PGraphics glowLine = root.createGraphics((int) size.x, (int) size.y);
 		glowLine.beginDraw();
 		glowLine.strokeCap(PConstants.ROUND);
