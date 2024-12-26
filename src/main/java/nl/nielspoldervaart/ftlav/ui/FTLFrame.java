@@ -8,16 +8,31 @@ import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
 import nl.nielspoldervaart.ftlav.visualiser.Visualiser;
 
-import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -32,7 +47,6 @@ public class FTLFrame extends JFrame {
 	private JButton exportImageButton;
 
 	private JFrame graphFrame;
-	private JFrame helpFrame;
 
 	private final Preferences prefs;
 
@@ -44,9 +58,6 @@ public class FTLFrame extends JFrame {
 	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
 	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("UI/reset.gif"));
 	private static final ImageIcon helpIcon		    = new ImageIcon(ClassLoader.getSystemResource("UI/help.gif"));
-
-	private final URL helpPage = ClassLoader.getSystemResource("UI/help.html");
-	private final HyperlinkListener linkListener;
 
 	private Visualiser graphRenderer;
 	private JScrollPane graphInspectorScrollPane;
@@ -61,20 +72,6 @@ public class FTLFrame extends JFrame {
 		this.appVersion = appVersion;
 		this.prefs = prefs;
 
-		linkListener = e -> {
-			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				log.trace("Dialog link clicked: {}", e.getURL());
-				if (Desktop.isDesktopSupported()) {
-					try {
-						Desktop.getDesktop().browse(e.getURL().toURI());
-						log.trace("Link opened in external browser.");
-					} catch (URISyntaxException | IOException f) {
-						log.error("Unable to open link.", f);
-					}
-				}
-			}
-		};
-
 		// graph window
 		setupGraphFrame();
 
@@ -83,9 +80,6 @@ public class FTLFrame extends JFrame {
 		setResizable(false);
 		setTitle(String.format("%s %d - Inspector", appName, appVersion));
 		setLayout(new BorderLayout());
-
-		// help frame
-		createhelpFrame();
 
 		// inspector toolbar
 		add(setupToolbar(), BorderLayout.NORTH);
@@ -131,8 +125,9 @@ public class FTLFrame extends JFrame {
 		exportRecordingButton.setToolTipText("Export recording of the game state's history to a TSV file");
 		importRecordingButton.setToolTipText("Open existing TSV file with recordings of the game state's history");
 		toggleGraphButton.setToolTipText("Show/Hide graph window");
-		resetButton.setToolTipText("Reset all preferences back to default");
 		exportImageButton.setToolTipText("Export full-resolution image of current graph view");
+		resetButton.setToolTipText("Reset all preferences back to default");
+		helpButton.setToolTipText("Open FTLAV documentation");
 
 		toggleGameStateRecordingButton.setEnabled(false);
 		exportRecordingButton.setEnabled(false);
@@ -273,7 +268,17 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		helpButton.addActionListener(e -> helpFrame.setVisible(true));
+		helpButton.addActionListener(e -> {
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://github.com/Niels-NTG/FTLAV"));
+				} catch (IOException | URISyntaxException ex) {
+					log.error("Unable to open URL", ex);
+				}
+			} else {
+				log.error("Unable to open URL: Desktop API not supported");
+			}
+		});
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -305,37 +310,6 @@ public class FTLFrame extends JFrame {
 		toolbar.add(helpButton);
 
 		return toolbar;
-	}
-
-	private void createhelpFrame() {
-
-		helpFrame = new JFrame();
-
-		helpFrame.setSize(480, 670);
-		helpFrame.setResizable(true);
-		helpFrame.setLocationRelativeTo(this);
-		helpFrame.setTitle("Help & Background Information");
-		helpFrame.setLayout(new BorderLayout());
-
-		try {
-			JEditorPane editor = new JEditorPane(helpPage);
-			editor.setEditable(false);
-			editor.addHyperlinkListener(linkListener);
-
-			JScrollPane helpScrollPane = new JScrollPane(
-				editor,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
-			);
-			helpScrollPane.getVerticalScrollBar().setUnitIncrement(14);
-			helpScrollPane.getHorizontalScrollBar().setUnitIncrement(14);
-			helpFrame.add(helpScrollPane, BorderLayout.CENTER);
-		} catch (IOException e) {
-			log.error(e.toString());
-		}
-
-		helpFrame.setVisible(false);
-
 	}
 
 	private void setupGraphFrame() {
