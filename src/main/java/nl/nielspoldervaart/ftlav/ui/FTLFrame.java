@@ -122,7 +122,7 @@ public class FTLFrame extends JFrame {
 		exportRecordingButton = new JButton("Export recording", exportRecordingIcon);
 		importRecordingButton = new JButton("Import recording", importRecordingIcon);
 		toggleGraphButton = new JToggleButton("Graph", graphIcon, false);
-		exportImageButton = new JButton("Export image", exportImageIcon);
+		exportImageButton = new JButton("Export graph", exportImageIcon);
 		JButton resetButton = new JButton(resetIcon);
 		JButton helpButton = new JButton(helpIcon);
 
@@ -132,7 +132,7 @@ public class FTLFrame extends JFrame {
 		importRecordingButton.setToolTipText("Open existing TSV file with recordings of the game state's history");
 		toggleGraphButton.setToolTipText("Show/Hide graph window");
 		resetButton.setToolTipText("Reset all preferences back to default");
-		exportImageButton.setToolTipText("Export a full resolution image of the current graph view");
+		exportImageButton.setToolTipText("Export full-resolution image of current graph view");
 
 		toggleGameStateRecordingButton.setEnabled(false);
 		exportRecordingButton.setEnabled(false);

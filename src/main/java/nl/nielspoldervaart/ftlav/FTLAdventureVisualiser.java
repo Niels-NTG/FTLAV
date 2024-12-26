@@ -186,7 +186,7 @@ public class FTLAdventureVisualiser {
 		}
 
 		if (datsDir == null) {
-			showErrorDialog("FTL resources were not found.\nThe editor will now exit.");
+			showErrorDialog("FTL resources were not found.\nFTLAV will now exit.");
 			log.debug("No FTL dats path found, exiting.");
 			System.exit(1);
 		}
