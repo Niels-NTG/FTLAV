@@ -14,6 +14,7 @@ import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
+import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableRow;
 import nl.nielspoldervaart.ftlav.data.VisualiserAnnotation;
 import nl.nielspoldervaart.ftlav.ui.FTLFrame;
@@ -63,6 +64,8 @@ public class FTLAdventureVisualiser {
 	public static ArrayList<SectorDot> sectorList = new ArrayList<>();
 
 	public static ArrayList<TableRow> recording = new ArrayList<>();
+
+	public static File recordsExportFile;
 
 	public static HashMap<String, Boolean> columnsInVisualiser = new HashMap<>();
 	public static HashMap<String, GraphLineColor> colorsInVisualiser = new HashMap<>();
@@ -259,6 +262,8 @@ public class FTLAdventureVisualiser {
 
 			setDefaultVisualiserDataColumnVisibility();
 
+			makeGameStateTable();
+
 		} finally {
 			try {
 				if (in != null) {
@@ -397,5 +402,16 @@ public class FTLAdventureVisualiser {
 
 	public static boolean hasRecords() {
 		return !recording.isEmpty();
+	}
+
+	public static void makeGameStateTable() throws IOException {
+		if (recordsExportFile != null && hasGameState()) {
+			if (recordsExportFile.exists()) {
+				log.info("Writing game state recording table file at {}", recordsExportFile.getAbsolutePath());
+			} else {
+				log.info("Creating game state recording table file at {} ", recordsExportFile.getAbsolutePath());
+			}
+			new TableMaker(recordsExportFile);
+		}
 	}
 }

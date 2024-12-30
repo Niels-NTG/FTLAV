@@ -3,7 +3,6 @@ package nl.nielspoldervaart.ftlav.ui;
 import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.DataUtil;
-import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
 import nl.nielspoldervaart.ftlav.visualiser.Visualiser;
@@ -40,8 +39,8 @@ import java.util.prefs.Preferences;
 public class FTLFrame extends JFrame {
 
 	private final JLabel loadedSaveGameLabel;
-	private JButton exportRecordingButton;
-	private JButton importRecordingButton;
+	private JButton newRecordingButton;
+	private JButton openRecordingButton;
 	private JToggleButton toggleGraphButton;
 	private JButton exportImageButton;
 
@@ -50,8 +49,8 @@ public class FTLFrame extends JFrame {
 	private final Preferences prefs;
 
 	private static final ImageIcon loadGameIcon	    = new ImageIcon(ClassLoader.getSystemResource("UI/loadgame.gif"));
-	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/export.gif"));
-	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/import.gif"));
+	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/new.gif"));
+	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/open.gif"));
 	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("UI/graph.gif"));
 	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
 	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("UI/reset.gif"));
@@ -109,23 +108,23 @@ public class FTLFrame extends JFrame {
 		toolbar.setFloatable(false);
 
 		JButton gameStateLoadBtn = new JButton("Load save game", loadGameIcon);
-		exportRecordingButton = new JButton("Export recording", exportRecordingIcon);
-		importRecordingButton = new JButton("Import recording", importRecordingIcon);
+		newRecordingButton = new JButton("New recording", exportRecordingIcon);
+		openRecordingButton = new JButton("Open recording", importRecordingIcon);
 		toggleGraphButton = new JToggleButton("Graph", graphIcon, false);
 		exportImageButton = new JButton("Export graph", exportImageIcon);
 		JButton resetButton = new JButton(resetIcon);
 		JButton helpButton = new JButton(helpIcon);
 
 		gameStateLoadBtn.setToolTipText("Choose FTL save game file (continue.sav)");
-		exportRecordingButton.setToolTipText("Export recording of the game state's history to a TSV file");
-		importRecordingButton.setToolTipText("Open existing TSV file with recordings of the game state's history");
+		newRecordingButton.setToolTipText("Start recording game state's history to a TSV file");
+		openRecordingButton.setToolTipText("Open existing TSV file with recordings of the game state's history");
 		toggleGraphButton.setToolTipText("Show/Hide graph window");
 		exportImageButton.setToolTipText("Export full-resolution image of current graph view");
 		resetButton.setToolTipText("Reset all preferences back to default");
 		helpButton.setToolTipText("Open FTLAV documentation");
 
-		exportRecordingButton.setEnabled(false);
-		importRecordingButton.setEnabled(false);
+		newRecordingButton.setEnabled(false);
+		openRecordingButton.setEnabled(false);
 		toggleGraphButton.setEnabled(false);
 		exportImageButton.setEnabled(false);
 
@@ -137,7 +136,7 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		exportRecordingButton.addActionListener(e -> {
+		newRecordingButton.addActionListener(e -> {
 			JFileChooser exportFileChooser = new JFileChooser();
 			exportFileChooser.setCurrentDirectory(null);
 			exportFileChooser.setFileHidingEnabled(true);
@@ -155,9 +154,9 @@ public class FTLFrame extends JFrame {
 			if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 				File chosenExportFile = exportFileChooser.getSelectedFile();
 				if (chosenExportFile != null) {
+					FTLAdventureVisualiser.recordsExportFile = exportFileChooser.getSelectedFile();
 					try {
-						log.info("Created TSV file at {}", chosenExportFile.getAbsolutePath());
-						new TableMaker(chosenExportFile);
+						FTLAdventureVisualiser.makeGameStateTable();
 					} catch (IOException ex) {
 						log.error("Unable to make table.", ex);
 						showErrorDialog(String.format("Unable to make table: %s", ex.getMessage()));
@@ -166,7 +165,7 @@ public class FTLFrame extends JFrame {
 			}
 		});
 
-		importRecordingButton.addActionListener(e -> {
+		openRecordingButton.addActionListener(e -> {
 			JFileChooser importFileChooser = new JFileChooser();
 			importFileChooser.setCurrentDirectory(null);
 			importFileChooser.setFileHidingEnabled(true);
@@ -193,7 +192,7 @@ public class FTLFrame extends JFrame {
 							this,
 							"Importing a recording will overwrite the existing recording.\n" +
 								"Are you sure you want to continue?",
-							"Before you import",
+							"Before you open this file",
 							JOptionPane.YES_NO_OPTION
 						);
 						if (dialogChoice == JOptionPane.NO_OPTION) {
@@ -206,6 +205,7 @@ public class FTLFrame extends JFrame {
 							TableReader.read(chosenImportFile);
 							onGameStateUpdate();
 							updateStatusBar(String.format("Imported recording with %s records", FTLAdventureVisualiser.recording.size()));
+							FTLAdventureVisualiser.recordsExportFile = chosenImportFile;
 						} catch (IOException ex) {
 							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
 							showErrorDialog(String.format("Unable to read TSV file: %s", ex.getMessage()));
@@ -302,8 +302,8 @@ public class FTLFrame extends JFrame {
 
 		toolbar.add(gameStateLoadBtn);
 		toolbar.add(Box.createHorizontalGlue());
-		toolbar.add(exportRecordingButton);
-		toolbar.add(importRecordingButton);
+		toolbar.add(newRecordingButton);
+		toolbar.add(openRecordingButton);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(toggleGraphButton);
 		toolbar.add(exportImageButton);
@@ -400,8 +400,8 @@ public class FTLFrame extends JFrame {
 			"No save game loaded"
 		);
 
-		exportRecordingButton.setEnabled(hasGameState);
-		importRecordingButton.setEnabled(hasGameState);
+		newRecordingButton.setEnabled(hasGameState);
+		openRecordingButton.setEnabled(hasGameState);
 
 		boolean hasRecords = FTLAdventureVisualiser.hasRecords();
 		toggleGraphButton.setEnabled(hasRecords);
