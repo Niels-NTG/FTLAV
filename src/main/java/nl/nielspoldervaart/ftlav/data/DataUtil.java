@@ -230,14 +230,14 @@ public class DataUtil {
 		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getDroneSlots();
 	}
 
-	public static String getStoreListing(SavedGameState gameState) {
-		String storeItems = "";
-		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
-		StoreState store = beacon.getStore();
-		if (store != null) {
-			storeItems = store.toString();
+	public static int getPlayerCrewCount(ShipState shipState) {
+		int playerControlledCrewCount = 0;
+		for (CrewState crewState : shipState.getCrewList()) {
+			if (crewState.isPlayerControlled()) {
+				playerControlledCrewCount++;
+			}
 		}
-		return storeItems.replaceAll("_"," ").replaceAll("\\s{2,}", " ");
+		return playerControlledCrewCount;
 	}
 
 	public static JSONArray getCrewList(ShipState shipState) {
@@ -273,24 +273,16 @@ public class DataUtil {
 	}
 
 	private static String getFullCrewType(String rawCrewType) {
-
-		String fullCrewType = "";
-
-		if (rawCrewType.length() > 1) {
-
-			switch (rawCrewType) {
-				case "battle"    : fullCrewType = "Anti-Personel Drone"; break;
-				case "energy"    : fullCrewType = "Zoltan"; break;
-				case "anaerobic" : fullCrewType = "Lanius"; break;
-				default :
-					fullCrewType = rawCrewType.substring(0, 1).toUpperCase() + rawCrewType.substring(1);
-				break;
-			}
-
+		if (rawCrewType.isEmpty()) {
+			return "";
 		}
-
-		return fullCrewType;
-
+		switch (rawCrewType) {
+			case "battle"    : return "Anti-Personel Drone";
+			case "energy"    : return "Zoltan";
+			case "anaerobic" : return "Lanius";
+			default:
+				return rawCrewType.substring(0, 1).toUpperCase() + rawCrewType.substring(1);
+		}
 	}
 
 	public static int getRebelFleetAdvancement(SavedGameState gameState) {

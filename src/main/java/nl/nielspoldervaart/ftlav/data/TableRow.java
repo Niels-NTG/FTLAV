@@ -450,8 +450,7 @@ public class TableRow {
 		fuel = playerShip.getFuelAmt();
 		missles = playerShip.getMissilesAmt();
 		droneParts = playerShip.getDronePartsAmt();
-		// TODO check if this also includes enemy boarders
-		crewSize = playerShip.getCrewList().size();
+		crewSize = DataUtil.getPlayerCrewCount(playerShip);
 		hull = playerShip.getHullAmt();
 		oxygenLevel = DataUtil.getShipOxygenLevel(playerShip);
 		shipAugments = DataUtil.getShipAugments(playerShip);
