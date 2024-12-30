@@ -211,6 +211,7 @@ public class FTLFrame extends JFrame {
 							log.info("Reading TSV file at {}", chosenImportFile.getAbsolutePath());
 							TableReader.read(chosenImportFile);
 							onGameStateUpdate();
+							updateStatusBar(String.format("Imported recording with %s records", FTLAdventureVisualiser.recording.size()));
 						} catch (IOException ex) {
 							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
 							showErrorDialog(String.format("Unable to read TSV file: %s", ex.getMessage()));
@@ -365,7 +366,19 @@ public class FTLFrame extends JFrame {
 			(File file) -> {
 				if (toggleGameStateRecordingButton.isSelected()) {
 					log.info("File {} has updated", file.getName());
-					FTLAdventureVisualiser.loadGameState(file);
+					try {
+						FTLAdventureVisualiser.loadGameState(file);
+						onGameStateUpdate();
+					} catch (IOException e) {
+						log.debug("Reading current game state failed: ", e);
+						updateStatusBar(String.format(
+							"Failed reading current game state from %s (%s). This state won't be recorded. Reason %s",
+							FTLAdventureVisualiser.gameStateFile.getName(),
+							FTLAdventureVisualiser.getTimeStamp(),
+							e.getMessage()
+						));
+					}
+					return;
 				}
 				onGameStateUpdate();
 			}
@@ -385,7 +398,7 @@ public class FTLFrame extends JFrame {
 	private void updateToolbarButtonStates() {
 		boolean hasGameState = FTLAdventureVisualiser.hasGameState();
 
-		loadedSaveGameLabel.setText(hasGameState ?
+		updateStatusBar(hasGameState ?
 			String.format(
 				"Loaded %s (%s)",
 				FTLAdventureVisualiser.gameStateFile.getName(),
@@ -407,6 +420,10 @@ public class FTLFrame extends JFrame {
 		if (!hasRecords) {
 			toggleGraphButton.setSelected(false);
 		}
+	}
+
+	private void updateStatusBar(String text) {
+		loadedSaveGameLabel.setText(text);
 	}
 
 	private void showErrorDialog(String message) {

@@ -201,10 +201,15 @@ public class FTLAdventureVisualiser {
 		log.info("Reading game state: {}", chosenFile.getAbsoluteFile());
 		log.info("Table rows: {}", recording.size() + 1);
 
-		loadGameState(chosenFile);
+		try {
+			loadGameState(chosenFile);
+		} catch (IOException e) {
+			log.error("Reading game state from file {} failed: {}", chosenFile.getAbsoluteFile(), e.getMessage());
+			showErrorDialog(String.format("Reading game state from file %s failed: %s", chosenFile.getAbsoluteFile(), e.getMessage()));
+		}
 	}
 
-	public static void loadGameState(File chosenFile) {
+	public static void loadGameState(File chosenFile) throws IOException {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(chosenFile);
@@ -254,10 +259,6 @@ public class FTLAdventureVisualiser {
 
 			setDefaultVisualiserDataColumnVisibility();
 
-		} catch (IOException e) {
-			log.error("Reading game state from file {} failed: {}", chosenFile.getName(), e.getMessage());
-			showErrorDialog(String.format("Reading game state (\"%s\") failed:%n%s", chosenFile.getName(), e.getMessage()));
-			unsetGameState();
 		} finally {
 			try {
 				if (in != null) {
