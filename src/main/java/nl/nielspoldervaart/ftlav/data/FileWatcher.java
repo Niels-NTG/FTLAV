@@ -49,7 +49,6 @@ public class FileWatcher implements Runnable {
 					if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
 						Path changedFilePath = (Path) event.context();
 						if (targetPath.getFileName().equals(changedFilePath)) {
-							log.info("{} has {}", targetFile, event.kind());
 							consumer.accept(targetFile);
 						}
 					}

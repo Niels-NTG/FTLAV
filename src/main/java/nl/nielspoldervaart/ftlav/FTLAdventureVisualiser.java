@@ -383,7 +383,7 @@ public class FTLAdventureVisualiser {
 	}
 
 	public static String getTimeStamp() {
-		return getTimeStamp(gameStateFile);
+		return getTimeStamp(gameStateFile).replaceAll("T", " ");
 	}
 	public static String getTimeStamp(File file) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");

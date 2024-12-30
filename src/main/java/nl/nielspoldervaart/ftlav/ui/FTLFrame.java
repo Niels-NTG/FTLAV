@@ -85,7 +85,7 @@ public class FTLFrame extends JFrame {
 		add(setupToolbar(), BorderLayout.NORTH);
 
 		loadedSaveGameLabel = new JLabel(" ");
-		loadedSaveGameLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 2));
+		loadedSaveGameLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
 		loadedSaveGameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(loadedSaveGameLabel, BorderLayout.SOUTH);
 
@@ -149,8 +149,12 @@ public class FTLFrame extends JFrame {
 			exportFileChooser.setFileHidingEnabled(true);
 			exportFileChooser.setDialogTitle("Pick a location to store your recording");
 			exportFileChooser.setSelectedFile(new File(
-				DataUtil.getPlayerShipName() + " FTLAV v" + appVersion + " " +
-				DataUtil.getTimeStampLastRecord() + ".tsv"
+				String.format(
+					"%s FTLAV v%d %s.tsv",
+					DataUtil.getPlayerShipName(),
+					appVersion,
+					DataUtil.getTimeStampLastRecord()
+				)
 			));
 
 			int chooserResponse = exportFileChooser.showSaveDialog(this);
@@ -193,7 +197,7 @@ public class FTLFrame extends JFrame {
 					if (FTLAdventureVisualiser.hasRecords()) {
 						int dialogChoice = JOptionPane.showConfirmDialog(
 							this,
-							"Importing a recording will overwrite the existing recording. " +
+							"Importing a recording will overwrite the existing recording.\n" +
 								"Are you sure you want to continue?",
 							"Before you import",
 							JOptionPane.YES_NO_OPTION
@@ -235,8 +239,12 @@ public class FTLFrame extends JFrame {
 			exportGraphFileChooser.setFileHidingEnabled(true);
 			exportGraphFileChooser.setDialogTitle("Pick a location to store your visualiser image");
 			exportGraphFileChooser.setSelectedFile(new File(
-				DataUtil.getPlayerShipName() + " FTLAV v" + appVersion + " " +
-					DataUtil.getTimeStampLastRecord() + ".png"
+				String.format(
+					"%s FTLAV v%d %s.png",
+					DataUtil.getPlayerShipName(),
+					appVersion,
+					DataUtil.getTimeStampLastRecord()
+				)
 			));
 
 			int chooserResponse = exportGraphFileChooser.showSaveDialog(this);
@@ -252,7 +260,7 @@ public class FTLFrame extends JFrame {
 		resetButton.addActionListener(e -> {
 			int dialogChoice = JOptionPane.showConfirmDialog(
 				this,
-				"Are you sure you want to reset all preferences? This operation will quit " + appName + ".",
+				String.format("Are you sure you want to reset all preferences? This operation will quit %s.", appName),
 				"Reset all preferences",
 				JOptionPane.YES_NO_OPTION
 			);
@@ -260,7 +268,7 @@ public class FTLFrame extends JFrame {
 				log.info("All preferences will be ereased.");
 				try {
 					prefs.clear();
-					log.info("All preferences have been cleared. Exiting...");
+					log.info("All preferences have been cleared. Exiting…");
 					System.exit(0);
 				} catch (BackingStoreException bse) {
 					log.trace("Something went wrong while attempting to reset all preferences", bse);
@@ -381,7 +389,7 @@ public class FTLFrame extends JFrame {
 			String.format(
 				"Loaded %s (%s)",
 				FTLAdventureVisualiser.gameStateFile.getName(),
-				FTLAdventureVisualiser.getTimeStamp().replaceAll("T", " ")
+				FTLAdventureVisualiser.getTimeStamp()
 			) :
 			"No save game loaded"
 		);
