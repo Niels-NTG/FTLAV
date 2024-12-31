@@ -3,7 +3,6 @@ package nl.nielspoldervaart.ftlav.data;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.Getter;
-import lombok.Setter;
 import net.blerf.ftl.model.state.DoorState;
 import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
@@ -17,9 +16,7 @@ import processing.data.StringList;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-@SuppressWarnings("unused")
 @Getter
-@Setter
 public class TableRow {
 
 	// Non-temporal
@@ -416,6 +413,7 @@ public class TableRow {
 	@CsvBindByName(column = "nearby ship hacking system damage")
 	private int nearbyShipHackingSystemDamage;
 
+	@SuppressWarnings("unused")
 	public TableRow() {}
 	public TableRow(SavedGameState gameState, String timeStamp) {
 

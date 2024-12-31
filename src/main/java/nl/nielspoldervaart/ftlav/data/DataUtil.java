@@ -10,7 +10,6 @@ import net.blerf.ftl.model.state.EnvironmentState;
 import net.blerf.ftl.model.state.RoomState;
 import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
-import net.blerf.ftl.model.state.StoreState;
 import net.blerf.ftl.model.state.WeaponState;
 import net.blerf.ftl.model.systeminfo.BatteryInfo;
 import net.blerf.ftl.model.systeminfo.ShieldsInfo;
@@ -33,7 +32,6 @@ public class DataUtil {
 	public static ArrayList<Integer> extractIntColumn(String columnName) {
 		ArrayList<Integer> column = new ArrayList<>();
 		for (TableRow row : FTLAdventureVisualiser.recording) {
-			// TODO fill with placeholder if fieldValue does not exist in this row
 			column.add((int)row.getFieldValue(columnName));
 		}
 		return column;
@@ -42,7 +40,6 @@ public class DataUtil {
 	public static ArrayList<String> extractStringColumn(String columnName) {
 		ArrayList<String> column = new ArrayList<>();
 		for (TableRow row : FTLAdventureVisualiser.recording) {
-			// TODO fill with placeholder if fieldValue does not exist in this row
 			column.add((String)row.getFieldValue(columnName));
 		}
 		return column;
