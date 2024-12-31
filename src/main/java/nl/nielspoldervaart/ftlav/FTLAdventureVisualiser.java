@@ -206,13 +206,13 @@ public class FTLAdventureVisualiser {
 
 		try {
 			loadGameState(chosenFile);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("Reading game state from file {} failed: {}", chosenFile.getAbsoluteFile(), e.getMessage());
 			showErrorDialog(String.format("Reading game state from file %s failed: %s", chosenFile.getAbsoluteFile(), e.getMessage()));
 		}
 	}
 
-	public static void loadGameState(File chosenFile) throws IOException {
+	public static void loadGameState(File chosenFile) throws Exception {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(chosenFile);
