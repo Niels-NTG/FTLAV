@@ -288,9 +288,7 @@ public class FTLFrame extends JFrame {
 			public void windowClosing(WindowEvent w) {
 				int exitWarning = JOptionPane.showConfirmDialog(
 					null,
-					"Are you sure you want to quit FTLAV?\n" +
-						"All collected data will be lost. Please use " +
-						"the \"Export recording\" to save the recorded data",
+					"Are you sure you want to quit FTLAV?",
 					"Confirm before quiting FTLAV…",
 					JOptionPane.YES_NO_OPTION
 				);
