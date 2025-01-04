@@ -54,7 +54,10 @@ public class DataUtil {
 	}
 
 	public static TableRow getLastRecord() {
-		return FTLAdventureVisualiser.recording.get(FTLAdventureVisualiser.recording.size() - 1);
+		if (FTLAdventureVisualiser.hasRecords()) {
+			return FTLAdventureVisualiser.recording.get(FTLAdventureVisualiser.recording.size() - 1);
+		}
+		return null;
 	}
 
 	public static String getPlayerShipName() {

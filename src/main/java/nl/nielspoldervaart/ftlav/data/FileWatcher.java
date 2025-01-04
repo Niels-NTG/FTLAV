@@ -3,6 +3,7 @@ package nl.nielspoldervaart.ftlav.data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.function.Consumer;
@@ -10,21 +11,30 @@ import java.util.function.Consumer;
 @Slf4j
 public class FileWatcher implements Runnable {
 
-	private final File targetFile;
+	public final File targetFile;
 	private final Consumer<File> consumer;
 	private final Thread thread;
 
-	public FileWatcher(File targetFile, Consumer<File> consumer) {
+	public FileWatcher(File targetFile, Consumer<File> consumer) throws FileNotFoundException {
+		if (targetFile == null || !targetFile.exists()) {
+			throw new FileNotFoundException("No file was submitted to the file watcher");
+		}
 		this.targetFile = targetFile;
 		this.consumer = consumer;
 		this.thread = new Thread(this);
-		// TODO apply singleton pattern to Filewatch so only one instance can exist at once,
-		//  to account for change of target file.
+		log.info("Starting watching file {} for changes", targetFile.getAbsolutePath());
 	}
 
 	public void watch() {
 		thread.setDaemon(true);
 		thread.start();
+	}
+
+	public void unwatch() {
+		log.info("Stopping watching file {} for changes", targetFile.getAbsolutePath());
+		try {
+			thread.interrupt();
+		} catch (SecurityException ignored) {}
 	}
 
 	@Override

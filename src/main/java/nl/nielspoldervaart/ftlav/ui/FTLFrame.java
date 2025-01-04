@@ -29,6 +29,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -130,10 +131,8 @@ public class FTLFrame extends JFrame {
 
 		gameStateLoadBtn.addActionListener(e -> {
 			FTLAdventureVisualiser.loadGameState(true);
+			startGameStateWatcher();
 			onGameStateUpdate();
-			if (FTLAdventureVisualiser.hasGameState()) {
-				toggleGraphButton.setSelected(true);
-			}
 		});
 
 		newRecordingButton.addActionListener(e -> {
@@ -348,33 +347,45 @@ public class FTLFrame extends JFrame {
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 		);
 		graphInspectorScrollPane.getVerticalScrollBar().setUnitIncrement(14);
+		graphInspectorScrollPane.setVisible(false);
 		add(graphInspectorScrollPane, BorderLayout.CENTER);
 	}
 
 	private void startGameStateWatcher() {
-		FileWatcher fileWatcher = new FileWatcher(
-			FTLAdventureVisualiser.gameStateFile,
-			(File file) -> {
-				if (FTLAdventureVisualiser.hasGameState()) {
-					log.info("File {} has updated", file.getName());
-					try {
-						FTLAdventureVisualiser.loadGameState(file);
-						onGameStateUpdate();
-					} catch (Exception e) {
-						log.debug("Reading current game state failed: ", e);
-						updateStatusBar(String.format(
-							"Failed reading current game state from %s (%s). This state won't be recorded. Reason %s",
-							FTLAdventureVisualiser.gameStateFile.getName(),
-							FTLAdventureVisualiser.getTimeStamp(),
-							e.getMessage()
-						));
-					}
+        try {
+			if (FTLAdventureVisualiser.gameStateFilewatcher != null) {
+				if (FTLAdventureVisualiser.gameStateFilewatcher.targetFile == FTLAdventureVisualiser.gameStateFile) {
 					return;
+				} else {
+					FTLAdventureVisualiser.gameStateFilewatcher.unwatch();
 				}
-				onGameStateUpdate();
 			}
-		);
-		fileWatcher.watch();
+			FTLAdventureVisualiser.gameStateFilewatcher = new FileWatcher(
+				FTLAdventureVisualiser.gameStateFile,
+				(File file) -> {
+					if (FTLAdventureVisualiser.hasGameState()) {
+						log.info("File {} has updated", file.getName());
+						try {
+							FTLAdventureVisualiser.loadGameState(file);
+							onGameStateUpdate();
+						} catch (Exception e) {
+							log.error("Reading current game state failed: ", e);
+							updateStatusBar(String.format(
+									"Failed reading current game state from %s (%s). This state won't be recorded.",
+									FTLAdventureVisualiser.gameStateFile.getName(),
+									FTLAdventureVisualiser.getTimeStamp(),
+									e.getMessage()
+							));
+						}
+						return;
+					}
+					onGameStateUpdate();
+				}
+			);
+			FTLAdventureVisualiser.gameStateFilewatcher.watch();
+        } catch (FileNotFoundException e) {
+            log.error("No save game file was selected");
+        }
 	}
 
 	private void onGameStateUpdate() {

@@ -14,6 +14,7 @@ import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
+import nl.nielspoldervaart.ftlav.data.FileWatcher;
 import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableRow;
 import nl.nielspoldervaart.ftlav.data.VisualiserAnnotation;
@@ -61,6 +62,7 @@ public class FTLAdventureVisualiser {
 
 	public static File gameStateFile;
 	public static SavedGameState gameState = null;
+	public static FileWatcher gameStateFilewatcher;
 	public static ArrayList<SectorDot> sectorList = new ArrayList<>();
 
 	public static ArrayList<TableRow> recording = new ArrayList<>();
@@ -190,7 +192,7 @@ public class FTLAdventureVisualiser {
 
 		if (datsDir == null) {
 			showErrorDialog("FTL resources were not found.\nFTLAV will now exit.");
-			log.debug("No FTL dats path found, exiting.");
+			log.error("No FTL dats path found, exiting.");
 			System.exit(1);
 		}
 		return datsDir;
@@ -201,10 +203,9 @@ public class FTLAdventureVisualiser {
 		if (chosenFile == null) {
 			return;
 		}
-		log.info("Reading game state: {}", chosenFile.getAbsoluteFile());
-		log.info("Table rows: {}", recording.size() + 1);
 
 		try {
+			log.info("Reading game state: {}", chosenFile.getAbsoluteFile());
 			loadGameState(chosenFile);
 		} catch (Exception e) {
 			log.error("Reading game state from file {} failed: {}", chosenFile.getAbsoluteFile(), e.getMessage());
@@ -320,7 +321,7 @@ public class FTLAdventureVisualiser {
 
 			@Override
 			public String getDescription() {
-				return "FTL saved game (continue.sav)";
+				return "FTL save game (continue.sav)";
 			}
 		});
 
@@ -330,18 +331,20 @@ public class FTLAdventureVisualiser {
 			continueFileChooser.setCurrentDirectory(FTLUtilities.findUserDataDir());
 		}
 		int fileChooserResult = continueFileChooser.showOpenDialog(null);
-		candidateSaveFile = continueFileChooser.getSelectedFile();
 		if (
 			fileChooserResult == JFileChooser.APPROVE_OPTION &&
-			candidateSaveFile != null &&
-			candidateSaveFile.exists()
+			continueFileChooser.getSelectedFile() != null &&
+			continueFileChooser.getSelectedFile().exists()
 		) {
-			if (validateContinueFile(candidateSaveFile)) {
-				prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
-				return candidateSaveFile;
-			} else if (confirmLoadInvalidContinueFile(candidateSaveFile.getAbsolutePath())) {
-				prefs.put(FTL_CONTINUE_PATH, candidateSaveFile.getAbsolutePath());
-				return candidateSaveFile;
+			File selectedFile = continueFileChooser.getSelectedFile();
+			if (validateContinueFile(selectedFile)) {
+				prefs.put(FTL_CONTINUE_PATH, selectedFile.getAbsolutePath());
+				return selectedFile;
+			} else {
+				if (confirmLoadInvalidContinueFile(selectedFile.getAbsolutePath())) {
+					prefs.put(FTL_CONTINUE_PATH, selectedFile.getAbsolutePath());
+					return selectedFile;
+				}
 			}
 		}
 
@@ -356,14 +359,13 @@ public class FTLAdventureVisualiser {
 	}
 
 	private static boolean confirmLoadInvalidContinueFile(String continueFilePath) {
-		int response = JOptionPane.showConfirmDialog(
-			null,
-			String.format("Warning, selected file %s might not be a valid FTL save file!", continueFilePath),
-			"Potentially invalid save file",
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.WARNING_MESSAGE
-		);
-		return response == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(
+            null,
+            String.format("Warning, selected file %s might not be a valid FTL save file!", continueFilePath),
+            "Potentially invalid save file",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        ) == JOptionPane.YES_OPTION;
 	}
 
 	private static void setDefaultVisualiserDataColumnVisibility() {

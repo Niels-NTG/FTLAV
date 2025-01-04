@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PGraphics;
 
 @Slf4j
 public class Visualiser extends PApplet {
@@ -99,6 +100,12 @@ public class Visualiser extends PApplet {
 
 		background(COLOR_BG_DARK);
 
+		if (!FTLAdventureVisualiser.hasRecords()) {
+			image(noDataGraphics(), 0, 0);
+			noLoop();
+			return;
+		}
+
 		LineGraph lineGraph = new LineGraph(this, Math.max(256, width) - MARGIN * 2, Math.max(256, height) - MARGIN * 2);
 		image(lineGraph.draw(), MARGIN, MARGIN);
 
@@ -110,6 +117,22 @@ public class Visualiser extends PApplet {
 
 	public void exportGraph(String exportPath) {
 		save(exportPath);
+	}
+
+	PGraphics noDataGraphics() {
+		PGraphics noDataGraphics = createGraphics(width, height);
+		noDataGraphics.beginDraw();
+		noDataGraphics.fill(COLOR_MAIN_TEXT);
+		noDataGraphics.noStroke();
+		noDataGraphics.textFont(FONT_TITLE);
+		noDataGraphics.textAlign(PApplet.CENTER, PApplet.CENTER);
+		noDataGraphics.text(
+			"Insufficient save game data",
+			width / 2,
+			height / 2
+		);
+		noDataGraphics.endDraw();
+		return noDataGraphics;
 	}
 
 	int getDataX(int index, int targetMin, int targetMax) {
