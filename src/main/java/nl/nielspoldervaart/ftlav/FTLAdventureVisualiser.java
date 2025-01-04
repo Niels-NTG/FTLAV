@@ -416,4 +416,14 @@ public class FTLAdventureVisualiser {
 			new TableMaker(recordsExportFile);
 		}
 	}
+
+	public static ArrayList<String> getColumnsVisibleInVisualiser() {
+		ArrayList<String> columnsVisibleInVisualiser = new ArrayList<>();
+		for (String column : columnsInVisualiser.keySet()) {
+			if (FTLAdventureVisualiser.columnsInVisualiser.get(column)) {
+				columnsVisibleInVisualiser.add(column);
+			}
+		}
+		return columnsVisibleInVisualiser;
+	}
 }

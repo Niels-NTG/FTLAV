@@ -64,22 +64,15 @@ public class GraphTextBox {
 		return titleGraphic;
 	}
 
-	static PGraphics createDataSeriesLabel(Visualiser root, PVector size, PVector offset, String label) {
-		PGraphics dataSeriesLabelBox = root.createGraphics((int) size.x, (int) size.y);
-		dataSeriesLabelBox.beginDraw();
-
-		PGraphics dataSeriesLabel = createTextBox(
+	static PGraphics createDataSeriesLabel(Visualiser root, String label) {
+		return createTextBox(
 			root,
 			label.toUpperCase(),
 			0, root.COLOR_MAIN_TEXT,
 			root.FONT_SMALL,
 			root.COLOR_BORDER, 1,
-			PConstants.LEFT
+			PConstants.CENTER
 		);
-		dataSeriesLabelBox.image(dataSeriesLabel, offset.x, offset.y - dataSeriesLabel.height);
-
-		dataSeriesLabelBox.endDraw();
-		return dataSeriesLabelBox;
 	}
 
 	static void createSectorLabel(Visualiser root, PGraphics g, PVector size, PVector offset, int sectorNumber, String sectorName, String sectorType) {
@@ -141,12 +134,14 @@ public class GraphTextBox {
 
 		int margin = 6;
 		int lineHeight = 24; // 24 is correct line height for root.FONT_LARGE
+		int minWidth = 24;
 		if (textFont == root.FONT_SMALL) {
 			margin = 4;
-			lineHeight = 18;
+			lineHeight = 16;
+			minWidth = 8;
 		}
 
-		int textWidth = Math.max(24, root.getTextWidth(text, textFont));
+		int textWidth = Math.max(minWidth, root.getTextWidth(text, textFont));
 		PVector size = new PVector(textWidth + margin + margin, lineHeight);
 
 		PGraphics textBox = root.createGraphics((int) size.x, (int) size.y);
@@ -154,7 +149,13 @@ public class GraphTextBox {
 		textBox.textFont(textFont);
 		textBox.textAlign(horizontalTextAlignment, PConstants.TOP);
 
-		textBox.image(createBevelBox(root, new PVector(textBox.width, textBox.height), backgroundColor, stroke, strokeWeight), 0, 0);
+		textBox.image(createBevelBox(
+			root,
+			new PVector(textBox.width, textBox.height),
+			backgroundColor,
+			stroke,
+			strokeWeight
+		), 0, 0);
 
 		textBox.noStroke();
 		textBox.fill(textColor);

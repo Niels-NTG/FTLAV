@@ -8,6 +8,9 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class LineGraph {
 
@@ -35,9 +38,11 @@ public class LineGraph {
 
 		drawYAxis(graphics, yMax);
 
-		drawXAxis(graphics);
+		PGraphics plotLabelArea = createPlotLabels(yMax);
 
-		plotData(graphics, yMax);
+		drawXAxis(graphics, plotLabelArea);
+
+		plotData(graphics, yMax, plotLabelArea);
 
 		graphics.endDraw();
 		return graphics;
@@ -68,7 +73,7 @@ public class LineGraph {
 		g.image(yAxis, 0, 0);
 	}
 
-	private void drawXAxis(PGraphics g) {
+	private void drawXAxis(PGraphics g, PGraphics plotLabelArea) {
 		ArrayList<Integer> beaconNumbers = DataUtil.extractIntColumn("beaconNumber");
 		ArrayList<Integer> sectorNumbers = DataUtil.extractIntColumn("sectorNumber");
 		ArrayList<String> sectorNames = DataUtil.extractStringColumn("sectorName");
@@ -83,7 +88,7 @@ public class LineGraph {
 
 		xAxis.strokeWeight(0.4f);
 		for (int i = 0; i < beaconNumbers.size(); i++) {
-			int x = root.getDataX(i, Y_AXIS_WIDTH, xAxis.width);
+			int x = Visualiser.getDataX(i, Y_AXIS_WIDTH, xAxis.width - (plotLabelArea.width));
 
 			xAxis.stroke(root.COLOR_BORDER);
 			xAxis.line(x, xAxis.height - X_AXIS_HEIGHT, x, TOP_MARGIN);
@@ -91,12 +96,12 @@ public class LineGraph {
 			if (sectorNumbers.get(i) != lastSectorNumber) {
 				int nextSectorIndex = -1;
 				for (int sectorNumberIndex = i; sectorNumberIndex < sectorNumbers.size(); sectorNumberIndex++) {
-					if (sectorNumbers.get(sectorNumberIndex) != sectorNumbers.get(i)) {
+					if (!sectorNumbers.get(sectorNumberIndex).equals(sectorNumbers.get(i))) {
 						nextSectorIndex = sectorNumberIndex;
 						break;
 					}
 				}
-				int sectorWidth = root.getDataX(nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex, Y_AXIS_WIDTH, xAxis.width) - x;
+				int sectorWidth = Visualiser.getDataX(nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex, Y_AXIS_WIDTH, xAxis.width) - x;
 				GraphTextBox.createSectorLabel(
 					root, g,
 					new PVector(sectorWidth, X_AXIS_HEIGHT),
@@ -118,21 +123,72 @@ public class LineGraph {
 		g.image(xAxis, 0, 0);
 	}
 
-	private void plotData(PGraphics g, int yMax) {
-		PVector lineGraphicsSize = new PVector(GRAPHICS_WIDTH - Y_AXIS_WIDTH, GRAPHICS_HEIGHT - (X_AXIS_HEIGHT + TOP_MARGIN));
+	private void plotData(PGraphics g, int yMax, PGraphics plotLabels) {
+		PVector lineGraphicsSize = new PVector(
+			GRAPHICS_WIDTH - (Y_AXIS_WIDTH + plotLabels.width),
+			GRAPHICS_HEIGHT - (X_AXIS_HEIGHT + TOP_MARGIN)
+		);
 		PVector lineGraphicsOffset = new PVector(Y_AXIS_WIDTH, TOP_MARGIN);
-		for (String key : FTLAdventureVisualiser.columnsInVisualiser.keySet()) {
-			if (FTLAdventureVisualiser.columnsInVisualiser.get(key)) {
-				GraphLine.createLine(root,
-					g,
-					lineGraphicsSize,
-					lineGraphicsOffset,
-					key,
+		for (String key : FTLAdventureVisualiser.getColumnsVisibleInVisualiser()) {
+			GraphLine.createLine(root,
+				g,
+				lineGraphicsSize,
+				lineGraphicsOffset,
+				key,
+				yMax,
+				root.getLineColor(FTLAdventureVisualiser.colorsInVisualiser.get(key).label)
+			);
+		}
+
+		g.image(plotLabels, GRAPHICS_WIDTH - plotLabels.width, TOP_MARGIN);
+	}
+
+	private PGraphics createPlotLabels(int yMax) {
+		final int LABEL_MARGIN = 4;
+		final int LABEL_AREA_MIN_WIDTH = 64;
+
+		HashMap<String, PGraphics> labels =	new HashMap<>();
+		ArrayList<Integer> labelWidths = new ArrayList<>();
+		for (String key : FTLAdventureVisualiser.getColumnsVisibleInVisualiser()) {
+			PGraphics labelGraphic = GraphTextBox.createDataSeriesLabel(root, DataUtil.getColumnDisplayName(key));
+			labels.put(key, labelGraphic);
+			labelWidths.add(labelGraphic.width + LABEL_MARGIN);
+		}
+		PGraphics labelsArea = root.createGraphics(
+			labelWidths.isEmpty() ? LABEL_AREA_MIN_WIDTH : Math.max(Collections.max(labelWidths), LABEL_AREA_MIN_WIDTH),
+			GRAPHICS_HEIGHT - (X_AXIS_HEIGHT + TOP_MARGIN)
+		);
+		labelsArea.beginDraw();
+		labelsArea.noStroke();
+		if (FTLAdventureVisualiser.recording.size() > 1) {
+			for (String key : labels.keySet()) {
+				int value;
+				try {
+					value = (int) Objects.requireNonNull(DataUtil.getLastRecord()).getFieldValue(key);
+				} catch (NullPointerException e) {
+					continue;
+				}
+
+				PGraphics label = labels.get(key);
+				int y = (int) PApplet.map(
+					value,
+					0,
 					yMax,
-					root.getLineColor(FTLAdventureVisualiser.colorsInVisualiser.get(key).label)
+					labelsArea.height,
+					0
+				) - (label.height + LABEL_MARGIN);
+				y = Math.max(y, LABEL_MARGIN);
+
+				labelsArea.image(
+					label,
+					LABEL_MARGIN,
+					y
 				);
 			}
 		}
+
+		labelsArea.endDraw();
+		return labelsArea;
 	}
 
 }

@@ -135,8 +135,8 @@ public class Visualiser extends PApplet {
 		return noDataGraphics;
 	}
 
-	int getDataX(int index, int targetMin, int targetMax) {
-		return (int) map(index, 0, Math.max(1, FTLAdventureVisualiser.recording.size()), targetMin, targetMax);
+	static int getDataX(int index, int targetMin, int targetMax) {
+		return (int) map(index, 0, Math.max(1, FTLAdventureVisualiser.recording.size() - 1), targetMin, targetMax);
 	}
 
 	int getTextWidth(String text, PFont font) {

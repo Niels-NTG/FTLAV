@@ -32,13 +32,9 @@ public class GraphLine {
 			glowLine.strokeWeight(gradient == glowGradient.length - 1 ? 2 : 2 + (gradient * 2));
 
 			for (int i = 0; i < dataPoints.size(); ++i) {
-				int x = root.getDataX(i, 0, glowLine.width);
-				int y = (int)PApplet.map(dataPoints.get(i), 0, yMax, glowLine.height - GLOW_SPREAD, GLOW_SPREAD);
+				int x = Visualiser.getDataX(i, 0, glowLine.width);
+				int y = (int)PApplet.map(dataPoints.get(i), 0, yMax, glowLine.height, 0) - GLOW_SPREAD / 2;
 				glowLine.vertex(x, y);
-
-				if (gradient == 0 && i == dataPoints.size() - 1) {
-					GraphTextBox.createDataSeriesLabel(root, size, new PVector(x, y), dataColumn);
-				}
 			}
 
 			glowLine.endShape();
@@ -46,20 +42,6 @@ public class GraphLine {
 		}
 		glowLine.endDraw();
 		g.image(glowLine, offset.x, offset.y);
-
-		// Add label
-		g.image(
-			GraphTextBox.createDataSeriesLabel(
-				root,
-				size,
-				new PVector(
-					root.getDataX(dataPoints.size() - 1, 0, glowLine.width) + GLOW_SPREAD,
-					PApplet.map(dataPoints.get(dataPoints.size() - 1), 0, yMax, glowLine.height, 0) - GLOW_SPREAD
-				),
-				DataUtil.getColumnDisplayName(dataColumn)
-			),
-			offset.x, offset.y
-		);
 	}
 
 }
