@@ -202,9 +202,16 @@ public class DataUtil {
 		JSONObject droneObject = new JSONObject();
 		droneObject.setString("type", blueprint.getType());
 		droneObject.setString("fullName", blueprint.getTitle().toString());
-		droneObject.setInt("cooldown", blueprint.getCooldown());
-		droneObject.setInt("dodge", blueprint.getDodge());
-		droneObject.setInt("speed", blueprint.getSpeed());
+		// These values are instances of Integer, not int, so these can be null.
+		if (blueprint.getCooldown() != null) {
+			droneObject.setInt("cooldown", blueprint.getCooldown());
+		}
+		if (blueprint.getDodge() != null) {
+			droneObject.setInt("dodge", blueprint.getDodge());
+		}
+		if (blueprint.getSpeed() != null) {
+			droneObject.setInt("speed", blueprint.getSpeed());
+		}
 		droneObject.setInt("power", blueprint.getPower());
 		droneObject.setInt("cost", blueprint.getCost());
 		droneObject.setInt("rarity", blueprint.getRarity());
