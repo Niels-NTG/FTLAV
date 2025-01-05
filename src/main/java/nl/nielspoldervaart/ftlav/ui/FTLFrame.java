@@ -369,12 +369,11 @@ public class FTLFrame extends JFrame {
 							FTLAdventureVisualiser.loadGameState(file);
 							onGameStateUpdate();
 						} catch (Exception e) {
-							log.error("Reading current game state failed: ", e);
+							log.error("Reading current game state failed: {}", e.getMessage());
 							updateStatusBar(String.format(
-									"Failed reading current game state from %s (%s). This state won't be recorded.",
-									FTLAdventureVisualiser.gameStateFile.getName(),
-									FTLAdventureVisualiser.getTimeStamp(),
-									e.getMessage()
+								"Failed reading current game state from %s (%s). This state won't be recorded.",
+								FTLAdventureVisualiser.gameStateFile.getName(),
+								FTLAdventureVisualiser.getTimeStamp()
 							));
 						}
 						return;
