@@ -181,31 +181,7 @@ public class FTLFrame extends JFrame {
 			if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 				File chosenImportFile = importFileChooser.getSelectedFile();
 				if (chosenImportFile != null && chosenImportFile.exists()) {
-					boolean canImport = true;
-					if (FTLAdventureVisualiser.hasRecords()) {
-						int dialogChoice = JOptionPane.showConfirmDialog(
-							this,
-							"Importing a recording will overwrite the existing recording.\n" +
-								"Are you sure you want to continue?",
-							"Before you open this file",
-							JOptionPane.YES_NO_OPTION
-						);
-						if (dialogChoice == JOptionPane.NO_OPTION) {
-							canImport = false;
-						}
-					}
-					if (canImport) {
-						try {
-							log.info("Reading TSV file at {}", chosenImportFile.getAbsolutePath());
-							TableReader.read(chosenImportFile);
-							onGameStateUpdate();
-							updateStatusBar(String.format("Imported recording with %s records", FTLAdventureVisualiser.recording.size()));
-							FTLAdventureVisualiser.recordsExportFile = chosenImportFile;
-						} catch (IOException ex) {
-							log.error("Unable to read TSV file at {}", chosenImportFile.getAbsolutePath(), ex);
-							showErrorDialog(String.format("Unable to read TSV file: %s", ex.getMessage()));
-						}
-					}
+					TableReader.read(chosenImportFile, this);
 				}
 			}
 		});
@@ -361,13 +337,7 @@ public class FTLFrame extends JFrame {
 				(File file) -> {
 					if (FTLAdventureVisualiser.hasGameState()) {
 						log.info("File {} has updated", file.getName());
-						try {
-							FTLAdventureVisualiser.loadGameState(file);
-							onGameStateUpdate();
-						} catch (Exception e) {
-							log.error("Reading current game state failed: {}", e.getMessage());
-						}
-						return;
+						FTLAdventureVisualiser.loadGameState(file);
 					}
 					onGameStateUpdate();
 				}
@@ -378,7 +348,7 @@ public class FTLFrame extends JFrame {
         }
 	}
 
-	private void onGameStateUpdate() {
+	public void onGameStateUpdate() {
 		updateToolbarButtonStates();
 		redrawVisualiser();
 	}
@@ -407,11 +377,11 @@ public class FTLFrame extends JFrame {
 		}
 	}
 
-	private void updateStatusBar(String text) {
+	public void updateStatusBar(String text) {
 		loadedSaveGameLabel.setText(text);
 	}
 
-	private void showErrorDialog(String message) {
+	public void showErrorDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

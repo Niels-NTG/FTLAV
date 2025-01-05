@@ -213,7 +213,7 @@ public class FTLAdventureVisualiser {
 		}
 	}
 
-	public static void loadGameState(File chosenFile) throws Exception {
+	public static void loadGameState(File chosenFile) {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(chosenFile);
@@ -263,7 +263,8 @@ public class FTLAdventureVisualiser {
 			setDefaultVisualiserDataColumnVisibility();
 
 			makeGameStateTable();
-
+		} catch (Exception e) {
+			log.error("Reading current game state failed: {}", e.getMessage());
 		} finally {
 			try {
 				if (in != null) {
