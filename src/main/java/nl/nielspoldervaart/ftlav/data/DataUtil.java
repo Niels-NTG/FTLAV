@@ -61,7 +61,13 @@ public class DataUtil {
 	}
 
 	public static String getPlayerShipName() {
-		return getLastRecord().getShipName();
+		if (FTLAdventureVisualiser.hasGameState()) {
+			return FTLAdventureVisualiser.gameState.getPlayerShipName();
+		}
+		if (FTLAdventureVisualiser.hasRecords()) {
+			return getLastRecord().getShipName();
+		}
+		return "";
 	}
 
 	public static String getTimeStampLastRecord() {
