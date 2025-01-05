@@ -40,8 +40,6 @@ import java.util.prefs.Preferences;
 public class FTLFrame extends JFrame {
 
 	private final JLabel loadedSaveGameLabel;
-	private JButton newRecordingButton;
-	private JButton openRecordingButton;
 	private JToggleButton toggleGraphButton;
 	private JButton exportImageButton;
 
@@ -109,8 +107,8 @@ public class FTLFrame extends JFrame {
 		toolbar.setFloatable(false);
 
 		JButton gameStateLoadBtn = new JButton("Load save game", loadGameIcon);
-		newRecordingButton = new JButton("New recording", newRecordingIcon);
-		openRecordingButton = new JButton("Open recording", openRecordingIcon);
+		JButton newRecordingButton = new JButton("New recording", newRecordingIcon);
+		JButton openRecordingButton = new JButton("Open recording", openRecordingIcon);
 		toggleGraphButton = new JToggleButton("Graph", graphIcon, false);
 		exportImageButton = new JButton("Export graph", exportImageIcon);
 		JButton resetButton = new JButton(resetIcon);
@@ -124,7 +122,6 @@ public class FTLFrame extends JFrame {
 		resetButton.setToolTipText("Reset all preferences back to default");
 		helpButton.setToolTipText("Open FTLAV documentation");
 
-		newRecordingButton.setEnabled(false);
 		toggleGraphButton.setEnabled(false);
 		exportImageButton.setEnabled(false);
 
@@ -401,8 +398,6 @@ public class FTLFrame extends JFrame {
 			) :
 			"No save game loaded"
 		);
-
-		newRecordingButton.setEnabled(hasGameState);
 
 		boolean hasRecords = FTLAdventureVisualiser.hasRecords();
 		toggleGraphButton.setEnabled(hasRecords);
