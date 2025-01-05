@@ -66,6 +66,7 @@ public class DataUtil {
 		return null;
 	}
 
+	@SuppressWarnings("DataFlowIssue")
 	public static String getPlayerShipName() {
 		if (FTLAdventureVisualiser.hasGameState()) {
 			return FTLAdventureVisualiser.gameState.getPlayerShipName();

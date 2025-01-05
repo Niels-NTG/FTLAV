@@ -58,8 +58,6 @@ public class FTLAdventureVisualiser {
 	private static final String FTL_PROFILE_PATH = "ftlProfilePath";
 	private static final String FTL_AE_PROFILE_PATH = "ftlAEProfilePath";
 
-	private static File gameDatsDir;
-
 	public static File gameStateFile;
 	public static SavedGameState gameState = null;
 	public static FileWatcher gameStateFilewatcher;
@@ -116,13 +114,15 @@ public class FTLAdventureVisualiser {
 		// Try to get an OS-native look and feel.
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ignored) {}
+		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
+			log.warn("Could not set system look and feel", e);
+		}
 
 		log.debug("{} v{}", APP_NAME, APP_VERSION);
 		log.debug("{} {}", System.getProperty("os.name"), System.getProperty("os.version"));
 		log.debug("{}, {}, {}", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch"));
 
-		gameDatsDir = loadDatsDir();
+		File gameDatsDir = loadDatsDir();
 
 		// Parse the dats.
 		try {
@@ -379,13 +379,6 @@ public class FTLAdventureVisualiser {
 		}
 	}
 
-	public static void unsetGameState() {
-		gameState = null;
-		gameStateFile = null;
-		recording.clear();
-		sectorList.clear();
-	}
-
 	private static void showErrorDialog(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
@@ -411,7 +404,7 @@ public class FTLAdventureVisualiser {
 			} else {
 				log.info("Creating game state recording table file at {} ", recordsExportFile.getAbsolutePath());
 			}
-			new TableMaker(recordsExportFile);
+			TableMaker.write(recordsExportFile);
 		}
 	}
 

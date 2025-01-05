@@ -16,7 +16,7 @@ import java.io.Writer;
 @Slf4j
 public class TableMaker {
 
-	public TableMaker(File tableFile) throws IOException {
+	public static void write(File tableFile) throws IOException {
 		Writer writer = new FileWriter(tableFile);
 
 		HeaderColumnNameMappingStrategy<TableRow> mappingStrategy = new HeaderColumnNameMappingStrategy<>();
