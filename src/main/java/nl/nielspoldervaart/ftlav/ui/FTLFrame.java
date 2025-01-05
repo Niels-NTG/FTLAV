@@ -144,7 +144,7 @@ public class FTLFrame extends JFrame {
 					"%s FTLAV v%d %s.tsv",
 					DataUtil.getPlayerShipName(),
 					appVersion,
-					DataUtil.getTimeStampLastRecord()
+					DataUtil.getFileNameSafeTimeStampLastRecord()
 				)
 			));
 
@@ -236,7 +236,7 @@ public class FTLFrame extends JFrame {
 					"%s FTLAV v%d %s.png",
 					DataUtil.getPlayerShipName(),
 					appVersion,
-					DataUtil.getTimeStampLastRecord()
+					DataUtil.getFileNameSafeTimeStampLastRecord()
 				)
 			));
 
@@ -369,11 +369,6 @@ public class FTLFrame extends JFrame {
 							onGameStateUpdate();
 						} catch (Exception e) {
 							log.error("Reading current game state failed: {}", e.getMessage());
-							updateStatusBar(String.format(
-								"Failed reading current game state from %s (%s). This state won't be recorded.",
-								FTLAdventureVisualiser.gameStateFile.getName(),
-								FTLAdventureVisualiser.getTimeStamp()
-							));
 						}
 						return;
 					}

@@ -14,6 +14,7 @@ import net.blerf.ftl.parser.DefaultDataManager;
 import net.blerf.ftl.parser.SavedGameParser;
 import net.blerf.ftl.parser.random.FTL_1_6_Random;
 import net.blerf.ftl.parser.sectortree.RandomSectorTreeGenerator;
+import nl.nielspoldervaart.ftlav.data.DataUtil;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
 import nl.nielspoldervaart.ftlav.data.TableMaker;
 import nl.nielspoldervaart.ftlav.data.TableRow;
@@ -39,9 +40,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.prefs.Preferences;
 
@@ -258,8 +258,7 @@ public class FTLAdventureVisualiser {
 
 			gameStateFile = chosenFile;
 
-			String timeStamp = getTimeStamp(chosenFile);
-			recording.add(new TableRow(gameState, timeStamp));
+			recording.add(new TableRow(gameState, chosenFile.lastModified()));
 
 			setDefaultVisualiserDataColumnVisibility();
 
@@ -390,12 +389,10 @@ public class FTLAdventureVisualiser {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public static String getTimeStamp() {
-		return getTimeStamp(gameStateFile).replaceAll("T", " ");
 	}
-	public static String getTimeStamp(File file) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		return dateFormat.format(file.lastModified());
+
+	public static String getTimeStamp() {
+		return DataUtil.getTimeStamp(new Date(gameStateFile.lastModified()));
 	}
 
 	public static boolean hasGameState() {

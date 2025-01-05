@@ -2,6 +2,7 @@ package nl.nielspoldervaart.ftlav.data;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
+import com.opencsv.bean.CsvDate;
 import lombok.Getter;
 import net.blerf.ftl.model.state.DoorState;
 import net.blerf.ftl.model.state.SavedGameState;
@@ -15,13 +16,16 @@ import processing.data.StringList;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Getter
 public class TableRow {
 
-	// Non-temporal
 	@CsvBindByName(column = "time")
-	private String time;
+	@CsvDate(DataUtil.DATE_FORMAT_PATTERN)
+	private Date time;
+
+	// Non-temporal
 	@CsvBindByName(column = "ship name")
 	private String shipName;
 	@CsvBindByName(column = "ship type")
@@ -415,12 +419,13 @@ public class TableRow {
 
 	@SuppressWarnings("unused")
 	public TableRow() {}
-	public TableRow(SavedGameState gameState, String timeStamp) {
+	public TableRow(SavedGameState gameState, long gameStateFileModificationTime) {
+
+		time = new Date(gameStateFileModificationTime);
 
 		ShipState playerShip = gameState.getPlayerShip();
 
 		// Non-temporal
-		time = timeStamp;
 		shipName = gameState.getPlayerShipName();
 		shipType = DataUtil.getFullShipType(gameState);
 		difficulty = gameState.getDifficulty().toString();
@@ -715,6 +720,7 @@ public class TableRow {
 				nearbyShipHackingSystemDamage = nearbyShipHackingSystem.getDamagedBars();
 			}
 		}
+
 	}
 
 	public static ArrayList<String> getTableWriterHeaders() {

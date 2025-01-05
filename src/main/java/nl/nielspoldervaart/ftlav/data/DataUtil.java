@@ -21,13 +21,19 @@ import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 
 public class DataUtil {
+
+	public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static ArrayList<Integer> extractIntColumn(String columnName) {
 		ArrayList<Integer> column = new ArrayList<>();
@@ -70,8 +76,20 @@ public class DataUtil {
 		return "";
 	}
 
+	@SuppressWarnings("DataFlowIssue")
 	public static String getTimeStampLastRecord() {
-		return getLastRecord().getTime().replaceAll("[/:]", ".");
+		if (FTLAdventureVisualiser.hasRecords()) {
+			return getTimeStamp(getLastRecord().getTime());
+		}
+		return "";
+	}
+
+	public static String getFileNameSafeTimeStampLastRecord() {
+		return getTimeStampLastRecord().replaceAll(":", "-");
+	}
+
+	public static String getTimeStamp(Date date) {
+		return DATE_FORMAT.format(date);
 	}
 
 	public static SectorDot getSector(SavedGameState gameState) {
