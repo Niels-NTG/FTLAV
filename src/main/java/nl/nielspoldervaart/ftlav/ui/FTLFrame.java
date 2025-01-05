@@ -50,8 +50,8 @@ public class FTLFrame extends JFrame {
 	private final Preferences prefs;
 
 	private static final ImageIcon loadGameIcon	    = new ImageIcon(ClassLoader.getSystemResource("UI/loadgame.gif"));
-	private static final ImageIcon exportRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/new.gif"));
-	private static final ImageIcon importRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/open.gif"));
+	private static final ImageIcon newRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/new.gif"));
+	private static final ImageIcon openRecordingIcon = new ImageIcon(ClassLoader.getSystemResource("UI/open.gif"));
 	private static final ImageIcon graphIcon		= new ImageIcon(ClassLoader.getSystemResource("UI/graph.gif"));
 	private static final ImageIcon exportImageIcon	= new ImageIcon(ClassLoader.getSystemResource("UI/savegraph.gif"));
 	private static final ImageIcon resetIcon        = new ImageIcon(ClassLoader.getSystemResource("UI/reset.gif"));
@@ -109,8 +109,8 @@ public class FTLFrame extends JFrame {
 		toolbar.setFloatable(false);
 
 		JButton gameStateLoadBtn = new JButton("Load save game", loadGameIcon);
-		newRecordingButton = new JButton("New recording", exportRecordingIcon);
-		openRecordingButton = new JButton("Open recording", importRecordingIcon);
+		newRecordingButton = new JButton("New recording", newRecordingIcon);
+		openRecordingButton = new JButton("Open recording", openRecordingIcon);
 		toggleGraphButton = new JToggleButton("Graph", graphIcon, false);
 		exportImageButton = new JButton("Export graph", exportImageIcon);
 		JButton resetButton = new JButton(resetIcon);
@@ -125,7 +125,6 @@ public class FTLFrame extends JFrame {
 		helpButton.setToolTipText("Open FTLAV documentation");
 
 		newRecordingButton.setEnabled(false);
-		openRecordingButton.setEnabled(false);
 		toggleGraphButton.setEnabled(false);
 		exportImageButton.setEnabled(false);
 
@@ -409,7 +408,6 @@ public class FTLFrame extends JFrame {
 		);
 
 		newRecordingButton.setEnabled(hasGameState);
-		openRecordingButton.setEnabled(hasGameState);
 
 		boolean hasRecords = FTLAdventureVisualiser.hasRecords();
 		toggleGraphButton.setEnabled(hasRecords);
