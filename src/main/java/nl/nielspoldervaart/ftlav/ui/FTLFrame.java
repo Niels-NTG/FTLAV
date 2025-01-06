@@ -187,10 +187,11 @@ public class FTLFrame extends JFrame {
 		});
 
 		toggleGraphButton.addItemListener(e -> {
-			boolean hasGameStateAndGraphIsOpen = FTLAdventureVisualiser.hasGameState() && e.getStateChange() == ItemEvent.SELECTED;
-			graphFrame.setVisible(hasGameStateAndGraphIsOpen);
-			graphInspectorScrollPane.setVisible(hasGameStateAndGraphIsOpen);
-			exportImageButton.setEnabled(hasGameStateAndGraphIsOpen);
+			boolean hasRecordsAndIsGraphInputActive =
+				FTLAdventureVisualiser.hasRecords() && e.getStateChange() == ItemEvent.SELECTED;
+			graphFrame.setVisible(hasRecordsAndIsGraphInputActive);
+			graphInspectorScrollPane.setVisible(hasRecordsAndIsGraphInputActive);
+			exportImageButton.setEnabled(hasRecordsAndIsGraphInputActive);
 			pack();
 		});
 		graphFrame.addWindowListener(new WindowAdapter() {

@@ -122,6 +122,8 @@ public class FTLAdventureVisualiser {
 		log.debug("{} {}", System.getProperty("os.name"), System.getProperty("os.version"));
 		log.debug("{}, {}, {}", System.getProperty("java.vm.name"), System.getProperty("java.version"), System.getProperty("os.arch"));
 
+		setDefaultVisualiserDataColumnVisibility();
+
 		File gameDatsDir = loadDatsDir();
 
 		// Parse the dats.
@@ -271,8 +273,6 @@ public class FTLAdventureVisualiser {
 			} else {
 				recording.add(new TableRow(gameState, gameStateFile.lastModified()));
 			}
-
-			setDefaultVisualiserDataColumnVisibility();
 
 			makeGameStateTable();
 		} catch (Exception e) {
