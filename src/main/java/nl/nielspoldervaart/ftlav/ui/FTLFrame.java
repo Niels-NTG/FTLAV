@@ -165,10 +165,10 @@ public class FTLFrame extends JFrame {
 			importFileChooser.setCurrentDirectory(null);
 			importFileChooser.setFileHidingEnabled(true);
 			importFileChooser.setDialogTitle("Pick TSV file to import");
-			importFileChooser.addChoosableFileFilter(new FileFilter() {
+			importFileChooser.setFileFilter(new FileFilter() {
 				@Override
 				public boolean accept(File f) {
-					return f.isFile() && f.getName().toLowerCase().endsWith(".tsv");
+					return f.isDirectory() || f.isFile() && f.getName().toLowerCase().endsWith(".tsv");
 				}
 
 				@Override
@@ -180,7 +180,7 @@ public class FTLFrame extends JFrame {
 			int chooserResponse = importFileChooser.showOpenDialog(this);
 			if (chooserResponse == JFileChooser.APPROVE_OPTION) {
 				File chosenImportFile = importFileChooser.getSelectedFile();
-				if (chosenImportFile != null && chosenImportFile.exists()) {
+				if (chosenImportFile != null && chosenImportFile.exists() && chosenImportFile.isFile()) {
 					TableReader.read(chosenImportFile, this);
 				}
 			}
