@@ -21,7 +21,7 @@ public class LineGraph {
 	private final int Y_INCREMENT = 20;
 	private final int Y_VISUALL_INCREMENT = 32;
 	private final int Y_AXIS_WIDTH = 32;
-	private final int X_AXIS_HEIGHT = 32;
+	private final int X_AXIS_HEIGHT = 36;
 	private final int TOP_MARGIN = 32;
 
 	LineGraph(Visualiser root, int width, int height) {
@@ -90,7 +90,7 @@ public class LineGraph {
 		PGraphics xAxis = root.createGraphics(g.width, g.height);
 		xAxis.beginDraw();
 		xAxis.textFont(root.FONT_MAIN);
-		xAxis.textAlign(PConstants.LEFT, PConstants.BOTTOM);
+		xAxis.textAlign(PConstants.LEFT, PConstants.TOP);
 
 		xAxis.strokeWeight(0.4f);
 		for (int i = 0; i < beaconNumbers.size(); i++) {
@@ -107,7 +107,11 @@ public class LineGraph {
 						break;
 					}
 				}
-				int sectorWidth = Visualiser.getDataX(nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex, Y_AXIS_WIDTH, xAxis.width) - x;
+				int sectorWidth = Visualiser.getDataX(
+					nextSectorIndex == -1 ? beaconNumbers.size() : nextSectorIndex,
+					Y_AXIS_WIDTH,
+					xAxis.width - plotLabelArea.width
+				) - x;
 				GraphTextBox.createSectorLabel(
 					root, g,
 					new PVector(sectorWidth, X_AXIS_HEIGHT),
@@ -120,7 +124,7 @@ public class LineGraph {
 
 			xAxis.noStroke();
 			xAxis.fill(root.COLOR_MAIN_TEXT);
-			xAxis.text(beaconNumbers.get(i), x + 4, xAxis.height - (X_AXIS_HEIGHT + 2));
+			xAxis.text(beaconNumbers.get(i), x + 4, xAxis.height - (X_AXIS_HEIGHT - 4));
 
 			lastSectorNumber = sectorNumbers.get(i);
 		}

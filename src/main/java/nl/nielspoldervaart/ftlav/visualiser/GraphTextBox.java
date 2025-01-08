@@ -37,7 +37,7 @@ public class GraphTextBox {
 			root.getTextWidth(score, root.FONT_MAIN)
 		);
 
-		PGraphics titleGraphic = root.createGraphics(root.width, root.height);
+		PGraphics titleGraphic = root.createGraphics(root.width, 54);
 		titleGraphic.beginDraw();
 
 		titleGraphic.fill(root.COLOR_MAIN_TEXT);
@@ -71,55 +71,60 @@ public class GraphTextBox {
 			0, root.COLOR_MAIN_TEXT,
 			root.FONT_SMALL,
 			root.COLOR_BORDER, 1,
-			PConstants.CENTER
+			PConstants.LEFT
 		);
 	}
 
 	static void createSectorLabel(Visualiser root, PGraphics g, PVector size, PVector offset, int sectorNumber, String sectorName, String sectorType) {
-		final int MARGIN = 4;
+		final int MARGIN = 2;
 
 		PGraphics sectorLabelBox = root.createGraphics((int) size.x, (int) size.y);
 		sectorLabelBox.beginDraw();
 
+		// Create sector label graphics.
 		PGraphics sectorNumberLabel = createTextBox(
 			root,
 			String.valueOf(sectorNumber),
 			root.COLOR_STATUS_BACKGROUND, root.COLOR_MAIN_TEXT,
-			root.FONT_LARGE
+			root.FONT_MAIN,
+			0, 0,
+			PConstants.CENTER
 		);
 		PGraphics sectorNameLabel = createTextBox(root,
 			sectorName,
 			root.COLOR_STATUS_BACKGROUND, root.COLOR_MAIN_TEXT,
-			root.FONT_LARGE
+			root.FONT_MAIN
 		);
 		int labelWidth = MARGIN + sectorNumberLabel.width + MARGIN + sectorNameLabel.width + MARGIN;
 		PGraphics background = createBevelBox(
 			root,
-			new PVector(labelWidth, 32),
-			root.COLOR_BORDER, 0, 0,
-			false, false, true, true
+			new PVector(labelWidth, 20),
+			root.COLOR_BORDER, 0, 0
 		);
 
+		// Draw line and gradient portion.
 		sectorLabelBox.noStroke();
 		int[] sectorGradient = root.getSectorGradient(sectorType);
 		for (int gradient = sectorGradient.length - 1; gradient >= 0; gradient--) {
 			sectorLabelBox.fill(sectorGradient[gradient]);
-			sectorLabelBox.rect(0, 0, size.x - 4, 3 * gradient);
+			sectorLabelBox.rect(0, 0, size.x - 4, 2 * gradient);
 		}
 		sectorLabelBox.strokeWeight(1);
 		sectorLabelBox.stroke(root.COLOR_BORDER);
 		sectorLabelBox.line(0, 0, size.x - 4, 0);
 
-		sectorLabelBox.image(background, 0, 0);
-		sectorLabelBox.image(sectorNumberLabel, MARGIN, MARGIN);
-		sectorLabelBox.image(sectorNameLabel, MARGIN + sectorNumberLabel.width + MARGIN, MARGIN);
+		// Composite final sector label graphic.
+		int labelYOffset = sectorLabelBox.height - background.height;
+		sectorLabelBox.image(background, 0, labelYOffset);
+		sectorLabelBox.image(sectorNumberLabel, MARGIN, labelYOffset + MARGIN);
+		sectorLabelBox.image(sectorNameLabel, MARGIN + sectorNumberLabel.width + MARGIN, labelYOffset + MARGIN);
 
 		sectorLabelBox.endDraw();
 		g.image(sectorLabelBox, offset.x, offset.y);
 	}
 
 	static PGraphics createTextBox(Visualiser root, String text, int backgroundColor, int textColor, PFont textFont) {
-		return createTextBox(root, text, backgroundColor, textColor, textFont, 0, 0, PConstants.CENTER);
+		return createTextBox(root, text, backgroundColor, textColor, textFont, 0, 0, PConstants.LEFT);
 	}
 	static PGraphics createTextBox(
 		Visualiser root,
@@ -139,6 +144,10 @@ public class GraphTextBox {
 			margin = 4;
 			lineHeight = 16;
 			minWidth = 8;
+		} else if (textFont == root.FONT_MAIN) {
+			margin = 4;
+			lineHeight = 16;
+			minWidth = 16;
 		}
 
 		int textWidth = Math.max(minWidth, root.getTextWidth(text, textFont));
