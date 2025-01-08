@@ -336,11 +336,11 @@ public class DataUtil {
 		}
 		if (environment.isPDSPresent()) {
 			if (environment.getVulnerableShips() == HazardVulnerability.BOTH_SHIPS) {
-				hazards.append("Neutral Planetary Defense System");
+				hazards.append("Neutral Anti-Ship Battery");
 			} else if (environment.getVulnerableShips() == HazardVulnerability.PLAYER_SHIP) {
-				hazards.append("Hostile Planetary Defense System");
+				hazards.append("Hostile Anti-Ship Battery");
 			} else if (environment.getVulnerableShips() == HazardVulnerability.NEARBY_SHIP) {
-				hazards.append("Allied Planetary Defense System");
+				hazards.append("Friendly Anti-Ship Battery");
 			}
 		}
 		if (environment.getAsteroidField() != null) {
