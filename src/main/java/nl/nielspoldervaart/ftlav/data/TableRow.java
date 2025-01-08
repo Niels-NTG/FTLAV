@@ -52,11 +52,13 @@ public class TableRow {
 	@CsvBindByName(column = "fleet advancement")
 	private int fleetAdvancement;
 
-	// Encounter
-	@CsvCustomBindByName(column = "beacon hazards", converter = JsonArrayCellProcessor.class)
-	private JSONArray beaconHazards;
+	// Beacon
+	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
 	@CsvBindByName(column = "encounter text")
 	private String encounterText;
+	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
+	@CsvCustomBindByName(column = "beacon hazards", converter = JsonArrayCellProcessor.class)
+	private JSONArray beaconHazards;
 
 	// Resources totals
 	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCE_TOTALS, plotType = PlotType.LINE)

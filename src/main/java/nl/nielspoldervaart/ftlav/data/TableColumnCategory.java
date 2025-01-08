@@ -3,7 +3,7 @@ package nl.nielspoldervaart.ftlav.data;
 public enum TableColumnCategory {
 	GAME("Game"),
 	SECTOR("Sector"),
-	ENCOUNTER("Encounter"),
+	BEACON("Beacon"),
 	RESOURCE_TOTALS("Resource Totals"),
 	RESOURCES("Resources"),
 	SYSTEMS("Player Ship Systems"),
