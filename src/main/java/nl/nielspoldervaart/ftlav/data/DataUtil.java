@@ -51,6 +51,26 @@ public class DataUtil {
 		return column;
 	}
 
+	public static int getMaxValue(HashMap<String, Boolean> columns) {
+		ArrayList<String> keys = new ArrayList<>();
+		for (String key : columns.keySet()) {
+			if (columns.get(key)) {
+				keys.add(key);
+			}
+		}
+		return getMaxValue(keys);
+	}
+	public static int getMaxValue(ArrayList<String> columns) {
+		ArrayList<Integer> values = new ArrayList<>();
+		for (String key : columns) {
+			values.addAll(DataUtil.extractIntColumn(key));
+		}
+		if (values.isEmpty()) {
+			return 0;
+		}
+		return Collections.max(values);
+	}
+
 	public static String getColumnDisplayName(String columnName) {
 		try {
 			return TableRow.getTableWriterHeader(TableRow.class.getDeclaredField(columnName));
@@ -254,14 +274,6 @@ public class DataUtil {
 		return 0;
 	}
 
-	public static int getWeaponSlotCount(SavedGameState gameState) {
-		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getWeaponSlots();
-	}
-
-	public static int getDroneSlotCount(SavedGameState gameState) {
-		return DataManager.get().getShip(gameState.getPlayerShip().getShipBlueprintId()).getDroneSlots();
-	}
-
 	public static int getPlayerCrewCount(ShipState shipState) {
 		int playerControlledCrewCount = 0;
 		for (CrewState crewState : shipState.getCrewList()) {
@@ -355,30 +367,10 @@ public class DataUtil {
 			hazards.append("Federation Fleet");
 		}
 
-		// if (FTLAdventureVisualiser.gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
+		// if (gameState.getStateVar("nebula") != null) // TODO Nebula Storm event
 
 		return hazards;
-
 	}
 
-	public static int getMaxValue(HashMap<String, Boolean> columns) {
-		ArrayList<String> keys = new ArrayList<>();
-		for (String key : columns.keySet()) {
-			if (columns.get(key)) {
-				keys.add(key);
-			}
-		}
-		return getMaxValue(keys);
-	}
-	public static int getMaxValue(ArrayList<String> columns) {
-		ArrayList<Integer> values = new ArrayList<>();
-		for (String key : columns) {
-			values.addAll(DataUtil.extractIntColumn(key));
-		}
-		if (values.isEmpty()) {
-			return 0;
-		}
-		return Collections.max(values);
-	}
 
 }

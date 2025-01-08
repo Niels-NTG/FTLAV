@@ -19,7 +19,7 @@ public class LineGraph {
 	private final int GRAPHICS_HEIGHT;
 
 	private final int Y_INCREMENT = 20;
-	private final int Y_VISUALL_INCREMENT = 32;
+	private final int Y_MIN_VISUAL_INCREMENT = 32;
 	private final int Y_AXIS_WIDTH = 32;
 	private final int X_AXIS_HEIGHT = 36;
 	private final int TOP_MARGIN = 32;
@@ -62,7 +62,7 @@ public class LineGraph {
 		int lastY = 0;
 		for (int i = 0; i <= yMax; i += Y_INCREMENT) {
 			int y = (int) PApplet.map(i, 0, yMax, g.height - X_AXIS_HEIGHT, TOP_MARGIN);
-			if (lastY != 0 && Math.abs(y - lastY) < Y_VISUALL_INCREMENT) {
+			if (lastY != 0 && Math.abs(y - lastY) < Y_MIN_VISUAL_INCREMENT) {
 				continue;
 			}
 

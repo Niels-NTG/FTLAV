@@ -30,7 +30,7 @@ public class GraphInspector extends JPanel {
 			}
 		}
 
-		togglePanels.values().forEach(togglePanel -> add(togglePanel));
+		togglePanels.values().forEach(this::add);
 	}
 
 }
