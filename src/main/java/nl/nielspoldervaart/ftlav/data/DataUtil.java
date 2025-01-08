@@ -348,9 +348,6 @@ public class DataUtil {
 		}
 
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
-		if (beacon.isEnemyPresent()) {
-			hazards.append("Enemy Ship");
-		}
 		if (beacon.getFleetPresence() == FleetPresence.REBEL) {
 			hazards.append("Rebel Fleet");
 		}
