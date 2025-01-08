@@ -243,7 +243,8 @@ public class FTLAdventureVisualiser {
 			) {
 				if (
 					newGameState.getTotalBeaconsExplored() == gameState.getTotalBeaconsExplored() &&
-					chosenFile.lastModified() > gameStateFile.lastModified()
+					DataUtil.getLastRecord() != null &&
+					new Date(chosenFile.lastModified()).compareTo(DataUtil.getLastRecord().getTime()) > 0
 				) {
 					isNewerGameStateForLastBeacon = true;
 				} else {
@@ -269,6 +270,7 @@ public class FTLAdventureVisualiser {
 
 			// If newer information is found for the last beacon, overwrite the last record with a new row.
 			if (isNewerGameStateForLastBeacon) {
+				log.info("Updating existing last game state recording");
 				recording.set(recording.size() - 1, new TableRow(gameState, gameStateFile.lastModified()));
 			} else {
 				recording.add(new TableRow(gameState, gameStateFile.lastModified()));
