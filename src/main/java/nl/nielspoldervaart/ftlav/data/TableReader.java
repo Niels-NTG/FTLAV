@@ -48,6 +48,7 @@ public class TableReader {
 			FTLAdventureVisualiser.recordsExportFile = targetFile;
 			FTLAdventureVisualiser.makeGameStateTable();
 			parentFrame.onGameStateUpdate();
+			parentFrame.toggleGraphButton.setSelected(true);
 		} catch (IOException e) {
 			log.error("Unable to read TSV file at {}", targetFile.getAbsolutePath(), e);
 			parentFrame.showErrorDialog(String.format("Unable to read TSV file: %s", e.getMessage()));

@@ -40,7 +40,7 @@ import java.util.prefs.Preferences;
 public class FTLFrame extends JFrame {
 
 	private final JLabel loadedSaveGameLabel;
-	private JToggleButton toggleGraphButton;
+	public JToggleButton toggleGraphButton;
 	private JButton exportImageButton;
 
 	private JFrame graphFrame;
