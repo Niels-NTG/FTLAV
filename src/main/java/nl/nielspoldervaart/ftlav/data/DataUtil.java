@@ -348,10 +348,10 @@ public class DataUtil {
 		}
 
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
-		if (beacon.getFleetPresence() == FleetPresence.REBEL) {
+		if (beacon.getFleetPresence() == FleetPresence.REBEL || beacon.getFleetPresence() == FleetPresence.BOTH) {
 			hazards.append("Rebel Fleet");
 		}
-		if (beacon.getFleetPresence() == FleetPresence.FEDERATION) {
+		if (beacon.getFleetPresence() == FleetPresence.FEDERATION || beacon.getFleetPresence() == FleetPresence.BOTH) {
 			hazards.append("Federation Fleet");
 		}
 
