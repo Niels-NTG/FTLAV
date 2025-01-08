@@ -19,6 +19,7 @@ public class LineGraph {
 	private final int GRAPHICS_HEIGHT;
 
 	private final int Y_INCREMENT = 20;
+	private final int Y_VISUALL_INCREMENT = 32;
 	private final int Y_AXIS_WIDTH = 32;
 	private final int X_AXIS_HEIGHT = 32;
 	private final int TOP_MARGIN = 32;
@@ -36,9 +37,9 @@ public class LineGraph {
 		PGraphics graphics = root.createGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT);
 		graphics.beginDraw();
 
-		drawYAxis(graphics, yMax);
-
 		PGraphics plotLabelArea = createPlotLabels(yMax);
+
+		drawYAxis(graphics, yMax, plotLabelArea);
 
 		drawXAxis(graphics, plotLabelArea);
 
@@ -48,7 +49,7 @@ public class LineGraph {
 		return graphics;
 	}
 
-	private void drawYAxis(PGraphics g, int yMax) {
+	private void drawYAxis(PGraphics g, int yMax, PGraphics plotLabelArea) {
 		PGraphics yAxis = root.createGraphics(GRAPHICS_WIDTH, g.height);
 		yAxis.beginDraw();
 		yAxis.strokeCap(PConstants.SQUARE);
@@ -58,15 +59,20 @@ public class LineGraph {
 		yAxis.textFont(root.FONT_MAIN);
 		yAxis.textAlign(PConstants.RIGHT, PConstants.BOTTOM);
 
+		int lastY = 0;
 		for (int i = 0; i <= yMax; i += Y_INCREMENT) {
 			int y = (int) PApplet.map(i, 0, yMax, g.height - X_AXIS_HEIGHT, TOP_MARGIN);
+			if (lastY != 0 && Math.abs(y - lastY) < Y_VISUALL_INCREMENT) {
+				continue;
+			}
 
 			if (i > 0) {
 				yAxis.stroke(root.COLOR_BORDER);
-				yAxis.line(Y_AXIS_WIDTH, y, yAxis.width, y);
+				yAxis.line(Y_AXIS_WIDTH, y, yAxis.width - plotLabelArea.width, y);
 			}
 			yAxis.noStroke();
 			yAxis.text(i, Y_AXIS_WIDTH - 2, y - 2);
+			lastY = y;
 		}
 
 		yAxis.endDraw();
@@ -88,7 +94,7 @@ public class LineGraph {
 
 		xAxis.strokeWeight(0.4f);
 		for (int i = 0; i < beaconNumbers.size(); i++) {
-			int x = Visualiser.getDataX(i, Y_AXIS_WIDTH, xAxis.width - (plotLabelArea.width));
+			int x = Visualiser.getDataX(i, Y_AXIS_WIDTH, xAxis.width - plotLabelArea.width);
 
 			xAxis.stroke(root.COLOR_BORDER);
 			xAxis.line(x, xAxis.height - X_AXIS_HEIGHT, x, TOP_MARGIN);
