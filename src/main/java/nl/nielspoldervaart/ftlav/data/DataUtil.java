@@ -10,16 +10,24 @@ import net.blerf.ftl.model.state.EnvironmentState;
 import net.blerf.ftl.model.state.RoomState;
 import net.blerf.ftl.model.state.SavedGameState;
 import net.blerf.ftl.model.state.ShipState;
+import net.blerf.ftl.model.state.StoreItem;
+import net.blerf.ftl.model.state.StoreShelf;
+import net.blerf.ftl.model.state.StoreState;
 import net.blerf.ftl.model.state.WeaponState;
 import net.blerf.ftl.model.systeminfo.BatteryInfo;
 import net.blerf.ftl.model.systeminfo.ShieldsInfo;
+import net.blerf.ftl.model.type.StoreItemType;
+import net.blerf.ftl.model.type.SystemType;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.xml.AugBlueprint;
+import net.blerf.ftl.xml.DefaultDeferredText;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
+import net.blerf.ftl.xml.CrewBlueprint;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
+import processing.data.StringList;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -117,6 +125,65 @@ public class DataUtil {
 		return FTLAdventureVisualiser.sectorList.get(gameState.getSectorNumber());
 	}
 
+	public static JSONObject getStoreContents(SavedGameState gameState) {
+		JSONObject storeContents = new JSONObject();
+		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
+		StoreState storeState = beacon.getStore();
+		if (storeState == null) {
+			return storeContents;
+		}
+		storeContents.setInt("fuel", storeState.getFuel());
+		storeContents.setInt("missiles", storeState.getMissiles());
+		storeContents.setInt("droneParts", storeState.getDroneParts());
+		for (StoreShelf storeShelf : storeState.getShelfList()) {
+			JSONArray shelfContents = new JSONArray();
+			if (storeShelf.getItemType() == StoreItemType.WEAPON) {
+				for (StoreItem shelfItem : storeShelf.getItems()) {
+					shelfContents.append(getWeaponBluePrint(shelfItem.getItemId()));
+				}
+			} else if (storeShelf.getItemType() == StoreItemType.AUGMENT) {
+				for (StoreItem shelfItem : storeShelf.getItems()) {
+					shelfContents.append(getAugmentBluePrint(shelfItem.getItemId()));
+				}
+			} else if (storeShelf.getItemType() == StoreItemType.DRONE) {
+				for (StoreItem shelfItem : storeShelf.getItems()) {
+					shelfContents.append(getDroneBluePrint(shelfItem.getItemId()));
+				}
+			} else if (storeShelf.getItemType() == StoreItemType.CREW) {
+				for (StoreItem shelfItem : storeShelf.getItems()) {
+					shelfContents.append(getCrewBluePrint(shelfItem.getItemId()));
+				}
+			} else if (storeShelf.getItemType() == StoreItemType.SYSTEM) {
+				for (StoreItem shelfItem : storeShelf.getItems()) {
+					shelfContents.append(SystemType.findById(shelfItem.getItemId()).toString());
+				}
+			}
+			if (shelfContents.size() > 0) {
+				storeContents.setJSONArray(
+					storeShelf.getItemType().toString().toLowerCase(),
+					shelfContents
+				);
+			}
+		}
+
+		return storeContents;
+	}
+
+	private static JSONObject getCrewBluePrint(String crewId) {
+		CrewBlueprint blueprint = DataManager.get().getCrew(crewId);
+		JSONObject crewObject = new JSONObject();
+		crewObject.setString("title", blueprint.getTitle().toString());
+		crewObject.setInt("cost", blueprint.getCost());
+		crewObject.setInt("rarity", blueprint.getRarity());
+		crewObject.setString("description", blueprint.getDesc().toString());
+		JSONArray powerList = new JSONArray();
+		for (DefaultDeferredText powerItem : blueprint.getPowerList()) {
+			powerList.append(powerItem.toString());
+		}
+		crewObject.setJSONArray("powerList", powerList);
+		return crewObject;
+	}
+
 	public static int getShipOxygenLevel(ShipState shipState) {
 		List<RoomState> roomList = shipState.getRoomList();
 		int roomCount = roomList.size();
@@ -173,17 +240,19 @@ public class DataUtil {
 	public static JSONArray getShipAugments(ShipState shipState) {
 		JSONArray augments = new JSONArray();
 		for (String id : shipState.getAugmentIdList()) {
-			AugBlueprint blueprint = DataManager.get().getAugment(id);
-			JSONObject augmentObject = new JSONObject();
-			augmentObject.setString("augmentId", blueprint.getId());
-			augmentObject.setString("name", blueprint.getTitle().toString());
-			augmentObject.setInt("cost", blueprint.getCost());
-			augmentObject.setInt("rarity", blueprint.getRarity());
-			augmentObject.setFloat("value", blueprint.getValue());
-			augmentObject.setBoolean("isStackable", blueprint.isStackable());
-			augments.append(augmentObject);
+			augments.append(getAugmentBluePrint(id));
 		}
 		return augments;
+	}
+	private static JSONObject getAugmentBluePrint(String augmentId) {
+		AugBlueprint blueprint = DataManager.get().getAugment(augmentId);
+		JSONObject augmentObject = new JSONObject();
+		augmentObject.setString("name", blueprint.getTitle().toString());
+		augmentObject.setInt("cost", blueprint.getCost());
+		augmentObject.setInt("rarity", blueprint.getRarity());
+		augmentObject.setFloat("value", blueprint.getValue());
+		augmentObject.setBoolean("isStackable", blueprint.isStackable());
+		return augmentObject;
 	}
 
 	public static int getShieldLayers(ShipState shipState) {
@@ -207,18 +276,17 @@ public class DataUtil {
 		JSONArray weaponList = new JSONArray();
 		for (WeaponState weaponState : weaponStates) {
 			JSONObject weaponObject = new JSONObject();
-			weaponObject.setString("weaponId", weaponState.getWeaponId());
 			weaponObject.setBoolean("isArmed", weaponState.isArmed());
-			weaponObject.setJSONObject("blueprint", getWeaponBluePrint(weaponState));
+			weaponObject.setJSONObject("blueprint", getWeaponBluePrint(weaponState.getWeaponId()));
 			weaponList.append(weaponObject);
 		}
 		return weaponList;
 	}
-	private static JSONObject getWeaponBluePrint(WeaponState weaponState) {
-		WeaponBlueprint blueprint = DataManager.get().getWeapon(weaponState.getWeaponId());
+	private static JSONObject getWeaponBluePrint(String weaponId) {
+		WeaponBlueprint blueprint = DataManager.get().getWeapon(weaponId);
 		JSONObject weaponObject = new JSONObject();
 		weaponObject.setString("type", blueprint.getType());
-		weaponObject.setString("fullName", blueprint.getTitle().toString());
+		weaponObject.setString("name", blueprint.getTitle().toString());
 		weaponObject.setInt("shieldPiercing", blueprint.getShieldPiercing());
 		weaponObject.setInt("damage", blueprint.getDamage());
 		weaponObject.setInt("shots", blueprint.getShots());
@@ -236,20 +304,19 @@ public class DataUtil {
 		JSONArray droneList = new JSONArray();
 		for (DroneState droneState : droneStates) {
 			JSONObject droneObject = new JSONObject();
-			droneObject.setString("droneId", droneState.getDroneId());
 			droneObject.setBoolean("isArmed", droneState.isArmed());
 			droneObject.setInt("health", droneState.getHealth());
 			droneObject.setBoolean("isDeployed", droneState.getExtendedDroneInfo().isDeployed());
-			droneObject.setJSONObject("blueprint", getDroneBluePrint(droneState));
+			droneObject.setJSONObject("blueprint", getDroneBluePrint(droneState.getDroneId()));
 			droneList.append(droneObject);
 		}
 		return droneList;
 	}
-	private static JSONObject getDroneBluePrint(DroneState droneState) {
-		DroneBlueprint blueprint = DataManager.get().getDrone(droneState.getDroneId());
+	private static JSONObject getDroneBluePrint(String droneId) {
+		DroneBlueprint blueprint = DataManager.get().getDrone(droneId);
 		JSONObject droneObject = new JSONObject();
 		droneObject.setString("type", blueprint.getType());
-		droneObject.setString("fullName", blueprint.getTitle().toString());
+		droneObject.setString("name", blueprint.getTitle().toString());
 		// These values are instances of Integer, not int, so these can be null.
 		if (blueprint.getCooldown() != null) {
 			droneObject.setInt("cooldown", blueprint.getCooldown());

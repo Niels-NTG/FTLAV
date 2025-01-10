@@ -12,6 +12,7 @@ import net.blerf.ftl.model.type.SystemType;
 import nl.nielspoldervaart.ftlav.visualiser.GraphLineColor;
 import nl.nielspoldervaart.ftlav.visualiser.PlotType;
 import processing.data.JSONArray;
+import processing.data.JSONObject;
 import processing.data.StringList;
 
 import java.lang.reflect.Field;
@@ -59,6 +60,9 @@ public class TableRow {
 	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
 	@CsvCustomBindByName(column = "beacon hazards", converter = JsonArrayCellProcessor.class)
 	private JSONArray beaconHazards;
+	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
+	@CsvCustomBindByName(column = "store", converter = JsonObjectCellProcessor.class)
+	private JSONObject store;
 
 	// Resources totals
 	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCE_TOTALS, plotType = PlotType.LINE)
@@ -440,9 +444,10 @@ public class TableRow {
 		sectorName = DataUtil.getSector(gameState).getTitle();
 		fleetAdvancement = DataUtil.getRebelFleetAdvancement(gameState);
 
-		// Encounter
-		beaconHazards = DataUtil.getBeaconHazards(gameState);
+		// Beacon
 		encounterText = gameState.getEncounter().getText();
+		beaconHazards = DataUtil.getBeaconHazards(gameState);
+		store = DataUtil.getStoreContents(gameState);
 
 		// Resource totals
 		totalShipsDefeated = gameState.getTotalShipsDefeated();
