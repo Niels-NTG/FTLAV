@@ -216,9 +216,7 @@ public class FTLAdventureVisualiser {
 	}
 
 	public static void loadGameState(File chosenFile) {
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(chosenFile);
+		try (FileInputStream in = new FileInputStream(chosenFile)) {
 			StringBuilder hexBuf = new StringBuilder();
 
 			// Read the content in advance, in case an error occurs.
@@ -236,21 +234,12 @@ public class FTLAdventureVisualiser {
 
 			SavedGameParser parser = new SavedGameParser();
 			SavedGameState newGameState = parser.readSavedGame(in);
-			boolean isNewerGameStateForLastBeacon = false;
-			if (
+
+			boolean isNewerGameStateForLastBeacon =
 				gameState != null &&
-				newGameState.getTotalBeaconsExplored() <= gameState.getTotalBeaconsExplored()
-			) {
-				if (
-					newGameState.getTotalBeaconsExplored() == gameState.getTotalBeaconsExplored() &&
+					newGameState.getCurrentBeaconId() == gameState.getCurrentBeaconId() &&
 					DataUtil.getLastRecord() != null &&
-					new Date(chosenFile.lastModified()).compareTo(DataUtil.getLastRecord().getTime()) > 0
-				) {
-					isNewerGameStateForLastBeacon = true;
-				} else {
-					return;
-				}
-			}
+					new Date(chosenFile.lastModified()).compareTo(DataUtil.getLastRecord().getTime()) > 0;
 			gameState = newGameState;
 			gameStateFile = chosenFile;
 
@@ -264,8 +253,7 @@ public class FTLAdventureVisualiser {
 				sectorList.add(sectorTree.getVisitedDot(c));
 			}
 
-			log.info("Ship name: {}", gameState.getPlayerShipName());
-			log.info("Number of beacons explored: {}", gameState.getTotalBeaconsExplored());
+			log.info("Currently at beacon: {}", gameState.getCurrentBeaconId());
 			log.info("Currently in sector: {}", gameState.getSectorNumber() + 1);
 
 			// If newer information is found for the last beacon, overwrite the last record with a new row.
@@ -279,12 +267,6 @@ public class FTLAdventureVisualiser {
 			makeGameStateTable();
 		} catch (Exception e) {
 			log.error("Reading current game state failed: {}", e.getMessage());
-		} finally {
-			try {
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException ignored) {}
 		}
 	}
 

@@ -38,8 +38,8 @@ public class TableRow {
 
 	// Sector
 	@VisualiserAnnotation(category = TableColumnCategory.SECTOR)
-	@CsvBindByName(column = "beacon number")
-	private int beaconNumber;
+	@CsvBindByName(column = "beacons explored")
+	private int beaconsExplored;
 	@VisualiserAnnotation(category = TableColumnCategory.SECTOR)
 	@CsvBindByName(column = "sector number")
 	private int sectorNumber;
@@ -438,7 +438,7 @@ public class TableRow {
 		AEContentEnabled = gameState.isDLCEnabled();
 
 		// Location
-		beaconNumber = gameState.getTotalBeaconsExplored();
+		beaconsExplored = gameState.getTotalBeaconsExplored();
 		sectorNumber = gameState.getSectorNumber() + 1;
 		sectorType = DataUtil.getSector(gameState).getType();
 		sectorName = DataUtil.getSector(gameState).getTitle();

@@ -80,7 +80,7 @@ public class LineGraph {
 	}
 
 	private void drawXAxis(PGraphics g, PGraphics plotLabelArea) {
-		ArrayList<Integer> beaconNumbers = DataUtil.extractIntColumn("beaconNumber");
+		ArrayList<Integer> beaconNumbers = DataUtil.extractIntColumn("beaconsExplored");
 		ArrayList<Integer> sectorNumbers = DataUtil.extractIntColumn("sectorNumber");
 		ArrayList<String> sectorNames = DataUtil.extractStringColumn("sectorName");
 		ArrayList<String> sectorTypes = DataUtil.extractStringColumn("sectorType");
