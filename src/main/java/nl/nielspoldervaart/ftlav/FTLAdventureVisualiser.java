@@ -36,7 +36,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -216,30 +215,17 @@ public class FTLAdventureVisualiser {
 	}
 
 	public static void loadGameState(File chosenFile) {
-		try (FileInputStream in = new FileInputStream(chosenFile)) {
-			StringBuilder hexBuf = new StringBuilder();
-
-			// Read the content in advance, in case an error occurs.
-			byte[] buf = new byte[4096];
-			int len;
-			while ((len = in.read(buf)) >= 0) {
-				for (int i = 0; i < len; i++) {
-					hexBuf.append(String.format("%02x", buf[i]));
-					if ((i + 1) % 32 == 0) {
-						hexBuf.append("\n");
-					}
-				}
-			}
-			in.getChannel().position(0);
+		try {
 
 			SavedGameParser parser = new SavedGameParser();
-			SavedGameState newGameState = parser.readSavedGame(in);
+			SavedGameState newGameState = parser.readSavedGame(chosenFile);
 
 			boolean isNewerGameStateForLastBeacon =
 				gameState != null &&
 					newGameState.getCurrentBeaconId() == gameState.getCurrentBeaconId() &&
 					DataUtil.getLastRecord() != null &&
 					new Date(chosenFile.lastModified()).compareTo(DataUtil.getLastRecord().getTime()) > 0;
+
 			gameState = newGameState;
 			gameStateFile = chosenFile;
 
@@ -377,8 +363,6 @@ public class FTLAdventureVisualiser {
 
 	private static void showErrorDialog(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-
 	}
 
 	public static String getTimeStamp() {
