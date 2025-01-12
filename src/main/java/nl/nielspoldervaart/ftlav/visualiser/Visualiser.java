@@ -10,7 +10,7 @@ import processing.core.PGraphics;
 public class Visualiser extends PApplet {
 
 	// layout
-	final int MARGIN = 24; // 24px margin on all sides of graphs
+	final int MARGIN = 16; // 24px margin on all sides of graphs
 
 	// colors
 	final int COLOR_BG_NORMAL = color(50, 43, 43);			// dark purple brown 	(background color)
@@ -106,10 +106,15 @@ public class Visualiser extends PApplet {
 			return;
 		}
 
-		LineGraph lineGraph = new LineGraph(this, Math.max(256, width) - MARGIN * 2, Math.max(256, height) - MARGIN * 2);
-		image(lineGraph.draw(), MARGIN, MARGIN);
+		PGraphics titleGraphic = GraphTextBox.createGraphTitle(this);
+		image(titleGraphic, 0, 0);
 
-		image(GraphTextBox.createGraphTitle(this), 0, 0);
+		LineGraph lineGraph = new LineGraph(
+			this,
+			Math.max(256, width) - MARGIN * 2,
+			Math.max(256, height) - (MARGIN + titleGraphic.height)
+		);
+		image(lineGraph.draw(), 0, titleGraphic.height);
 
 		noLoop();
 

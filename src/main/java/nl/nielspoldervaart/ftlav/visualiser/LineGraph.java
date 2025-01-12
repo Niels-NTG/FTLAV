@@ -22,7 +22,7 @@ public class LineGraph {
 	private final int Y_MIN_VISUAL_INCREMENT = 32;
 	private final int Y_AXIS_WIDTH = 32;
 	private final int X_AXIS_HEIGHT = 36;
-	private final int TOP_MARGIN = 32;
+	private final int TOP_MARGIN = 16;
 
 	LineGraph(Visualiser root, int width, int height) {
 		this.root = root;
@@ -89,8 +89,6 @@ public class LineGraph {
 
 		PGraphics xAxis = root.createGraphics(g.width, g.height);
 		xAxis.beginDraw();
-		xAxis.textFont(root.FONT_MAIN);
-		xAxis.textAlign(PConstants.LEFT, PConstants.TOP);
 
 		xAxis.strokeWeight(0.4f);
 		for (int i = 0; i < beaconNumbers.size(); i++) {
@@ -122,8 +120,11 @@ public class LineGraph {
 				);
 			}
 
+			// Draw sector number
 			xAxis.noStroke();
 			xAxis.fill(root.COLOR_MAIN_TEXT);
+			xAxis.textFont(root.FONT_MAIN);
+			xAxis.textAlign(PConstants.LEFT, PConstants.TOP);
 			xAxis.text(beaconNumbers.get(i), x + 4, xAxis.height - (X_AXIS_HEIGHT - 4));
 
 			lastSectorNumber = sectorNumbers.get(i);
