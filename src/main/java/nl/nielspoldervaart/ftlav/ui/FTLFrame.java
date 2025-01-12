@@ -258,13 +258,17 @@ public class FTLFrame extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent w) {
-				int exitWarning = JOptionPane.showConfirmDialog(
+				boolean hasUnsavedRecording =
+					FTLAdventureVisualiser.hasRecords() && (
+						FTLAdventureVisualiser.recordsExportFile == null || !FTLAdventureVisualiser.recordsExportFile.exists()
+				);
+				int exitWarningResponse = JOptionPane.showConfirmDialog(
 					null,
-					"Are you sure you want to quit FTLAV?",
+					String.format("Are you sure you want to quit FTLAV?%s", hasUnsavedRecording ? " Your recording hasn't been saved to a file yet!" : ""),
 					"Confirm before quiting FTLAV…",
 					JOptionPane.YES_NO_OPTION
 				);
-				if (exitWarning == JOptionPane.YES_OPTION) {
+				if (exitWarningResponse == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
 			}
