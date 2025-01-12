@@ -1,81 +1,69 @@
-# FTLAV
-*FTL: Faster Than Light Adventure Visualiser*
+# FTLAV - FTL: Faster Than Light Adventure Visualiser
 
-With this tool you can record and visualise your unique adventures in the videogame [FTL: Faster Than Light](https://subsetgames.com/ftl.html). It’s a nice way to archive spectacular FTL sessions for posterity. It can also be a powerful tool for analysing and optimising your play style.
+*FTL: Faster Than Light Adventure Visualiser* (FTLAV) is a tool that records and visualises the player's progress in the rogue-like video game *[FTL: Faster Than Light](https://subsetgames.com/ftl.html)*. The idea of this program was born out of a dissatisfaction with how FTL only shows the player a high score and not much more on its "game over" screen. This does not properly reflect the journey of the player that brought them to this point. Nor does it help players improve their strategy for future play sessions. FTLAV records the player's adventure every step of the way, offering data visualisation and data export features.
 
-<a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/screenshot1.png"/></a>
+![FTLAV v3 screenshot](./img/FTLAV%20v3%20demo%20screenshot.png)
 
-Here’s an example of a full FTL game from beginning to end:
-<a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/fullgame1.png"/></a>
+Jump to: [Features](#Features) | [Installation](#Installation) | [Usage](#Usage) | [Acknowledgements](#Acknowledgements)
+
+## Features
+
+FTLAV is meant to be run alongside FTL, watching FTL's save game file for changes while you play. FTLAV parses the game state into human-readable data, which it can export to a `.tsv` (tab-separated values) spreadsheet file. Each row contains detailed data reflecting the game state at that point in this, which includes but is not limited to:
+
+- Number of beacons explored, sector information, rebel fleet advancement.
+- Environmental hazards, encounter type, contents of store (if present).
+- Cumulative resources and other statistics: total scrap collected, total scrap collected, total ships defeated and total score.
+- Current available resources: scrap, fuel, missiles, drone parts, crew members, hull strength, oxygen level and cargo.
+- Current system status: total power capacity, power consumption and amount of damage for every system installed on the ship.
+- Nearby ship resources and systems, if present.
+- Real-world date and time.
+
+Some of this data is presented in a customisable dynamic visualisation which can be exported as an image file.
+
+See the [examples folder](./examples) for an example of FTLAV's output.
+
+## Installation
+
+FTLAV requires the following:
+
+- *[FTL: Faster Than Light](https://subsetgames.com/ftl.html)*
+  - Version 1.6.4 or newer for Mac/Linux/Windows
+  - Older versions of the game *might* also work (untested)
+  - Modded versions of the game *might* work (untested)
+- Any version of macOS, Linux or Windows that [supports Java 8](https://www.java.com/en/download/help/sysreq.html) up to [Java 17](https://www.oracle.com/java/technologies/javase/products-doc-jdk17certconfig.html). Never versions of Java may not work with FTLAV.
+  - Mac OS X 10.8.3 or newer
+  - Ubuntu 14.04 or newer
+  - Windows Vista SP2 or newer
+- The [latest release of FTLAV itself](https://github.com/Niels-NTG/FTLAV/releases/latest)
 
 ## Usage
-Before you do anything make sure you have FTL: Faster Than Light installed and downloaded the [latest version of FTLAV from the releases page](https://github.com/Niels-NTG/FTLAV/releases). This application is powered by Java, meaning that it can run on any operation system (Mac OS X, Windows, Linux, etc.) that supports Java 7 or higher. It’s designed to work with any up-to-data version of FTL for Mac/Linux/Windows, no matter if you bought it from Steam, GOG, ftlgame.com or some other place. It’s possible for modded versions of FTL to work with FTLAV, but it might not work for you.
 
-Start FTL: Faster Than Light; start a new game or continue an existing one. Now start FTLAV. If it's your first time it will ask where your FTL data is located. After this, click ***Open*** and select the file `continue.sav`. This file contains all information regarding your current run.
+### Startup
 
-If the selected file is valid you will be presented with a second window showing an empty graph. In the main window you can select the types of data you want to display in this graph. You can toggle these on or off at any time without losing any data. Please note that when toggling changes won’t show up instantly, only when the current gamestate is updated.
+When starting FTLAV for the first time it will try to auto-detect the location of FTL resources scanning for common installation locations of the standalone, Steam and GoG versions of the game on Mac, Linux and Windows. When confirmed this location will be remembered for the next time you use FTLAV.
 
-Play FTL as you would normally do, with FTLAV running in the background. The graph will update automatically each time you reach a safe point in the game, usually just after an encounter or when exiting a store. It’s also possible to trigger an update by quitting FTL, but this may produce unreliable results.
+FTLAV will try to automatically load the current FTL save file (`continue.sav`) on startup. If it cannot find this file you likely do not have an ongoing session, meaning you should start a new game in FTL. Use the "![load game icon](src/main/resources/UI/loadgame.gif)Load save game" button to manually load a save game file.
 
-If you get a game-over by either loosing or winning the game, FTL will delete `continue.sav`. FTLAV won’t be able to track any new data and will respond with a “File Not Found” error. This is perfectly normal. You can still save your graph as an image by pressing the ***Export image*** button. This will save the graph as two PNG images, one with a [transparant background](https://raw.github.com/Niels-NTG/FTLAV/master/img/game2alpha.png) and [one without](https://raw.github.com/Niels-NTG/FTLAV/master/img/game2.png), at the current resolution of the graph window. Additionally it’s possible to export a detailed table with information on each possible data point for each visited beacon. This is done by clicking the ***Export data*** button. This will save all data as a CSV-file. This can be read by pretty much any spreadsheet application. This can be used to for example maintain an Excel document containing data from all runs with a particular type of ship. With CSV being such a flexible format you might have very different ideas on what to do with your FTL data. If so, share your creations with the community, and please don’t forget to mention FTLAV. *If you’re using Apple Numbers you might want to convert the file using [this script](http://www.appletips.nl/files/CSVtoTabs-Clipboard.zip) so Numbers can parse it correctly.*
+### Recording your FTL game
 
-[Here’s an example of a CSV-file generated by FTLAV](https://raw.github.com/Niels-NTG/FTLAV/master/CSVexamples/example(FederationCruiseA-EASY-AE).csv). The image below was captured during the same session.
-<a href="https://raw.github.com/Niels-NTG/FTLAV/master/img/game2.png"><img src="https://raw.github.com/Niels-NTG/FTLAV/master/img/game2.png"/></a>
+FTL's `continue.sav` file only stores the most current state of the game. For this reason FTLAV watches this file for changes and will attempt to parse the file and append a new row to its recording when you arrive at a beacon different from the previous one. Or when there's new information for the current beacon, it will update the last row with this new information.
 
-It’s possible to track data from games that are already ongoing. It’s however not possible to look into the past from the moment you’ve started tracking. This also means that if you quit FTLAV, all data from before the current beacon will be lost. You can however open and close FTL at any moment without using any graph data.
+Please note that due to the mysterious nature of the FTL save game file format, FTLAV won't always be able to parse the current game state. In such a case FTLAV skips recording this game state and waits for the next one.
 
+### Export recording
 
-## Roadmap
+To export the recording to a `.tsv` (tab-separated values) spreadsheet file, click the "![new game icon](src/main/resources/UI/new.gif)New recording" button and then choose a file location and file name.
 
-### Version 3 (Someday)
-- The method for storing the game state history has been completely redone. Instead of storing the complete history in RAM, each new game state is written directly to a CSV file. This change makes FTLAV a much more flexible and powerful tool. This means you can stop and resume tracking FTL data at any time. This also opens up the possibility for creating your own visualisations on top of FTLAV.
-- The graph renderer code has been completely rewritten. This not only improves overal performance, but also makes it easier to write alternative visualisations.
-- The graph renderer is now available as a stand-alone Processing sketch.
-- More compact UI.
-- Added graph legend.
-- New and improved graph types!
-	- Improved per-beacon line graph. Graph lines now can show ∆ between beacons instead of absoluut values.
-	- New per sector bar graph, showing totals and averages per sector.
-	- New timed scatter plot, showing changes on two axis over time.
-	- New systems upgrade diagram.
-- Graph scales in such a way that it never becomes to dense to display on a single screen.
-- Mouseover tooltips for more in-depth information about a particular beacon or point in the graph.
+After creating this file, FTLAV will append new recorded information  to this file as long as the current FTL save game exists.
 
-### Version 2 (27 september 2015) [latest release]
-**[download](https://github.com/Niels-NTG/FTLAV/releases/tag/v2-alpha)**
+### Import recording
 
-- New data types
-	- Enemy fleet advancement
-	- Info on any system (capacity, current energy, damage) on the players ship and nearby ships (CSV exports only)
-	- Export the full dataset as a CSV-file
+To resume recording a preexisting recording or merge an existing recording with the current one, click the "![open recording icon](src/main/resources/UI/open.gif)Open recording" button and choose a TSV file created by FTLAV.
 
-### Version 1 (13 September 2015)
-- New data types
-	- Scrap count
-	- Hull level
-	- Fuel count
-	- Drone Parts count
-	- Missiles count
-	- Crew size
-	- Ship Oxygen level
-	- Crew member health
-	- Crew skills (pilot, engine, shields, weapons, repairing, combat)
-	- Crew stats (total repairs, combat kills, evasions, survived jumps, skills points)
-	- Ship log (total ships defeated, total beacons explored, total scrap collected, total crew hired)
-- Graph features
-	- Labeled sectors (name, type, number)
-	- Beacon labels (as N explored beacons)
-	- Labeled graph lines
-	- Coloured graph lines (purple for crew, blue for the rest)
-	- Graph title (ship name, current score, difficulty, Advanced Edition on/off)
-	- FTL style colour scheme
-	- FTL style blue glowing lines
-	- FTL style typography
-- Export to PNG
-- Export to PNG with transparant background
-- Help menu
+### Visualisation
 
-## Contribute
-If you have ideas, suggestions, problems or encountered a bug, please let me know, preferably by filing an [issue](https://github.com/Niels-NTG/FTLAV/issues) at this GitHub repository.
+Some of this data visualised in a separate window that automatically gets redrawn each time new data comes in. This window can be toggled using the "![graph icon](src/main/resources/UI/graph.gif)Graph" button. The presentation of this data can be changed in the settings panel in FTLAV's main window. Here you also find the "![save graph icon](src/main/resources/UI/savegraph.gif)Export graph" button to export the current visualisation as an image file.
 
-If you want to delve into the code you will probably need some knowledge of [Processing](http://processing.github.io/processing-javadocs/core/index.html) (Java library responsible for the rendering of the graph) or/and Java (UI, data-parsing and basically everything else). For the Java part you can look at [Vhati](https://github.com/Vhati)’s version of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor), of which a large part of the code of this project is based. Use [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) to compile the source code.
+## Acknowledgements
+
+For the parsing and reading of the binary-formatted FTL save data, FTLAV makes heavy use of the source code of the [FTL Profile Editor](https://github.com/reseto/ftl-profile-editor/) project by GitHub user [reseto](https://github.com/reseto), which is a fork of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor) by [Vhati](https://github.com/Vhati), which in turn is a fork from the [original repository](https://github.com/ComaToes/ftl-profile-editor) by [ComaToes](https://github.com/ComaToes). FTLAV would have never gotten off the ground without the efforts of these  people, as well as other contributors to the FTL Profile Editor project.

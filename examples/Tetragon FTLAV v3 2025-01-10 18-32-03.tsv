@@ -1,0 +1,6207 @@
+"TIME"	"SHIP NAME"	"SHIP TYPE"	"DIFFICULTY"	"AE CONTENT ENABLED"	"BEACONS EXPLORED"	"SECTOR NUMBER"	"SECTOR TYPE"	"SECTOR NAME"	"FLEET ADVANCEMENT"	"ENCOUNTER TEXT"	"BEACON HAZARDS"	"STORE"	"TOTAL SHIPS DEFEATED"	"TOTAL SCRAP COLLECTED"	"TOTAL CREW HIRED"	"SCORE"	"SCRAP"	"FUEL"	"MISSLES"	"DRONE PARTS"	"CREW SIZE"	"HULL"	"OXYGEN LEVEL"	"SHIP AUGMENTS"	"CARGO"	"CREW"	"PILOT SYSTEM POWER CAPACITY"	"PILOT SYSTEM DAMAGE"	"SENSOR SYSTEM POWER CAPACITY"	"SENSOR SYSTEM DAMAGE"	"DOOR SYSTEM POWER CAPACITY"	"DOOR SYSTEM DAMAGE"	"DOOR COUNT"	"DOORS OPEN"	"DOORS DAMAGED"	"BATTERY SYSTEM POWER CAPACITY"	"BATTERY SYSTEM DAMAGE"	"BATTERY SYSTEM USE"	"MEDBAY SYSTEM POWER CAPACITY"	"MEDBAY SYSTEM POWER CONSUMPTION"	"MEDBAY SYSTEM DAMAGE"	"OXYGEN SYSTEM POWER CAPACITY"	"OXYGEN SYSTEM POWER CONSUMPTION"	"OXYGEN SYSTEM DAMAGE"	"SHIELD SYSTEM POWER CAPACITY"	"SHIELD SYSTEM POWER CONSUMPTION"	"SHIELD SYSTEM DAMAGE"	"SHIELD LAYERS"	"ZOLTAN SHIELD LAYERS"	"ENGINE SYSTEM POWER CAPACITY"	"ENGINE SYSTEM POWER CONSUMPTION"	"ENGINE SYSTEM DAMAGE"	"WEAPONS SYSTEM POWER CAPACITY"	"WEAPONS SYSTEM POWER CONSUMPTION"	"WEAPONS SYSTEM DAMAGE"	"WEAPONS LAYOUT"	"DRONE CONTROL SYSTEM POWER CAPACITY"	"DRONE CONTROL SYSTEM POWER CONSUMPTION"	"DRONE CONTROL SYSTEM DAMAGE"	"DRONE CONTROL LAYOUT"	"TELEPORTER SYSTEM POWER CAPACITY"	"TELEPORTER SYSTEM POWER CONSUMPTION"	"TELEPORTER SYSTEM DAMAGE"	"CLOAKING SYSTEM POWER CAPACITY"	"CLOAKING SYSTEM POWER CONSUMPTION"	"CLOAKING SYSTEM DAMAGE"	"CLOAKED"	"ARTILLERY SYSTEM POWER CAPACITY"	"ARTILLERY SYSTEM POWER CONSUMPTION"	"ARTILLERY SYSTEM DAMAGE"	"CLONE BAY SYSTEM POWER CAPACITY"	"CLONE BAY SYSTEM POWER CONSUMPTION"	"CLONE BAY SYSTEM DAMAGE"	"MIND CONTROL SYSTEM POWER CAPACITY"	"MIND CONTROL SYSTEM POWER CONSUMPTION"	"MIND CONTROL SYSTEM DAMAGE"	"HACKING SYSTEM POWER CAPACITY"	"HACKING SYSTEM POWER CONSUMPTION"	"HACKING SYSTEM DAMAGE"	"NEARBY SHIP EXISTS"	"NEARBY SHIP HOSTILE"	"NEARBY SHIP CREW SIZE"	"NEARBY SHIP HULL"	"NEARBY SHIP OXYGEN LEVEL"	"NEARBY SHIP AUGMENTS"	"NEARBY SHIP CREW"	"NEARBY SHIP PILOT SYSTEM POWER CAPACITY"	"NEARBY SHIP PILOT SYSTEM DAMAGE"	"NEARBY SHIP SENSOR SYSTEM POWER CAPACITY"	"NEARBY SHIP SENSOR SYSTEM DAMAGE"	"NEARBY SHIP DOOR SYSTEM POWER CAPACITY"	"NEARBY SHIP DOOR SYSTEM DAMAGE"	"NEARBY SHIP DOOR COUNT"	"NEARBY SHIP DOORS OPEN"	"NEARBY SHIP DOORS DAMAGED"	"NEARBY SHIP BATTERY SYSTEM POWER CAPACITY"	"NEARBY SHIP BATTERY SYSTEM DAMAGE"	"NEARBY SHIP BATTERY SYSTEM USE"	"NEARBY SHIP MEDBAY SYSTEM POWER CAPACITY"	"NEARBY SHIP MEDBAY SYSTEM POWER CONSUMPTION"	"NEARBY SHIP MEDBAY SYSTEM DAMAGE"	"NEARBY SHIP OXYGEN SYSTEM POWER CAPACITY"	"NEARBY SHIP OXYGEN SYSTEM POWER CONSUMPTION"	"NEARBY SHIP OXYGEN SYSTEM DAMAGE"	"NEARBY SHIP SHIELD SYSTEM POWER CAPACITY"	"NEARBY SHIP SHIELD SYSTEM POWER CONSUMPTION"	"NEARBY SHIP SHIELD SYSTEM DAMAGE"	"NEARBY SHIP SHIELD LAYERS"	"NEARBY SHIP ZOLTAN SHIELD LAYERS"	"NEARBY SHIP ENGINE SYSTEM POWER CAPACITY"	"NEARBY SHIP ENGINE SYSTEM POWER CONSUMPTION"	"NEARBY SHIP ENGINE SYSTEM DAMAGE"	"NEARBY SHIP WEAPONS SYSTEM POWER CAPACITY"	"NEARBY SHIP WEAPONS SYSTEM POWER CONSUMPTION"	"NEARBY SHIP WEAPONS SYSTEM DAMAGE"	"NEARBY SHIP WEAPONS LAYOUT"	"NEARBY SHIP DRONE CONTROL SYSTEM POWER CAPACITY"	"NEARBY SHIP DRONE CONTROL SYSTEM POWER CONSUMPTION"	"NEARBY SHIP DRONE CONTROL SYSTEM DAMAGE"	"NEARBY SHIP DRONE CONTROL LAYOUT"	"NEARBY SHIP TELEPORTER SYSTEM POWER CAPACITY"	"NEARBY SHIP TELEPORTER SYSTEM POWER CONSUMPTION"	"NEARBY SHIP TELEPORTER SYSTEM DAMAGE"	"NEARBY SHIP CLOAKING SYSTEM POWER CAPACITY"	"NEARBY SHIP CLOAKING SYSTEM POWER CONSUMPTION"	"NEARBY SHIP CLOAKING SYSTEM DAMAGE"	"NEARBY SHIP CLOAKED"	"NEARBY SHIP ARTILLERY SYSTEM POWER CAPACITY"	"NEARBY SHIP ARTILLERY SYSTEM POWER CONSUMPTION"	"NEARBY SHIP ARTILLERY SYSTEM DAMAGE"	"NEARBY SHIP CLONE BAY SYSTEM POWER CAPACITY"	"NEARBY SHIP CLONE BAY SYSTEM POWER CONSUMPTION"	"NEARBY SHIP CLONE BAY SYSTEM DAMAGE"	"NEARBY SHIP MIND CONTROL SYSTEM POWER CAPACITY"	"NEARBY SHIP MIND CONTROL SYSTEM POWER CONSUMPTION"	"NEARBY SHIP MIND CONTROL SYSTEM DAMAGE"	"NEARBY SHIP HACKING SYSTEM POWER CAPACITY"	"NEARBY SHIP HACKING SYSTEM POWER CONSUMPTION"	"NEARBY SHIP HACKING SYSTEM DAMAGE"
+"2025-01-10 18:32:03"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"1"	"1"	"CIVILIAN"	"Civilian Sector"	"0"	"The data you carry is vital to the remaining Federation fleet. You'll need supplies for the journey, so make sure to explore each sector before moving on to the next. But get to the exit before the pursuing Rebel fleet can catch up! 
+ 
+TIP: Targets -  Prioritize your targeting in combat. Weapons and Shields are usually the best choice, but if they're fleeing, hit their Engines or Piloting to prevent escape."	"[]"	"{}"	"0"	"0"	"3"	"10"	"30"	"16"	"0"	"25"	"3"	"30"	"94"	"[{
+  ""augmentId"": ""DEFENSE_SCRAMBLER"",
+  ""cost"": 80,
+  ""name"": ""Defense Scrambler"",
+  ""isStackable"": false,
+  ""value"": 0,
+  ""rarity"": 4
+}]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"2"	"1"	"0"	"1"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": false
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:34:58"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"2"	"1"	"CIVILIAN"	"Civilian Sector"	"6"	"event_DESTROYED_DEFAULT_1_text"	"[""Asteroid Field""]"	"{}"	"1"	"17"	"3"	"57"	"47"	"18"	"1"	"24"	"3"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 1,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 1,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 1,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 3,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:35:28"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"3"	"1"	"CIVILIAN"	"Civilian Sector"	"16"	"ship_SQUAT_WARNING_escape_text"	"[]"	"{}"	"1"	"17"	"3"	"67"	"47"	"17"	"1"	"24"	"3"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 2,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 2,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 2,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 3,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"true"	"true"	"3"	"8"	"100"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Feras"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Felicity"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Jason Bovee"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 20,
+    ""cooldown"": 12,
+    ""fullName"": ""Mini Beam"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""BEAM"",
+    ""shots"": 0,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""BEAM_1"",
+  ""isArmed"": true
+}]"	"2"	"2"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": true,
+  ""isDeployed"": true,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:37:33"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"4"	"1"	"CIVILIAN"	"Civilian Sector"	"25"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"3"	"37"	"3"	"137"	"17"	"18"	"3"	"20"	"3"	"28"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 3,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 3,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 70,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 3,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 8,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"1"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": false
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:38:13"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"5"	"1"	"CIVILIAN"	"Civilian Sector"	"35"	"event_AUTO_CIVILIAN_c1_text"	"[]"	"{}"	"3"	"63"	"3"	"173"	"23"	"17"	"4"	"21"	"3"	"28"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 4,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 4,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 78,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 4,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 8,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": false
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"true"	"true"	"0"	"7"	"0"	"[]"	"[]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"1"	"0"	"1"	"1"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 20,
+    ""cooldown"": 9,
+    ""fullName"": ""Leto Missiles"",
+    ""shieldPiercing"": 5,
+    ""power"": 1,
+    ""type"": ""MISSILES"",
+    ""shots"": 1,
+    ""breachChance"": 1,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""MISSILES_1"",
+  ""isArmed"": true
+}]"	"2"	"2"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Combat Drone Mark I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 2
+  },
+  ""droneId"": ""COMBAT_1"",
+  ""isArmed"": true,
+  ""isDeployed"": true,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:39:21"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"6"	"1"	"CIVILIAN"	"Civilian Sector"	"45"	"event_DISTRESS_SATELLITE_DEFENSE_c1_c6_text"	"[]"	"{}"	"4"	"107"	"3"	"247"	"67"	"16"	"7"	"21"	"3"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 2,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 5,
+    ""pilotedEvasions"": 4,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 5,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 2,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 86,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 5,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 11,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"2"	"0"	"1"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:41:04"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"8"	"1"	"CIVILIAN"	"Civilian Sector"	"65"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"5"	"128"	"3"	"308"	"63"	"14"	"9"	"20"	"3"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 3,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 7,
+    ""pilotedEvasions"": 6,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 7,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 3,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 7,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 14,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:41:55"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"9"	"1"	"CIVILIAN"	"Civilian Sector"	"84"	"ship_REBEL_AUTO_ITEM_destroyed_text"	"[]"	"{}"	"6"	"128"	"3"	"338"	"63"	"13"	"9"	"20"	"3"	"28"	"80"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 3,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 8,
+    ""pilotedEvasions"": 6,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 8,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 3,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 8,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 17,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"1"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"0"	"1"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:42:44"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"10"	"1"	"CIVILIAN"	"Civilian Sector"	"94"	"event_PIRATE_SUN_text"	"[""Red Giant""]"	"{}"	"6"	"161"	"3"	"381"	"96"	"14"	"9"	"21"	"3"	"28"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 3,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 9,
+    ""pilotedEvasions"": 6,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 9,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 3,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 9,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 17,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"true"	"true"	"3"	"9"	"100"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Mantis"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Kevin Fish"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Maxwell"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Zoltan"",
+    ""health"": 70,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Aki"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"4"	"0"	"1"	"0"	"2"	"2"	"0"	"2"	"1"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 20,
+      ""cooldown"": 12,
+      ""fullName"": ""Mini Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""BEAM_1"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 3,
+      ""cost"": 50,
+      ""cooldown"": 9,
+      ""fullName"": ""Heavy Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 3,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""LASER_HEAVY_1"",
+    ""isArmed"": true
+  }
+]"	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:43:52"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"11"	"1"	"CIVILIAN"	"Civilian Sector"	"104"	"event_REPAIR_STATION_c1_text"	"[]"	"{}"	"7"	"182"	"3"	"432"	"107"	"16"	"9"	"20"	"3"	"30"	"88"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 4,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 10,
+    ""pilotedEvasions"": 8,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 10,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 4,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 10,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 19,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:45:03"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"13"	"2"	"NEBULA"	"Uncharted Nebula"	"0"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"8"	"204"	"3"	"494"	"129"	"16"	"9"	"19"	"3"	"30"	"90"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 4,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 12,
+    ""pilotedEvasions"": 8,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 12,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 4,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 12,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 21,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:46:31"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"16"	"2"	"NEBULA"	"Uncharted Nebula"	"0"	"ship_REBEL_AUTO_ITEM_destroyed_text"	"[]"	"{}"	"9"	"204"	"3"	"544"	"129"	"13"	"9"	"16"	"3"	"30"	"93"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 6,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 15,
+    ""pilotedEvasions"": 12,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 15,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 6,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 15,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 23,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"1"	"1"	"0"	"[{
+  ""blueprint"": {
+    ""damage"": 1,
+    ""fireChance"": 1,
+    ""cost"": 25,
+    ""cooldown"": 10,
+    ""fullName"": ""Dual Shot Laser"",
+    ""shieldPiercing"": 0,
+    ""power"": 1,
+    ""type"": ""LASER"",
+    ""shots"": 2,
+    ""breachChance"": 0,
+    ""rarity"": 0
+  },
+  ""weaponId"": ""LASER_BURST_2"",
+  ""isArmed"": true
+}]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:48:20"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"18"	"2"	"NEBULA"	"Uncharted Nebula"	"14"	"text_NEBULA_EMPTY_LIST_6"	"[]"	"{}"	"9"	"289"	"3"	"649"	"4"	"14"	"13"	"16"	"3"	"26"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 6,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 17,
+    ""pilotedEvasions"": 12,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 17,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 6,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 17,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 23,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"1"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:52:06"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"20"	"2"	"NEBULA"	"Uncharted Nebula"	"30"	"event_REBEL_TRANSPORT_DESTROYED_6_text"	"[]"	"{}"	"11"	"342"	"3"	"762"	"57"	"15"	"14"	"14"	"3"	"23"	"87"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 8,
+    ""race"": ""Lanius"",
+    ""health"": 99,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 19,
+    ""pilotedEvasions"": 16,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 19,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 8,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 19,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 27,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:53:30"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"21"	"2"	"NEBULA"	"Uncharted Nebula"	"38"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"12"	"364"	"3"	"814"	"79"	"16"	"14"	"15"	"3"	"22"	"44"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 20,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 20,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 20,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"0"	"0"	"4"	"4"	"0"	"1"	"0"	"2"	"1"	"0"	"4"	"0"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:53:54"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"22"	"2"	"NEBULA"	"Uncharted Nebula"	"45"	"text_NEBULA_EMPTY_LIST_1"	"[]"	"{}"	"12"	"364"	"3"	"824"	"54"	"15"	"14"	"15"	"3"	"22"	"32"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 21,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 21,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 21,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"0"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"1"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:54:03"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"23"	"2"	"NEBULA"	"Uncharted Nebula"	"53"	"event_FINISH_BEACON_NEBULA_text"	"[]"	"{}"	"12"	"364"	"3"	"834"	"54"	"14"	"14"	"15"	"3"	"22"	"29"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 22,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 22,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 22,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"0"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"1"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:54:38"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"24"	"3"	"CIVILIAN"	"Engi Homeworlds"	"0"	"text_START_BEACON_ENGI_1"	"[]"	"{}"	"12"	"364"	"3"	"844"	"54"	"13"	"14"	"15"	"3"	"22"	"43"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 23,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 23,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 23,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 18:59:23"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"25"	"3"	"CIVILIAN"	"Engi Homeworlds"	"1"	"text_STORE_ENGI_3"	"[]"	"{
+  ""droneParts"": 0,
+  ""weapon"": [
+    {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    {
+      ""damage"": 2,
+      ""fireChance"": 3,
+      ""cost"": 50,
+      ""cooldown"": 9,
+      ""fullName"": ""Heavy Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 3,
+      ""rarity"": 2
+    },
+    {
+      ""damage"": 0,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 22,
+      ""fullName"": ""Ion Bomb"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BOMB"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 3
+    }
+  ],
+  ""system"": [
+    ""teleporter"",
+    ""cloaking"",
+    ""battery""
+  ],
+  ""fuel"": 4,
+  ""missiles"": 4
+}"	"12"	"364"	"3"	"854"	"0"	"14"	"14"	"17"	"3"	"23"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 24,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 24,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 24,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:00:08"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"28"	"3"	"CIVILIAN"	"Engi Homeworlds"	"30"	"event_ENGI_SURRENDER_text"	"[]"	"{}"	"12"	"383"	"3"	"903"	"19"	"14"	"12"	"19"	"3"	"23"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 27,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 27,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 27,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:01:10"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"30"	"3"	"CIVILIAN"	"Engi Homeworlds"	"50"	"text_STORE_ENGI_2"	"[]"	"{
+  ""droneParts"": 2,
+  ""augment"": [
+    {
+      ""augmentId"": ""SCRAP_COLLECTOR"",
+      ""cost"": 50,
+      ""name"": ""Scrap Recovery Arm"",
+      ""isStackable"": true,
+      ""value"": 0.10000000149011612,
+      ""rarity"": 1
+    },
+    {
+      ""augmentId"": ""SHIELD_RECHARGE"",
+      ""cost"": 45,
+      ""name"": ""Shield Charge Booster"",
+      ""isStackable"": true,
+      ""value"": 0.15000000596046448,
+      ""rarity"": 2
+    },
+    {
+      ""augmentId"": ""O2_MASKS"",
+      ""cost"": 50,
+      ""name"": ""Emergency Respirators"",
+      ""isStackable"": false,
+      ""value"": 0.5,
+      ""rarity"": 2
+    }
+  ],
+  ""weapon"": [
+    {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    {
+      ""damage"": 0,
+      ""fireChance"": 0,
+      ""cost"": 40,
+      ""cooldown"": 14,
+      ""fullName"": ""Repair Burst"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BOMB"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 3
+    },
+    {
+      ""damage"": 0,
+      ""fireChance"": 1,
+      ""cost"": 45,
+      ""cooldown"": 13,
+      ""fullName"": ""Small Bomb"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BOMB"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    }
+  ],
+  ""system"": [
+    ""medbay"",
+    ""cloaking"",
+    ""battery""
+  ],
+  ""fuel"": 7,
+  ""missiles"": 2,
+  ""drone"": [
+    {
+      ""dodge"": 0,
+      ""cost"": 50,
+      ""cooldown"": 1000,
+      ""fullName"": ""Combat Drone Mark I"",
+      ""power"": 2,
+      ""type"": ""COMBAT"",
+      ""speed"": 15,
+      ""rarity"": 2
+    },
+    {
+      ""dodge"": 0,
+      ""cost"": 35,
+      ""cooldown"": 7000,
+      ""fullName"": ""Anti-Combat Drone"",
+      ""power"": 1,
+      ""type"": ""DEFENSE"",
+      ""speed"": 5,
+      ""rarity"": 1
+    },
+    {
+      ""dodge"": 0,
+      ""cost"": 75,
+      ""cooldown"": 1000,
+      ""fullName"": ""Combat Drone Mark II"",
+      ""power"": 4,
+      ""type"": ""COMBAT"",
+      ""speed"": 28,
+      ""rarity"": 5
+    }
+  ]
+}"	"12"	"427"	"3"	"967"	"13"	"13"	"12"	"20"	"3"	"23"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 29,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 29,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 29,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 32,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"5"	"5"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:02:49"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"32"	"3"	"CIVILIAN"	"Engi Homeworlds"	"70"	""	"[]"	"{}"	"12"	"469"	"3"	"1029"	"13"	"14"	"12"	"20"	"3"	"29"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 9,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 31,
+    ""pilotedEvasions"": 18,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 31,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 9,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 31,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 33,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"1"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"5"	"5"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"true"	"true"	"2"	"3"	"99"	"[{
+  ""augmentId"": ""ROCK_ARMOR"",
+  ""cost"": 80,
+  ""name"": ""Rock Plating"",
+  ""isStackable"": false,
+  ""value"": 0.15000000596046448,
+  ""rarity"": 0
+}]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Zoltan"",
+    ""health"": 70,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Sean O'Regan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Mullett"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"3"	"4"	"0"	"0"	"0"	"1"	"1"	"0"	"2"	"2"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 3,
+      ""cost"": 50,
+      ""cooldown"": 9,
+      ""fullName"": ""Heavy Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 3,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""LASER_HEAVY_1"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 0,
+      ""fireChance"": 1,
+      ""cost"": 45,
+      ""cooldown"": 13,
+      ""fullName"": ""Small Bomb"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BOMB"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""BOMB_1"",
+    ""isArmed"": true
+  }
+]"	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:04:54"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"34"	"3"	"CIVILIAN"	"Engi Homeworlds"	"89"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"14"	"511"	"3"	"1131"	"55"	"15"	"12"	"20"	"3"	"27"	"90"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 33,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 1,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 1,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 33,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 33,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 39,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"5"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"1"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:05:35"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"35"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"0"	"text_START_BEACON_REBEL_2"	"[]"	"{}"	"14"	"540"	"3"	"1170"	"9"	"17"	"13"	"20"	"3"	"27"	"92"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 34,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 34,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 34,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 39,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:05:51"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"36"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"0"	"event_REPAIR_STATION_text"	"[]"	"{}"	"14"	"540"	"3"	"1180"	"9"	"16"	"13"	"20"	"3"	"27"	"92"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 35,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 35,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 35,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 39,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:05:59"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"37"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"0"	"event_AUTO_CIVILIAN_text"	"[]"	"{}"	"14"	"540"	"3"	"1190"	"9"	"15"	"13"	"20"	"3"	"27"	"92"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 36,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 36,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 36,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 39,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:08:06"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"38"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"0"	"text_STORE_REBEL_2"	"[]"	"{
+  ""droneParts"": 3,
+  ""augment"": [
+    {
+      ""augmentId"": ""SCRAP_COLLECTOR"",
+      ""cost"": 50,
+      ""name"": ""Scrap Recovery Arm"",
+      ""isStackable"": true,
+      ""value"": 0.10000000149011612,
+      ""rarity"": 1
+    },
+    {
+      ""augmentId"": ""AUTO_COOLDOWN"",
+      ""cost"": 40,
+      ""name"": ""Automated Re-loader"",
+      ""isStackable"": true,
+      ""value"": 0.10000000149011612,
+      ""rarity"": 2
+    },
+    {
+      ""augmentId"": ""SHIELD_RECHARGE"",
+      ""cost"": 45,
+      ""name"": ""Shield Charge Booster"",
+      ""isStackable"": true,
+      ""value"": 0.15000000596046448,
+      ""rarity"": 2
+    }
+  ],
+  ""weapon"": [
+    {
+      ""damage"": 2,
+      ""fireChance"": 1,
+      ""cost"": 65,
+      ""cooldown"": 17,
+      ""fullName"": ""Hull Missile"",
+      ""shieldPiercing"": 5,
+      ""power"": 2,
+      ""type"": ""MISSILES"",
+      ""shots"": 1,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    {
+      ""damage"": 0,
+      ""fireChance"": 0,
+      ""cost"": 50,
+      ""cooldown"": 16,
+      ""fullName"": ""Anti-Bio Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 5
+    },
+    {
+      ""damage"": 0,
+      ""fireChance"": 0,
+      ""cost"": 45,
+      ""cooldown"": 13,
+      ""fullName"": ""Heavy Ion"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 3
+    }
+  ],
+  ""fuel"": 3,
+  ""missiles"": 4,
+  ""drone"": [
+    {
+      ""dodge"": 0,
+      ""cost"": 35,
+      ""cooldown"": 7000,
+      ""fullName"": ""Anti-Combat Drone"",
+      ""power"": 1,
+      ""type"": ""DEFENSE"",
+      ""speed"": 5,
+      ""rarity"": 1
+    },
+    {
+      ""dodge"": 0,
+      ""cost"": 50,
+      ""cooldown"": 1000,
+      ""fullName"": ""Anti-Ship Beam Drone I"",
+      ""power"": 2,
+      ""type"": ""COMBAT"",
+      ""speed"": 15,
+      ""rarity"": 3
+    },
+    {
+      ""cost"": 35,
+      ""fullName"": ""Anti-Personnel Drone"",
+      ""power"": 2,
+      ""type"": ""BATTLE"",
+      ""rarity"": 2
+    }
+  ],
+  ""crew"": [
+    {
+      ""cost"": 55,
+      ""description"": ""The 'Rockmen' of Vrachos IV are rarely seen and are known for their fortitude."",
+      ""id"": ""rock"",
+      ""shortTitle"": ""Rockman"",
+      ""title"": ""Rockman"",
+      ""rarity"": 3,
+      ""powerList"": [
+        ""Immune to fire"",
+        ""Movement speed is halved"",
+        ""Max Health is increased to 150""
+      ]
+    },
+    {
+      ""cost"": 55,
+      ""description"": ""The 'Rockmen' of Vrachos IV are rarely seen and are known for their fortitude."",
+      ""id"": ""rock"",
+      ""shortTitle"": ""Rockman"",
+      ""title"": ""Rockman"",
+      ""rarity"": 3,
+      ""powerList"": [
+        ""Immune to fire"",
+        ""Movement speed is halved"",
+        ""Max Health is increased to 150""
+      ]
+    },
+    {
+      ""cost"": 55,
+      ""description"": ""The Mantis disregard for individual lives led to their evolution as a vicious warrior race."",
+      ""id"": ""mantis"",
+      ""shortTitle"": ""Mantis"",
+      ""title"": ""Mantis"",
+      ""rarity"": 2,
+      ""powerList"": [
+        ""Inflict 1.5x damage in combat"",
+        ""1.2x move speed"",
+        ""Halved repair speed""
+      ]
+    }
+  ]
+}"	"15"	"560"	"4"	"1240"	"20"	"14"	"15"	"21"	"4"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 37,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 37,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 37,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 43,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 142,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 1,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:08:23"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"39"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"6"	"ship_REBEL_ENGI_UNLOCK_2REAL_escape_text"	"[]"	"{}"	"15"	"560"	"4"	"1250"	"20"	"13"	"15"	"21"	"4"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 38,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 38,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 38,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 43,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 2,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"0"	"0"	"true"	"true"	"3"	"12"	"100"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Lagardi"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Lisandra"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Hector"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"3"	"4"	"0"	"1"	"0"	"3"	"3"	"0"	"3"	"3"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 1,
+      ""cost"": 38,
+      ""cooldown"": 10,
+      ""fullName"": ""Artemis Missiles"",
+      ""shieldPiercing"": 5,
+      ""power"": 2,
+      ""type"": ""MISSILES"",
+      ""shots"": 1,
+      ""breachChance"": 1,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""MISSILES_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 3,
+      ""cost"": 50,
+      ""cooldown"": 9,
+      ""fullName"": ""Heavy Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 3,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""LASER_HEAVY_1"",
+    ""isArmed"": true
+  }
+]"	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:09:39"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"40"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"16"	"event_RANDOM_GIFT_4_text"	"[]"	"{}"	"15"	"560"	"4"	"1260"	"20"	"10"	"15"	"20"	"4"	"28"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 11,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 39,
+    ""pilotedEvasions"": 22,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 39,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 11,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 78,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 39,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 44,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 1,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 3,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"true"	"false"	"2"	"9"	"100"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Maradine"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Arries"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"3"	"4"	"0"	"1"	"0"	"2"	"1"	"0"	"4"	"0"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 65,
+      ""cooldown"": 10,
+      ""fullName"": ""Flak Gun Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BURST"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""SHOTGUN"",
+    ""isArmed"": false
+  }
+]"	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:11:46"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"42"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"36"	""	"[]"	"{}"	"16"	"607"	"4"	"1347"	"47"	"8"	"16"	"19"	"4"	"26"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 13,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 5,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 5,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 41,
+    ""pilotedEvasions"": 26,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 41,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 13,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 94,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 41,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 54,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 3,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 5,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"2"	"2"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"true"	"false"	"3"	"5"	"99"	"[]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 91,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 1,
+    ""name"": ""Wai-Shing"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 70,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Noemi"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Human"",
+    ""health"": 100,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 0,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Graffin"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": false,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"1"	"0"	"0"	"0"	"2"	"0"	"8"	"0"	"3"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"3"	"4"	"0"	"0"	"0"	"3"	"3"	"0"	"3"	"0"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 1,
+      ""cost"": 38,
+      ""cooldown"": 10,
+      ""fullName"": ""Artemis Missiles"",
+      ""shieldPiercing"": 5,
+      ""power"": 2,
+      ""type"": ""MISSILES"",
+      ""shots"": 1,
+      ""breachChance"": 1,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""MISSILES_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 20,
+      ""cooldown"": 10,
+      ""fullName"": ""Defense Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_1"",
+    ""isArmed"": false
+  }
+]"	"3"	"0"	"0"	"[
+  {
+    ""blueprint"": {
+      ""dodge"": 0,
+      ""cost"": 35,
+      ""cooldown"": 7000,
+      ""fullName"": ""Anti-Combat Drone"",
+      ""power"": 1,
+      ""type"": ""DEFENSE"",
+      ""speed"": 5,
+      ""rarity"": 1
+    },
+    ""droneId"": ""ANTI_DRONE"",
+    ""isArmed"": false,
+    ""isDeployed"": true,
+    ""health"": 1
+  },
+  {
+    ""blueprint"": {
+      ""cost"": 30,
+      ""fullName"": ""System Repair Drone"",
+      ""power"": 1,
+      ""type"": ""REPAIR"",
+      ""rarity"": 1
+    },
+    ""droneId"": ""REPAIR"",
+    ""isArmed"": false,
+    ""isDeployed"": true,
+    ""health"": 25
+  },
+  {
+    ""blueprint"": {
+      ""dodge"": 0,
+      ""cost"": 35,
+      ""cooldown"": 7000,
+      ""fullName"": ""Anti-Combat Drone"",
+      ""power"": 1,
+      ""type"": ""DEFENSE"",
+      ""speed"": 5,
+      ""rarity"": 1
+    },
+    ""droneId"": ""ANTI_DRONE"",
+    ""isArmed"": false,
+    ""isDeployed"": true,
+    ""health"": 1
+  }
+]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:13:16"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"43"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"46"	"event_DESTROYED_DEFAULT_1_text"	"[""Pulsar""]"	"{}"	"17"	"607"	"4"	"1377"	"47"	"7"	"16"	"18"	"4"	"20"	"93"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 14,
+    ""race"": ""Lanius"",
+    ""health"": 78,
+    ""repairSkill"": 7,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 7,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 42,
+    ""pilotedEvasions"": 28,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 60,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 42,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 14,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 42,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 58,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 3,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 6,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"1"	"0"	"0"	"0"	"2"	"0"	"2"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:15:01"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"44"	"4"	"HOSTILE"	"Rebel Controlled Sector"	"55"	"event_STORE_REBELSIDE_SEARCH_2_text"	"[]"	"{}"	"17"	"695"	"4"	"1475"	"30"	"8"	"18"	"20"	"4"	"20"	"74"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 14,
+    ""race"": ""Lanius"",
+    ""health"": 86,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 43,
+    ""pilotedEvasions"": 28,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 62,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 43,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 14,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 43,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 58,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 3,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 7,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"1"	"0"	"0"	"0"	"4"	"2"	"0"	"6"	"0"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": false
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": false
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:16:09"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"47"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"0"	"text_REBEL_AUTO_9"	"[]"	"{}"	"17"	"695"	"4"	"1505"	"30"	"5"	"3"	"20"	"4"	"30"	"82"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 14,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 46,
+    ""pilotedEvasions"": 28,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 86,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 46,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 14,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 46,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 58,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 3,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 10,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"true"	"true"	"0"	"11"	"0"	"[]"	"[]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"4"	"4"	"0"	"2"	"0"	"3"	"3"	"0"	"4"	"4"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 2,
+      ""fireChance"": 1,
+      ""cost"": 38,
+      ""cooldown"": 10,
+      ""fullName"": ""Artemis Missiles"",
+      ""shieldPiercing"": 5,
+      ""power"": 2,
+      ""type"": ""MISSILES"",
+      ""shots"": 1,
+      ""breachChance"": 1,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""MISSILES_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 50,
+      ""cooldown"": 11,
+      ""fullName"": ""Burst Laser Mark I"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""LASER_BURST_2_A"",
+    ""isArmed"": true
+  }
+]"	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"2"	"2"	"0"
+"2025-01-10 19:17:19"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"48"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"7"	"text_NOTHING_REBEL_4"	"[]"	"{}"	"18"	"735"	"4"	"1575"	"70"	"4"	"5"	"20"	"4"	"24"	"93"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 15,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 47,
+    ""pilotedEvasions"": 30,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 94,
+    ""repairSkill"": 3,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 3,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 47,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 15,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 47,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 64,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 6,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 11,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:19:32"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"50"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"26"	"event_DESTROYED_DEFAULT_1_text"	"[""Asteroid Field""]"	"{}"	"19"	"735"	"4"	"1615"	"34"	"8"	"5"	"19"	"4"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 20,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 49,
+    ""pilotedEvasions"": 40,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 3,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 3,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 49,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 20,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 49,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 68,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 12,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 13,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"3"	"0"	"1"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:19:53"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"51"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"36"	"text_REBEL_AUTO_8"	"[]"	"{}"	"19"	"775"	"4"	"1665"	"74"	"7"	"6"	"20"	"4"	"30"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 20,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 50,
+    ""pilotedEvasions"": 40,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 3,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 3,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 50,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 20,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 50,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 68,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 150,
+    ""repairSkill"": 0,
+    ""shieldSkill"": 12,
+    ""combatSkill"": 0,
+    ""repairs"": 0,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 14,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"true"	"true"	"0"	"11"	"0"	"[]"	"[]"	"1"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"5"	"4"	"0"	"2"	"0"	"3"	"3"	"0"	"3"	"3"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 65,
+      ""cooldown"": 16,
+      ""fullName"": ""Chain Burst Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_CHAINGUN"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 0,
+      ""fireChance"": 1,
+      ""cost"": 45,
+      ""cooldown"": 13,
+      ""fullName"": ""Small Bomb"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""BOMB"",
+      ""shots"": 1,
+      ""breachChance"": 0,
+      ""rarity"": 1
+    },
+    ""weaponId"": ""BOMB_1"",
+    ""isArmed"": true
+  }
+]"	"4"	"3"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 60,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone II"",
+    ""power"": 3,
+    ""type"": ""COMBAT"",
+    ""speed"": 11,
+    ""rarity"": 5
+  },
+  ""droneId"": ""COMBAT_BEAM_2"",
+  ""isArmed"": true,
+  ""isDeployed"": true,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:23:30"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"53"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"51"	"event_DESTROYED_DEFAULT_1_text"	"[]"	"{}"	"21"	"818"	"4"	"1768"	"117"	"8"	"6"	"20"	"4"	"29"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 23,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 52,
+    ""pilotedEvasions"": 46,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 71,
+    ""repairSkill"": 6,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 6,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 52,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 23,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 52,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 85,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 136,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 20,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 16,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
+"2025-01-10 19:24:45"	"Tetragon"	"Engi Cruiser C"	"EASY"	"true"	"54"	"5"	"HOSTILE"	"Rebel Controlled Sector"	"61"	"ship_REBEL_VS_FEDERATION_destroyed_text"	"[]"	"{}"	"22"	"867"	"4"	"1847"	"166"	"10"	"8"	"19"	"4"	"29"	"94"	"[
+  {
+    ""augmentId"": ""BACKUP_DNA"",
+    ""cost"": 40,
+    ""name"": ""Backup DNA Bank"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 2
+  },
+  {
+    ""augmentId"": ""DEFENSE_SCRAMBLER"",
+    ""cost"": 80,
+    ""name"": ""Defense Scrambler"",
+    ""isStackable"": false,
+    ""value"": 0,
+    ""rarity"": 4
+  }
+]"	"[""LASER_CHARGEGUN""]"	"[
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 26,
+    ""race"": ""Lanius"",
+    ""health"": 100,
+    ""repairSkill"": 9,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 9,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 53,
+    ""pilotedEvasions"": 52,
+    ""name"": ""Mikael Olofsson"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 79,
+    ""repairSkill"": 6,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 6,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 53,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Craig Dolan"",
+    ""engineSkill"": 26,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Engi"",
+    ""health"": 100,
+    ""repairSkill"": 4,
+    ""shieldSkill"": 0,
+    ""combatSkill"": 0,
+    ""repairs"": 4,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 53,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Declan"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 94,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 1
+  },
+  {
+    ""combatKills"": 0,
+    ""pilotSkill"": 0,
+    ""race"": ""Rock"",
+    ""health"": 144,
+    ""repairSkill"": 2,
+    ""shieldSkill"": 23,
+    ""combatSkill"": 0,
+    ""repairs"": 2,
+    ""isEnemyBoardingDrone"": false,
+    ""jumpsSurvived"": 17,
+    ""pilotedEvasions"": 0,
+    ""name"": ""Andrew Fenn"",
+    ""engineSkill"": 0,
+    ""weaponsSkill"": 0,
+    ""isMindControlled"": false,
+    ""isPlayerControlled"": true,
+    ""skillMasteriesEarned"": 0
+  }
+]"	"2"	"0"	"1"	"0"	"1"	"0"	"23"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"1"	"1"	"0"	"4"	"4"	"0"	"2"	"0"	"4"	"4"	"0"	"6"	"6"	"0"	"[
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 25,
+      ""cooldown"": 10,
+      ""fullName"": ""Dual Shot Laser"",
+      ""shieldPiercing"": 0,
+      ""power"": 1,
+      ""type"": ""LASER"",
+      ""shots"": 2,
+      ""breachChance"": 0,
+      ""rarity"": 0
+    },
+    ""weaponId"": ""LASER_BURST_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 1,
+      ""cost"": 75,
+      ""cooldown"": 15,
+      ""fullName"": ""Hull Smasher Laser Mark II"",
+      ""shieldPiercing"": 0,
+      ""power"": 3,
+      ""type"": ""LASER"",
+      ""shots"": 3,
+      ""breachChance"": 3,
+      ""rarity"": 3
+    },
+    ""weaponId"": ""LASER_HULL_2"",
+    ""isArmed"": true
+  },
+  {
+    ""blueprint"": {
+      ""damage"": 1,
+      ""fireChance"": 0,
+      ""cost"": 55,
+      ""cooldown"": 16,
+      ""fullName"": ""Pike Beam"",
+      ""shieldPiercing"": 0,
+      ""power"": 2,
+      ""type"": ""BEAM"",
+      ""shots"": 0,
+      ""breachChance"": 0,
+      ""rarity"": 2
+    },
+    ""weaponId"": ""BEAM_LONG"",
+    ""isArmed"": true
+  }
+]"	"2"	"0"	"0"	"[{
+  ""blueprint"": {
+    ""dodge"": 0,
+    ""cost"": 50,
+    ""cooldown"": 1000,
+    ""fullName"": ""Anti-Ship Beam Drone I"",
+    ""power"": 2,
+    ""type"": ""COMBAT"",
+    ""speed"": 15,
+    ""rarity"": 3
+  },
+  ""droneId"": ""COMBAT_BEAM"",
+  ""isArmed"": false,
+  ""isDeployed"": false,
+  ""health"": 1
+}]"	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"1"	"1"	"0"	"0"	"0"	"0"	"2"	"2"	"0"	"false"	"false"	"0"	"0"	"0"	""	""	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	""	"0"	"0"	"0"	""	"0"	"0"	"0"	"0"	"0"	"0"	"false"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"	"0"
