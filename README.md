@@ -67,3 +67,13 @@ Some of this data visualised in a separate window that automatically gets redraw
 ## Acknowledgements
 
 For the parsing and reading of the binary-formatted FTL save data, FTLAV makes heavy use of the source code of the [FTL Profile Editor](https://github.com/reseto/ftl-profile-editor/) project by GitHub user [reseto](https://github.com/reseto), which is a fork of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor) by [Vhati](https://github.com/Vhati), which in turn is a fork from the [original repository](https://github.com/ComaToes/ftl-profile-editor) by [ComaToes](https://github.com/ComaToes). FTLAV would have never gotten off the ground without the efforts of these  people, as well as other contributors to the FTL Profile Editor project.
+
+## GitHub star history
+
+<a href="https://star-history.com/#Niels-NTG/FTLAV&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Niels-NTG/FTLAV&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Niels-NTG/FTLAV&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Niels-NTG/FTLAV&type=Date" />
+ </picture>
+</a>
