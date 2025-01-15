@@ -64,6 +64,14 @@ To resume recording a preexisting recording or merge an existing recording with 
 
 Some of this data visualised in a separate window that automatically gets redrawn each time new data comes in. This window can be toggled using the "![graph icon](https://github.com/Niels-NTG/FTLAV/raw/master/src/main/resources/UI/graph.gif) Graph" button. The presentation of this data can be changed in the settings panel in FTLAV's main window. Here you also find the "![export graph icon](https://github.com/Niels-NTG/FTLAV/raw/master/src/main/resources/UI/savegraph.gif) Export graph" button to export the current visualisation as an image file.
 
+### Troubleshooting
+
+- FTLAV crashes right after startup:
+  - You may be running a version of Java that's too new and/or doesn't include the right dependencies to display the UI.
+  - Java OpenJDK 17 distributed by Microsoft is the newest version of Java that tested to work with FTLAV. Installers can be found on [Microsoft's website](https://learn.microsoft.com/en-us/java/openjdk/older-releases#openjdk-17) or in your OS' package manager (if it has one).
+- I'm on Linux and I can't seem to run `.jar` files as applications:
+  - Open the folder of FTLAV in your terminal and run `java -jar FTLAdventureVisualiser.jar`.
+
 ## Acknowledgements
 
 For the parsing and reading of the binary-formatted FTL save data, FTLAV makes heavy use of the source code of the [FTL Profile Editor](https://github.com/reseto/ftl-profile-editor/) project by GitHub user [reseto](https://github.com/reseto), which is a fork of [FTL Profile Editor](https://github.com/Vhati/ftl-profile-editor) by [Vhati](https://github.com/Vhati), which in turn is a fork from the [original repository](https://github.com/ComaToes/ftl-profile-editor) by [ComaToes](https://github.com/ComaToes). FTLAV would have never gotten off the ground without the efforts of these  people, as well as other contributors to the FTL Profile Editor project.
