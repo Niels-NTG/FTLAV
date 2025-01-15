@@ -1,20 +1,17 @@
 <assembly>
-	<id>dist-win</id>
+	<id>dist</id>
 	<formats>
 		<format>zip</format>
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>skel_common</directory>
-			<outputDirectory>/</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>skel_win</directory>
-			<outputDirectory>/</outputDirectory>
+			<directory>${project.basedir}</directory>
 			<includes>
-				<include>*</include>
+				<include>README.md</include>
+				<include>LICENSE</include>
 			</includes>
 		</fileSet>
+
 		<fileSet>
 			<directory>${project.build.directory}</directory>
 			<outputDirectory>/</outputDirectory>

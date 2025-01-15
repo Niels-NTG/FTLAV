@@ -1,12 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.nielspoldervaart.ftlav</groupId>
 	<artifactId>ftl-adventure-visualiser</artifactId>
-	<version>3</version>
+	<version>3.0.1</version>
 	<name>FTL Adventure Visualiser</name>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -63,82 +66,65 @@
 	</dependencies>
 
 	<build>
-	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.1</version>
-			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-				<compilerArgument>-Xlint:unchecked</compilerArgument>
-			</configuration>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-assembly-plugin</artifactId>
-			<version>2.4.1</version>
-			<executions>
-				 <!-- Build jar. -->
-				<execution>
-					<id>jar-with-dependencies</id>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-					<configuration>
-						<descriptorRefs>
-							<descriptorRef>jar-with-dependencies</descriptorRef>
-						</descriptorRefs>
-						<archive>
-							<manifest>
-								<mainClass>nl.nielspoldervaart.ftlav.FTLAdventureVisualiser</mainClass>
-							</manifest>
-							<manifestEntries>
-								<Built-By>NTG</Built-By>
-							</manifestEntries>
-						</archive>
-						<finalName>FTLAdventureVisualiser</finalName>
-						<appendAssemblyId>false</appendAssemblyId>
-						<attach>false</attach>
-					</configuration>
-				</execution>
-				<!-- uncomment this section if you wish to also build zip and/or tar.gz archives -->
-				<!-- Build zip archive. -->
-				<execution>
-					<id>dist-win</id>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-					<configuration>
-						<descriptors>
-							<descriptor>src/main/assembly/dist-win.xml</descriptor>
-						</descriptors>
-						<finalName>${project.name} v${project.version}-Win</finalName>
-						<appendAssemblyId>false</appendAssemblyId>
-						<attach>false</attach>
-					</configuration>
-				</execution>
-				<!-- Build tar.gz archive. -->
-				<execution>
-					<id>dist-unix</id>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-					<configuration>
-						<descriptors>
-						</descriptors>
-						<appendAssemblyId>false</appendAssemblyId>
-						<attach>false</attach>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
-</build>
-								<descriptor>src/main/assembly/dist-mac-linux.xml</descriptor>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-Xlint:unchecked</arg>
+						<arg>-Xlint:deprecation</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<executions>
+					<!-- Build jar. -->
+					<execution>
+						<id>jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>nl.nielspoldervaart.ftlav.FTLAdventureVisualiser</mainClass>
+								</manifest>
+								<manifestEntries>
+									<Built-By>Niels-NTG Poldervaart</Built-By>
+								</manifestEntries>
+							</archive>
+							<finalName>FTLAdventureVisualiser</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<attach>false</attach>
+						</configuration>
+					</execution>
+					<!-- uncomment this section if you wish to also build zip archive that include README and LICENSE files -->
+					<!-- Build zip archive. -->
+					<execution>
+						<id>dist</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/dist.xml</descriptor>
 							</descriptors>
-							<finalName>${project.name} v${project.version}-Mac-Linux</finalName>
+							<finalName>${project.name} v${project.version}</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
