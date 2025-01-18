@@ -60,6 +60,14 @@ public class GraphTextBox {
 			8
 		);
 
+		// Beacon event key
+		titleGraphic.textAlign(PConstants.RIGHT, PConstants.TOP);
+		titleGraphic.text(
+			"RG = Red Gian, P = Pulsar, AF = Asteroid Field\nASB = Anti-Ship Battery, RF = Rebel Fleet\nS = Store, HS = Hostile Ship",
+			root.width - 12,
+			8
+		);
+
 		titleGraphic.endDraw();
 		return titleGraphic;
 	}

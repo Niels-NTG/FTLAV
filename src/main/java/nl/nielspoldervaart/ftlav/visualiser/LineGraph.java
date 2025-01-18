@@ -2,10 +2,13 @@ package nl.nielspoldervaart.ftlav.visualiser;
 
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.DataUtil;
+import nl.nielspoldervaart.ftlav.data.TableRow;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PVector;
+import processing.data.JSONArray;
+import processing.data.StringList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,12 +25,44 @@ public class LineGraph {
 	private final int Y_MIN_VISUAL_INCREMENT = 32;
 	private final int Y_AXIS_WIDTH = 32;
 	private final int X_AXIS_HEIGHT = 36;
-	private final int TOP_MARGIN = 16;
+	private final int TOP_MARGIN = 28;
 
 	LineGraph(Visualiser root, int width, int height) {
 		this.root = root;
 		this.GRAPHICS_WIDTH = width;
 		this.GRAPHICS_HEIGHT = height;
+	}
+
+	private static StringList getBeaconInfoAcronymList(TableRow tableRow) {
+		StringList beaconInfoAcronyms = new StringList();
+		JSONArray hazards = tableRow.getBeaconHazards();
+		for (int i = 0; i < hazards.size(); i++) {
+			String hazardAcronym = getBeaconHazardAcronym(hazards.getString(i));
+			if (!hazardAcronym.isEmpty()) {
+				beaconInfoAcronyms.append(hazardAcronym);
+			}
+		}
+		if (tableRow.getStore().size() > 0) {
+			beaconInfoAcronyms.append("S");
+		}
+		if (tableRow.isNearbyShipHostile()) {
+			beaconInfoAcronyms.append("HS");
+		}
+		return beaconInfoAcronyms;
+	}
+
+	private static String getBeaconHazardAcronym(String beaconHazardName) {
+		switch (beaconHazardName) {
+			case "Red Giant": return "RG";
+			case "Pulsar": return "P";
+			case "Asteroid Field": return "AF";
+			case "Neutral Anti-Ship Battery":
+			case "Friendly Anti-Ship Battery":
+			case "Hostile Anti-Ship Battery":
+				return "ASB";
+			case "Rebel Fleet": return "RF";
+			default: return "";
+		}
 	}
 
 	PGraphics draw() {
@@ -86,6 +121,7 @@ public class LineGraph {
 		ArrayList<String> sectorTypes = DataUtil.extractStringColumn("sectorType");
 
 		int lastSectorNumber = -1;
+		int lastBeaconNumber = -1;
 
 		PGraphics xAxis = root.createGraphics(g.width, g.height);
 		xAxis.beginDraw();
@@ -123,11 +159,23 @@ public class LineGraph {
 			// Draw sector number
 			xAxis.noStroke();
 			xAxis.fill(root.COLOR_MAIN_TEXT);
-			xAxis.textFont(root.FONT_MAIN);
-			xAxis.textAlign(PConstants.LEFT, PConstants.TOP);
-			xAxis.text(beaconNumbers.get(i), x + 4, xAxis.height - (X_AXIS_HEIGHT - 4));
+			if (beaconNumbers.get(i) != lastBeaconNumber) {
+				xAxis.textFont(root.FONT_MAIN);
+				xAxis.textAlign(PConstants.LEFT, PConstants.TOP);
+				xAxis.text(beaconNumbers.get(i), x + 4, xAxis.height - (X_AXIS_HEIGHT - 4));
+			}
+
+			// Draw beacon info labels
+			xAxis.textFont(root.FONT_SMALL);
+			xAxis.textAlign(PConstants.LEFT, PConstants.BOTTOM);
+			xAxis.text(
+				getBeaconInfoAcronymList(FTLAdventureVisualiser.recording.get(i)).join("\n"),
+				x + 4,
+				TOP_MARGIN - 2
+			);
 
 			lastSectorNumber = sectorNumbers.get(i);
+			lastBeaconNumber = beaconNumbers.get(i);
 		}
 
 		xAxis.endDraw();
