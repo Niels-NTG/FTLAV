@@ -220,18 +220,8 @@ public class FTLAdventureVisualiser {
 		try {
 
 			SavedGameParser parser = new SavedGameParser();
-			SavedGameState newGameState = parser.readSavedGame(chosenFile);
-
-			boolean isNewerGameStateForLastBeacon =
-				gameState != null &&
-					newGameState.getCurrentBeaconId() == gameState.getCurrentBeaconId();
-
-			gameState = newGameState;
+			gameState = parser.readSavedGame(chosenFile);
 			gameStateFile = chosenFile;
-
-			if (isNewerGameStateForLastBeacon) {
-				return;
-			}
 
 			RandomSectorTreeGenerator sectorTreeGenerator = new RandomSectorTreeGenerator(new FTL_1_6_Random());
 			SectorTree sectorTree = new SectorTree();
@@ -252,6 +242,18 @@ public class FTLAdventureVisualiser {
 				gameState.getCurrentBeaconId(),
 				gameState.getSectorNumber() + 1
 			);
+
+			TableRow newRow = new TableRow(gameState, gameStateFile.lastModified());
+
+			if (newRow.shouldDiscardRow()) {
+				return;
+			}
+
+			if (newRow.isSimilarTo(DataUtil.getLastRecord())) {
+				recording.set(recording.size() - 1, newRow);
+			} else {
+				recording.add(newRow);
+			}
 
 			makeGameStateTable();
 		} catch (Exception e) {

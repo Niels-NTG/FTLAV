@@ -772,4 +772,26 @@ public class TableRow {
 		}
 	}
 
+	public boolean shouldDiscardRow() {
+		return encounterText.isEmpty();
+	}
+
+	public boolean isSimilarTo(TableRow otherRow) {
+		if (otherRow == null) {
+			return false;
+		}
+		if (time.equals(otherRow.getTime())) {
+			return true;
+		}
+		if (beaconId == otherRow.getBeaconId()) {
+			if (otherRow.getEncounterText().equals(encounterText)) {
+				return true;
+			}
+			if (otherRow.getEncounterText().contains("NOTHING") && encounterText.equals("NOTHING")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
