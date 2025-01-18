@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -296,6 +297,7 @@ public class FTLFrame extends JFrame {
 		graphFrame.setSize(1200, 700);
 		graphFrame.setType(JFrame.Type.UTILITY);
 		graphFrame.setResizable(true);
+		graphFrame.setMinimumSize(new Dimension(1000, 660));
 		graphFrame.setLocationRelativeTo(null);
 		graphFrame.setTitle(String.format("%s %d - Graph Renderer", appName, appVersion));
 		graphFrame.setLayout(new BorderLayout());
