@@ -222,12 +222,14 @@ public class FTLAdventureVisualiser {
 
 			boolean isNewerGameStateForLastBeacon =
 				gameState != null &&
-					newGameState.getCurrentBeaconId() == gameState.getCurrentBeaconId() &&
-					DataUtil.getLastRecord() != null &&
-					new Date(chosenFile.lastModified()).compareTo(DataUtil.getLastRecord().getTime()) > 0;
+					newGameState.getCurrentBeaconId() == gameState.getCurrentBeaconId();
 
 			gameState = newGameState;
 			gameStateFile = chosenFile;
+
+			if (isNewerGameStateForLastBeacon) {
+				return;
+			}
 
 			RandomSectorTreeGenerator sectorTreeGenerator = new RandomSectorTreeGenerator(new FTL_1_6_Random());
 			SectorTree sectorTree = new SectorTree();
@@ -239,16 +241,8 @@ public class FTLAdventureVisualiser {
 				sectorList.add(sectorTree.getVisitedDot(c));
 			}
 
-			log.info("Currently at beacon: {}", gameState.getCurrentBeaconId());
-			log.info("Currently in sector: {}", gameState.getSectorNumber() + 1);
+			log.info("{} arrived at beacon ID {} in sector {}", getTimeStamp(), gameState.getCurrentBeaconId(), gameState.getSectorNumber() + 1);
 
-			// If newer information is found for the last beacon, overwrite the last record with a new row.
-			if (isNewerGameStateForLastBeacon) {
-				log.info("Updating existing last game state recording");
-				recording.set(recording.size() - 1, new TableRow(gameState, gameStateFile.lastModified()));
-			} else {
-				recording.add(new TableRow(gameState, gameStateFile.lastModified()));
-			}
 
 			makeGameStateTable();
 		} catch (Exception e) {

@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -341,7 +342,11 @@ public class FTLFrame extends JFrame {
 				FTLAdventureVisualiser.gameStateFile,
 				(File file) -> {
 					if (FTLAdventureVisualiser.hasGameState()) {
-						log.info("File {} has updated", file.getName());
+						log.info(
+							"{} File {} has updated",
+							DataUtil.getTimeStamp(new Date(file.lastModified())),
+							file.getName()
+						);
 						FTLAdventureVisualiser.loadGameState(file);
 					}
 					onGameStateUpdate();
@@ -367,11 +372,10 @@ public class FTLFrame extends JFrame {
 
 		updateStatusBar(hasGameState ?
 			String.format(
-				"Loaded %s (%s)",
-				FTLAdventureVisualiser.gameStateFile.getName(),
+				"%s save game file was updated",
 				FTLAdventureVisualiser.getTimeStamp()
 			) :
-			"No save game loaded"
+			"No save game file loaded"
 		);
 
 		boolean hasRecords = FTLAdventureVisualiser.hasRecords();
