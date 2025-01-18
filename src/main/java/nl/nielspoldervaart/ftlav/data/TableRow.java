@@ -55,6 +55,9 @@ public class TableRow {
 
 	// Beacon
 	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
+	@CsvBindByName(column = "beacon id")
+	private int beaconId;
+	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
 	@CsvBindByName(column = "encounter text")
 	private String encounterText;
 	@VisualiserAnnotation(category = TableColumnCategory.BEACON)
@@ -445,6 +448,7 @@ public class TableRow {
 		fleetAdvancement = DataUtil.getRebelFleetAdvancement(gameState);
 
 		// Beacon
+		beaconId = gameState.getCurrentBeaconId();
 		encounterText = gameState.getEncounter().getText();
 		beaconHazards = DataUtil.getBeaconHazards(gameState);
 		store = DataUtil.getStoreContents(gameState);
