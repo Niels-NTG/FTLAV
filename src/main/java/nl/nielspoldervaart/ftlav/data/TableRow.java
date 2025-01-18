@@ -94,7 +94,7 @@ public class TableRow {
 	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.GREEN, category = TableColumnCategory.RESOURCES, plotType = PlotType.LINE)
 	@CsvBindByName(column = "crew size")
 	private int crewSize;
-	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCES, plotType = PlotType.LINE)
+	@VisualiserAnnotation(isEnabledByDefault = true, defaultGraphLineColor = GraphLineColor.RED, category = TableColumnCategory.RESOURCES, plotType = PlotType.LINE)
 	@CsvBindByName(column = "hull")
 	private int hull;
 	@VisualiserAnnotation(defaultGraphLineColor = GraphLineColor.BLUE, category = TableColumnCategory.RESOURCES, plotType = PlotType.LINE)
