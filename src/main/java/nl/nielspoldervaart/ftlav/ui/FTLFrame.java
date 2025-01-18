@@ -3,8 +3,8 @@ package nl.nielspoldervaart.ftlav.ui;
 import lombok.extern.slf4j.Slf4j;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import nl.nielspoldervaart.ftlav.data.DataUtil;
-import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.data.FileWatcher;
+import nl.nielspoldervaart.ftlav.data.TableReader;
 import nl.nielspoldervaart.ftlav.visualiser.Visualiser;
 
 import javax.swing.BorderFactory;

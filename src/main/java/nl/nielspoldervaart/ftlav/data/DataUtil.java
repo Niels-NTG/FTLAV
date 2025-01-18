@@ -20,14 +20,13 @@ import net.blerf.ftl.model.type.StoreItemType;
 import net.blerf.ftl.model.type.SystemType;
 import net.blerf.ftl.parser.DataManager;
 import net.blerf.ftl.xml.AugBlueprint;
+import net.blerf.ftl.xml.CrewBlueprint;
 import net.blerf.ftl.xml.DefaultDeferredText;
 import net.blerf.ftl.xml.DroneBlueprint;
 import net.blerf.ftl.xml.WeaponBlueprint;
-import net.blerf.ftl.xml.CrewBlueprint;
 import nl.nielspoldervaart.ftlav.FTLAdventureVisualiser;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
-import processing.data.StringList;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -427,10 +426,11 @@ public class DataUtil {
 		}
 
 		BeaconState beacon = gameState.getBeaconList().get(gameState.getCurrentBeaconId());
-		if (beacon.getFleetPresence() == FleetPresence.REBEL || beacon.getFleetPresence() == FleetPresence.BOTH) {
+		FleetPresence fleetPresence = beacon.getFleetPresence();
+		if (fleetPresence == FleetPresence.REBEL || fleetPresence == FleetPresence.BOTH) {
 			hazards.append("Rebel Fleet");
 		}
-		if (beacon.getFleetPresence() == FleetPresence.FEDERATION || beacon.getFleetPresence() == FleetPresence.BOTH) {
+		if (fleetPresence == FleetPresence.FEDERATION || fleetPresence == FleetPresence.BOTH) {
 			hazards.append("Federation Fleet");
 		}
 
@@ -438,6 +438,5 @@ public class DataUtil {
 
 		return hazards;
 	}
-
 
 }

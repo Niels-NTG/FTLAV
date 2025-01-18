@@ -54,8 +54,6 @@ public class FTLAdventureVisualiser {
 	private static final Preferences prefs = Preferences.userNodeForPackage(FTLAdventureVisualiser.class);
 	private static final String FTL_DAT_PATH = "ftlDatsPath";
 	private static final String FTL_CONTINUE_PATH = "ftlContinuePath";
-	private static final String FTL_PROFILE_PATH = "ftlProfilePath";
-	private static final String FTL_AE_PROFILE_PATH = "ftlAEProfilePath";
 
 	public static File gameStateFile;
 	public static SavedGameState gameState = null;
@@ -193,7 +191,7 @@ public class FTLAdventureVisualiser {
 
 		if (datsDir == null) {
 			showErrorDialog("FTL resources were not found.\nFTLAV will now exit.");
-			log.error("No FTL dats path found, exiting.");
+			log.error("FTL resources were not found, exiting…");
 			System.exit(1);
 		}
 		return datsDir;
@@ -210,7 +208,11 @@ public class FTLAdventureVisualiser {
 			loadGameState(chosenFile);
 		} catch (Exception e) {
 			log.error("Reading game state from file {} failed: {}", chosenFile.getAbsoluteFile(), e.getMessage());
-			showErrorDialog(String.format("Reading game state from file %s failed: %s", chosenFile.getAbsoluteFile(), e.getMessage()));
+			showErrorDialog(String.format(
+				"Reading game state from file %s failed: %s",
+				chosenFile.getAbsoluteFile(),
+				e.getMessage()
+			));
 		}
 	}
 
@@ -233,7 +235,10 @@ public class FTLAdventureVisualiser {
 
 			RandomSectorTreeGenerator sectorTreeGenerator = new RandomSectorTreeGenerator(new FTL_1_6_Random());
 			SectorTree sectorTree = new SectorTree();
-			sectorTree.setSectorDots(sectorTreeGenerator.generateSectorTree(gameState.getSectorTreeSeed(), gameState.isDLCEnabled()));
+			sectorTree.setSectorDots(sectorTreeGenerator.generateSectorTree(
+				gameState.getSectorTreeSeed(),
+				gameState.isDLCEnabled()
+			));
 			sectorTree.setSectorVisitation(gameState.getSectorVisitation());
 			int lastVisitedColumn = sectorTree.getLastVisitedColumn();
 			sectorList.clear();
@@ -241,8 +246,12 @@ public class FTLAdventureVisualiser {
 				sectorList.add(sectorTree.getVisitedDot(c));
 			}
 
-			log.info("{} arrived at beacon ID {} in sector {}", getTimeStamp(), gameState.getCurrentBeaconId(), gameState.getSectorNumber() + 1);
-
+			log.info(
+				"{} arrived at beacon ID {} in sector {}",
+				getTimeStamp(),
+				gameState.getCurrentBeaconId(),
+				gameState.getSectorNumber() + 1
+			);
 
 			makeGameStateTable();
 		} catch (Exception e) {

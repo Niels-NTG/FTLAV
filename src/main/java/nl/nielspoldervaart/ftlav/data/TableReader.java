@@ -28,8 +28,6 @@ public class TableReader {
 				FTLAdventureVisualiser.recording.addAll(newTableRows);
 				RowOrderComparator comparator = new RowOrderComparator();
 				FTLAdventureVisualiser.recording.sort(comparator);
-				// TODO remove rows with duplicate dates
-
 			} else {
 				int overwriteExistingRowsDialogChoice = JOptionPane.showConfirmDialog(
 					parentFrame,
